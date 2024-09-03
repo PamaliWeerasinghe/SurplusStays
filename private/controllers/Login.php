@@ -2,11 +2,11 @@
 
 //home controller
 
-class Home extends Controller
+class Login extends Controller
 {
     function index()
     {
-        $this->view('home');
+        $this->view('login');
     }
 }
 

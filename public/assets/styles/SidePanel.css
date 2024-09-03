@@ -1,18 +1,11 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
-}
-
-.container {
-    display: flex;
-}
 
 .side-nav {
     width: 380px;
-    height: 100vh;
     background-color: #f5f9ff;
     padding: 20px;
+    display: flex;
     box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
+    flex-direction: column;
 }
 
 .profile-section {

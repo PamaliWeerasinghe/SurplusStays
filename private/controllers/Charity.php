@@ -4,6 +4,6 @@ class Charity extends Controller
 {
     function index($id = '')
     {
-        echo $this->view('charity');
+       $this->view('charity_dashboard');
     }
 }
