@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recent Items</title>
-    <link rel="stylesheet" href="../../Charity/public/assets/styles/RecentItems.css"> 
+    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/RecentItems.css"> 
 </head>
 <body>
 
@@ -13,14 +13,14 @@
     </div>
 
     <div class="item_slider">
-        <img src="../../Charity/public/assets/images/arrow_left.png" alt="" class="back_btn"/>
-        <img src="../../Charity/public/assets/images/arrow_right.png" alt="" class="next_btn"/>
+        <img src="../../SURPLUSSTAYS/public/assets/images/arrow_left.png" alt="" class="back_btn"/>
+        <img src="../../SURPLUSSTAYS/public/assets/images/arrow_right.png" alt="" class="next_btn"/>
         <div class="slider">
             <ul>
                 <li>
                         <div class="product">
                             <div class="discount">60% <br>OFF</div>
-                            <img src="../../Charity/public/assets/images/Organic_Black_Tea.png" alt="">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/Organic_Black_Tea.png" alt="">
                             <div class="details">
                                 <h3>Black Tea</h3>
                                 <p>Rs.175</p>
@@ -30,7 +30,7 @@
                 </li>
                 <li>
                         <div class="product">
-                            <img src="../../Charity/public/assets/images/Sugar.png" alt="">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/Sugar.png" alt="">
                             <div class="details">
                                 <h3>Sugar</h3>
                                 <p>Rs.224</p>
@@ -40,7 +40,7 @@
                 </li>
                 <li>
                         <div class="product">
-                            <img src="../../Charity/public/assets/images/Brown_Suji.png" alt="">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/Brown_Suji.png" alt="">
                             <div class="details">
                                 <h3>Brown Suji</h3>
                                 <p>Rs.115</p>
@@ -50,7 +50,7 @@
                 </li>
                 <li>
                         <div class="product">
-                            <img src="../../Charity/public/assets/images/Organic_Black_Tea.png" alt="">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/Organic_Black_Tea.png" alt="">
                             <div class="details">
                                 <h3>Black Tea</h3>
                                 <p>Rs.155</p>
@@ -60,7 +60,7 @@
                 </li>
                 <li>
                     <div class="product">
-                        <img src="../../Charity/public/assets/images/Sugar.png" alt="">
+                        <img src="../../SURPLUSSTAYS/public/assets/images/Sugar.png" alt="">
                         <div class="details">
                             <h3>Sugar</h3>
                             <p>Rs.224</p>
@@ -79,48 +79,48 @@
     </div>
 
     <div class="item_slider_b">
-        <img src="../../Charity/public/assets/images/arrow_left.png" alt="" class="back_btn"/>
-        <img src="../../Charity/public/assets/images/arrow_right.png" alt="" class="next_btn"/>
+        <img src="../../SURPLUSSTAYS/public/assets/images/arrow_left.png" alt="" class="back_btn"/>
+        <img src="../../SURPLUSSTAYS/public/assets/images/arrow_right.png" alt="" class="next_btn"/>
         <div class="slider_b" >
             <ul>
                 <li>
                         <div class="buisness">
-                            <img src="../../Charity/public/assets/images/Keels.png" alt="">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/Keels.png" alt="">
                         </div>
                 </li>
                 <li>
                         <div class="buisness">
-                            <img src="../../Charity/public/assets/images/ElephantHouse.png" alt="">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/ElephantHouse.png" alt="">
                         </div>
                 </li>
                 <li>
                         <div class="buisness">
-                            <img src="../../Charity/public/assets/images/Cinnamon.png" alt="">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/Cinnamon.png" alt="">
                         </div>
                 </li>
                 <li>
                         <div class="buisness">
-                            <img src="../../Charity/public/assets/images/Laughs.png" alt="">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/Laughs.png" alt="">
                         </div>
                 </li>
                 <li>
                         <div class="buisness">
-                            <img src="../../Charity/public/assets/images/Glomark.png" alt="">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/Glomark.png" alt="">
                         </div>
                 </li>
                 <li>
                         <div class="buisness">
-                            <img src="../../Charity/public/assets/images/ElephantHouse.png" alt="">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/ElephantHouse.png" alt="">
                         </div>
                 </li>
                 <li>
                     <div class="buisness">
-                        <img src="../../Charity/public/assets/images/Keels.png" alt="">
+                        <img src="../../SURPLUSSTAYS/public/assets/images/Keels.png" alt="">
                     </div>
             </li>
             <li>
                 <div class="buisness">
-                    <img src="../../Charity/public/assets/images/Cinnamon.png" alt="">
+                    <img src="../../SURPLUSSTAYS/public/assets/images/Cinnamon.png" alt="">
                 </div>
         </li>
             </ul>
@@ -129,8 +129,8 @@
 
     <button class="transparent_btn">More About Buisnesses</button>
 
-    <script src="../../Charity/public/assets/js/RecentItems.js"></script>
-    <script src="../../Charity/public/assets/js/BuisnessSlider.js"></script>
+    <script src="../../SURPLUSSTAYS/public/assets/js/RecentItems.js"></script>
+    <script src="../../SURPLUSSTAYS/public/assets/js/BuisnessSlider.js"></script>
 
 </body>
 </html>
