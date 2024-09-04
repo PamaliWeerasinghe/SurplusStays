@@ -6,6 +6,6 @@
     <title>Welcome</title>
 </head>
 <body>
-    <?php require "../views/includes/navbar.view.php"?>
+    <?php require "adminNav.view.php"?>
 </body>
 </html>

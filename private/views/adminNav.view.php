@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Admin Nav</title>
-    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/adminDashboard.css">
+    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/adminNav.css">
 </head>
 <body>
 <div class="main-div">
@@ -45,5 +45,5 @@
                 
         </div>
     </div>
-</body>
-</html>
+<!-- </body>
+</html> -->
