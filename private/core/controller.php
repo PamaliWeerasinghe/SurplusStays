@@ -10,10 +10,10 @@ class Controller
 
         if(file_exists("../private/views/" . $view . ".view.php"))
         {
-            return file_get_contents("../private/views/" . $view . ".view.php");
+            require ("../private/views/" . $view . ".view.php");
         }
         else {
-            return file_get_contents("../private/views/404.view.php");
+            require ("../private/views/404.view.php");
         }
     }
 }
