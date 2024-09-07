@@ -8,7 +8,7 @@
 </head>
 <body>
 
-<?php echo $this->view('includes/navbar')?>
+<?php echo $this->view('includes/navbar_unregistered')?>
     <div class="rectangle">
         <h2> <span class="white">RECENT</span> ITEMS</h2>
     </div>
