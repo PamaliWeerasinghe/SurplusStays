@@ -92,3 +92,63 @@
     height: 4vh;
     
 }
+
+/* manage customers */
+
+.business-row{
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+}
+.business-details{
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: flex-start;
+    padding-left: 6%;
+}
+.business-location{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+}
+.business-summary{
+    display: flex;
+    flex-direction: column;
+    padding-left: 12%;
+    justify-content: center;
+    align-items: flex-start;
+}
+.business-summary label{
+    margin-top: 8%;
+    color: grey;
+}
+.business-buttons{
+    display: flex;
+    flex-direction: column;
+    margin-top: 2%;
+    width: 25%;
+    padding-left: 4%;
+}
+.business-buttons button{
+    margin-top: 4%;
+    background-color: white;
+    border-color: white;
+    border-style: solid;
+    border-radius: 6px;
+    height: 4vh;
+    
+}
+
+.business-wrap{
+    display: flex;
+    flex-direction: row;
+}
+.business-joined{
+    margin-top: 3%;
+
+}
+.business-joined label{
+    color: red;
+}

@@ -2,7 +2,7 @@
     class Admin extends Controller{
 
         function index(){
-            $this->view('adminManageCustomers');
+            $this->view('adminManageBusinesses');
         }
 
         function test($name){
