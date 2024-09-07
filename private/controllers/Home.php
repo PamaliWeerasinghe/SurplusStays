@@ -6,7 +6,7 @@ class Home extends Controller
 {
     function index()
     {
-        echo $this->view('adminWelcomePage');
+        echo $this->view('home');
     }
 }
 
