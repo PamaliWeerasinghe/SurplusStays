@@ -111,6 +111,7 @@
     flex: 1;
     background-color:#1B4332;
     border-radius: 7px 10px 10px 7px; /*ltop rtop rbot lbot*/
+    cursor: pointer;
 }
 .slot1 label{
     color: white;
@@ -172,28 +173,4 @@
     
   }
   
-  .order-table button {
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: none;
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .order-table .completed {
-    background-color: #1B4332;
 
-  }
-  
-  .order-table .take-action {
-    background-color: #FD5D34;
-  }
-  
-  .arrow-div{
-    display: flex;
-    justify-content: flex-end;
-    margin-bottom: 4%;
-    padding:1%;
-  }
