@@ -2,7 +2,7 @@
     class Admin extends Controller{
 
         function index(){
-            $this->view('AdminSeeComplainPage');
+            $this->view('AdminRefundMoney');
         }
 
         function test($name){
