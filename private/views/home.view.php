@@ -8,6 +8,7 @@
 </head>
 <body>
 
+<?php echo $this->view('includes/navbar_unregistered')?>
     <div class="rectangle">
         <h2> <span class="white">RECENT</span> ITEMS</h2>
     </div>
@@ -131,6 +132,8 @@
 
     <script src="../../SURPLUSSTAYS/public/assets/js/RecentItems.js"></script>
     <script src="../../SURPLUSSTAYS/public/assets/js/BuisnessSlider.js"></script>
+
+    <?php echo $this->view('includes/footer')?>
 
 </body>
 </html>

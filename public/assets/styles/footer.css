@@ -6,9 +6,8 @@ body {
     }
 
     .footer {
-    position: fixed;
     left: 0;
-    bottom: 0;
+    bottom: 0; 
     width: 100%;
     background-color: #1b4332;
     color: white;
@@ -22,6 +21,7 @@ body {
     width: 33%;
     align-items: center;
     }
+
 
 /* Clear floats after the columns */
     .row{
@@ -38,6 +38,10 @@ body {
 
     .h{
         background-color: black;
+    }
+
+    .col2H{
+        color: white;
     }
 
     @media screen and (max-width: 600px) {
