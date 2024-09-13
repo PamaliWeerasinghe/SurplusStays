@@ -6,7 +6,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITENAME ?></title>
-    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/adminTrackExpiry.css" />
+    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/adminSidePanel.css" />
     <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/adminManageActors.css" />
     <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/admin.css">
 </head>

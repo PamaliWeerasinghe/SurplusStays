@@ -1,8 +1,8 @@
-.navbar{
+/* .navbar{
     width: 100%;
     height: 7vh;
     background-color: black;
-}
+} */
 .sidePanel{
     display: flex;
     flex-direction: column;
