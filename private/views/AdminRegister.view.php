@@ -42,7 +42,7 @@
                 
                         
             </div>
-            <button class="register-button" onclick="window.location.href='<?=ROOT?>/charity_register'">SIGN IN</button>
+            <button class="register-button" onclick="window.location.href='<?=ROOT?>/admin/dashboard'">SIGN IN</button>
         </div>
     </div>
 

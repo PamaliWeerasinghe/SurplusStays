@@ -5,8 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITENAME ?></title>
-    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/admin.css">
-    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/adminDashboard.css">
+    <link rel="stylesheet" href="<?=STYLES?>/admin.css">
+    <link rel="stylesheet" href="<?=STYLES?>/adminDashboard.css">
 </head>
 
 <body>
@@ -19,11 +19,11 @@
             <?php require APPROOT."/views/includes/adminSidePanel.view.php"?>
             <div class="dashboard">
                 <div class="summary">
-                    <div class="notifications"><img src="../../SURPLUSSTAYS/public/assets/images/Bell.png" /></div>
+                    <div class="notifications"><img src="<?=ASSETS?>/images/Bell.png" /></div>
                     <div class="summary-blocks">
                         <div class="summaries">
                             <div class="summaries-1">
-                                <img src="../../SURPLUSSTAYS/public/assets/images/manifest.png" />
+                                <img src="<?=ASSETS?>/images/manifest.png" />
                             </div>
                             <div class="summaries-2">
                                 <label class="summaries-2-label1">Remove Users</label>
@@ -32,7 +32,7 @@
                         </div>
                         <div class="summaries">
                             <div class="summaries-1">
-                                <img src="../../SURPLUSSTAYS/public/assets/images/manifest.png" />
+                                <img src="<?=ASSETS?>/images/manifest.png" />
                             </div>
                             <div class="summaries-2">
                                 <label class="summaries-2-label1">Complaints</label>
@@ -41,7 +41,7 @@
                         </div>
                         <div class="summaries">
                             <div class="summaries-1">
-                                <img src="../../SURPLUSSTAYS/public/assets/images/box-mark.png" />
+                                <img src="<?=ASSETS?>/images/box-mark.png" />
                             </div>
                             <div class="summaries-2">
                                 <label class="summaries-2-label1">Donations</label>
@@ -50,7 +50,7 @@
                         </div>
                         <div class="summaries">
                             <div class="summaries-1">
-                                <img src="../../SURPLUSSTAYS/public/assets/images/rating.png" />
+                                <img src="<?=ASSETS?>/images/rating.png" />
                             </div>
                             <div class="summaries-2">
                                 <label class="summaries-2-label1">Customers</label>
@@ -109,7 +109,7 @@
                             <div class="product-row">
                                 <div class="product-item">
                                     <div>
-                                        <img src="../../SURPLUSSTAYS/public/assets/images/bread.png"/>
+                                        <img src="<?=ASSETS?>/images/bread.png"/>
                                     </div>
                                     <div class="product-summaries-item">
                                     <label class="product-summaries-label1">Bread</label>
@@ -119,7 +119,7 @@
                                 </div>
                                 <div class="product-item">
                                     <div>
-                                        <img src="../../SURPLUSSTAYS/public/assets/images/rice.png"/>
+                                        <img src="<?=ASSETS?>/images/rice.png"/>
                                     </div>
                                     <div class="product-summaries-item">
                                     <label class="product-summaries-label1">Rice</label>
@@ -129,7 +129,7 @@
                                 </div>
                                 <div class="product-item">
                                     <div>
-                                        <img src="../../SURPLUSSTAYS/public/assets/images/chips.png"/>
+                                        <img src="<?=ASSETS?>/images/chips.png"/>
                                     </div>
                                     <div class="product-summaries-item">
                                     <label class="product-summaries-label1">Chips</label>
@@ -141,7 +141,7 @@
                             <div class="product-row">
                                 <div class="product-item">
                                     <div>
-                                        <img src="../../SURPLUSSTAYS/public/assets/images/popcorn.png"/>
+                                        <img src="<?=ASSETS?>/images/popcorn.png"/>
                                     </div>
                                     <div class="product-summaries-item">
                                     <label class="product-summaries-label1">Popcorn</label>
@@ -151,7 +151,7 @@
                                 </div>
                                 <div class="product-item">
                                     <div>
-                                        <img src="../../SURPLUSSTAYS/public/assets/images/pasta.png"/>
+                                        <img src="<?=ASSETS?>/images/pasta.png"/>
                                     </div>
                                     <div class="product-summaries-item">
                                     <label class="product-summaries-label1">Pasta</label>
@@ -161,7 +161,7 @@
                                 </div>
                                 <div class="product-item">
                                     <div>
-                                        <img src="../../SURPLUSSTAYS/public/assets/images/peanuts.png"/>
+                                        <img src="<?=ASSETS?>/images/peanuts.png"/>
                                     </div>
                                     <div class="product-summaries-item">
                                     <label class="product-summaries-label1">Nuts</label>
@@ -172,7 +172,7 @@
                             </div>
                     </div>
                     <div class="next">
-                        <img src="../../SURPLUSSTAYS/public/assets/images/down.png"/>
+                        <img src="<?=ASSETS?>/images/down.png"/>
                     </div>
 
                 </div>
@@ -226,7 +226,7 @@
                    
                    
                     <div class="next">
-                        <img src="../../SURPLUSSTAYS/public/assets/images/down.png"/>
+                        <img src="<?=ASSETS?>/images/down.png"/>
                     </div>
 
                 </div>

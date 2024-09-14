@@ -1,16 +1,12 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<?php require APPROOT.'/views/includes/htmlHeader.view.php'?>
     <title><?php echo SITENAME ?></title>
-    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/adminTrackExpiry.css" />
-    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/adminSidePanel.css" />
-    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/admin.css">
+    <link rel="stylesheet" href="<?=STYLES?>/adminTrackExpiry.css" />
+    <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
+    <link rel="stylesheet" href="<?=STYLES?>/admin.css">
 </head>
 
 <body>
+<?php echo $this->view('includes/navbar')?>
     <div class="main-div">
         <div class="sub-div-1">
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
@@ -19,10 +15,10 @@
                     <div class="notifications-type2">
                         <div class="searchdiv">
                             <input type="text" class="search" placeholder="Search..." />
-                            <img src="../../SURPLUSSTAYS/public/assets/images/search.png" class="bell2" />
+                            <img src="<?=ASSETS?>/images/search.png" class="bell2" />
                         </div>
 
-                        <img src="../../SURPLUSSTAYS/public/assets/images/Bell.png" class="bell" />
+                        <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
                     </div>
                     <div class="summary-blocks">
                         <div class="summaries">
@@ -216,8 +212,8 @@
                     </table>
                     <div class="arrow-div">
                         <div class="arrows">
-                            <img src="../../SURPLUSSTAYS/public/assets/images/Arrow right-circle.png"/>
-                            <img src="../../SURPLUSSTAYS/public/assets/images/Arrow right-circle-bold.png"/>
+                            <img src="<?=ASSETS?>/images/Arrow right-circle.png"/>
+                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png"/>
                             
                         </div>
                     </div>
@@ -227,7 +223,5 @@
 
             </div>
         </div>
-
-</body>
-
-</html>
+        <?php echo $this->view('includes/footer')?>
+        <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>
