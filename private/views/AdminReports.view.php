@@ -11,6 +11,7 @@
 </head>
 
 <body>
+<?php echo $this->view('includes/navbar')?>
     <div class="main-div">
         <div class="sub-div-1">
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
@@ -215,7 +216,7 @@
 
             </div>
         </div>
-
+        <?php echo $this->view('includes/footer')?>
 </body>
 
 </html>

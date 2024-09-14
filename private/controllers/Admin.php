@@ -2,9 +2,13 @@
     class Admin extends Controller{
 
         function index(){
-            $this->view('adminReports');
+            $this->view('AdminRefundMoney');
         }
 
+        function register(){
+            $this->view('AdminRegister');
+        }
+        
         function test($name){
             $data=[
                 "username"=>$name

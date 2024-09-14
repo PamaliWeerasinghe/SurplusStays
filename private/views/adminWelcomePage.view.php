@@ -10,8 +10,10 @@
 </head>
 
 <body>
+    <!-- navbar -->
+
     <div class="main-div">
-        <!-- include the navbar -->
+    <?php echo $this->view('includes/navbar')?>
         <div class="sub-div-1">
             <!-- included the admin side panel -->
             <?php require APPROOT."/views/includes/adminSidePanel.view.php"?>
@@ -57,7 +59,7 @@
                         </div>
                     </div>
                 </div>
-                <div class="order-status">
+                <div class="admin-order-status">
                     <div class="order">
                         <label>Order Status</label>
                     </div>
@@ -182,7 +184,7 @@
                        
                     </div>
                     <div class="table-container">
-  <table class="order-table">
+  <table class="admin-order-table">
     <thead>
       <tr>
         <th>Date</th>
@@ -232,7 +234,9 @@
             </div>
             
         </div>
+        <?php echo $this->view('includes/footer')?>
     </div>
+    
 </body>
 
 </html>

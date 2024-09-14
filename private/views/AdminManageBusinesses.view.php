@@ -11,6 +11,7 @@
 </head>
 
 <body>
+    
     <div class="main-div">
         <div class="sub-div-1">
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
