@@ -1,13 +1,7 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo SITENAME ?></title>
-    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/adminSidePanel.css" />
-    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/adminReports.css">
-    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/admin.css">
+<?php require APPROOT.'/views/includes/htmlHeader.view.php'?>
+    <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
+    <link rel="stylesheet" href="<?=STYLES?>/adminReports.css">
+    <link rel="stylesheet" href="<?=STYLES?>/admin.css">
 </head>
 
 <body>
@@ -20,10 +14,10 @@
                     <div class="notifications-type2">
                         <div class="searchdiv">
                             <input type="text" class="search" placeholder="Search..." />
-                            <img src="../../SURPLUSSTAYS/public/assets/images/search.png" class="bell2" />
+                            <img src="<?=ASSETS?>/images/search.png" class="bell2" />
                         </div>
 
-                        <img src="../../SURPLUSSTAYS/public/assets/images/Bell.png" class="bell" />
+                        <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
                     </div>
                     
 
@@ -85,7 +79,7 @@
     <button>Get Report</button>
   </div>
   <div class="reports-next">
-                        <img src="../../SURPLUSSTAYS/public/assets/images/down.png"/>
+                        <img src="<?=ASSETS?>/images/down.png"/>
                     </div>
     <!-- Report 02 -->
                     <div class="white-bar">
@@ -105,11 +99,11 @@
     <tbody>
       <tr>
         <td>
-        <img src="../../SURPLUSSTAYS/public/assets/images/chips.png" />
+        <img src="<?=ASSETS?>/images/chips.png" />
         </td>
         <td>Uswatte Crispy Chips</td>
         <td>
-        <img src="../../SURPLUSSTAYS/public/assets/images/keells.png"  />
+        <img src="<?=ASSETS?>/images/keells.png"  />
         </td>
         <td>Rajagiriya</td>
         <td>10</td>
@@ -117,11 +111,11 @@
       </tr>
       <tr>
         <td>
-        <img src="../../SURPLUSSTAYS/public/assets/images/popcorn.png" />
+        <img src="<?=ASSETS?>/images/popcorn.png" />
         </td>
         <td>Pop Corn</td>
         <td>
-        <img src="../../SURPLUSSTAYS/public/assets/images/laughs.png"  />
+        <img src="<?=ASSETS?>/images/laughs.png"  />
         </td>
         <td>Rajagiriya</td>
         <td>10</td>
@@ -129,11 +123,11 @@
       </tr>
       <tr>
         <td>
-        <img src="../../SURPLUSSTAYS/public/assets/images/pasta.png" />
+        <img src="<?=ASSETS?>/images/pasta.png" />
         </td>
         <td>Cheese Pasta (Dinner)</td>
         <td>
-        <img src="../../SURPLUSSTAYS/public/assets/images/keells.png"  />
+        <img src="<?=ASSETS?>/images/keells.png"  />
         </td>
         <td>Malabe</td>
         <td>10</td>
@@ -147,7 +141,7 @@
     <button>Get Report</button>
   </div>
   <div class="reports-next">
-                        <img src="../../SURPLUSSTAYS/public/assets/images/down.png"/>
+                        <img src="<?=ASSETS?>/images/down.png"/>
                     </div>
 
                     <!-- Report 03 -->
@@ -168,7 +162,7 @@
     <tbody>
       <tr>
         <td>
-        <img src="../../SURPLUSSTAYS/public/assets/images/ginyard.png" />
+        <img src="<?=ASSETS?>/images/ginyard.png" />
         </td>
         <td>25</td>
         <td>
@@ -180,7 +174,7 @@
       </tr>
       <tr>
         <td>
-        <img src="../../SURPLUSSTAYS/public/assets/images/warnerandspencer.png" />
+        <img src="<?=ASSETS?>/images/warnerandspencer.png" />
         </td>
         <td>25</td>
         <td>
@@ -199,14 +193,14 @@
     <button>Get Report</button>
   </div>
   <div class="reports-next">
-                        <img src="../../SURPLUSSTAYS/public/assets/images/down.png"/>
+                        <img src="<?=ASSETS?>/images/down.png"/>
                     </div>
 
                     
                     <div class="arrow-div">
                         <div class="arrows">
-                            <img src="../../SURPLUSSTAYS/public/assets/images/Arrow right-circle.png"/>
-                            <img src="../../SURPLUSSTAYS/public/assets/images/Arrow right-circle-bold.png"/>
+                            <img src="<?=ASSETS?>/images/Arrow right-circle.png"/>
+                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png"/>
                             
                         </div>
                     </div>

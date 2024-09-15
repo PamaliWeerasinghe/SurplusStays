@@ -4,27 +4,25 @@
         <label>Hi <span class="admin">Pamali!</span></label>
     </div>
     <div class="buttons">
-        <div class="btn-Selected" id="dashboard" onclick="dashboard();"
-        data-path="/surplusstays/admin/dashboard">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/dashboard">
             <label>Dashboard</label>
         </div>
-        <div class="btn-nonSelected" id="trackExpiry" onclick="trackExpiry();"
-        data-path="/surplusstays/admin/TrackExpiry">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/TrackExpiry">
             <label>Track Expiry</label>
         </div>
-        <div class="btn-nonSelected" id="complaints" onclick="complaints();">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/Complaints">
             <label>Complaints</label>
         </div>
-        <div class="btn-nonSelected" id="manageCustomers" onclick="manageCustomers();">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/ManageCustomers">
             <label>Manage Customers</label>
         </div>
-        <div class="btn-nonSelected" id="manageBusinesses" onclick="manageBusinesses();">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/ManageBusinesses">
             <label>Manage Businesses</label>
         </div>
-        <div class="btn-nonSelected" id="manageCharity" onclick="manageCharity();">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/ManageCharityOrg">
             <label>Manage Charity Org</label>
         </div>
-        <div class="btn-nonSelected" id="reports" onclick="reports();">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/Reports">
             <label>Reports</label>
         </div>
         <div class="btn-nonSelected" id="profile" onclick="profile();">

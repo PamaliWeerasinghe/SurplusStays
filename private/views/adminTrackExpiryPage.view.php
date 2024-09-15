@@ -225,3 +225,4 @@
         </div>
         <?php echo $this->view('includes/footer')?>
         <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>
+        
