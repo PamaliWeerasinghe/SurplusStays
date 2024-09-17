@@ -4,7 +4,6 @@
     margin-top: -20%;
     border-radius: 10px;
     padding: 2%;
-    padding-bottom: 0%;
     margin-bottom: 5%;
     
 }
@@ -104,5 +103,33 @@
     border-style: solid;
     border-radius: 6px;
     height: 4vh;
+    
+}
+
+.add-complain-btn {
+    
+    width: 86%;
+    height: 8vh;
+    font-size: 1.2rem;
+    background-color: white;
+    color: #23483C;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    
+}
+
+.add-complain-btn:hover {
+    background-color: #F0F0F0;
+}
+
+.add-buyer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
     
 }

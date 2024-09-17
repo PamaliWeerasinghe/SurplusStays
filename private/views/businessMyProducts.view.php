@@ -21,12 +21,7 @@
                         <img src="<?= ASSETS ?>/images/Bell.png" class="bell" />
                     </div>
                     <div class="add-buyer">
-                        <div>
-                            <label>
-                                + Add Product
-                            </label>
-
-                        </div>
+                        <button class="add-complain-btn">+ Add Product</button>
                     </div>
 
 
@@ -220,6 +215,91 @@
                                     <button>Remove</button>
                                 </div>
                             </div>
+                            
+                        </div>
+                        <div class="buyer-row">
+                            <div class="row1">
+                                <div>
+                                    <div class="customer-img">
+                                        <img src="<?= ASSETS ?>/images/chips.png" />
+
+                                        <div class="customer-details">
+
+                                            <label>Chips</label>
+                                            <label>Rs 55</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="customer-joined">
+                                    <label>Expire :</label>
+                                    <label>2024.12.25 11.00AM</label>
+                                </div>
+                                <div class="customer-purchased">
+                                    <label>Items - </label>
+                                    <label>17</label>
+                                </div>
+                                <div class="customer-buttons">
+                                    <button>View</button>
+                                    <button>Remove</button>
+                                </div>
+                            </div>
+                            <div class="row1">
+                                <div>
+                                    <div class="customer-img">
+                                        <img src="<?= ASSETS ?>/images/peanuts.png" />
+
+                                        <div class="customer-details">
+
+                                            <label>Peanuts</label>
+                                            <label>Rs 119</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="customer-joined">
+                                    <label>Expire :</label>
+                                    <label>2024.12.25 11.00AM</label>
+                                </div>
+                                <div class="customer-purchased">
+                                    <label>Items - </label>
+                                    <label>7</label>
+                                </div>
+                                <div class="customer-buttons">
+                                    <button>View</button>
+                                    <button>Remove</button>
+                                </div>
+                            </div>
+                            <div class="row1">
+                                <div>
+                                    <div class="customer-img">
+                                        <img src="<?= ASSETS ?>/images/rice.png" />
+
+                                        <div class="customer-details">
+
+                                            <label>Rice</label>
+                                            <label>Rs 42</label>
+                                        </div>
+                                    </div>
+                                </div>
+
+
+                                <div class="customer-joined">
+                                    <label>Expire :</label>
+                                    <label>2024.12.25 11.00AM</label>
+                                </div>
+                                <div class="customer-purchased">
+                                    <label>Items - </label>
+                                    <label>54</label>
+                                </div>
+                                <div class="customer-buttons">
+                                    <button>View</button>
+                                    <button>Remove</button>
+                                </div>
+                            </div>
+                            
                         </div>
                     </div>
 
