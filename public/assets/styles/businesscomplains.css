@@ -1,0 +1,119 @@
+
+.order-nav{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 60%;
+    height: 4vh;
+    margin-top: 5%;
+    
+}
+.view-slots{
+    display: flex;
+
+    width: 80%;
+    height: 6vh;
+    border-style: solid;
+    border-color: #1B4332;
+    border-radius: 10px;
+}
+.slot1{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    background-color:#1B4332;
+    border-radius: 7px 10px 10px 7px; /*ltop rtop rbot lbot*/
+    cursor: pointer;
+}
+.slot1 label{
+    color: white;
+}
+.slot2{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex: 1;
+    background-color: white;
+    border-radius: 7px 10px 10px 7px; /*ltop rtop rbot lbot*/
+}
+.order-nav :hover{
+    cursor: pointer;
+}
+
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5%;
+    margin-bottom: 4%;
+    /* font-family: Arial, sans-serif; */
+  }
+  
+  .order-table thead tr {
+    /* background-color: #f8f8f8; */
+    text-align: left;
+    
+  }
+  
+  .order-table th, .order-table td {
+    padding: 12px 20px;
+    font-size: medium;
+    color: #333;
+  }
+  
+  .order-table th {
+    color: #7e8a91;
+    font-weight: 600;
+  }
+  
+  .order-table tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+    background-color: white;
+  }
+  
+  .order-table tbody tr:last-child {
+    margin-top: 4%;
+  }
+  
+  .order-table td {
+    vertical-align: middle;
+
+  }
+  .order-table td label {
+    font-size:xx-small;
+    color: grey;
+    
+  }
+  
+
+
+.add-complain-btn {
+    
+    width: 89%;
+    height: 8vh;
+    font-size: 1.2rem;
+    background-color: white;
+    color: #23483C;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+    
+}
+
+.add-complain-btn:hover {
+    background-color: #F0F0F0;
+}
+
+.add-buyer{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+    
+}
+
+

@@ -74,6 +74,10 @@ body {
     background-color: #FD5D34;
 }
 
+.order-table .rejected {
+    background-color:blue;
+}
+
 .arrow-div {
     display: flex;
     justify-content: flex-end;
@@ -159,7 +163,8 @@ body {
     background-color: #F0F8FF;
     margin-top: -19%;
     border-radius: 10px;
-    padding: 1%;
+    padding: 2%;
+    margin-bottom: 5%;
     
 }
 .order{
