@@ -10,7 +10,7 @@
     <?php echo $this->view('includes/navbar')?>
 
     <div class="container">
-        <?php echo $this->view('includes/charity_sidepanel')?>
+        <?php echo $this->view('includes/charitySidepanel')?>
         <div class="container-right">
             <div class="top-nav">
                 <div class="top-bar">
@@ -35,7 +35,7 @@
                     <option value="dateAdded">Closed</option>
                     </select>
                 </div>
-                <button class="create-event-button">+ Create Event</button>
+                <button class="create-event-button" onclick="window.location.href='<?=ROOT?>/charity/createEvent'">+ Create Event</button>
                 </div>
                 <div class="complaints-status">
                     <div class="table-container">
@@ -54,7 +54,7 @@
                                     <td class="event">
                                         <div class="event-name">
                                             <img src="<?=ASSETS?>/images/manudam mehewara 2.png" alt="Event" class="event-img">
-                                            <span>Manudam Mehewara</span>
+                                            <h3>Manudam Mehewara</h3>
                                         </div>
                                     </td>
                                     <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
@@ -69,7 +69,7 @@
                                     <td class="event">
                                         <div class="event-name">
                                             <img src="<?=ASSETS?>/images/popcorn.png" alt="Event" class="event-img">
-                                            <span>Harvest Hope</span>
+                                            <h3>Harvest Hope</h3>
                                         </div>
                                     </td>
                                     <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
@@ -84,7 +84,7 @@
                                     <td class="event">
                                         <div class="event-name">
                                             <img src="<?=ASSETS?>/images/popcorn.png" alt="Event" class="event-img">
-                                            <span>Harvest Hope</span>
+                                            <h3>Harvest Hope</h3>
                                         </div>
                                     </td>
                                     <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
@@ -99,7 +99,7 @@
                                     <td class="event">
                                         <div class="event-name">
                                             <img src="<?=ASSETS?>/images/popcorn.png" alt="Event" class="event-img">
-                                            <span>Harvest Hope</span>
+                                            <h3>Harvest Hope</h3>
                                         </div>
                                     </td>
                                     <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
@@ -114,7 +114,7 @@
                                     <td class="event">
                                         <div class="event-name">
                                             <img src="<?=ASSETS?>/images/popcorn.png" alt="Event" class="event-img">
-                                            <span>Harvest Hope</span>
+                                            <h3>Harvest Hope</h3>
                                         </div>
                                     </td>
                                     <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
@@ -129,7 +129,7 @@
                                     <td class="event">
                                         <div class="event-name">
                                             <img src="<?=ASSETS?>/images/popcorn.png" alt="Event" class="event-img">
-                                            <span>Harvest Hope</span>
+                                            <h3>Harvest Hope</h3>
                                         </div>
                                     </td>
                                     <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
@@ -144,7 +144,7 @@
                                     <td class="event">
                                         <div class="event-name">
                                             <img src="<?=ASSETS?>/images/popcorn.png" alt="Event" class="event-img">
-                                            <span>Harvest Hope</span>
+                                            <h3>Harvest Hope</h3>
                                         </div>
                                     </td>
                                     <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
@@ -159,7 +159,6 @@
                         </table>
                     </div>
                 </div>
-
             </div>
         </div>
     </div>

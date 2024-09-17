@@ -156,7 +156,7 @@
                                 <th>Date</th>
                                 <th>Shop</th>
                                 <th>buisness</th>
-                                <th>Response</th>
+                                <th>Action</th>
                             </tr>
                         </thead>
                         <tbody>

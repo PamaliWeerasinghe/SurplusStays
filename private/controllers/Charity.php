@@ -14,21 +14,26 @@ class Charity extends Controller
 
     function donations()
     {
-        $this->view('charity_donations');
+        $this->view('charityDonations');
     }
 
     function browse_shops()
     {
-        $this->view('charity_browse_shops');
+        $this->view('charityBrowseShops');
     }
 
     function reports()
     {
-        $this->view('charity_reports');
+        $this->view('charityReports');
     }
 
     function profile()
     {
-        $this->view('charity_profile');
+        $this->view('charityProfile');
+    }
+
+    function createEvent()
+    {
+        $this->view('charityCreateEvent');
     }
 }
