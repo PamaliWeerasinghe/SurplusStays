@@ -25,10 +25,13 @@
             $this->view('businessComplains');
         }
         function reports(){
-            $this->view('businessReports');
+            $this->view('businessAddProduct');
         }
         function profile(){
             $this->view('businessProfile');
+        }
+        function addproduct(){
+            $this->view('businessAddProduct');
         }
         
 

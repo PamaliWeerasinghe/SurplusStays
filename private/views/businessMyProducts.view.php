@@ -21,7 +21,7 @@
                         <img src="<?= ASSETS ?>/images/Bell.png" class="bell" />
                     </div>
                     <div class="add-buyer">
-                        <button class="add-complain-btn">+ Add Product</button>
+                        <button class="add-complain-btn" onclick="window.location.href='<?=ROOT?>/business/addproduct'">+ Add Product</button>
                     </div>
 
 
