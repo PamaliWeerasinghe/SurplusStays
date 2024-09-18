@@ -51,7 +51,7 @@
                     </div>
 
                     <div class="section charity-bank-details">
-                        <h3>Charity Details</h3>
+                        <h3>Business Details</h3>
                         <div class="charity-info">
                             <p><strong>Owner:</strong> Keels PVT LTD</p>
                             <p><strong>Account Number:</strong> 987654321</p>
@@ -63,10 +63,10 @@
                     <div class="section notifications-preferences">
                         <h3>Notifications and Preferences</h3>
                         <div class="charity-info">
-                            <label><input class="check" type="checkbox"> Receive notifications for new shops being registered in the website.</label>
+                            <label><input class="check" type="checkbox"> Receive notifications for new orders and customer messages via email.</label>
                             <label><input class="check" type="checkbox"> Prefer email communication for promotions and updates.</label>
                             <label><input class="check" type="checkbox"> Prefer SMS communication for promotions and updates.</label>
-                            <label><input class="check" type="checkbox"> Receive notifications for new donation requests and shop replies via SMS.</label>
+                            <label><input class="check" type="checkbox"> Receive notifications for new orders and customer messages via SMS.</label>
                         </div>
                     </div>
 
