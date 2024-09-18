@@ -14,7 +14,7 @@
                 <div class="summary">
                     <div class="notifications-type2">
                         <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." />
+                            <input type="text" class="search" placeholder="Search..." id="searchInput" />
                             <img src="<?=ASSETS?>/images/search.png" class="bell2" />
                         </div>
 
@@ -92,9 +92,9 @@
                             </div>
                         </div>
                     </div>
-                    <table class="order-table">
+                    <table class="order-table" >
                         <thead>
-                            <tr>
+                            <t`r>
                                 <th>ItemID</th>
                                 <th>Expiry Date & Time</th>
                                 <th>Business</th>
@@ -103,7 +103,7 @@
                                 <th>Price</th>
                             </tr>
                         </thead>
-                        <tbody>
+                        <tbody id="order-table-body">
                             <tr>
                                 <td>#154</td>
                                 <td>14.02.2024 <br/> 02: 45: 30</td>
@@ -212,8 +212,8 @@
                     </table>
                     <div class="arrow-div">
                         <div class="arrows">
-                            <img src="<?=ASSETS?>/images/Arrow right-circle.png"/>
-                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png"/>
+                            <img src="<?=ASSETS?>/images/Arrow right-circle.png" id="prevBtn"/>
+                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png" id="nextBtn"/>
                             
                         </div>
                     </div>
