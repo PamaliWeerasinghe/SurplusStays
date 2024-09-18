@@ -2,7 +2,7 @@
     class Admin extends Controller{
 
         function index(){
-            $this->view('AdminRegister');
+            $this->view('home_section1');
         }
 
         function register(){

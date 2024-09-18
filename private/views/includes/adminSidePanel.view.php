@@ -25,9 +25,9 @@
         <div class="btn-nonSelected" data-path="/surplusstays/public/admin/Reports">
             <label>Reports</label>
         </div>
-        <div class="btn-nonSelected" id="profile" onclick="profile();">
+        <!-- <div class="btn-nonSelected" id="profile" onclick="profile();">
             <label>Profile</label>
-        </div>
+        </div> -->
     </div>
     <script src="<?=ROOT?>/assets/js/adminPagesNavigation.js"></script>
 </aside>
