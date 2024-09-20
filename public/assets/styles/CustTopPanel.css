@@ -5,6 +5,7 @@ body {
 
 .container {
     display: flex;
+    height: 100vh;
 }
 
 /* Top Navigation */
@@ -33,6 +34,7 @@ body {
     background-color: #0B3D3B;
     border: #6e7683;
     border-style: solid;
+    font-family: "Outfit, sans serif";
 }
 
 .notification {
@@ -84,3 +86,4 @@ body {
     font-weight: 700;
     display: block;
 }
+
