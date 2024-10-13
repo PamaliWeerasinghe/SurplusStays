@@ -1,0 +1,93 @@
+.add-product-name{
+    display: flex;
+    flex-direction: column;
+    width: 90%;
+    padding: 2%;
+}
+.inp1{
+    border: none;
+    height: 4vh;
+    border-radius: 4px;
+    margin-top: 1%;
+    padding-left: 2%;
+}
+.add-product-name textarea{
+    height: 18vh;
+}
+.imgs-div{
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    justify-content: flex-start;
+    align-items: center;
+    /* background-color: red; */
+    height: 20vh;
+}
+.add-product-img-div{
+    width: 15%;
+    height: 15vh;
+    background-color: white;
+    margin-left: 2%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+.discount-box{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+
+}
+.inp2{
+    width: 25%;
+    height: 4vh;
+    border: none;
+    border-radius: 4px;
+    padding-left: 2%;
+    margin-left: 2%;
+    margin-right: 2%;
+}
+.submit-product{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 5%;
+    margin-bottom: 5%;
+}
+.add-product-btn{
+    background-color: #1B4332;
+    color: white;
+    border: none;
+    height: 6vh;
+    border-radius: 25px;
+    width: 25%;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+.clear-btn{
+    background-color: transparent;
+    border-style: solid;
+    border-color: #FD5D34;
+    color: #FD5D34;
+    height: 6vh;
+    border-radius: 25px;
+    width: 25%;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+.cancel-btn{
+    background-color: white;
+    border: none;
+    color: black;
+    height: 6vh;
+    border-radius: 25px;
+    width: 25%;
+    margin-right: 2%;
+    margin-left: 2%;
+}
+.back-to-products{
+    margin-top: 12%;
+    margin-bottom: 8%;
+}

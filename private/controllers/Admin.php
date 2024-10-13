@@ -1,6 +1,8 @@
 <?php 
     class Admin extends Controller{
-
+        function AddProduct(){
+            $this->view('business_AddProduct');
+        }
         function index(){
             $this->view('home_section1');
         }
