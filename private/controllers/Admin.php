@@ -34,7 +34,9 @@
         function Reports(){
             $this->view('AdminReports');
         }
-        
+        function RecentItems(){
+            $this->view('home');
+        }
 
         function test($name){
             $data=[

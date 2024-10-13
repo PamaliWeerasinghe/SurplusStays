@@ -60,6 +60,75 @@
             <label style="color: #40916C;">&nbsp;Click and Collect</label>
         </div>
     </div>
+    <div class="how-it-works">
+        <div class="div1">
+            <label style="color: #2D6A4F;font-weight:bolder;font-size:xx-large">HOW IT <label style="color: black;">WORKS</label></label>
+        </div>
+        <div class="div2">
+            <!-- point 01 -->
+            <div class="point1">
+                <div class="bullet">
+                    <div class="bullet-num">
+                        <h1>1</h1>
+                    </div>
+                </div>
+                <div class="bullet-details">
+                    <h3>REGISTER AND CREATE ACCOUNT</h3>
+                    <label>Customers and businesses register on our platform.</label>
+                </div>
+            
+            </div>
+            <!-- point 01 -->
+            <!-- point 02 -->
+            <div class="point1">
+                <div class="bullet">
+                    <div class="bullet-num">
+                        <h1>2</h1>
+                    </div>
+                </div>
+                <div class="bullet-details">
+                    <h3>BUSINESSES LIST SURPLUS</h3>
+                    <label>Businesses list their surplus food items and available quantities on the platform.</label>
+                </div>
+            
+            </div>
+            <!-- point 02 -->
+            <!-- point 03 -->
+            <div class="point1">
+                <div class="bullet">
+                    <div class="bullet-num">
+                        <h1>3</h1>
+                    </div>
+                </div>
+                <div class="bullet-details">
+                    <h3>CUSTOMERS BROWSE AND ORDER</h3>
+                    <label>Customers browse available food items and order what they need at discounted prices.</label>
+                </div>
+            
+            </div>
+            <!-- point 03 -->
+            <!-- point 04 -->
+            <div class="point1">
+                <div class="bullet">
+                    <div class="bullet-num">
+                        <h1>4</h1>
+                    </div>
+                </div>
+                <div class="bullet-details">
+                    <h3>PICKUP</h3>
+                    <label>Customers choose to pick up their order from the business location</label>
+                </div>
+            
+            </div>
+            <!-- point 04 -->
+        </div>
+    </div>
+    <div class="goal">
+        <label style="color:#4AD66D;font-size:xx-large;font-weight:bold">Reduce <label style="color: black;">Waste</label><label style="color: #D8F3DC;">,</label> Share <label style="color: black;">Surplus</label><label style="color: #D8F3DC;">,</label> Make a <label style="color: black;">Difference</label></label>
+    </div>
+    <div class="young-crowd">
 
+    </div>
+    <?php echo $this->view('RecentItems') ?>
     <?php echo $this->view('includes/footer') ?>
     <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
