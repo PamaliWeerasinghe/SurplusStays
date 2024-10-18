@@ -4,7 +4,9 @@ class Charity extends Controller
 {
     function index()
     {
-       $this->view('charity_dashboard');
+        $charity = new Organization();
+        $data = $charity->findAll();
+        $this->view('charity_dashboard',['rows' => $data]);
     }
 
     function manage_events()

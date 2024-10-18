@@ -193,6 +193,16 @@
             </div>
         </div>
     </div>
+
+    <?php
+    echo "<pre>";
+    if (isset($rows)) {
+        print_r($rows);
+    } else {
+        echo "No data available";
+    }
+?>
+
     <?php echo $this->view('includes/footer')?>
     
 </body>
