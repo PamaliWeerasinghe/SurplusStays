@@ -8,8 +8,9 @@ body {
     display: flex;
     background-color: #f4f4f4;
     flex-direction: row;
-    width: 100%; /* Ensure container takes full width */
-    height: 140%; /* Adjust height to fill the screen */
+    width: 100%; /* Ensure container takes full width */ /* Adjust height to fill the screen */
+    height: auto; /* Allow height to be dynamic based on the content */
+    align-items: stretch; /* Ensure the left and right divs match in height */
 }
 
 .left {
@@ -18,10 +19,14 @@ body {
     color: white;
     width: 50%; /* Adjust width to fit with the right section */
     position: relative;
+    height: auto; /* Allow dynamic height to match right div */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .left-image{
     width: 105%;
-    height: 100%;
+    height: 100%; /* Let image height adapt */
 }
 
 .left h3, .left p {
@@ -47,6 +52,7 @@ body {
 
 .right {
     width: 50%; /* Adjust to 50% to match the left */
+    height: 200%;
     background-color: #F0F8FF;
     display: flex;
     flex-direction: column;
@@ -67,7 +73,7 @@ body {
     font-size: 22px;
     font-weight: 600;
     margin-top: 5%;
-    margin-bottom: 10px;
+    margin-bottom: 40px;
     cursor: pointer;
 }
 
@@ -107,7 +113,6 @@ body {
     flex-direction: row;
     align-items: center;
     gap: 6px;
-    margin-bottom: 40px;
 }
 .input{
     width: 100%;
@@ -137,4 +142,22 @@ body {
 }
 .a{
     color: #1B4332;
+}
+.error.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.error.alert ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.error.alert li {
+    margin-bottom: 5px;
 }

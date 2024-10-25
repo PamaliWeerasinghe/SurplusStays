@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?=STYLES?>/charityManageEvents.css">
 </head>
 <body>
-    <?php echo $this->view('includes/navbar')?>
+    <?php echo $this->view('includes/charityNavbar')?>
 
     <div class="container">
         <?php echo $this->view('includes/charitySidepanel')?>
@@ -50,112 +50,40 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <tr>
-                                    <td class="event">
-                                        <div class="event-name">
-                                            <img src="<?=ASSETS?>/images/manudam mehewara 2.png" alt="Event" class="event-img">
-                                            <h3>Manudam Mehewara</h3>
-                                        </div>
-                                    </td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (08.00PM)</td>
-                                    <td><button class="status ongoing">Ongoing</button></td>
-                                    <td class="action">
-                                        <button class="action-btn edit">Edit</button>
-                                        <button class="action-btn delete">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="event">
-                                        <div class="event-name">
-                                            <img src="<?=ASSETS?>/images/popcorn.png" alt="Event" class="event-img">
-                                            <h3>Harvest Hope</h3>
-                                        </div>
-                                    </td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (08.00PM)</td>
-                                    <td><button class="status draft">Draft</button></td>
-                                    <td class="action">
-                                        <button class="action-btn edit">Edit</button>
-                                        <button class="action-btn delete">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="event">
-                                        <div class="event-name">
-                                            <img src="<?=ASSETS?>/images/popcorn.png" alt="Event" class="event-img">
-                                            <h3>Harvest Hope</h3>
-                                        </div>
-                                    </td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (08.00PM)</td>
-                                    <td><button class="status draft">Draft</button></td>
-                                    <td class="action">
-                                        <button class="action-btn edit">Edit</button>
-                                        <button class="action-btn delete">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="event">
-                                        <div class="event-name">
-                                            <img src="<?=ASSETS?>/images/popcorn.png" alt="Event" class="event-img">
-                                            <h3>Harvest Hope</h3>
-                                        </div>
-                                    </td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (08.00PM)</td>
-                                    <td><button class="status closed">Closed</button></td>
-                                    <td class="action">
-                                        <button class="action-btn edit">Edit</button>
-                                        <button class="action-btn delete">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="event">
-                                        <div class="event-name">
-                                            <img src="<?=ASSETS?>/images/popcorn.png" alt="Event" class="event-img">
-                                            <h3>Harvest Hope</h3>
-                                        </div>
-                                    </td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (08.00PM)</td>
-                                    <td><button class="status closed">Closed</button></td>
-                                    <td class="action">
-                                        <button class="action-btn edit">Edit</button>
-                                        <button class="action-btn delete">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="event">
-                                        <div class="event-name">
-                                            <img src="<?=ASSETS?>/images/popcorn.png" alt="Event" class="event-img">
-                                            <h3>Harvest Hope</h3>
-                                        </div>
-                                    </td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (08.00PM)</td>
-                                    <td><button class="status draft">Draft</button></td>
-                                    <td class="action">
-                                        <button class="action-btn edit">Edit</button>
-                                        <button class="action-btn delete">Delete</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="event">
-                                        <div class="event-name">
-                                            <img src="<?=ASSETS?>/images/popcorn.png" alt="Event" class="event-img">
-                                            <h3>Harvest Hope</h3>
-                                        </div>
-                                    </td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (10.00AM)</td>
-                                    <td class="date">Fri, Aug 14, 2024 <br> (08.00PM)</td>
-                                    <td><button class="status ongoing">Ongoing</button></td>
-                                    <td class="action">
-                                        <button class="action-btn edit">Edit</button>
-                                        <button class="action-btn delete">Delete</button>
-                                    </td>
-                                </tr>
-                            </tbody>
+                            <?php if ($rows): ?>
+                                <?php foreach ($rows as $row): ?>
+                                    <tr>
+                                        <td class="event">
+                                            <div class="event-name">
+                                                <img src="<?=ASSETS?>/images/event_placeholder.png" alt="Event" class="event-img">
+                                                <h3><?= htmlspecialchars($row->event) ?></h3>
+                                            </div>
+                                        </td>
+                                        <td class="date"><?= htmlspecialchars($row->start_dateTime) ?></td>
+                                        <td class="date"><?= htmlspecialchars($row->end_dateTime) ?></td>
+                                        <td>
+                                            <?php if ($row->status == 1): ?>
+                                                <button class="status ongoing">Ongoing</button>
+                                            <?php elseif ($row->status == 2): ?>
+                                                <button class="status draft">Draft</button>
+                                            <?php else: ?>
+                                                <button class="status closed">Closed</button>
+                                            <?php endif; ?>
+                                        </td>
+                                        <td class="action">
+                                            <button class="action-btn edit">Edit</button>
+                                            <form action="<?=ROOT?>/charity/deleteEvent/<?=$row->id?>" method="post" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                                                <button type="submit" class="action-btn delete">Delete</button>
+                                            </form>
+
+                                        </td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr><td colspan="5"><h4>No events found</h4></td></tr>
+                            <?php endif; ?>
+                        </tbody>
+
                         </table>
                     </div>
                 </div>

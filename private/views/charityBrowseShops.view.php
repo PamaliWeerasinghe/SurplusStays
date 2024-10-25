@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?=STYLES?>/charityBrowseShops.css">
 </head>
 <body>
-    <?php echo $this->view('includes/navbar')?>
+    <?php echo $this->view('includes/charityNavbar')?>
 
     <div class="container">
         <?php echo $this->view('includes/charitySidepanel')?>

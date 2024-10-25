@@ -2,8 +2,9 @@
 
 class Model extends Database
 {
+   public $errors = array();
 
-   function __construct()
+   public function __construct()
    {
         if(!property_exists($this,'table'))
         {

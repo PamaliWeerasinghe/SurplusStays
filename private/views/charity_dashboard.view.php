@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?=STYLES?>/charityDashboard.css">
 </head>
 <body>
-    <?php echo $this->view('includes/navbar')?>
+    <?php echo $this->view('includes/charityNavbar')?>
 
     <div class="container">
         <?php echo $this->view('includes/charitySidepanel')?>
@@ -194,14 +194,14 @@
         </div>
     </div>
 
-    <?php
-    echo "<pre>";
-    if (isset($rows)) {
-        print_r($rows);
-    } else {
-        echo "No data available";
-    }
-?>
+    <!-- <?php
+    // echo "<pre>";
+    // if (isset($rows)) {
+    //     print_r($rows);
+    // } else {
+    //     echo "No data available";
+    // }
+?> -->
 
     <?php echo $this->view('includes/footer')?>
     

@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?=STYLES?>/charityProfile.css">
 </head>
 <body>
-    <?php echo $this->view('includes/navbar')?>
+    <?php echo $this->view('includes/charityNavbar')?>
 
     <div class="container">
         <?php echo $this->view('includes/charitySidepanel')?>
@@ -36,9 +36,8 @@
                                 </div>
                             </div>
                             <div class="charity-text">
-                                <h4>KARUNA.LK ⭐ 4.7/5.0</h4>
+                                <h4><?=Auth::getName()?> ⭐ 4.7/5.0</h4>
                                 <p><strong>Owner:</strong> Dialog Axiata Foundation</p>
-                                <p><strong>Charity Type:</strong> Online Fundraising Platform</p>
                                 <p><strong>Phone Number:</strong> 0716386868</p>
                                 <p><strong>Email Address:</strong> info@karuna.lk</p>
                             </div>
@@ -58,9 +57,7 @@
                         <h3>Charity Description</h3>
                         <div class="charity-info">
                             <p>
-                                Karuna.LK is a trusted, secure and completely free-to-use online fundraising platform by Dialog Foundation that connects like-minded people who want to be part of taking action to support and enrich Sri Lankan lives and communities.
-                                <br>
-                                There are many families in Sri Lanka who are struggling to get by each and every day. With the economic effects being felt by everyone, there are those who are struggling to put food on the table for their families.
+                            <?=Auth::getCharity_description()?>
                             </p>
                         </div>
                     </div>

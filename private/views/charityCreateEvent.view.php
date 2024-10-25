@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?=STYLES?>/charityCreateEvents.css">
 </head>
 <body>
-    <?php echo $this->view('includes/navbar')?>
+    <?php echo $this->view('includes/charityNavbar')?>
 
     <div class="container">
         <?php echo $this->view('includes/charitySidepanel')?>
@@ -23,49 +23,77 @@
                     <div class="header">
                         <h2>Create New Event</h2>
                     </div>
-                    <form action="#" method="POST">
+                    <form method="POST">
+
+                        <?php if (!empty($errors)): ?>
+                            <div class="error alert">
+                                <ul>
+                                    <?php foreach ($errors as $error): ?>
+                                        <li><?= $error ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
+
                         <div class="input-group">
                             <label for="event-name">Event Name :</label>
-                            <input type="text" id="event-name" name="event-name" placeholder="Enter The Name Of The Event">
+                            <input value="<?=get_var('event-name')?>" type="text" name="event-name" placeholder="Enter The Name Of The Event">
                         </div>
 
                         <div class="input-group">
                             <label for="event-goal">Goal Of The Event :</label>
-                            <select id="event-goal" name="event-goal">
-                                <option value="" disabled selected>Enter The Main Goal Of The Event</option>
-                                <option value="Goal 1">Goal 1</option>
-                                <option value="Goal 2">Goal 2</option>
-                                <option value="Goal 3">Goal 3</option>
-                            </select>
+                            <input type="text" value="<?=get_var('event-goal')?>"  name="event-goal" placeholder="Enter The Goal Of The Event">
                         </div>
 
                         <div class="input-group">
                             <label for="description">Description :</label>
-                            <textarea id="description" name="description" placeholder="Provide A Brief Description Of The Event"></textarea>
+                            <textarea value="<?=get_var('description')?>" name="description" placeholder="Provide A Brief Description Of The Event"></textarea>
                         </div>
 
                         <div class="input-group">
-                            <label for="district">Select District :</label>
-                            <select id="district" name="district">
+                            <label for="district">Select District:</label>
+                            <select value="<?=get_var('district')?>" name="district" class="styled-select">
+                                <option value="Ampara">Ampara</option>
+                                <option value="Anuradhapura">Anuradhapura</option>
+                                <option value="Badulla">Badulla</option>
+                                <option value="Batticaloa">Batticaloa</option>
                                 <option value="Colombo">Colombo</option>
-                                <option value="District 2">District 2</option>
-                                <option value="District 3">District 3</option>
+                                <option value="Galle">Galle</option>
+                                <option value="Gampaha">Gampaha</option>
+                                <option value="Hambantota">Hambantota</option>
+                                <option value="Jaffna">Jaffna</option>
+                                <option value="Kalutara">Kalutara</option>
+                                <option value="Kandy">Kandy</option>
+                                <option value="Kegalle">Kegalle</option>
+                                <option value="Kilinochchi">Kilinochchi</option>
+                                <option value="Kurunegala">Kurunegala</option>
+                                <option value="Mannar">Mannar</option>
+                                <option value="Matale">Matale</option>
+                                <option value="Matara">Matara</option>
+                                <option value="Monaragala">Monaragala</option>
+                                <option value="Mullaitivu">Mullaitivu</option>
+                                <option value="Nuwara Eliya">Nuwara Eliya</option>
+                                <option value="Polonnaruwa">Polonnaruwa</option>
+                                <option value="Puttalam">Puttalam</option>
+                                <option value="Ratnapura">Ratnapura</option>
+                                <option value="Trincomalee">Trincomalee</option>
+                                <option value="Vavuniya">Vavuniya</option>
                             </select>
                         </div>
 
                         <div class="input-group">
                             <label for="location">Location :</label>
-                            <input type="text" id="location" name="location" placeholder="Enter The Location Where The Event Will Take Place">
+                            <input type="text" value="<?=get_var('location')?>" name="location" placeholder="Enter The Location Where The Event Will Take Place">
                         </div>
 
                         <div class="input-group">
                             <label for="start-date">Start Date And Time :</label>
-                            <input type="datetime-local" id="start-date" name="start-date">
+                            <input type="datetime-local" value="<?=get_var('start-date')?>" name="start-date">
                         </div>
 
                         <div class="input-group">
                             <label for="end-date">Ending Date And Time :</label>
-                            <input type="datetime-local" id="end-date" name="end-date">
+                            <input type="datetime-local" value="<?=get_var('end-date')?>" name="end-date">
                         </div>
 
                         <div class="input-group upload-group">
@@ -100,11 +128,11 @@
 
                         <div class="input-group">
                             <label for="required-food">Add Required Food : <small>Optional</small></label>
-                            <input type="text" id="required-food" name="required-food" placeholder="Enter Food Items That Are Needed">
+                            <input type="text" value="<?=get_var('required-food')?>" name="required-food" placeholder="Enter Food Items That Are Needed">
                         </div>
 
                         <div class="button-group">
-                            <button type="submit" class="btn-create">Create Event</button>
+                            <button class="btn-create">Create Event</button>
                             <button type="reset" class="btn-clear">Clear All</button>
                             <button type="button" class="btn-cancel">Cancel</button>
                         </div>
@@ -113,6 +141,7 @@
             </div>
         </div>
     </div>
+
     <?php echo $this->view('includes/footer')?>
     
 </body>
