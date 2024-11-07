@@ -1,4 +1,5 @@
-<?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
+<?php 
+require APPROOT . '/views/includes/htmlHeader.view.php' ?>
 <title><?php echo SITENAME ?></title>
 
 <link rel="stylesheet" href="<?= STYLES ?>/home_section1.css">

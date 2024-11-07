@@ -4,6 +4,9 @@
             $this->view('business_AddProduct');
         }
         function index(){
+            // $db=new Database();
+            // $data=$db->query("SELECT * FROM admin");
+            // echo($data);
             $this->view('home_section1');
         }
 

@@ -4,8 +4,8 @@ class Database
 {
     private function connect() 
     {
-        $string = "mysql:host=localhost;dbname=surplusstays_db";
-        if(!$con = new PDO($string,'root','')){
+        $string = DBDRIVER .":host=". DBHOST .";dbname=".DBNAME;
+        if(!$con = new PDO($string,DBUSER,DBPASS)){
             die("could not connect to the database");
         }
 
@@ -13,7 +13,7 @@ class Database
         
     }
 
-    public function run($query, $data = array(), $data_type = "object") 
+    public function query($query, $data = array(), $data_type = "object") 
     {
         $con = $this->connect();
         $stm = $con->prepare($query);
@@ -36,10 +36,7 @@ class Database
         return false;
     }
 
-    public function query() 
-    {
-
-    }
+  
 }
 
 
