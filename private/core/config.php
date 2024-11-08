@@ -14,4 +14,11 @@ define('STYLES', 'http://localhost/SurplusStays/public/assets/styles');
 define('ASSETS', '../../../SurplusStays/public/assets');
 
 
+define('DBNAME', 'surplusstays');
+define('DBHOST', 'localhost');
+define('DBUSER', 'root');
+define('DBPASS', '');
+define('DBDRIVER', 'mysql');
+
+
 ?>
