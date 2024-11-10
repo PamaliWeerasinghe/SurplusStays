@@ -3,6 +3,7 @@
 //every file created in the core must be added here
 
 require "config.php";
+require "functions.php";
 require "database.php";
 require "controller.php";
 require "model.php";

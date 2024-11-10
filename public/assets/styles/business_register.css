@@ -3,27 +3,29 @@ body {
     font-family: Arial, sans-serif;
     overflow-x: hidden; /* Prevents horizontal scroll due to potential overflow */
 }
-
 .container {
     display: flex;
     background-color: #f4f4f4;
     flex-direction: row;
-    width: 100%; /* Ensure container takes full width */
-    height: 140%; /* Adjust height to fill the screen */
+    width: 100%; /* Ensure container takes full width */ /* Adjust height to fill the screen */
+    height: auto; /* Allow height to be dynamic based on the content */
+    align-items: stretch; /* Ensure the left and right divs match in height */
 }
-
 .left {
     background: url('<?=ASSETS?>/images/register_background.png') no-repeat center center;
     background-size: cover;
     color: white;
     width: 50%; /* Adjust width to fit with the right section */
-    position: relative; 
+    position: relative;
+    height: auto; /* Allow dynamic height to match right div */
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
 }
 .left-image{
     width: 105%;
-    height: 100%;
+    height: 100%; /* Let image height adapt */
 }
-
 .left h3, .left p {
     position: absolute;
     top: 30%;
@@ -33,20 +35,18 @@ body {
     padding-right: 140px;
     border-radius: 8px;
 }
-
 .left h3 {
     font-size: 28px;
     font-weight: bold;
 }
-
 .left p {
     font-size: 16px;
     line-height: 1.2;
     margin-top: 80px;
 }
-
 .right {
     width: 50%; /* Adjust to 50% to match the left */
+    height: 200%;
     background-color: #F0F8FF;
     display: flex;
     flex-direction: column;
@@ -57,7 +57,6 @@ body {
     border-radius: 40px;
     z-index: 1;
 }
-
 .register-button {
     background-color: #1B4332;
     color: white;
@@ -67,29 +66,24 @@ body {
     font-size: 22px;
     font-weight: 600;
     margin-top: 5%;
-    margin-bottom: 10px;
+    margin-bottom: 40px;
     cursor: pointer;
 }
-
 .register-button:hover {
     background-color: #FD5D34;
     transition: 0.5s;
 }
-
 .login-link {
     margin-top: 20px;
 }
-
 .login-link p {
     font-size: 14px;
     color: black;
 }
-
 .login-link a {
     color: #1B4332;
     text-decoration: underline;
 }
-
 .login-link a:hover {
     text-decoration: underline;
 }
@@ -101,13 +95,11 @@ body {
     align-items: right;
     width: 60%;
 }
-
 .steps{
     display: flex;
     flex-direction: row;
     align-items: center;
     gap: 6px;
-    margin-bottom: 40px;
 }
 .input{
     width: 100%;
@@ -123,7 +115,6 @@ body {
     justify-content: center;
     margin-right: 15px;
 }
-
 .input{
     background-color: white;
     border-radius: 40px 40px 40px 40px ;
@@ -132,9 +123,46 @@ body {
     padding: 25px;
     padding-left: 30px;
 }
+
+.select {
+    width: 100%;          
+    padding: 25px;          
+    font-size: 16px;      
+    color: #333;           
+    background-color:white; 
+    border: 1px solid white; 
+    border-radius: 40px;    
+    appearance: none;      
+    cursor: pointer;      
+}
+
+.select option {
+    background-color: #ffffff; 
+    color: #333;               
+    padding: 5px;              
+}
+
+
+
 .right h4{
     font-weight: 500;
 }
 .a{
     color: #1B4332;
+}
+.error.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+.error.alert ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+.error.alert li {
+    margin-bottom: 5px;
 }

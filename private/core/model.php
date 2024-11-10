@@ -1,9 +1,9 @@
 <?php
 class Model extends Database
 {
+    public $errors = array();
 
-
-    function __construct()
+    public function __construct()
     {
         if (!property_exists($this, 'table')) {
             $this->table = strtoLower($this::class);
@@ -35,23 +35,23 @@ class Model extends Database
     }
 
     public function update($id, $data)
-   {
-     $str = "";
-     foreach ($data as $key => $value) {
-          $str .= $key. "=:". $key.",";
-     }
-     $str = trim($str,",");
-    
-     $data['id'] = $id;
-     $query = "update $this->table set $str where id = :id";
-     
-     return $this->query($query,$data);
-   }
+    {
+        $str = "";
+        foreach ($data as $key => $value) {
+            $str .= $key . "=:" . $key . ",";
+        }
+        $str = trim($str, ",");
 
-   public function delete($id)
-   {
-     $query = "delete from $this->table where id = :id";
-     $data['id'] = $id;
-     return $this->query($query,$data);
-}
+        $data['id'] = $id;
+        $query = "update $this->table set $str where id = :id";
+
+        return $this->query($query, $data);
+    }
+
+    public function delete($id)
+    {
+        $query = "delete from $this->table where id = :id";
+        $data['id'] = $id;
+        return $this->query($query, $data);
+    }
 }

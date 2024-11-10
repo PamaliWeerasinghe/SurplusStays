@@ -27,6 +27,6 @@ class Login extends Controller
         //$product->update(7,$arr);
         $product->delete(8);
         $data = $product->findAll();
-        $this->view('login', ['rows' => $data]);
+        $this->view('business_login', ['rows' => $data]);
     }
 }
