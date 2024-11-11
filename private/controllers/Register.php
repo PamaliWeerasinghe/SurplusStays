@@ -21,7 +21,7 @@ class Register extends Controller
                 $arr['email'] = $_POST['email'];
                 $arr['phoneNo'] = $_POST['phone'];
                 $arr['username'] = $_POST['username'];
-                $arr['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $arr['password'] = $_POST['password'];
                 $arr['businessType'] = $_POST['type'];
                 $arr['address'] = $_POST['address'];
                 $arr['status_id'] = 1;

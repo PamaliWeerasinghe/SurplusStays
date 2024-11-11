@@ -3,24 +3,27 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-    <title>Login</title>
-</head>
+    <title>Register</title>
+    <link rel="stylesheet" href="<?=ROOT?>/assets/styles/register.css">
 <body>
-<link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/login.css">
 <?php echo $this->view('includes/navbar')?>
     <div class="container">
-        <input type="text">
+        <div class="left">
+        <img src="<?=ASSETS?>/images/register_background.png" class="left-image" alt="Register image">
+            <h3>Login with Surplus Stays</h3>
+            <p>Join our community and start making a difference today. 
+                Whether you're a business looking to donate surplus food or a customer wanting to purchase quality surplus items, 
+                registering with SurplusStays is easy and free!
+            </p>
+        </div>
+        <div class="right">
+            <button class="register-button">Customer Login</button>
+            <button class="register-button" onclick="window.location.href='<?=ROOT?>/login/businessLogin'">Business Login</button>
+            <button class="register-button" onclick="window.location.href='<?=ROOT?>/login/charityLogin'">Charity Login</button>
+                <p>Don't have an account? <a href='<?=ROOT?>/register'>SIGN UP HERE</a></p>
+            </div>
+        </div>
     </div>
-
-    <?php
-    echo "<pre>";
-    if (isset($rows)) {
-        print_r($rows);
-    } else {
-        echo "No data available";
-    }
-?>
 <?php echo $this->view('includes/footer')?>
 </body>
 </html>

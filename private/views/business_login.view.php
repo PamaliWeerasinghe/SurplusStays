@@ -29,10 +29,10 @@
                 <?php endif; ?>
                 
                 <h4>EMAIL :</h4>
-                <input placeholder="ENTER YOUR EMAIL"  type="email" name="email" class="input">
+                <input placeholder="ENTER YOUR EMAIL" value="<?=get_var('email')?>" type="email" name="email" class="input">
                 
                 <h4>PASSWORD :</h4>
-                <input placeholder="ENTER YOUR PASSWORD"  type="password" name="password" class="input">
+                <input placeholder="ENTER YOUR PASSWORD" value="<?=get_var('password')?>" type="password" name="password" class="input">
                 <p>FORGOT YOUR PASSWORD? <a href="url">RESET PASSWORD</a> | DON'T HAVE AN ACCOUNT? <a href="url">REGISTER HERE</a></p>                  
             </div>
             <button class="register-button">SIGN IN</button>

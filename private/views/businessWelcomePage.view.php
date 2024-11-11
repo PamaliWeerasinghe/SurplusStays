@@ -12,7 +12,7 @@
     <!-- navbar -->
 
     <div class="main-div">
-        <?php echo $this->view('includes/navbar') ?>
+        <?php echo $this->view('includes/businessNavbar') ?>
         <div class="sub-div-1">
             <!-- included the business side panel -->
             <?php require APPROOT . "/views/includes/businessSidePanel.view.php" ?>

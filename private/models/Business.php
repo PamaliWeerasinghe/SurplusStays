@@ -3,6 +3,11 @@
 class Business extends Model
 {
     protected $table = "business";
+
+    protected $beforeInsert=[
+        'hash_password'
+    ];
+
     public function validate($DATA)
     {
         // Validation rules
@@ -40,5 +45,10 @@ class Business extends Model
         }
         // Return true if no errors
         return empty($this->errors);
+    }
+
+    public function hash_password($data){
+        $data['password']=password_hash($data['password'],PASSWORD_DEFAULT);
+        return $data;
     }
 }
