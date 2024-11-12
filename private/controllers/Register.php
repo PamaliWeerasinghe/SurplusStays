@@ -19,10 +19,10 @@ class Register extends Controller
             if ($user->validate($_POST)) {
                 $arr['name'] = $_POST['name'];
                 $arr['email'] = $_POST['email'];
-                $arr['phoneNo'] = $_POST['phone'];
+                $arr['phone_no'] = $_POST['phone'];
                 $arr['username'] = $_POST['username'];
                 $arr['password'] = $_POST['password'];
-                $arr['businessType'] = $_POST['type'];
+                $arr['business_type'] = $_POST['type'];
                 $arr['address'] = $_POST['address'];
                 $arr['status_id'] = 1;
 
