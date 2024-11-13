@@ -26,9 +26,9 @@ class Model extends Database
 
     public function insert($data)
     {
-        if (property_exists($this, 'beforeInsert')) {
-            foreach ($this->beforeInsert as $func) {
-                $data = $this->$func($data);
+        if(property_exists($this,'beforeInsert')){
+            foreach($this->beforeInsert as $func){
+                $data=$this->$func($data);
             }
         }
         $keys = array_keys($data);
@@ -41,35 +41,17 @@ class Model extends Database
 
     public function update($id, $data)
     {
-        // Define all required fields with default values (e.g., empty string for text fields, 0 for numbers)
-        $fields = [
-            'product-name' => '',
-            'category' => '',
-            'description' => '',
-            'quantity' => 0,
-            'price-per-unit' => 0.0,
-            'expiration' => null,
-            'discount' => 0.0,
-        ];
-
-        // Merge submitted data with defaults, so all fields are present
-        $data = array_merge($fields, $data);
-
-        // Build query string with all fields
         $str = "";
         foreach ($data as $key => $value) {
             $str .= $key . "=:" . $key . ",";
         }
         $str = trim($str, ",");
 
-        // Include the ID in the data array
         $data['id'] = $id;
+        $query = "update $this->table set $str where id = :id";
 
-        // Build and execute query
-        $query = "UPDATE $this->table SET $str WHERE id = :id";
         return $this->query($query, $data);
     }
-
 
     public function delete($id)
     {
