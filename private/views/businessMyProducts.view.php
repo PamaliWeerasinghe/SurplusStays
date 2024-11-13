@@ -5,9 +5,9 @@
 </head>
 
 <body>
-    
+
     <div class="main-div">
-    <?php echo $this->view('includes/businessNavbar') ?>
+        <?php echo $this->view('includes/businessNavbar') ?>
         <div class="sub-div-1">
             <?php require APPROOT . "/views/includes/businessSidePanel.view.php" ?>
             <div class="dashboard">
@@ -21,7 +21,7 @@
                         <img src="<?= ASSETS ?>/images/Bell.png" class="bell" />
                     </div>
                     <div class="add-buyer">
-                        <button class="add-complain-btn" onclick="window.location.href='<?=ROOT?>/business/addproduct'">+ Add Product</button>
+                        <button class="add-complain-btn" onclick="window.location.href='<?= ROOT ?>/business/addproduct'">+ Add Product</button>
                     </div>
 
 
@@ -48,260 +48,61 @@
                             </select>
                         </div>
 
+
+
                     </div>
-                    <div class="buyer-row-colomn">
-                        <div class="buyer-row">
-                            <div class="row1">
-                                <div>
-                                    <div class="customer-img">
-                                        <img src="<?= ASSETS ?>/images/bread.png" />
 
-                                        <div class="customer-details">
+                    <table class="order-table">
+                        <thead>
+                            <tr>
+                                <th>Name</th>
+                                <th>Quantity</th>
+                                <th>Price</th>
+                                <th>Expiration date/time</th>
+                                <th>Action</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if ($rows): ?>
+                                <?php foreach ($rows as $row): ?>
+                                    <tr>
+                                        <td>
+                                            <div class="event-name">
+                                                <img src="<?= ASSETS ?>/images/pasta.png" alt="Event" class="event-img">
+                                                <h3><?= $row->name ?></h3>
+                                            </div>
+                                        </td>
 
-                                            <label>Bread</label>
-                                            <label>Rs 24.50</label>
-                                        </div>
-                                    </div>
-                                </div>
+                                        <td><?= $row->qty ?></td>
+                                        <td><?= $row->price_per_unit ?></td>
+                                        <td><?= $row->expiration_date_time ?></td>
 
+                                        <td>
+                                            <div style="display: inline-block; margin-right: 10px;">
+                                                <a href="<?= ROOT ?>/business/editproduct/<?= $row->id ?>">
+                                                    <button class="completed">Edit</button>
+                                                </a>
+                                            </div>
 
-                                <div class="customer-joined">
-                                    <label>Expire :</label>
-                                    <label>2024.12.25 11.00AM</label>
-                                </div>
-                                <div class="customer-purchased">
-                                    <label>Items - </label>
-                                    <label>24</label>
-                                </div>
-                                <div class="customer-buttons">
-                                    <button>View</button>
-                                    <button>Remove</button>
-                                </div>
-                            </div>
-                            <div class="row1">
-                                <div>
-                                    <div class="customer-img">
-                                        <img src="<?= ASSETS ?>/images/popcorn.png" />
+                                            <div style="display: inline-block;">
+                                                <form action="<?= ROOT ?>/business/deleteproduct/<?= $row->id ?>" method="post" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                                                    <button type="submit" class="take-action">Delete</button>
+                                                </form>
+                                            </div>
+                                        </td>
 
-                                        <div class="customer-details">
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                    <td colspan="6">
+                                        <h4>No products found</h4>
+                                    </td>
+                                </tr>
+                            <?php endif; ?>
 
-                                            <label>Popcorn</label>
-                                            <label>Rs 32</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="customer-joined">
-                                    <label>Expire :</label>
-                                    <label>2024.12.25 11.00AM</label>
-                                </div>
-                                <div class="customer-purchased">
-                                    <label>Items - </label>
-                                    <label>12</label>
-                                </div>
-                                <div class="customer-buttons">
-                                    <button>View</button>
-                                    <button>Remove</button>
-                                </div>
-                            </div>
-                            <div class="row1">
-                                <div>
-                                    <div class="customer-img">
-                                        <img src="<?= ASSETS ?>/images/pasta.png" />
-
-                                        <div class="customer-details">
-
-                                            <label>Pasta</label>
-                                            <label>Rs 99</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="customer-joined">
-                                    <label>Expire :</label>
-                                    <label>2024.12.25 11.00AM</label>
-                                </div>
-                                <div class="customer-purchased">
-                                    <label>Items - </label>
-                                    <label>5</label>
-                                </div>
-                                <div class="customer-buttons">
-                                    <button>View</button>
-                                    <button>Remove</button>
-                                </div>
-                            </div>
-                        </div>
-                        <div class="buyer-row">
-                            <div class="row1">
-                                <div>
-                                    <div class="customer-img">
-                                        <img src="<?= ASSETS ?>/images/chips.png" />
-
-                                        <div class="customer-details">
-
-                                            <label>Chips</label>
-                                            <label>Rs 55</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="customer-joined">
-                                    <label>Expire :</label>
-                                    <label>2024.12.25 11.00AM</label>
-                                </div>
-                                <div class="customer-purchased">
-                                    <label>Items - </label>
-                                    <label>17</label>
-                                </div>
-                                <div class="customer-buttons">
-                                    <button>View</button>
-                                    <button>Remove</button>
-                                </div>
-                            </div>
-                            <div class="row1">
-                                <div>
-                                    <div class="customer-img">
-                                        <img src="<?= ASSETS ?>/images/peanuts.png" />
-
-                                        <div class="customer-details">
-
-                                            <label>Peanuts</label>
-                                            <label>Rs 119</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="customer-joined">
-                                    <label>Expire :</label>
-                                    <label>2024.12.25 11.00AM</label>
-                                </div>
-                                <div class="customer-purchased">
-                                    <label>Items - </label>
-                                    <label>7</label>
-                                </div>
-                                <div class="customer-buttons">
-                                    <button>View</button>
-                                    <button>Remove</button>
-                                </div>
-                            </div>
-                            <div class="row1">
-                                <div>
-                                    <div class="customer-img">
-                                        <img src="<?= ASSETS ?>/images/rice.png" />
-
-                                        <div class="customer-details">
-
-                                            <label>Rice</label>
-                                            <label>Rs 42</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="customer-joined">
-                                    <label>Expire :</label>
-                                    <label>2024.12.25 11.00AM</label>
-                                </div>
-                                <div class="customer-purchased">
-                                    <label>Items - </label>
-                                    <label>54</label>
-                                </div>
-                                <div class="customer-buttons">
-                                    <button>View</button>
-                                    <button>Remove</button>
-                                </div>
-                            </div>
-                            
-                        </div>
-                        <div class="buyer-row">
-                            <div class="row1">
-                                <div>
-                                    <div class="customer-img">
-                                        <img src="<?= ASSETS ?>/images/chips.png" />
-
-                                        <div class="customer-details">
-
-                                            <label>Chips</label>
-                                            <label>Rs 55</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="customer-joined">
-                                    <label>Expire :</label>
-                                    <label>2024.12.25 11.00AM</label>
-                                </div>
-                                <div class="customer-purchased">
-                                    <label>Items - </label>
-                                    <label>17</label>
-                                </div>
-                                <div class="customer-buttons">
-                                    <button>View</button>
-                                    <button>Remove</button>
-                                </div>
-                            </div>
-                            <div class="row1">
-                                <div>
-                                    <div class="customer-img">
-                                        <img src="<?= ASSETS ?>/images/peanuts.png" />
-
-                                        <div class="customer-details">
-
-                                            <label>Peanuts</label>
-                                            <label>Rs 119</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="customer-joined">
-                                    <label>Expire :</label>
-                                    <label>2024.12.25 11.00AM</label>
-                                </div>
-                                <div class="customer-purchased">
-                                    <label>Items - </label>
-                                    <label>7</label>
-                                </div>
-                                <div class="customer-buttons">
-                                    <button>View</button>
-                                    <button>Remove</button>
-                                </div>
-                            </div>
-                            <div class="row1">
-                                <div>
-                                    <div class="customer-img">
-                                        <img src="<?= ASSETS ?>/images/rice.png" />
-
-                                        <div class="customer-details">
-
-                                            <label>Rice</label>
-                                            <label>Rs 42</label>
-                                        </div>
-                                    </div>
-                                </div>
-
-
-                                <div class="customer-joined">
-                                    <label>Expire :</label>
-                                    <label>2024.12.25 11.00AM</label>
-                                </div>
-                                <div class="customer-purchased">
-                                    <label>Items - </label>
-                                    <label>54</label>
-                                </div>
-                                <div class="customer-buttons">
-                                    <button>View</button>
-                                    <button>Remove</button>
-                                </div>
-                            </div>
-                            
-                        </div>
-                    </div>
+                        </tbody>
+                    </table>
 
                     <div class="arrow-div">
                         <div class="arrows">

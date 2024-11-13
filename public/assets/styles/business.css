@@ -78,6 +78,7 @@ body {
     background-color:blue;
 }
 
+
 .arrow-div {
     display: flex;
     justify-content: flex-end;
@@ -245,6 +246,8 @@ body {
     color: grey;
     
   }
+
+  
   
   /* For reports */
 

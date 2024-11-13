@@ -1,3 +1,5 @@
+
+
 .Business-complaints-order-status{
     width: 82%;
     background-color: #F0F8FF;
@@ -131,5 +133,22 @@
     justify-content: center;
     align-items: center;
     margin-top: 3%;
+    
+}
+
+.event-name {
+    display: flex;
+    align-items: center;
+}
+
+.event-name h3{
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+.event-name img.event-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 50%;
     
 }

@@ -54,4 +54,16 @@ class Auth
         return 'Unknown';
     
     }
+
+    public static function getUserId()
+    {
+        if(session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+        // Check if the user session contains an business ID
+        if(isset($_SESSION['USER']->id))
+        {
+            return $_SESSION['USER']->id;
+        }
+    }
 }
