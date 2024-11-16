@@ -31,6 +31,9 @@ class Organization extends Model
         if(empty($DATA['username'])) {
             $this->errors['username'] = "Username is required";
         }
+        if (empty($DATA['picture'])) {
+            $this->errors['picture'] = "Profile picture is required";
+        }
         if(empty($DATA['password']) || strlen($DATA['password']) < 6) {
             $this->errors['password'] = "Password must be at least 6 characters";
         }

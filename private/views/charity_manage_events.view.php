@@ -71,7 +71,9 @@
                                             <?php endif; ?>
                                         </td>
                                         <td class="action">
+                                            <a href="<?=ROOT?>/charity/editEvent/<?=$row->id?>">
                                             <button class="action-btn edit">Edit</button>
+                                            </a>
                                             <form action="<?=ROOT?>/charity/deleteEvent/<?=$row->id?>" method="post" onsubmit="return confirm('Are you sure you want to delete this event?');">
                                                 <button type="submit" class="action-btn delete">Delete</button>
                                             </form>

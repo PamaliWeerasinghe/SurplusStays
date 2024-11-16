@@ -12,7 +12,6 @@
     <div class="container">
         <?php echo $this->view('includes/charitySidepanel')?>
         <div class="container-right">
-
             <div class="top-half">
                 <div class="top-bar">
                     <div class="notification">
@@ -28,7 +27,7 @@
                         <h3>Charity Details</h3>
                         <div class="charity-overview">
                             <div class="image-container">
-                                <img class="logo-img" src="<?=ASSETS?>/images/karuna.lk 1.png" alt="Charity Logo">
+                            <img class="logo-img" src="<?=ASSETS?>/charityImages/<?=basename(Auth::getPicture())?>" alt="Charity Logo">
                                 <div class="overlay">
                                     <div class="camera-icon">
                                         <img src="<?=ASSETS?>/icons/Camera.png" alt="Camera Icon">

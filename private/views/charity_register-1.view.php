@@ -17,7 +17,7 @@
                 Register with SurplusStays to connect with donors and help feed those in need.
             </p>
         </div>
-        <form method="post" class="right">
+        <form method="post" class="right" enctype="multipart/form-data"> <!--enctype="multipart/form-data" allows file uploads-->
             <div class="details">
                 <div class="steps">
                     <h4>STEP</h4>
@@ -46,6 +46,13 @@
                 <input placeholder="ENTER A BRIEF DESCRIPTION ABOUT THE ORGANIZATION" value="<?=get_var('description')?>" type="text" name="description" class="input"> 
                 <h4>USERNAME :</h4>
                 <input placeholder="ENTER A USERNAME" value="<?=get_var('username')?>" type="username" name="username" class="input" >
+                <h4>PROFILE PICTURE :</h4>
+                    <div class="upload-wrapper">
+                        <label for="upload-1">
+                            <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview">
+                        </label>
+                        <input type="file" id="upload-1" name="profile_picture" style="display: none;" accept="image/*">
+                    </div>
                 <h4>PASSWORD :</h4>
                 <input placeholder="ENTER A PASSWORD" value="<?=get_var('password')?>" type="text" name="password" class="input">
                 <h4>CONFIRM PASSWORD  :</h4>
@@ -57,5 +64,20 @@
     </div>
 
 <?php echo $this->view('includes/footer')?>
+
+<!-- JavaScript to Show Preview -->
+<script>
+document.getElementById('upload-1').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('profilePreview').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+</script>
+
 </body>
 </html>
