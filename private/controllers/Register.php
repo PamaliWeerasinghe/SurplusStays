@@ -35,7 +35,7 @@ class Register extends Controller
                 $errors = $user->errors;
             }
         }
-        $this->view('charity_register-1',[
+        $this->view('AddNewCharityOrg',[
             'errors'=>$errors,
         ]);
      }

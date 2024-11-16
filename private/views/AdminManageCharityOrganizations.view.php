@@ -20,7 +20,7 @@
 
                         <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
                     </div>
-                    <div class="add-buyer" onclick="window.location.href='<?=ROOT?>/Charity/addNewCharityOrg'">
+                    <div class="add-buyer" onclick="window.location.href='<?=ROOT?>/Admin/addNewCharityOrg'">
                             <div>
                                 <label>
                                 + Add Charity Organization
@@ -74,13 +74,13 @@
                             </div>
                             
                             </div>
-                            <div class="business-joined">
+                            <!-- <div class="business-joined">
                                 <label>Joined On : 22 / 06 / 2023</label>
-                            </div>
+                            </div> -->
                            
                             
                     </div>
-                    <div class="business-row">
+                    <!-- <div class="business-row">
                             <div class="business-wrap">
                             <div class="business">
                             <img src="<?=ASSETS?>/images/ginyard.png" />
@@ -109,8 +109,8 @@
                             </div>
                            
                             
-                    </div>
-                    <div class="business-row">
+                    </div> -->
+                    <!-- <div class="business-row">
                             <div class="business-wrap">
                             <div class="business">
                             <img src="<?=ASSETS?>/images/warnerandspencer.png" />
@@ -139,8 +139,8 @@
                             </div>
                            
                             
-                    </div>
-                    <div class="business-row">
+                    </div> -->
+                    <!-- <div class="business-row">
                             <div class="business-wrap">
                             <div class="business">
                             <img src="<?=ASSETS?>/images/rimberio.png" />
@@ -169,8 +169,8 @@
                             </div>
                            
                             
-                    </div>
-                    <div class="business-row">
+                    </div> -->
+                    <!-- <div class="business-row">
                             <div class="business-wrap">
                             <div class="business">
                             <img src="<?=ASSETS?>/images/peeloek.png" />
@@ -199,7 +199,7 @@
                             </div>
                            
                             
-                    </div>
+                    </div> -->
 
                         <div class="arrow-div">
                         <div class="arrows">

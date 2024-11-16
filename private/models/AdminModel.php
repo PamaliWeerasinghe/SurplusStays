@@ -1,0 +1,79 @@
+<?php
+
+class AdminModel extends Model
+{   
+  
+    public $table = 'organization';
+
+    //Validate Admin login details
+    public function validate($DATA)
+    {
+        $this->errors = array();
+        //validating the name
+        if (!preg_match('/^[a-z A-Z]+$/', $DATA['fullName'])) {
+            $this->errors['name'] = "Only letters are allowed for the full name";
+        }
+
+        //validating the email
+        if (empty($DATA['email']) || !filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
+            $this->errors['email'] = "Email is not valid";
+        }
+
+
+        //No errors
+        if (count($this->errors) == 0) {
+            return true;
+        }
+        //Contains errors
+        return false;
+    }
+    public function validateCharity($DATA)
+    {
+        $this->errors = array();
+        //validate the name
+        if (!preg_match('/^[a-z A-Z &]+$/', $DATA['name'])) {
+            $this->errors['name'] = "Only letters are allowed for the name";
+        }
+        //validate the image selection
+        // if(isset($DATA['logo'])){
+        //     $this->errors['logo']="Select a logo for the Organization";
+        // }
+        //validate the city
+        if (!preg_match('/^[a-z A-Z]+$/', $DATA['city'])) {
+            $this->errors['city'] = "Only letters are allowed for the city";
+        }
+        //validate the email
+        if (empty($DATA['email']) || !filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
+            $this->errors['email'] = "Email is not valid";
+        }
+        //validate the mobile phone number
+        if (!preg_match('/^(\+94|0)?((7|1)[0-9]{1})[0-9]{7}$/', $DATA['phone'])) {
+            $this->errors['phone'] = "Invalid phone number";
+        }
+        //validate the organization description
+        if (empty($DATA['description'])) {
+            $this->errors['description'] = "Description cannot be empty";
+        }
+        //validate the username
+        if (empty($DATA['username'])) {
+            $this->errors['username'] = "Username should not be empty";
+        }
+        //validate passowrd01 and confirm_password
+        if (empty($DATA['password'])) {
+            $this->errors['password'] = "Password cannot be empty";
+        } else if (empty($DATA['confirm_password'])) {
+            $this->errors['password'] = "Confirm Password cannot be empty";
+        } else {
+            if ($DATA['password'] != $DATA['confirm_password']) {
+                $this->errors['passwords'] = "Passwords do not match";
+            }
+        }
+
+
+        if (count($this->errors) == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+}

@@ -1,5 +1,38 @@
 <?php 
     class Admin extends Controller{
+
+        //Add new Charity organization
+        function addNewCharityOrg(){
+            $errors=array();
+            if(count($_POST)>0){
+                $charity=new AdminModel();
+                if($charity->validateCharity($_POST)){
+                    //insert charity org
+                    $arr['name']=$_POST['name'];
+                    $arr['city']=$_POST['city'];
+                    $arr['email']=$_POST['email'];
+                    $arr['phoneNo']=$_POST['phone'];
+                    $arr['charity_description']=$_POST['description'];
+                    $arr['username']=$_POST['username'];
+                    $arr['password']=password_hash($_POST['password'],PASSWORD_DEFAULT);
+                    $arr['date']=date("Y-m-d H:i:s");
+                    $charity->insert($arr);
+                    //redirect to manage charity org 
+                    $this->view('AdminManageCharityOrganizations');
+
+                }else{
+                    
+                    $errors=$charity->errors;
+                    $this->view('AddNewCharityOrg',['errors'=>$errors]);
+                }
+
+            }else{
+                $this->view('AddNewCharityOrg',['errors'=>$errors]);
+
+            }
+            
+        }
+
         function AddProduct(){
             $this->view('business_AddProduct');
         }
@@ -14,7 +47,7 @@
         
             $errors=array();
             if(count($_POST)>0){
-                $user=new User();
+                $user=new AdminModel();
                
                 if($user->validate($_POST)){
                 

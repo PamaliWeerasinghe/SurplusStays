@@ -4,7 +4,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="<?=ROOT?>/assets/styles/charity_register.css">
+    <!-- <link rel="stylesheet" href="<?=ROOT?>/assets/styles/charity_register.css"> -->
+    <link rel="stylesheet" href="<?=STYLES?>/charity_register.css">
 </head>
 <body>
 <?php echo $this->view('includes/navbar')?>
@@ -36,6 +37,8 @@
 
                 <h4>ORGANIZATION NAME :</h4>
                 <input placeholder="ENTER YOUR ORGANIZATION NAME" value="<?=get_var('name')?>" type="text" name="name" class="input" >
+                <h4>ORGANIZATION LOGO :</h4>
+                <input placeholder="ADD ORGANIZATION OF THE LOGO" value="<?=get_var('logo')?>" type="file" name="logo" class="input" >
                 <h4>ORGANIZATION CITY :</h4>
                 <input placeholder="ENTER YOUR ORGANIZATION CITY" value="<?=get_var('city')?>" type="text" name="city" class="input">
                 <h4>ORGANIZATION EMAIL:</h4>
@@ -52,7 +55,7 @@
                 <input placeholder="RE-ENTER A PASSWORD" value="<?=get_var('confirm_password')?>" type="text" name="confirm_password" class="input">   
                 <p>BY REGISTERING YOU AGREE TO OUR <a href="url">TERMS AND CONDITIONS</a> AND <a href="url">PRIVACY POLICY</a></p>                  
             </div>
-            <button class="register-button">REGISTER NOW</button>
+            <button class="register-button" type="submit">REGISTER NOW</button>
 </form>
     </div>
 

@@ -16,7 +16,7 @@ class Charity extends Controller
     }
     //Inserting a new charity organization
     function addNewCharityOrg(){
-        $this->view('charity_register-1');
+        $this->view('AddNewCharityOrg');
     }
 
     function manage_events()
