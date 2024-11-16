@@ -1,0 +1,36 @@
+.Business-complaints-order-nav{
+    display: flex;
+    justify-content: flex-start;
+    align-items: center;
+    width: 100%;
+    height: 4vh;
+    margin-top: 5%;
+    
+}
+.Business-complaints-view-slots{
+    display: flex;
+
+    width: 50%;
+    height: 6vh;
+    border-style: solid;
+    border-color: #1B4332;
+    border-radius: 10px;
+}
+.Business-complaints-order-status{
+    width: 86%;
+    /* height: 50vh; */
+    background-color: #F0F8FF;
+    margin-top: -27%;
+    border-radius: 10px;
+    padding: 1%;
+    
+}
+.see-complain{
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    color: grey;
+    cursor: pointer;
+}
