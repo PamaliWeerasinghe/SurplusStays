@@ -137,4 +137,19 @@ body {
 }
 .a{
     color: #1B4332;
+    
 }
+.alert{
+    display: flex;
+    flex-direction: coulmn;
+    align-items: center;
+    justify-content: center;
+    /* gap: 6px; */
+    /* margin-bottom: 40px; */
+    background-color:green;
+    
+}
+/* .alert div{
+    display: flex;
+    flex-direction: row;
+} */

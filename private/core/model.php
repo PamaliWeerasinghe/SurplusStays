@@ -2,6 +2,7 @@
 
 class Model extends Database
 {
+   protected $table='admin';
    public $errors = array();
 
    public function __construct()
@@ -14,6 +15,7 @@ class Model extends Database
 
    public function where($column, $value)
    {
+        //check whether the column exists before executing the query
         $column = addslashes($column);
         $query = "select * from $this->table where $column = :value";
         return $this->query($query,[

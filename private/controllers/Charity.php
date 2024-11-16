@@ -14,6 +14,10 @@ class Charity extends Controller
         //,['rows' => $data]
         $this->view('charity_dashboard');
     }
+    //Inserting a new charity organization
+    function addNewCharityOrg(){
+        $this->view('charity_register-1');
+    }
 
     function manage_events()
     {

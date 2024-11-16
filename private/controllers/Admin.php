@@ -11,9 +11,28 @@
         }
 
         function register(){
-            $this->view('AdminRegister');
+        
+            $errors=array();
+            if(count($_POST)>0){
+                $user=new User();
+               
+                if($user->validate($_POST)){
+                
+                    $this->view('AdminRegister');
+                }else{
+                    $errors=$user->errors;
+                    $this->view('AdminLoginStep1',['errors'=>$errors]);
+                
+                }
+              
+            }else{
+                $this->view('AdminLoginStep1',['errors'=>$errors]);
+            }
+            
+            // print_r($_POST);
+            
         }
-
+        
         function dashboard(){
             $this->view('adminWelcomePage');
         }

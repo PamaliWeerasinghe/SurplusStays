@@ -1,5 +1,6 @@
 <?php
 
+//Used for input fields
 function get_var($key)
 {
     if(isset($_POST[$key]))
@@ -10,9 +11,17 @@ function get_var($key)
     return "";
 }
 
-function get_select()
+//Used for drop downs
+function get_select($key,$value)
 {
-
+    if(isset($_POST[$key]))
+    {
+        if($_POST[$key]==$value)
+        {
+            return "selected";
+        }
+    }
+    return "";
 }
 
 function esc($var)

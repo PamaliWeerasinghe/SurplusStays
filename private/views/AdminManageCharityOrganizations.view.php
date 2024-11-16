@@ -20,7 +20,7 @@
 
                         <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
                     </div>
-                    <div class="add-buyer">
+                    <div class="add-buyer" onclick="window.location.href='<?=ROOT?>/Charity/addNewCharityOrg'">
                             <div>
                                 <label>
                                 + Add Charity Organization

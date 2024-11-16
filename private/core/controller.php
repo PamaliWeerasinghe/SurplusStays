@@ -12,7 +12,7 @@ class Controller
         if(file_exists("../private/views/" . $view . ".view.php"))
         {
             require("../private/views/" . $view . ".view.php");
-            require ("../private/views/" . $view . ".view.php");
+        
         }
         else {
             require("../private/views/404.view.php");
@@ -22,11 +22,11 @@ class Controller
         public function model($model){
             //watch simpleEPIC #7
 
-        }
-}
+        
+
             require ("../private/views/404.view.php");
         }
-    }
+    
 
     public function load_model($model)
     {
