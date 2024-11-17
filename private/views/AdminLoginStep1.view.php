@@ -21,27 +21,24 @@
                     <div class="step-number"><h3>1</h3></div>
                     <p>PERSONAL INFORMATION</p>
                 </div>
-                <?php if(count($errors)>0): ?>
-                <div class="alert">
-                    <div>
-                        <strong>Errors:</strong>
-                        <button type="button">&times;</button>
+                <?php if (!empty($errors)): ?>
+                    <div class="error alert">
+                        <ul>
+                            <?php foreach ($errors as $error): ?>
+                                <li><?= $error ?></li>
+                            <?php endforeach; ?>
+                        </ul>
                     </div>
-                    <?php foreach($errors as $error):?>
-                        <div>
-                            <?=$error?>
-                        </div>
-                    <?php endforeach ?>
-                </div>
                 <?php endif; ?>
                 <form method="post">
-                <h4>FULL NAME :</h4>
-                <input value="<?=get_var('fullName')?>" placeholder="ENTER YOUR FULL NAME" type="text" class="input"  name="fullName"  required>
+                
                 <h4>EMAIL ADDRESS :</h4>
                 <input value="<?=get_var('email')?>" placeholder="ENTER YOUR EMAIL ADDRESS" type="email" class="input"  name="email" required>
+                <h4>PASSWORD :</h4>
+                <input value="<?=get_var('password')?>" placeholder="ENTER YOUR PASSWORD" type="text" class="input"  name="password"  required>
                
             </div>
-            <button type="submit" class="register-button">RECEIVE VERIFICATION CODE</button>
+            <button type="submit" class="register-button">LOG IN</button>
             </form>  
         </div>
         

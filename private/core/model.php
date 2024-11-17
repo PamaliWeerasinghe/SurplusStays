@@ -2,7 +2,7 @@
 
 class Model extends Database
 {
-     public $table = 'organization';
+     public $table='admin';
      public $errors = array();
 
      public function __construct()
@@ -12,13 +12,14 @@ class Model extends Database
           }
      }
 
-     public function where($column, $value)
+     public function where($column,$value)
      {
+          // $this->table=$table;
           //check whether the column exists before executing the query
           $column = addslashes($column);
           $query = "select * from $this->table where $column = :value";
           return $this->query($query, [
-               'column' => $column,
+               // 'column' => $column,
                'value' => $value
           ]);
      }
@@ -31,7 +32,7 @@ class Model extends Database
 
      public function insert($data)
      {    
-          
+          // $this->table=$table;
           $keys = array_keys($data);
           $columns = implode(',', $keys);
           $values = implode(',:', $keys);

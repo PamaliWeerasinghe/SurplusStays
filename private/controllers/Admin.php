@@ -16,7 +16,7 @@
                     $arr['username']=$_POST['username'];
                     $arr['password']=password_hash($_POST['password'],PASSWORD_DEFAULT);
                     $arr['date']=date("Y-m-d H:i:s");
-                    $charity->insert($arr);
+                    $charity->insert($arr,'organization');
                     //redirect to manage charity org 
                     $this->view('AdminManageCharityOrganizations');
 
@@ -44,23 +44,34 @@
         }
 
         function register(){
-        
-            $errors=array();
-            if(count($_POST)>0){
-                $user=new AdminModel();
-               
-                if($user->validate($_POST)){
-                
-                    $this->view('AdminRegister');
-                }else{
-                    $errors=$user->errors;
-                    $this->view('AdminLoginStep1',['errors'=>$errors]);
-                
-                }
-              
+            if(Auth::logged_in()){
+                $this->view('adminWelcomePage');
             }else{
-                $this->view('AdminLoginStep1',['errors'=>$errors]);
+                $errors=array();
+                
+                if(count($_POST)>0){
+                    $user=new AdminModel();
+                    if($row=$user->where('email',$_POST['email'])){
+                        Auth::authenticate($row);
+                        $this->view('adminWelcomePage');
+                    }else{
+                        $errors['email']="wrong email or password";
+                    }
+                    
+                    if($user->validate($_POST)){
+                    
+                        $this->view('AdminRegister');
+                    }else{
+                        $errors=$user->errors;
+                        $this->view('AdminLoginStep1',['errors'=>$errors]);
+                    
+                    }
+                  
+                }else{
+                    $this->view('AdminLoginStep1',['errors'=>$errors]);
+                }
             }
+           
             
             // print_r($_POST);
             

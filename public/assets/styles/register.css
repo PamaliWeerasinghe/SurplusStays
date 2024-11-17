@@ -139,17 +139,21 @@ body {
     color: #1B4332;
     
 }
-.alert{
-    display: flex;
-    flex-direction: coulmn;
-    align-items: center;
-    justify-content: center;
-    /* gap: 6px; */
-    /* margin-bottom: 40px; */
-    background-color:green;
-    
+.error.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
 }
-/* .alert div{
-    display: flex;
-    flex-direction: row;
-} */
+
+.error.alert ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.error.alert li {
+    margin-bottom: 5px;
+}
