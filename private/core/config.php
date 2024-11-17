@@ -12,6 +12,7 @@ define('SITENAME', 'surplusStays');
 define('ROOT', 'http://localhost/SurplusStays/public');
 define('STYLES', 'http://localhost/SurplusStays/public/assets/styles');
 define('ASSETS', '../../../SurplusStays/public/assets');
+define('ADMINROOT','http://localhost/SurplusStays/public/admin');
 
 //DATABASE
 define('DBNAME','surplusstays');

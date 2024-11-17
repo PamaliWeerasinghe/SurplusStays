@@ -40,7 +40,7 @@ class Controller
 
     public function redirect($link)
     {
-        header("Location: ". ROOT . "/".trim($link,"/"));
+        header("Location: ". ADMINROOT . "/".trim($link,"/"));
         die;
     }
  }
