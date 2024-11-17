@@ -1,7 +1,10 @@
 <?php
 class Admin extends Controller
 {
-
+    //View a charity organization
+    function CharityOrgView(){
+        $this->view('charity');
+    }
     //Add new Charity organization
     function addNewCharityOrg()
     {
@@ -52,13 +55,15 @@ class Admin extends Controller
 
             if (count($_POST) > 0) {
                 $user = new AdminModel();
-                if ($row = $user->where('email', $_POST['email'])) {
+                $charityOrg=$user->findAll('organization');
+                if ($row = $user->where('email', $_POST['email'],'admin')) {
                     Auth::authenticate($row);
-                    $this->view('adminWelcomePage');
+                   
+                    $this->view('adminWelcomePage',['charityOrg'=>$charityOrg]);
                 } else {
                     if ($user->validate($_POST)) {
 
-                        $this->view('AdminRegister');
+                        $this->view('adminWelcomePage',['charityOrg'=>$charityOrg]);
                     } else {
                         $errors = $user->errors;
                         $this->view('AdminLoginStep1', ['errors' => $errors]);

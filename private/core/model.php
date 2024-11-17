@@ -2,7 +2,7 @@
 
 class Model extends Database
 {
-     public $table='admin';
+     public $table;
      public $errors = array();
 
      public function __construct()
@@ -12,9 +12,9 @@ class Model extends Database
           }
      }
 
-     public function where($column,$value)
+     public function where($column,$value,$table)
      {
-          // $this->table=$table;
+          $this->table=$table;
           //check whether the column exists before executing the query
           $column = addslashes($column);
           $query = "select * from $this->table where $column = :value";
@@ -24,8 +24,9 @@ class Model extends Database
           ]);
      }
 
-     public function findAll()
-     {
+     public function findAll($table)
+     {    
+          $this->table=$table;
           $query = "select * from $this->table";
           return $this->query($query);
      }

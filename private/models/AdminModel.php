@@ -10,13 +10,17 @@ class AdminModel extends Model
     {
         $this->errors = array();
         //validating the name
-        if (!preg_match('/^[a-z A-Z]+$/', $DATA['fullName'])) {
-            $this->errors['name'] = "Only letters are allowed for the full name";
-        }
+        // if (!preg_match('/^[a-z A-Z]+$/', $DATA['fullName'])) {
+        //     $this->errors['name'] = "Only letters are allowed for the full name";
+        // }
 
         //validating the email
         if (empty($DATA['email']) || !filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
             $this->errors['email'] = "Email is not valid";
+        }
+        //validating the password
+        if(empty($DATA['password'])){
+            $this->errors['password']="Password is empty";
         }
 
 
