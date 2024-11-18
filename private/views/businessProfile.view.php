@@ -26,7 +26,7 @@
                         <h3>Business Details</h3>
                         <div class="charity-overview">
                             <div class="image-container">
-                                <img class="logo-img" src="<?=ASSETS?>/images/<?=basename(Auth::getPicture())?>" alt="Business Logo">
+                                <img class="logo-img" src="<?=ASSETS?>/businessImages/<?=basename(Auth::getPicture())?>" alt="Business Logo">
                                 <!--<div class="overlay">
                                     <div class="camera-icon">
                                         <img src="<?= ASSETS ?>/icons/Camera.png" alt="Camera Icon">

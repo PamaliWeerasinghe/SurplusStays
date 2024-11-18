@@ -18,7 +18,7 @@ class Register extends Controller
             $user = new Business();
 
             if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
-                $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/images/";
+                $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/businessImages/";
                 $fileName = basename($_FILES['profile_picture']['name']);
                 $filePath = $targetDir . $fileName;
                 $fileType = pathinfo($filePath, PATHINFO_EXTENSION);
