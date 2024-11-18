@@ -4,8 +4,6 @@
 
 class App 
 {
-    //URL format -->/controller/method/params
-
     protected $controller = "home";
     protected $method = "index";
     protected $params = array();
@@ -21,10 +19,7 @@ class App
             //removes the first item
         }
         
-        //call the controller
         require "../private/controllers/".$this->controller.".php";
-
-        //instantiate controller class
         $this->controller = new $this->controller();
 
         if(isset($URL[1])) 
@@ -38,7 +33,6 @@ class App
 
         $URL = array_values($URL); //always set the starting parameter in array[0]
 
-        //Getting the paramaters list
         $this->params = $URL;
         call_user_func_array([$this->controller,$this->method], $this->params);
     }

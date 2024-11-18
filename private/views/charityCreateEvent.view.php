@@ -23,7 +23,7 @@
                     <div class="header">
                         <h2>Create New Event</h2>
                     </div>
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
 
                         <?php if (!empty($errors)): ?>
                             <div class="error alert">

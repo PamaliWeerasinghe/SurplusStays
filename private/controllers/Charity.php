@@ -60,20 +60,58 @@ class Charity extends Controller
         $this->view('charityProfile');
     }
 
+    function viewEvent($id = null)
+    {
+        $event = new Event();
+        $row = $event->where('id', $id);
+        $this->view('charityViewEvent', [
+            'row' => $row,
+        ]);
+    }
+
     function createEvent()
     {
-        if(!Auth::logged_in())
-        {
+        if (!Auth::logged_in()) {
             $this->redirect('login');
         }
-        $errors = array();
-        if(count($_POST)>0)
-        {
-            $event = new event();
-
-            if ($event->validate($_POST)) 
-            {
-                
+    
+        $errors = [];
+        if (count($_POST) > 0) {
+            $event = new Event();
+            $uploadedPictures = [];
+            $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/charityImages/";
+    
+            // Handle each upload field
+            foreach ($_FILES as $key => $file) {
+                if (strpos($key, 'upload-') === 0 && isset($file['name']) && $file['error'] === 0) {
+                    $fileName = basename($file['name']);
+                    $filePath = $targetDir . $fileName;
+                    $fileType = pathinfo($filePath, PATHINFO_EXTENSION);
+    
+                    // Allow certain file formats
+                    $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+                    if (in_array(strtolower($fileType), $allowedTypes)) {
+                        // Attempt to move the uploaded file
+                        if (move_uploaded_file($file['tmp_name'], $filePath)) {
+                            // Save the full path to the image in the array
+                            $uploadedPictures[] = '/assets/charityImages/' . $fileName; // Use relative path
+                        } else {
+                            $errors[] = "Failed to upload image: {$fileName}.";
+                        }
+                    } else {
+                        $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed for {$fileName}.";
+                    }
+                }
+            }
+    
+            // Check if at least one image was uploaded
+            if (!empty($uploadedPictures)) {
+                $_POST['pictures'] = implode(',', $uploadedPictures); // Store paths as a comma-separated string
+            } else {
+                $errors[] = "At least one event picture is required.";
+            }
+    
+            if (empty($errors) && $event->validate($_POST)) {
                 $arr['organization_id'] = Auth::getUserId();
                 $arr['event'] = $_POST['event-name'];
                 $arr['event_description'] = $_POST['description'];
@@ -84,19 +122,20 @@ class Charity extends Controller
                 $arr['goal'] = $_POST['event-goal'];
                 $arr['district'] = $_POST['district'];
                 $arr['location'] = $_POST['location'];
-            
+                $arr['pictures'] = $_POST['pictures']; // Store full file paths in the database
+    
                 $event->insert($arr);
-                $this->redirect('charity/manage_events');  // Redirect to the event list page or another relevant page
-            }else
-            {
-                $errors = $event->errors;
+                $this->redirect('charity/manage_events');
+            } else {
+                $errors = array_merge($errors, $event->errors);
             }
         }
-        $this->view('charityCreateEvent',[
-            'errors' => $errors
+    
+        $this->view('charityCreateEvent', [
+            'errors' => $errors,
         ]);
     }
-
+    
     function deleteEvent($id)
     {
         if (!Auth::logged_in()) {
@@ -126,6 +165,39 @@ class Charity extends Controller
 
         $event = new event();
 
+        $uploadedPictures = [];
+        $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/charityImages/";
+
+        // Handle each upload field
+        foreach ($_FILES as $key => $file) {
+            if (strpos($key, 'upload-') === 0 && isset($file['name']) && $file['error'] === 0) {
+                $fileName = basename($file['name']);
+                $filePath = $targetDir . $fileName;
+                $fileType = pathinfo($filePath, PATHINFO_EXTENSION);
+
+                // Allow certain file formats
+                $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+                if (in_array(strtolower($fileType), $allowedTypes)) {
+                    // Attempt to move the uploaded file
+                    if (move_uploaded_file($file['tmp_name'], $filePath)) {
+                        // Save the full path to the image in the array
+                        $uploadedPictures[] = '/assets/charityImages/' . $fileName; // Use relative path
+                    } else {
+                        $errors[] = "Failed to upload image: {$fileName}.";
+                    }
+                } else {
+                    $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed for {$fileName}.";
+                }
+            }
+        }
+
+        // Check if at least one image was uploaded
+        if (!empty($uploadedPictures)) {
+            $_POST['pictures'] = implode(',', $uploadedPictures); // Store paths as a comma-separated string
+        } else {
+            $errors[] = "At least one event picture is required.";
+        }
+
         $errors = array();
         if(count($_POST)>0)
         {
@@ -142,6 +214,7 @@ class Charity extends Controller
                 $arr['goal'] = $_POST['event-goal'];
                 $arr['district'] = $_POST['district'];
                 $arr['location'] = $_POST['location'];
+                $arr['pictures'] = $_POST['pictures'];
             
                 $event->update($id, $arr);
                 $this->redirect('charity/manage_events');  // Redirect to the event list page or another relevant page
@@ -157,6 +230,8 @@ class Charity extends Controller
             'errors' => $errors,
         ]);
     }
+
+
 
 
 }

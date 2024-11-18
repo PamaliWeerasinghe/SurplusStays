@@ -36,39 +36,11 @@ class Event extends Model
         if (!empty($DATA['goal']) && strlen($DATA['goal']) > 50) {
             $this->errors['goal'] = "Goal must be under 50 characters";
         }
+        if (empty($DATA['pictures'])) {
+            $this->errors['pictures'] = "At least one event picture is required.";
+        }
 
         // Return true if no errors
         return empty($this->errors);
     }
 }
-
-     // protected $allowedColumns = [
-    //     'organization_id',
-    //     'event',
-    //     'event_description',
-    //     'start_dateTime',
-    //     'end_dateTime',
-    //     'requesting_items',
-    //     'status',
-    //     'goal',
-    //     'district',
-    //     'location'
-    // ];
-
-    // protected $beforeInsert = [
-    //     'make_event_id',
-    //     'make_organization_id'
-    // ];
-
-    // protected function make_event_id($data)
-    // {
-    //     $data['event_id'] = random_string(60);
-    //     return $data;
-    // }
-
-    // protected function make_organization_id($data)
-    // {
-    //     $data['organization_id'] = random_string(60);
-    //     return $data;
-    // }
-
