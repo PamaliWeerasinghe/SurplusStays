@@ -114,10 +114,18 @@ body {
 .upload-group .upload-wrapper {
     display: flex;
     justify-content:space-evenly;
+    gap: 10px;
+}
+.upload-group .upload-icon {
+    width: 150px; /* Set a fixed width */
+    height: 150px; /* Set a fixed height to maintain square shape */
+    object-fit: cover; /* Ensures the image is cropped properly */
+    border-radius: 8px; /* Optional: adds rounded corners to the images */
 }
 
 .upload-group input[type="file"] {
     width: 18%;
+    display: none;
 }
 
 .button-group {

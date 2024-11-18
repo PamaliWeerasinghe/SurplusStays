@@ -109,9 +109,18 @@ class Business extends Controller
            
             if ($product->validate($_POST)) 
             {
+
+                $arr['business_id'] = Auth::getUserId();
+                $arr['name'] = $_POST['product-name'];
+                $arr['category'] = $_POST['category'];
+                $arr['description'] = $_POST['description'];
+                $arr['qty'] = $_POST['quantity'];                
+                $arr['price_per_unit'] = $_POST['price-per-unit'];
+                $arr['expiration_date_time'] = $_POST['expiration'];
+                $arr['discount_price'] = $_POST['discount'];
                 
                 
-                $product->update($id,$_POST);
+                $product->update($id,$arr);
                 $this->redirect('business/myproducts');  
             }else
             {
@@ -119,7 +128,9 @@ class Business extends Controller
             }
         }
         $row=$product->where('id',$id);
-        $row = $row ? $row[0] : null;
+        if (!$row) {
+            error_log('Product not found for ID: ' . $id);
+        }
         
         $this->view('businessEditProduct',[
             'row'=>$row,
@@ -129,21 +140,21 @@ class Business extends Controller
 
     function deleteproduct($id)
     {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
-    
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-            $product = new Products(); // Ensure you have an Event model
-            if ($product->delete($id)) {
-                // Optionally, set a success message
-                $_SESSION['message'] = 'Event deleted successfully';
-            } else {
-                // Optionally, set an error message
-                $_SESSION['message'] = 'Failed to delete event';
+        {
+            if (!Auth::logged_in()) {
+                $this->redirect('login');
             }
-    
-            $this->redirect('business/myproducts'); // Redirect back to the manage events page
+            if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+                $product = new Products(); // Ensure you have an Product model
+                if ($product->delete($id)) {
+                    // Optionally, set a success message
+                    $_SESSION['message'] = 'Product deleted successfully';
+                } else {
+                    // Optionally, set an error message
+                    $_SESSION['message'] = 'Failed to delete product';
+                }
+                $this->redirect('business/myproducts'); // Redirect back to the myproducts page
+            }
         }
     }
     

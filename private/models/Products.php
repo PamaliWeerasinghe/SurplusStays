@@ -27,7 +27,19 @@ class Products extends Model
         }
         
         if (empty($DATA['expiration'])) {  
-            $this->errors['expiration'] = "expiration date and time is required";
+            $this->errors['expiration'] = "Expiration date and time is required";
+        } else {
+            // Normalize datetime-local format to include seconds
+            $expirationInput = $DATA['expiration'] . ':00'; // Append seconds
+    
+            $currentDateTime = new DateTime();
+            $expirationDateTime = DateTime::createFromFormat('Y-m-d\TH:i:s', $expirationInput);
+    
+            if (!$expirationDateTime) {
+                $this->errors['expiration'] = "Invalid date and time format.";
+            } elseif ($expirationDateTime < $currentDateTime) {
+                $this->errors['expiration'] = "Expiration date and time must be in the future.";
+            }
         }
         
         // Return true if no errors
