@@ -108,12 +108,18 @@ body {
     height: 200px; /* Adjust height based on your logo size */
     border-radius: 68px;
     padding-top: 5%;
+    margin-right: 30px;
     
 }
 
 .logo-image {
     width: 200px;
-    height: auto;
+    height: 200px;
+    margin-right: 30px;
+}
+.logo-img {
+    width: 200px;
+    height: 200px;
 }
 
 

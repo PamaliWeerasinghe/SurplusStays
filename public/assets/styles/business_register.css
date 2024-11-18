@@ -166,3 +166,20 @@ body {
 .error.alert li {
     margin-bottom: 5px;
 }
+
+.upload-wrapper {
+    position: relative;
+    width: 200px; /* Set the width of the square */
+    height: 200px; /* Set the height of the square */
+    border-radius: 10px; /* Optional: Rounded corners */
+    display: flex;
+    border: none;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Ensure the image stays within the square */
+}
+.upload-wrapper img {
+    width: 200px; /* Make the image fill the width */
+    height: 200px; /* Make the image fill the height */
+    object-fit: cover; /* Ensure the image retains aspect ratio and covers the square */
+}

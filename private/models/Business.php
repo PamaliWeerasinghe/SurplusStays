@@ -34,6 +34,11 @@ class Business extends Model
         if(empty($DATA['address'])) {
             $this->errors['address'] = "address is required";
         }
+
+        if (empty($DATA['picture'])) {
+            $this->errors['picture'] = "Profile picture is required";
+        }
+        
         if(empty($DATA['username'])) {
             $this->errors['username'] = "Username is required";
         }
