@@ -3,7 +3,7 @@ class Admin extends Controller
 {
     //View a charity organization
     function CharityOrgView(){
-        $this->view('charity');
+        $this->view('AdminViewCharity');
     }
     //Add new Charity organization
     function addNewCharityOrg()
@@ -102,6 +102,10 @@ class Admin extends Controller
 
     function Complaints()
     {
+        //AdminSeeComplainPage is the page to be directed after clicking on AdminBusinessComplaints
+        $this->view('AdminBusinessComplaints');
+    }
+    function ViewComplain(){
         $this->view('AdminSeeComplainPage');
     }
 

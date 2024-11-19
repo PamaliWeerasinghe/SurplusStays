@@ -92,6 +92,8 @@
 }
 .business-response-area-btn{
     padding: 4%;
+    display: flex;
+    justify-content: flex-end;
     
 }
 .business-response-area-btn button{
