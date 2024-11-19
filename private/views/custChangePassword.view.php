@@ -2,7 +2,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>View orders</title>
+    <title>Change Account Password</title>
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -13,7 +13,7 @@
     <link rel="stylesheet" href="../../public/assets/styles/custChangePassword.css">
 </head>
 
-<body>
+<body style="font-family:Outfit, sans-serif">
     <div class="container">
         <!-- sidebar -->
         <div class="side-nav">
