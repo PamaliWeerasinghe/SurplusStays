@@ -1,4 +1,5 @@
 <!DOCTYPE html>
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -12,6 +13,7 @@
     <link rel="stylesheet" href="../../public/assets/styles/CustTopPanel.css">
     <link rel="stylesheet" href="../../public/assets/styles/custChangePassword.css">
 </head>
+
 
 <body style="font-family:Outfit, sans-serif">
     <div class="container">
