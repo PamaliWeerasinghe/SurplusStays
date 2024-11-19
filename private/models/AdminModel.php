@@ -1,8 +1,8 @@
 <?php
 
 class AdminModel extends Model
-{   
-  
+{
+
     public $table = 'organization';
 
     //Validate Admin login details
@@ -19,8 +19,8 @@ class AdminModel extends Model
             $this->errors['email'] = "Email is not valid";
         }
         //validating the password
-        if(empty($DATA['password'])){
-            $this->errors['password']="Password is empty";
+        if (empty($DATA['password'])) {
+            $this->errors['password'] = "Password is empty";
         }
 
 
@@ -39,9 +39,22 @@ class AdminModel extends Model
             $this->errors['name'] = "Only letters are allowed for the name";
         }
         //validate the image selection
-        // if(isset($DATA['logo'])){
-        //     $this->errors['logo']="Select a logo for the Organization";
-        // }
+        
+        $logo = $_FILES['logo']['name'];
+        $logoExt = explode('.', $logo);
+        $logoActualExt = strtolower(end($logoExt));
+        $allowed = array('jpg', 'jpeg', 'png');
+        if (in_array($logoActualExt, $allowed)) {
+            if ($_FILES['logo']['error'] != 0) {
+                $this->errors['logo'] = "There was an error uploading your file!";
+            }
+        } else {
+            $this->errors['logo'] = "You cannot upload files of this type!";
+        }
+
+        if (isset($DATA['logo'])) {
+            $this->errors['logo'] = "Select a logo for the Organization";
+        }
         //validate the city
         if (!preg_match('/^[a-z A-Z]+$/', $DATA['city'])) {
             $this->errors['city'] = "Only letters are allowed for the city";

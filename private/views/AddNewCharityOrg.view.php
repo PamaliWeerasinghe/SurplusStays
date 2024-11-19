@@ -18,7 +18,7 @@
                 Register with SurplusStays to connect with donors and help feed those in need.
             </p>
         </div>
-        <form method="post" class="right">
+        <form method="post" class="right" enctype="multipart/form-data">
             <div class="details">
                 <div class="steps">
                     <h4>STEP</h4>
