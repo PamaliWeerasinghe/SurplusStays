@@ -12,7 +12,7 @@
             <div class="dashboard">
 
                 <div class="summary">
-                    <div class="notifications"><img src="<?= ASSETS ?>/images/Bell.png" /></div>
+                    <div class="notifications"><img src="<?= ROOT ?>/assets/images/bell.png" /></div>
                 </div>
 
                 <div class="inner-main">
@@ -22,7 +22,7 @@
 
                     <?php if ($row): ?>
 
-                        <form method="POST">
+                        <form method="POST" enctype="multipart/form-data">
 
                             <?php if (!empty($errors)): ?>
                                 <div class="error alert">
@@ -73,18 +73,34 @@
                             <div class="input-group upload-group">
                                 <label>Upload Images : <small>You Can Add Up To 3 Images.</small></label>
                                 <div class="upload-wrapper">
+                                    <?php
+                                    // Get the images from the pictures array
+                                    $productPictures = explode(',', $row[0]->pictures);
+                                    ?>
                                     <label for="upload-1">
-                                        <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon">
+                                        <?php if (!empty($productPictures[0])): ?>
+                                            <img src="<?= ROOT ?><?= htmlspecialchars($productPictures[0]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-1">
+                                        <?php else: ?>
+                                            <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
+                                        <?php endif; ?>
                                     </label>
                                     <input type="file" id="upload-1" name="upload-1" style="display: none;">
 
                                     <label for="upload-2">
-                                        <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon">
+                                        <?php if (!empty($productPictures[1])): ?>
+                                            <img src="<?= ROOT ?><?= htmlspecialchars($productPictures[1]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-2">
+                                        <?php else: ?>
+                                            <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-2">
+                                        <?php endif; ?>
                                     </label>
                                     <input type="file" id="upload-2" name="upload-2" style="display: none;">
 
                                     <label for="upload-3">
-                                        <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon">
+                                        <?php if (!empty($productPictures[2])): ?>
+                                            <img src="<?= ROOT ?><?= htmlspecialchars($productPictures[2]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-3">
+                                        <?php else: ?>
+                                            <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-3">
+                                        <?php endif; ?>
                                     </label>
                                     <input type="file" id="upload-3" name="upload-3" style="display: none;">
                                 </div>
@@ -112,4 +128,38 @@
             </div>
         </div>
         <?php echo $this->view('includes/footer') ?>
-        <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
+
+        <!-- JavaScript to Show Preview -->
+        <script>
+            document.getElementById('upload-1').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profilePreview-1').src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            document.getElementById('upload-2').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profilePreview-2').src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+            document.getElementById('upload-3').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        document.getElementById('profilePreview-3').src = e.target.result;
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+
+            <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>

@@ -22,7 +22,7 @@
                         <h2>Add New Product</h2>
                     </div>
 
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
 
                         <?php if (!empty($errors)): ?>
                             <div class="error alert">

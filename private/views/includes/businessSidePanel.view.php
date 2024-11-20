@@ -1,7 +1,7 @@
 <aside class="sidePanel">
     <div class="greeting">
-        <img src="<?=ASSETS?>/images/sample_profile_pic.png" />
-        <label>Hi <span class="admin"> <?=Auth::getusername()?></span></label>
+        <img src="<?= ASSETS ?>/businessImages/<?= basename(Auth::getPicture()) ?>" alt="Profile Image" class="profile-image">
+        <label>Hi <span class="admin"> <?= Auth::getusername() ?></span></label>
     </div>
     <div class="buttons">
         <div class="btn-nonSelected" data-path="/surplusstays/public/business/dashboard">
@@ -29,5 +29,5 @@
             <label>Profile</label>
         </div>-->
     </div>
-    <script src="<?=ROOT?>/assets/js/businessPagesNavigation.js"></script>
+    <script src="<?= ROOT ?>/assets/js/businessPagesNavigation.js"></script>
 </aside>

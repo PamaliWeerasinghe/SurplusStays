@@ -25,6 +25,10 @@ class Products extends Model
         if (empty($DATA['price-per-unit'])) { 
             $this->errors['price-per-unit'] = "Price is required";
         }
+
+        if (empty($DATA['pictures'])) {
+            $this->errors['pictures'] = "At least one event picture is required.";
+        }
         
         if (empty($DATA['expiration'])) {  
             $this->errors['expiration'] = "Expiration date and time is required";

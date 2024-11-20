@@ -19,7 +19,7 @@ class Business extends Controller
 
     function myproducts()
     {
-        
+
         if (!Auth::logged_in()) {
             $this->redirect('login');
         }
@@ -60,87 +60,152 @@ class Business extends Controller
     {
         $this->view('businessProfile');
     }
+
+    function viewProduct($id = null)
+    {
+        $product = new Products();
+        $row = $product->where('id', $id);
+        $this->view('businessViewProduct', [
+            'row' => $row,
+        ]);
+    }
+
     function addproduct()
     {
-        
-        if(!Auth::logged_in())
-        {
+
+        if (!Auth::logged_in()) {
             $this->redirect('login');
         }
-        $errors = array();
-        if(count($_POST)>0)
-        {
+        $errors = [];
+        if (count($_POST) > 0) {
             $product = new Products();
-            if ($product->validate($_POST)) 
-            {
-                
+            $uploadedPictures = [];
+            $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/businessImages/";
+
+            // Handle each upload field
+            foreach ($_FILES as $key => $file) {
+                if (strpos($key, 'upload-') === 0 && isset($file['name']) && $file['error'] === 0) {
+                    $fileName = basename($file['name']);
+                    $filePath = $targetDir . $fileName;
+                    $fileType = pathinfo($filePath, PATHINFO_EXTENSION);
+
+                    // Allow certain file formats
+                    $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+                    if (in_array(strtolower($fileType), $allowedTypes)) {
+                        // Attempt to move the uploaded file
+                        if (move_uploaded_file($file['tmp_name'], $filePath)) {
+                            // Save the full path to the image in the array
+                            $uploadedPictures[] = '/assets/businessImages/' . $fileName; // Use relative path
+                        } else {
+                            $errors[] = "Failed to upload image: {$fileName}.";
+                        }
+                    } else {
+                        $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed for {$fileName}.";
+                    }
+                }
+            }
+
+            // Check if at least one image was uploaded
+            if (!empty($uploadedPictures)) {
+                $_POST['pictures'] = implode(',', $uploadedPictures); // Store paths as a comma-separated string
+            } else {
+                $errors[] = "At least one product picture is required.";
+            }
+
+            if (empty($errors) && $product->validate($_POST)) {
+
                 $arr['business_id'] = Auth::getUserId();
                 $arr['name'] = $_POST['product-name'];
                 $arr['category'] = $_POST['category'];
                 $arr['description'] = $_POST['description'];
-                $arr['qty'] = $_POST['quantity'];                
+                $arr['qty'] = $_POST['quantity'];
                 $arr['price_per_unit'] = $_POST['price-per-unit'];
                 $arr['expiration_date_time'] = $_POST['expiration'];
                 $arr['discount_price'] = $_POST['discount'];
+                $arr['pictures'] = $_POST['pictures']; // Store full file paths in the database
                 $product->insert($arr);
-                $this->redirect('business/myproducts');  
-            }else
-            {
-                $errors = $product->errors;
+                $this->redirect('business/myproducts');
+            } else {
+                $errors = array_merge($errors, $product->errors);
             }
         }
-        $this->view('businessAddProduct',[
+        $this->view('businessAddProduct', [
             'errors' => $errors
         ]);
     }
 
-    function editproduct($id=null)
+    function editproduct($id = null)
     {
-        
-        if(!Auth::logged_in())
-        {
+
+        if (!Auth::logged_in()) {
             $this->redirect('login');
         }
 
         $product = new Products();
+
+        $uploadedPictures = [];
+        $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/businessImages/";
+        // Handle each upload field
+        foreach ($_FILES as $key => $file) {
+            if (strpos($key, 'upload-') === 0 && isset($file['name']) && $file['error'] === 0) {
+                $fileName = basename($file['name']);
+                $filePath = $targetDir . $fileName;
+                $fileType = pathinfo($filePath, PATHINFO_EXTENSION);
+                // Allow certain file formats
+                $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+                if (in_array(strtolower($fileType), $allowedTypes)) {
+                    // Attempt to move the uploaded file
+                    if (move_uploaded_file($file['tmp_name'], $filePath)) {
+                        // Save the full path to the image in the array
+                        $uploadedPictures[] = '/assets/businessImages/' . $fileName; // Use relative path
+                    } else {
+                        $errors[] = "Failed to upload image: {$fileName}.";
+                    }
+                } else {
+                    $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed for {$fileName}.";
+                }
+            }
+        }
+        // Check if at least one image was uploaded
+        if (!empty($uploadedPictures)) {
+            $_POST['pictures'] = implode(',', $uploadedPictures); // Store paths as a comma-separated string
+        } else {
+            $errors[] = "At least one product picture is required.";
+        }
+
         $errors = array();
-        if(count($_POST)>0)
-        {
-           
-            if ($product->validate($_POST)) 
-            {
+        if (count($_POST) > 0) {
+
+            if ($product->validate($_POST)) {
 
                 $arr['business_id'] = Auth::getUserId();
                 $arr['name'] = $_POST['product-name'];
                 $arr['category'] = $_POST['category'];
                 $arr['description'] = $_POST['description'];
-                $arr['qty'] = $_POST['quantity'];                
+                $arr['qty'] = $_POST['quantity'];
                 $arr['price_per_unit'] = $_POST['price-per-unit'];
                 $arr['expiration_date_time'] = $_POST['expiration'];
                 $arr['discount_price'] = $_POST['discount'];
-                
-                
-                $product->update($id,$arr);
-                $this->redirect('business/myproducts');  
-            }else
-            {
+                $arr['pictures'] = $_POST['pictures'];
+
+
+                $product->update($id, $arr);
+                $this->redirect('business/myproducts');
+            } else {
                 $errors = $product->errors;
             }
         }
-        $row=$product->where('id',$id);
-        if (!$row) {
-            error_log('Product not found for ID: ' . $id);
-        }
+        $row = $product->where('id', $id);
         
-        $this->view('businessEditProduct',[
-            'row'=>$row,
+
+        $this->view('businessEditProduct', [
+            'row' => $row,
             'errors' => $errors
         ]);
     }
 
     function deleteproduct($id)
-    {
-        {
+    { {
             if (!Auth::logged_in()) {
                 $this->redirect('login');
             }
@@ -157,7 +222,7 @@ class Business extends Controller
             }
         }
     }
-    
+
 
     function test($name)
     {

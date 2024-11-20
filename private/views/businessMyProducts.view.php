@@ -59,17 +59,25 @@
                                 <th>Quantity</th>
                                 <th>Price</th>
                                 <th>Expiration date/time</th>
-                                <th>Action</th>
+                                <th></th>
                             </tr>
                         </thead>
                         <tbody>
                             <?php if ($rows): ?>
                                 <?php foreach ($rows as $row): ?>
+                                    <?php
+                                    // Get the first image from the pictures array
+                                    $productPictures = explode(',', $row->pictures); // Assuming $row->pictures is a comma-separated string
+                                    $productImage = isset($productPictures[0]) ? $productPictures[0] : 'product_placeholder.png'; // Use placeholder if no image
+                                    ?>
                                     <tr>
                                         <td>
                                             <div class="event-name">
-                                                <img src="<?= ASSETS ?>/images/pasta.png" alt="Event" class="event-img">
-                                                <h3><?= $row->name ?></h3>
+
+                                                <img src="<?= ROOT ?><?= htmlspecialchars($productImage) ?>" alt="product" class="event-img">
+                                                <a href="<?= ROOT ?>/business/viewProduct/<?= $row->id ?>" style="text-decoration: none; color: black;">
+                                                    <h3><?= $row->name ?></h3>
+                                                </a>
                                             </div>
                                         </td>
 
@@ -104,13 +112,7 @@
                         </tbody>
                     </table>
 
-                    <div class="arrow-div">
-                        <div class="arrows">
-                            <img src="<?= ASSETS ?>/images/Arrow right-circle.png" />
-                            <img src="<?= ASSETS ?>/images/Arrow right-circle-bold.png" />
-
-                        </div>
-                    </div>
+                    
 
                 </div>
 
