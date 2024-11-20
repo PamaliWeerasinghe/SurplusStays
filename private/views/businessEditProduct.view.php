@@ -161,5 +161,5 @@
                     reader.readAsDataURL(file);
                 }
             });
-
+            </script>
             <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
