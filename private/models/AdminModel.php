@@ -39,7 +39,7 @@ class AdminModel extends Model
             $this->errors['name'] = "Only letters are allowed for the name";
         }
         //validate the image selection
-        
+
         $logo = $_FILES['logo']['name'];
         $logoExt = explode('.', $logo);
         $logoActualExt = strtolower(end($logoExt));
@@ -92,5 +92,16 @@ class AdminModel extends Model
         } else {
             return false;
         }
+    }
+    public function uploadLogo($logo)
+    {
+
+        $logoExt = explode('.', $logo);
+        $logoActualExt = strtolower(end($logoExt));
+        $logoNameNew = uniqid('', true) . "." . $logoActualExt;
+        $fileDestination = '../../SurplusStays/public/assets/uploads/' . $logoNameNew;
+        move_uploaded_file($_FILES['logo']['tmp_name'], $fileDestination);
+
+        return $fileDestination;
     }
 }

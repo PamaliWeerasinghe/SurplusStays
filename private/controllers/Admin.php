@@ -12,15 +12,10 @@ class Admin extends Controller
         if (count($_POST) > 0) {
             $charity = new AdminModel();
             if ($charity->validateCharity($_POST)) {
-                $logo = $_FILES['logo']['name'];
-                $logoExt = explode('.', $logo);
-                $logoActualExt = strtolower(end($logoExt));
-                $logoNameNew=uniqid('',true).".".$logoActualExt;
-                $fileDestination='../../SurplusStays/public/assets/uploads/'.$logoNameNew;
-                move_uploaded_file($_FILES['logo']['tmp_name'],$fileDestination);
+                
                 //insert charity org
                 $arr['name'] = $_POST['name'];
-                $arr['picture']=$fileDestination;
+                $arr['picture']=$charity->uploadLogo($_FILES['logo']['name']);
                 $arr['city'] = $_POST['city'];
                 $arr['email'] = $_POST['email'];
                 $arr['phoneNo'] = $_POST['phone'];
