@@ -44,10 +44,9 @@ class Admin extends Controller
     }
     function index()
     {
-        // $db=new Database();
-        // $data=$db->query("SELECT * FROM admin");
-        // echo($data);
-        $this->view('home_section1');
+        
+        // $this->view('home_section1');
+        $this->view('popup');
     }
 
     function register()

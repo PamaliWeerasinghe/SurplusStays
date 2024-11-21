@@ -70,14 +70,14 @@
                                     <label>No. of Complaints : <?= $row->donations ?></label>
                                 </div>
                                 <div class="business-buttons">
-                                    <button onclick="window.location.href='<?= ADMINROOT ?>/AdminCharity'">
+                                    <button onclick="window.location.href='<?=ROOT ?>/AdminCharity/<?=$row->id?>'">
                                         <span class="material-symbols-outlined action-btn view">
                                             account_box
                                         </span>
 
 
                                     </button>
-                                    <button onclick="window.location.href='<?= ADMINROOT ?>/AdminCharity'">
+                                    <button onclick="window.location.href=''">
                                         <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
                                             person_remove
                                         </span>

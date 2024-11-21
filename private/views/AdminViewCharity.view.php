@@ -26,7 +26,8 @@
                 <div class="seecomplain-status">
                     <div class="seecomplain-bar">
                         <label>INGOUDE FOUNDATION</label>
-                        <label>Org. ID : 001023</label>
+                        <label>Org. ID :</label>
+                    
                     </div>
                     <div class="see-product">
                         <div class="main-img-details">
