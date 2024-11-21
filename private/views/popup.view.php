@@ -7,13 +7,13 @@
     <link rel="stylesheet" href="<?=STYLES?>/popup.css">
 </head>
 <body>
-    <div class="container">
-        <button type="submit" class="btn" onclick="openPopup()">Submit</button>
+    <div class="popup-container">
+        <!-- <button type="submit" class="popup-btn" onclick="openPopup()">Submit</button> -->
         <div class="popup" id="popup">
-            <img src="<?=ASSETS?>/images/404-tick.png"/>
+            <img src="<?=ASSETS?>/images/404-tick.png" class="popup-img"/>
             <h2>Successfull!</h2>
             <p>Your details has been successfully submitted.</p>
-            <button type="button" onclick="closePopup()">OK</button>
+            <button type="button" class="popup-close-button" onclick="closePopup()">OK</button>
         </div>
     </div>
 

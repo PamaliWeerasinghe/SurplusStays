@@ -2,7 +2,8 @@
     <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
     <link rel="stylesheet" href="<?=STYLES?>/admin.css">
     <link rel="stylesheet" href="<?=STYLES?>/adminSeeComplains.css">
-    
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"   />
+    <link rel="stylesheet" href="<?=STYLES?>/popup.css">
 </head>
 
 <body>
@@ -30,6 +31,15 @@
                     
                     </div>
                     <div class="see-product">
+                    <div class="business-response-area-btn">
+                            <button class="complain-btn1" onclick="openPopup()">
+                            <span class="material-symbols-outlined action-btn edit" onclick="openEdit()">
+                                edit_square
+                            </span>
+                                
+                            </button>
+                            <!-- <button class="complain-btn2">Reply To Customer</button> -->
+                        </div>
                         <div class="main-img-details">
                         <div class="see-product-img">
                                 <img src="<?=ASSETS?>/images/bread-lg.png"/>
@@ -76,21 +86,7 @@
                                     
                             </div>
                         </div>
-                        <!-- <div class="sub-img">
-                        <img src="<?=ASSETS?>/images/bread.png"/>
-                        <img src="<?=ASSETS?>/images/bread.png"/>
-                        </div> -->
-                        <!-- <div class="sub-details" >
-                            <label>Date Joined : 2024.09.20  10:00 AM</label>
-                        </div> -->
-                        <!-- <div class="sub-details" >
-                            <label>Discounted price : Rs 12.50</label>
-                        </div> -->
-                        <!-- <div class="sub-customer-details" >
-                            <label>Customer  Details : </label>
-                            <span>Contact Number - 0773616815 </span>
-                            <span>Email Address - samashi12@gmail.com</span>
-                        </div> -->
+                        
                         <div class="business-response-area">
                             <div>
                                 <h3>Organization Description</h3>
@@ -104,10 +100,7 @@
                                         </p>
                                     </div>
                         </div>
-                        <div class="business-response-area-btn">
-                            <button class="complain-btn1">Edit Details</button>
-                            <!-- <button class="complain-btn2">Reply To Customer</button> -->
-                        </div>
+                       
                            
                     </div>
 
@@ -128,3 +121,22 @@
         </div>
         <?php echo $this->view('includes/footer')?>
         <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>
+        <div class="popup-container">
+        <!-- <button type="submit" class="popup-btn" onclick="openPopup()">Submit</button> -->
+        <div class="popup" id="popup">
+            <img src="<?=ASSETS?>/images/404-tick.png" class="popup-img"/>
+            <h2>Successfull!</h2>
+            <p>Your details has been successfully submitted.</p>
+            <button type="button" class="popup-close-button" onclick="closePopup()">OK</button>
+        </div>
+    </div>
+
+    <script>
+    let popup=document.getElementById("popup");
+    function openPopup(){
+        popup.classList.add("open-popup");
+    }
+    function closePopup(){
+        popup.classList.remove("open-popup");
+    }
+</script>

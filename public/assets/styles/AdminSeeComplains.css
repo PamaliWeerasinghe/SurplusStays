@@ -95,16 +95,19 @@
     display: flex;
     justify-content: flex-end;
     
+    
 }
 .business-response-area-btn button{
     width: 25%;
     height: 5vh;
     border-radius: 20px;
     border: none;
+    text-align: center;
 }
 .complain-btn1{
     background-color: #FFAC96;
     cursor: pointer;
+    text-align: center;
 }
 .complain-btn2{
     background-color: #fff;

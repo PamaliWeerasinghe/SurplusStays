@@ -10,7 +10,7 @@ class AdminCharity extends Controller
         // $data=$user->findAll('organization');
         // $this->view('AdminViewCharity',['rows'=>$data]);
         
-        $this->view('AdminViewCharity',$id);
+        $this->view('AdminViewCharity');
 
     }
     
