@@ -123,7 +123,19 @@ class Admin extends Controller
     }
     function ManageCharityOrg()
     {
-        $this->view('AdminManageCharityOrganizations');
+        if(AdminAuth::logged_in()){
+            $this->redirect('register');
+        }else{
+        $user= new AdminModel();
+        $data=$user->findAll('organization');
+        $countd=new AdminCharityDetails();
+        foreach($data as $row){
+            $count=$countd->getDonorCount($row->id);
+            $row->donors=$count;
+            
+        }
+        $this->view('AdminManageCharityOrganizations',['rows'=>$data]);
+        }
     }
     function Reports()
     {

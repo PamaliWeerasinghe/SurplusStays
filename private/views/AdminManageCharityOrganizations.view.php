@@ -50,26 +50,26 @@
                         </div>
                         
                     </div>
+                    <?php foreach ($rows as $row):?>
                     <div class="business-row">
                             <div class="business-wrap">
                             <div class="business">
-                            <img src="<?=ASSETS?>/images/ingoude.png" />
+                            <img src="<?=$row->picture?>" />
                             </div>
                             <div class="business-details">
-                                <label style="font-weight: bold;font-size:larger">INGOUDE Foundation</label>
+                                <label style="font-weight: bold;font-size:larger"><?=$row->name?></label>
                                 <div>
-                                <label>Ratings : </label>
-                                <img src="<?=ASSETS?>/images/star-rating.png" />
-                                
+                                <label>Date Joined : <?=$row->date?> </label>
+                               
                                 </div>
                             
                             </div>
                             <div class="business-summary">
-                                <label>Donors Engaged : 48</label>
+                                <label>Donors Engaged : <?=$row->donors?></label>
                                 <label>No. of Complaints : 20</label>
                             </div>
                             <div class="business-buttons">
-                                <button onclick="window.location.href='<?=ADMINROOT?>/CharityOrgView'">View</button>
+                                <button onclick="window.location.href='<?=ADMINROOT?>/AdminCharity'">View</button>
                                 <button>Remove</button>
                             </div>
                             
@@ -80,138 +80,11 @@
                            
                             
                     </div>
-
-                    <div class="business-row">
-                            <div class="business-wrap">
-                            <div class="business">
-                            <img src="<?=ASSETS?>/images/ginyard.png" />
-                            </div>
-                            <!-- <?php if(!empty($charityOrg)): ?> -->
-                                <ul>
-                                <?php foreach($charityOrg as $charity):?>
-                                    
-                                    <li><?=$charity['name']?></li>
-                                <?php endforeach; ?>
-                                </ul>
-                                    
-                            
-
-                            <!-- <?php endif; ?> -->
-                            <div class="business-details">
-                                <label style="font-weight: bold;font-size:larger">Ginyard International</label>
-                                <div>
-                                <label>Ratings : </label>
-                                <img src="<?=ASSETS?>/images/star-rating.png" />
-                               
-                                </div>
-                                
-                            </div>
-                            <div class="business-summary">
-                            <label>Donors Engaged : 48</label>
-                            <label>No. of Complaints : 20</label>
-                            </div>
-                            <div class="business-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
-                            </div>
-                            
-                            </div>
-                            <!-- <div class="business-joined">
-                                <label>Joined On : 22 / 06 / 2023</label>
-                            </div> -->
-                           
-                            
-                    </div>
-                    <div class="business-row">
-                            <div class="business-wrap">
-                            <div class="business">
-                            <img src="<?=ASSETS?>/images/warnerandspencer.png" />
-                            </div>
-                            <div class="business-details">
-                                <label style="font-weight: bold;font-size:larger">Warner & Spencer</label>
-                                <div>
-                                <label>Ratings : </label>
-                                <img src="<?=ASSETS?>/images/star-rating.png" />
-                                
-                                </div>
-                                
-                            </div>
-                            <div class="business-summary">
-                            <label>Donors Engaged : 48</label>
-                            <label>No. of Complaints : 20</label>
-                            </div>
-                            <div class="business-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
-                            </div>
-                            
-                            </div>
-                            <!-- <div class="business-joined">
-                                <label>Joined On : 22 / 06 / 2023</label>
-                            </div> -->
-                           
-                            
-                    </div>
-                    <div class="business-row">
-                            <div class="business-wrap">
-                            <div class="business">
-                            <img src="<?=ASSETS?>/images/rimberio.png" />
-                            </div>
-                            <div class="business-details">
-                                <label style="font-weight: bold;font-size:larger">RIMBERIO Foundation</label>
-                                <div>
-                                <label>Ratings : </label>
-                                <img src="<?=ASSETS?>/images/star-rating.png" />
-                                
-                                </div>
-                                
-                            </div>
-                            <div class="business-summary">
-                            <label>Donors Engaged : 48</label>
-                            <label>No. of Complaints : 20</label>
-                            </div>
-                            <div class="business-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
-                            </div>
-                            
-                            </div>
-                            <!-- <div class="business-joined">
-                                <label>Joined On : 22 / 06 / 2023</label>
-                            </div> -->
-                           
-                            
-                    </div>
-                    <div class="business-row">
-                            <div class="business-wrap">
-                            <div class="business">
-                            <img src="<?=ASSETS?>/images/peeloek.png" />
-                            </div>
-                            <div class="business-details">
-                                <label style="font-weight: bold;font-size:larger">PEELOEK</label>
-                                <div>
-                                <label>Ratings : </label>
-                                <img src="<?=ASSETS?>/images/star-rating.png" />
-                               
-                                </div>
-                                
-                            </div>
-                            <div class="business-summary">
-                            <label>Donors Engaged : 48</label>
-                            <label>No. of Complaints : 20</label>
-                            </div>
-                            <div class="business-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
-                            </div>
-                            
-                            </div>
-                            <!-- <div class="business-joined">
-                                <label>Joined On : 22 / 06 / 2023</label>
-                            </div> -->
-                           
-                            
-                    </div>
+                    <?php endforeach;?>
+                    
+                    
+                    
+                    
 
                         <div class="arrow-div">
                         <div class="arrows">

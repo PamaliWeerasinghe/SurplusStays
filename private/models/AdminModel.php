@@ -99,7 +99,7 @@ class AdminModel extends Model
         $logoExt = explode('.', $logo);
         $logoActualExt = strtolower(end($logoExt));
         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
-        $fileDestination = '../../SurplusStays/public/assets/uploads/' . $logoNameNew;
+        $fileDestination = '../../../SurplusStays/public/assets/uploads/' . $logoNameNew;
         move_uploaded_file($_FILES['logo']['tmp_name'], $fileDestination);
 
         return $fileDestination;

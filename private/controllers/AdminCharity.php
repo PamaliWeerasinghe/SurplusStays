@@ -3,7 +3,7 @@ class AdminCharity extends Controller
 {
     //load all the charity organizations
     function index(){
-        if(!Auth::logged_in()){
+        if(!AdminAuth::logged_in()){
             $this->redirect('register');
         }
         $user= new AdminModel();

@@ -18,7 +18,7 @@ class AdminAuth
     //check whether an admin is logged in
     public static function logged_in()
     {
-        if (isset($_SESSION['admin'])) {
+        if (isset($_SESSION['ADMIN'])) {
             return true;
         }
         return false;
