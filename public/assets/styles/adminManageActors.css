@@ -127,8 +127,8 @@
 .business-buttons{
     display: flex;
     flex-direction: column;
-    margin-top: 2%;
-    width: 25%;
+    margin-top: 3%;
+    width: 5%;
     padding-left: 4%;
 }
 .business-buttons button{
@@ -139,8 +139,11 @@
     border-radius: 6px;
     height: 4vh;
     
+    
 }
-
+.business-buttons button :hover{
+    cursor: pointer;
+}
 .business-wrap{
     display: flex;
     flex-direction: row;

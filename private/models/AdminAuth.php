@@ -27,8 +27,8 @@ class AdminAuth
     //retrieve details from the session variable
     public static function admin()
     {
-        if (isset($_SESSION['admin'])) {
-            return $_SESSION['admin']->name;
+        if (isset($_SESSION['ADMIN'])) {
+            return $_SESSION['ADMIN']->name;
         }
     }
 

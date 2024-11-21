@@ -2,7 +2,8 @@
 class Admin extends Controller
 {
     //View a charity organization
-    function CharityOrgView(){
+    function CharityOrgView()
+    {
         $this->view('AdminViewCharity');
     }
     //Add new Charity organization
@@ -12,10 +13,10 @@ class Admin extends Controller
         if (count($_POST) > 0) {
             $charity = new AdminModel();
             if ($charity->validateCharity($_POST)) {
-                
+
                 //insert charity org
                 $arr['name'] = $_POST['name'];
-                $arr['picture']=$charity->uploadLogo($_FILES['logo']['name']);
+                $arr['picture'] = $charity->uploadLogo($_FILES['logo']['name']);
                 $arr['city'] = $_POST['city'];
                 $arr['email'] = $_POST['email'];
                 $arr['phoneNo'] = $_POST['phone'];
@@ -58,15 +59,15 @@ class Admin extends Controller
 
             if (count($_POST) > 0) {
                 $user = new AdminModel();
-                $charityOrg=$user->findAll('organization');
-                if ($row = $user->where('email', $_POST['email'],'admin')) {
+                $charityOrg = $user->findAll('organization');
+                if ($row = $user->where('email', $_POST['email'], 'admin')) {
                     AdminAuth::authenticate($row);
-                   
-                    $this->view('adminWelcomePage',['charityOrg'=>$charityOrg]);
+
+                    $this->view('adminWelcomePage', ['charityOrg' => $charityOrg]);
                 } else {
                     if ($user->validate($_POST)) {
 
-                        $this->view('adminWelcomePage',['charityOrg'=>$charityOrg]);
+                        $this->view('adminWelcomePage', ['charityOrg' => $charityOrg]);
                     } else {
                         $errors = $user->errors;
                         $this->view('AdminLoginStep1', ['errors' => $errors]);
@@ -74,8 +75,6 @@ class Admin extends Controller
 
                     // $errors['email'] = "wrong email or password";
                 }
-
-                
             } else {
                 $this->view('AdminLoginStep1', ['errors' => $errors]);
             }
@@ -94,7 +93,8 @@ class Admin extends Controller
             $this->redirect('register');
         }
     }
-    function AdminLogin(){
+    function AdminLogin()
+    {
         $this->view('adminLoginStep1');
     }
 
@@ -108,7 +108,8 @@ class Admin extends Controller
         //AdminSeeComplainPage is the page to be directed after clicking on AdminBusinessComplaints
         $this->view('AdminBusinessComplaints');
     }
-    function ViewComplain(){
+    function ViewComplain()
+    {
         $this->view('AdminSeeComplainPage');
     }
 
@@ -123,18 +124,21 @@ class Admin extends Controller
     }
     function ManageCharityOrg()
     {
-        if(AdminAuth::logged_in()){
+        if (AdminAuth::logged_in()) {
             $this->redirect('register');
-        }else{
-        $user= new AdminModel();
-        $data=$user->findAll('organization');
-        $countd=new AdminCharityDetails();
-        foreach($data as $row){
-            $count=$countd->getDonorCount($row->id);
-            $row->donors=$count;
-            
-        }
-        $this->view('AdminManageCharityOrganizations',['rows'=>$data]);
+        } else {
+            $user = new AdminModel();
+            $data = $user->findAll('organization');
+            $countd = new AdminCharityDetails();
+            foreach ($data as $row) {
+                $count = $countd->getDonorCount($row->id);
+                $row->donors = $count;
+            }
+            foreach ($data as $row) {
+                $count = $countd->getComplaintsCount($row->id);
+                $row->donations = $count;
+            }
+            $this->view('AdminManageCharityOrganizations', ['rows' => $data]);
         }
     }
     function Reports()

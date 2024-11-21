@@ -17,4 +17,17 @@ class AdminCharityDetails extends Model
 
         return $result[0]->donors;
     }
+    public function getComplaintsCount($id)
+    {
+        $query = "select count(donations_id) as donations
+        from charity_complaints
+        inner join donations
+        on charity_complaints.donations_id=donations.id
+        where organization_id=:id";
+
+        $params = ["id" => $id];
+        $result = $this->query($query, $params);
+
+        return $result[0]->donations;
+    }
 }
