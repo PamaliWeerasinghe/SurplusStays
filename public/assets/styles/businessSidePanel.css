@@ -8,6 +8,7 @@
     flex-direction: column;
     flex: 1;
     background-color: #F0F8FF;
+    padding-bottom: 10%;
 }
 
 .greeting{

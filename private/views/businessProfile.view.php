@@ -1,14 +1,19 @@
-<?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
-<title><?php echo SITENAME ?></title>
-<link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
-<link rel="stylesheet" href="<?= STYLES ?>/businessProfile.css">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo SITENAME ?></title>
+    <link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
+    <link rel="stylesheet" href="<?= STYLES ?>/businessProfile.css">
 </head>
 
 <body>
     <?php echo $this->view('includes/businessNavbar') ?>
     <div class="main-div">
         <div class="sub-div-1">
-            <?php require APPROOT . "/views/includes/businessSidePanel.view.php" ?>
+            <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
 
 
@@ -26,7 +31,7 @@
                         <h3>Business Details</h3>
                         <div class="charity-overview">
                             <div class="image-container">
-                                <img class="logo-img" src="<?=ASSETS?>/businessImages/<?=basename(Auth::getPicture())?>" alt="Business Logo">
+                                <img class="logo-img" src="<?= ASSETS ?>/businessImages/<?= basename(Auth::getPicture()) ?>" alt="Business Logo">
                                 <!--<div class="overlay">
                                     <div class="camera-icon">
                                         <img src="<?= ASSETS ?>/icons/Camera.png" alt="Camera Icon">
@@ -34,10 +39,10 @@
                                 </div>-->
                             </div>
                             <div class="charity-text">
-                                <h4><?=Auth::getName()?> ⭐ 4.9/5.0</h4>
-                                <p><strong>Business type : </strong> <?=Auth::getbusiness_type()?></p>
-                                <p><strong>Phone Number:</strong> <?=Auth::getphone_No()?></p>
-                                <p><strong>Email Address:</strong> <?=Auth::getemail()?></p>
+                                <h4><?= Auth::getName() ?> ⭐ 4.9/5.0</h4>
+                                <p><strong>Business type : </strong> <?= Auth::getbusiness_type() ?></p>
+                                <p><strong>Phone Number:</strong> <?= Auth::getphone_No() ?></p>
+                                <p><strong>Email Address:</strong> <?= Auth::getemail() ?></p>
                             </div>
                         </div>
                     </div>
@@ -45,9 +50,9 @@
                     <div class="section business-address">
                         <h3>Business Address</h3>
                         <div class="charity-info">
-                            <p><strong>Street Address:</strong><?=Auth::getaddress()?></p>
-                            
-                            </div>
+                            <p><strong>Street Address:</strong><?= Auth::getaddress() ?></p>
+
+                        </div>
                     </div>
 
                     <div class="section charity-bank-details">
@@ -83,4 +88,6 @@
             </div>
         </div>
         <?php echo $this->view('includes/footer') ?>
-        <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
+</body>
+
+</html>

@@ -1,7 +1,12 @@
-<?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
-<title><?php echo SITENAME ?></title>
-<link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
-<link rel="stylesheet" href="<?= STYLES ?>/businessViewProduct.css">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo SITENAME ?></title>
+    <link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
+    <link rel="stylesheet" href="<?= STYLES ?>/businessViewProduct.css">
 </head>
 
 <body>
@@ -14,7 +19,7 @@
 
     <div class="main-div">
         <div class="sub-div-1">
-            <?php require APPROOT . "/views/includes/businessSidePanel.view.php" ?>
+            <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
 
 
@@ -71,32 +76,31 @@
                             <h3>That product was not found</h3>
                         <?php endif; ?>
                     </div>
-
                 </div>
-
-
             </div>
         </div>
         <?php echo $this->view('includes/footer') ?>
-        <script>
-            document.addEventListener("DOMContentLoaded", function() {
-                const textareas = document.querySelectorAll("textarea");
+    </div>
+    <script>
+        document.addEventListener("DOMContentLoaded", function() {
+            const textareas = document.querySelectorAll("textarea");
 
-                textareas.forEach((textarea) => {
-                    // Adjust height initially
-                    adjustHeight(textarea);
+            textareas.forEach((textarea) => {
+                // Adjust height initially
+                adjustHeight(textarea);
 
-                    // Adjust height on input
-                    textarea.addEventListener("input", function() {
-                        adjustHeight(this);
-                    });
+                // Adjust height on input
+                textarea.addEventListener("input", function() {
+                    adjustHeight(this);
                 });
-
-                function adjustHeight(textarea) {
-                    textarea.style.height = "auto"; // Reset height
-                    textarea.style.height = textarea.scrollHeight + "px"; // Set height to match content
-                }
             });
-        </script>
 
-        <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
+            function adjustHeight(textarea) {
+                textarea.style.height = "auto"; // Reset height
+                textarea.style.height = textarea.scrollHeight + "px"; // Set height to match content
+            }
+        });
+    </script>
+</body>
+
+</html>

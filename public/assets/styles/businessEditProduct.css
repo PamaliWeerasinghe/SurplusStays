@@ -42,6 +42,7 @@ body {
     padding: 3%;
 }
 
+/*main inner side*/
 .inner-main {
     width: 88%;
     background-color: #F0F8FF;
@@ -59,6 +60,7 @@ body {
 }
 
 .header h2 {
+    color: white;
     font-size: 18px;
 }
 
@@ -97,10 +99,15 @@ body {
 }
 
 .upload-group .upload-icon {
-    width: 150px;
-    height: 150px;
-    object-fit: cover;
-    border-radius: 8px;
+    width: 150px; /* Set a fixed width */
+    height: 150px; /* Set a fixed height to maintain square shape */
+    object-fit: cover; /* Ensures the image is cropped properly */
+    border-radius: 8px; /* Optional: adds rounded corners to the images */
+}
+
+.upload-group input[type="file"] {
+    width: 18%;
+    display: none;
 }
 
 .button-group {
@@ -126,11 +133,6 @@ button {
     color: white;
 }
 
-.btn-clear {
-    background-color: #f39c12;
-    color: white;
-}
-
 .btn-cancel {
     background-color: #e74c3c;
     color: white;
@@ -139,3 +141,8 @@ button {
 button:hover {
     opacity: 0.9;
 }
+
+.small {
+    font-weight: 300px;
+}
+

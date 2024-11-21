@@ -1,24 +1,29 @@
-<?php require APPROOT.'/views/includes/htmlHeader.view.php'?>
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITENAME ?></title>
-    <link rel="stylesheet" href="<?=STYLES?>/businessorders.css" />
-    <link rel="stylesheet" href="<?=STYLES?>/businessSidePanel.css" />
-    <link rel="stylesheet" href="<?=STYLES?>/business.css">
+    <link rel="stylesheet" href="<?= STYLES ?>/businessorders.css" />
+    <link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
+    <link rel="stylesheet" href="<?= STYLES ?>/business.css">
 </head>
 
 <body>
-<?php echo $this->view('includes/businessNavbar')?>
+    <?php echo $this->view('includes/businessNavbar') ?>
     <div class="main-div">
         <div class="sub-div-1">
-            <?php require APPROOT . "/views/includes/businessSidePanel.view.php" ?>
+            <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
                 <div class="summary">
                     <div class="notifications-type2">
                         <div class="searchdiv">
                             <input type="text" class="search" placeholder="Search..." />
-                            <img src="<?=ASSETS?>/images/search.png" class="bell2" />
+                            <img src="<?= ASSETS ?>/images/search.png" class="bell2" />
                         </div>
 
-                        <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
+                        <img src="<?= ASSETS ?>/images/Bell.png" class="bell" />
                     </div>
                     <div class="summary-blocks">
                         <div class="summaries">
@@ -107,7 +112,7 @@
                                 <td>Sunil Gamachcchi</td>
                                 <td>Full Bread</td>
                                 <td><button class="take-action">Not Collected</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
                             </tr>
                             <tr>
                                 <td>#154</td>
@@ -115,7 +120,7 @@
                                 <td>Chamindu Sanjana</td>
                                 <td>Popcorn</td>
                                 <td><button class="take-action">Not Collected</button></td>
-                                <td style="text-align: center;">Rs.55 <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs.55 <br /><label>View Full Details</label></td>
                             </tr>
                             <tr>
                                 <td>#154</td>
@@ -123,7 +128,7 @@
                                 <td>Desahit Gallge</td>
                                 <td>Corn</td>
                                 <td><button class="take-action">Not Collected</button></td>
-                                <td style="text-align: center;">Rs.75<br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs.75<br /><label>View Full Details</label></td>
                             </tr>
                             <tr>
                                 <td>#154</td>
@@ -131,7 +136,7 @@
                                 <td>Suriya Kumar</td>
                                 <td>Rice</td>
                                 <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
                             </tr>
                             <tr>
                                 <td>#154</td>
@@ -139,7 +144,7 @@
                                 <td>Wanindu Hasarnga</td>
                                 <td>Pasta</td>
                                 <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
                             </tr>
                             <tr>
                                 <td>#154</td>
@@ -147,7 +152,7 @@
                                 <td>Suriya Kumar</td>
                                 <td>Rice</td>
                                 <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
                             </tr>
                             <tr>
                                 <td>#154</td>
@@ -155,7 +160,7 @@
                                 <td>Wanindu Hasarnga</td>
                                 <td>Pasta</td>
                                 <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
                             </tr>
                             <tr>
                                 <td>#154</td>
@@ -163,7 +168,7 @@
                                 <td>Suriya Kumar</td>
                                 <td>Rice</td>
                                 <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
                             </tr>
                             <tr>
                                 <td>#154</td>
@@ -171,7 +176,7 @@
                                 <td>Wanindu Hasarnga</td>
                                 <td>Pasta</td>
                                 <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
                             </tr>
                             <tr>
                                 <td>#154</td>
@@ -179,7 +184,7 @@
                                 <td>Suriya Kumar</td>
                                 <td>Rice</td>
                                 <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
                             </tr>
                             <tr>
                                 <td>#154</td>
@@ -187,7 +192,7 @@
                                 <td>Wanindu Hasarnga</td>
                                 <td>Pasta</td>
                                 <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
                             </tr>
                             <tr>
                                 <td>#154</td>
@@ -195,7 +200,7 @@
                                 <td>Suriya Kumar</td>
                                 <td>Rice</td>
                                 <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
                             </tr>
                             <tr>
                                 <td>#154</td>
@@ -203,17 +208,17 @@
                                 <td>Wanindu Hasarnga</td>
                                 <td>Pasta</td>
                                 <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
                             </tr>
-                            
-                            
+
+
                         </tbody>
                     </table>
                     <div class="arrow-div">
                         <div class="arrows">
-                            <img src="<?=ASSETS?>/images/Arrow right-circle.png"/>
-                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png"/>
-                            
+                            <img src="<?= ASSETS ?>/images/Arrow right-circle.png" />
+                            <img src="<?= ASSETS ?>/images/Arrow right-circle-bold.png" />
+
                         </div>
                     </div>
 
@@ -222,6 +227,7 @@
 
             </div>
         </div>
-        <?php echo $this->view('includes/footer')?>
-        <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>
-        
+        <?php echo $this->view('includes/footer') ?>
+</body>
+
+</html>

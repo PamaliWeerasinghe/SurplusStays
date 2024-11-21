@@ -1,15 +1,22 @@
-<?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
-<link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
-<link rel="stylesheet" href="<?= STYLES ?>/businessMyProducts.css" />
-<link rel="stylesheet" href="<?= STYLES ?>/business.css">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo SITENAME ?></title>
+    <link rel="stylesheet" href="<?= STYLES ?>/businessMyProducts.css">
+    <link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css">
 </head>
 
 <body>
+    <!-- navbar -->
 
     <div class="main-div">
         <?php echo $this->view('includes/businessNavbar') ?>
         <div class="sub-div-1">
-            <?php require APPROOT . "/views/includes/businessSidePanel.view.php" ?>
+            <!-- included the business side panel -->
+            <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
                 <div class="summary">
                     <div class="notifications-type2">
@@ -41,11 +48,7 @@
                                 <option>This week</option>
                                 <option>This month</option>
                             </select>
-                            <select>
-                                <option>Date added</option>
-                                <option>september</option>
-                                <option>octomber</option>
-                            </select>
+
                         </div>
 
 
@@ -70,14 +73,13 @@
                                     $productPictures = explode(',', $row->pictures); // Assuming $row->pictures is a comma-separated string
                                     $productImage = isset($productPictures[0]) ? $productPictures[0] : 'product_placeholder.png'; // Use placeholder if no image
                                     ?>
-                                    <tr>
+                                    <tr onclick="window.location.href='<?= ROOT ?>/business/viewProduct/<?= $row->id ?>'">
                                         <td>
                                             <div class="event-name">
 
                                                 <img src="<?= ROOT ?><?= htmlspecialchars($productImage) ?>" alt="product" class="event-img">
-                                                <a href="<?= ROOT ?>/business/viewProduct/<?= $row->id ?>" style="text-decoration: none; color: black;">
-                                                    <h3><?= $row->name ?></h3>
-                                                </a>
+                                                <h3><?= mb_strimwidth($row->name, 0, 20, '...') ?></h3>
+
                                             </div>
                                         </td>
 
@@ -112,7 +114,7 @@
                         </tbody>
                     </table>
 
-                    
+
 
                 </div>
 
@@ -123,5 +125,15 @@
         <?php echo $this->view('includes/footer') ?>
     </div>
 
+    <script>
+        document.querySelectorAll('.completed, .take-action').forEach(button => {
+            button.addEventListener('click', event => {
+                event.stopPropagation();
+            });
+        });
+    </script>
 
-    <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
+
+</body>
+
+</html>

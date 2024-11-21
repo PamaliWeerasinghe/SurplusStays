@@ -1,15 +1,20 @@
-<?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
-<title><?php echo SITENAME ?></title>
-<link rel="stylesheet" href="<?= STYLES ?>/businesscomplains.css" />
-<link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
-<link rel="stylesheet" href="<?= STYLES ?>/business.css">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo SITENAME ?></title>
+    <link rel="stylesheet" href="<?= STYLES ?>/businesscomplains.css" />
+    <link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
+    <link rel="stylesheet" href="<?= STYLES ?>/business.css">
 </head>
 
 <body>
     <?php echo $this->view('includes/businessNavbar') ?>
     <div class="main-div">
         <div class="sub-div-1">
-            <?php require APPROOT . "/views/includes/businessSidePanel.view.php" ?>
+            <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
                 <div class="summary">
                     <div class="notifications-type2">
@@ -170,4 +175,6 @@
             </div>
         </div>
         <?php echo $this->view('includes/footer') ?>
-        <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
+</body>
+
+</html>

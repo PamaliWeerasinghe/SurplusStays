@@ -1,14 +1,20 @@
-<?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
-<link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
-<link rel="stylesheet" href="<?= STYLES ?>/businessReports.css">
-<link rel="stylesheet" href="<?= STYLES ?>/business.css">
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo SITENAME ?></title>
+    <link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
+    <link rel="stylesheet" href="<?= STYLES ?>/businessReports.css">
+    <link rel="stylesheet" href="<?= STYLES ?>/business.css">
 </head>
 
 <body>
     <?php echo $this->view('includes/businessNavbar') ?>
     <div class="main-div">
         <div class="sub-div-1">
-            <?php require APPROOT . "/views/includes/businessSidePanel.view.php" ?>
+            <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
                 <div class="summary">
                     <div class="notifications-type2">
@@ -37,7 +43,7 @@
                                 <th>Quantity</th>
                                 <th>Unit Price</th>
                                 <th>Final Discounted Price</th>
-                                
+
                             </tr>
                         </thead>
                         <tbody>
@@ -47,7 +53,7 @@
                                 <td>10</td>
                                 <td>Rs. 2.50</td>
                                 <td>Rs. 25.00</td>
-                                
+
                             </tr>
                             <tr>
                                 <td>Fresh Apple</td>
@@ -55,7 +61,7 @@
                                 <td>10</td>
                                 <td>Rs. 2.50</td>
                                 <td>Rs. 25.00</td>
-                                
+
                             </tr>
                             <tr>
                                 <td>Fresh Apple</td>
@@ -63,7 +69,7 @@
                                 <td>10</td>
                                 <td>Rs. 2.50</td>
                                 <td>Rs. 25.00</td>
-                                
+
                             </tr>
                             <tr>
                                 <td>Fresh Apple</td>
@@ -71,14 +77,14 @@
                                 <td>10</td>
                                 <td>Rs. 2.50</td>
                                 <td>Rs. 25.00</td>
-                                
+
                             </tr>
                         </tbody>
                     </table>
                     <div class="get-report-btn">
                         <button>Get Report</button>
                     </div>
-                    
+
                     <div class="arrow-div">
                         <div class="arrows">
                             <img src="<?= ASSETS ?>/images/Arrow right-circle.png" />

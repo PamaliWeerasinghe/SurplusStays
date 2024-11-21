@@ -15,7 +15,7 @@
         <?php echo $this->view('includes/businessNavbar') ?>
         <div class="sub-div-1">
             <!-- included the business side panel -->
-            <?php require APPROOT . "/views/includes/businessSidePanel.view.php" ?>
+            <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
                 <div class="summary">
                     <div class="notifications"><img src="<?= ASSETS ?>/images/Bell.png" /></div>
@@ -239,5 +239,4 @@
     </div>
 
 </body>
-
 </html>
