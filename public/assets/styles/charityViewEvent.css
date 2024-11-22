@@ -127,11 +127,12 @@ body, html {
 }
 
 .charity-text h4{
-    color: black;
+    color: #555;
 }
 
-p {
+.section p {
     margin-bottom: 10px;
+    font-size: 22px;
     color: #555;
 }
 

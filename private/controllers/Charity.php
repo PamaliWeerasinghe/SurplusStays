@@ -9,10 +9,12 @@ class Charity extends Controller
             $this->redirect('login');
         }
 
-        // $charity = new Organization();
-        // $data = $charity->findAll();
-        //,['rows' => $data]
-        $this->view('charity_dashboard');
+        $event = new Event();
+        $org_id = Auth::getID();
+        $rowCount = $event->countRows($org_id);
+        $this->view('charity_dashboard', [
+            'rowCount' => $rowCount,
+        ]);
     }
 
     function manage_events()
@@ -22,9 +24,8 @@ class Charity extends Controller
         }
 
         $event = new event();
-        $organization_id = Auth::getUserId();
+        $organization_id = Auth::getID();
         $data = $event->where('organization_id', $organization_id);
-
         $currentDateTime = date('Y-m-d H:i:s');
 
         if(!empty($data))
@@ -163,43 +164,65 @@ class Charity extends Controller
             $this->redirect('login');
         }
 
+        $errors = []; // Ensure this is declared before use.
         $event = new event();
 
+        $row = $event->where('id', $id);
+        $currentPictures = explode(',', $row[0]->pictures);
         $uploadedPictures = [];
+        
         $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/charityImages/";
 
-        // Handle each upload field
-        foreach ($_FILES as $key => $file) {
-            if (strpos($key, 'upload-') === 0 && isset($file['name']) && $file['error'] === 0) {
-                $fileName = basename($file['name']);
-                $filePath = $targetDir . $fileName;
-                $fileType = pathinfo($filePath, PATHINFO_EXTENSION);
-
+        // Loop through upload slots (assuming there are 4 upload slots)
+        for ($i = 0; $i < 5; $i++) {
+            $uploadKey = 'upload-' . $i+1;
+        
+            if (isset($_FILES[$uploadKey]) && $_FILES[$uploadKey]['error'] === 0) {
+                // Get the original file name and extension
+                $fileName = basename($_FILES[$uploadKey]['name']);
+                $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+        
+                // Generate a unique file name
+                $uniqueName = uniqid('img_', true) . '.' . $fileType;
+        
+                // Define the file path
+                $filePath = $targetDir . $uniqueName;
+        
                 // Allow certain file formats
                 $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
                 if (in_array(strtolower($fileType), $allowedTypes)) {
-                    // Attempt to move the uploaded file
-                    if (move_uploaded_file($file['tmp_name'], $filePath)) {
-                        // Save the full path to the image in the array
-                        $uploadedPictures[] = '/assets/charityImages/' . $fileName; // Use relative path
+                    if (move_uploaded_file($_FILES[$uploadKey]['tmp_name'], $filePath)) {
+                        // Save the relative path to the uploaded image
+                        $uploadedPictures[$i] = '/assets/charityImages/' . $uniqueName;
                     } else {
                         $errors[] = "Failed to upload image: {$fileName}.";
                     }
                 } else {
                     $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed for {$fileName}.";
                 }
+            } 
+            elseif (!empty($currentPictures[$i])) {
+                $uploadedPictures[$i] = $currentPictures[$i];
+            }
+        }
+        
+
+        // Ensure all 4 slots are accounted for
+        for ($i = 0; $i < 5; $i++) {
+            if (!isset($uploadedPictures[$i])) {
+                $uploadedPictures[$i] = ''; // Fill empty slots with an empty string
             }
         }
 
-        // Check if at least one image was uploaded
-        if (!empty($uploadedPictures)) {
-            $_POST['pictures'] = implode(',', $uploadedPictures); // Store paths as a comma-separated string
-        } else {
+        // Check if at least one image was uploaded or exists
+        if (!array_filter($uploadedPictures)) { // array_filter removes empty values
             $errors[] = "At least one event picture is required.";
+        } else {
+            $_POST['pictures'] = implode(',', $uploadedPictures); // Store paths as a comma-separated string
         }
 
         $errors = array();
-        if(count($_POST)>0)
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($_POST) > 0)
         {
             if ($event->validate($_POST)) 
             {

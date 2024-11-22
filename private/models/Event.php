@@ -43,4 +43,12 @@ class Event extends Model
         // Return true if no errors
         return empty($this->errors);
     }
+
+    public function countRows($org_id) {
+        $query = "SELECT COUNT(*) as count FROM " . $this->table . " WHERE organization_id = :org_id";
+        $params = [':org_id' => $org_id];
+        $result = $this->query($query, $params); // Pass parameters for prepared statement
+        return $result[0]->count ?? 0; // Ensure query() returns array or object
+    }
+    
 }

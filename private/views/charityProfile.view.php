@@ -37,8 +37,8 @@
                             <div class="charity-text">
                                 <h4><?=Auth::getName()?> ⭐ 4.7/5.0</h4>
                                 <p><strong>Owner:</strong> Dialog Axiata Foundation</p>
-                                <p><strong>Phone Number:</strong> 0716386868</p>
-                                <p><strong>Email Address:</strong> info@karuna.lk</p>
+                                <p><strong>Phone Number:</strong> <?=Auth::getphoneNo()?></p>
+                                <p><strong>Email Address:</strong> <?=Auth::getemail()?></p>
                             </div>
                         </div>
                     </div>
