@@ -65,4 +65,12 @@ class Model extends Database
           $data['id'] = $id;
           return $this->query($query, $data);
      }
+
+     //select the last inserted id 
+     public function selectLastID($table)
+     {
+          $this->table=$table;
+          $query="select MAX(id) AS last_id from $this->table";
+          return $this->query($query);
+     }
 }

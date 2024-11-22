@@ -26,8 +26,9 @@ class Admin extends Controller
                 $arr['date'] = date("Y-m-d H:i:s");
 
                 $charity->insert($arr, 'organization');
+                $data=$charity->findAll('organization');
                 //redirect to manage charity org 
-                $this->view('AdminManageCharityOrganizations');
+                $this->view('AdminManageCharityOrganizations',['rows'=>$data]);
             } else {
 
                 $errors = $charity->errors;
