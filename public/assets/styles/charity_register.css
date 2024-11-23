@@ -161,3 +161,75 @@ body {
 .error.alert li {
     margin-bottom: 5px;
 }
+
+.upload-container {
+    background-color: white;
+    border-radius: 40px 40px 40px 40px ;
+    border: none;
+    text-align: center;
+    
+    /* padding: 20px; */
+    
+    /* box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1); */
+    width: 110%;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+  }
+
+
+
+input[type="file"] {
+    display: block;
+    /* margin: 10px auto;
+    padding: 5px; */
+    margin-left: 12%;
+    font-size: 14px;
+    width: 100%;
+    
+  }
+
+  .preview-container {
+    /* margin-top: 20px; */
+    border: 2px dashed #d3d3d3;
+    padding: 5%;
+    border-radius: 8px;
+    text-align: center;
+    margin-left: 12%;
+  }
+
+  .preview-container img {
+    display: block;
+    margin: 0 auto;
+    /* border-radius: 50%; */
+    border: 2px solid #ddd;
+  }
+
+  .preview-placeholder {
+    color: #888;
+    font-size: 14px;
+  }
+  .logo-icon-preview{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+    padding: 3%;
+  }
+  .upload-details{
+    display: flex;
+    flex-direction: row;
+    justify-content: center;
+    align-items: center;
+  }
+  .upload-icon{
+    /* margin-right: 3%; */
+    display: flex;
+    flex: 1;
+  }
+  .upload-message{
+    display: flex;
+    flex: 4;
+    color: red;
+  }

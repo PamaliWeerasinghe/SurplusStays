@@ -36,8 +36,31 @@
 
                 <h4>ORGANIZATION NAME :</h4>
                 <input placeholder="ENTER YOUR ORGANIZATION NAME" value='<?=$rows->name?>' type="text" name="name" class="input" >
+                
                 <h4>ORGANIZATION LOGO :</h4>
-                <input placeholder="ADD ORGANIZATION OF THE LOGO" value="<?=get_var('logo')?>" type="file" name="logo" class="input" >
+                <!-- <input placeholder="ADD ORGANIZATION OF THE LOGO" value="<?=get_var('logo')?>" type="file" name="logo" class="input" > -->
+                <!-- <div class="img-container">
+                <div id="profile-pic-preview" class="preview-container">
+                    <p class="preview-placeholder">No image selected</p>
+                    
+                </div>
+                   
+                    <input type="file" id="profilePic" accept="image/*"/>
+                
+                
+                </div> -->
+                <div class="upload-container">
+                        <div class="logo-icon-preview">
+                        <img src="<?=$rows->picture?>" alt="Profile Picture" id="profile-pic-preview">
+                        <input type="file" id="profilePic" name="profilePic" accept=".jpg, .jpeg, .png">
+                        </div>
+                        <!-- <div class="upload-details">
+                        <div class="upload-icon">⬆</div>
+                        <div class="upload-message">Image size should be under 5MB</div>
+                        </div> -->
+                        
+                </div>
+
                 <h4>ORGANIZATION CITY :</h4>
                 <input placeholder="ENTER YOUR ORGANIZATION CITY" value='<?=$rows->name?>' type="text" name="city" class="input">
                 <h4>ORGANIZATION EMAIL:</h4>
@@ -59,5 +82,28 @@
     </div>
 
 <?php echo $this->view('includes/footer')?>
+
+<script>
+    document.getElementById('profilePic').addEventListener('change', function(e) {
+    const file = e.target.files[0];
+    
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            const img = document.createElement('img');
+            img.src = e.target.result;
+            img.alt = 'Profile Preview';
+            img.style.width = '100px';
+            img.style.height = '100px';
+            // document.getElementById('profile-pic-preview').innerHTML = img;
+            document.getElementById('profile-pic-preview').src=img.src;
+            
+        }
+        reader.readAsDataURL(file);
+    }
+});
+</script>
+
+
 </body>
 </html>

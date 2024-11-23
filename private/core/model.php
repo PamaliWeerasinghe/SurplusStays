@@ -58,6 +58,23 @@ class Model extends Database
           return $this->query($query, $data);
      }
 
+     //Update charity organization except password field
+     public function updateExceptPassword($name,$picture,$city,$email,$phoneNo,$description,$username,$date,$id){
+          $this->table='organization';
+          $query="update $this->table set 
+          name = :$name,
+          picture =:$picture,
+          city=:$city,
+          email=:$email,
+          phoneNo=:$phoneNo,
+          charity_description=:$description,
+          username=:$username,
+          date=:$date
+          where id=:$id";
+
+          return $this->query($query);
+     }
+
      public function delete($id,$table)
      {    
           $this->table=$table;

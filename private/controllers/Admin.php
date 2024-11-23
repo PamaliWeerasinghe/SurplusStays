@@ -157,4 +157,8 @@ class Admin extends Controller
         ];
         $this->view('aboutView', $data);
     }
+
+    function img(){
+        $this->view('viewImg');
+    }
 }
