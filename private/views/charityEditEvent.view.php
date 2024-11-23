@@ -107,17 +107,17 @@
                                     <label for="upload-1">
                                         <?php if(!empty($eventPictures[0])):?>
                                             <img src="<?=ROOT?><?= htmlspecialchars($eventPictures[0]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-1">
+                                            <img class="delete-btn" src="<?=ASSETS?>/icons/delete-button.png" alt="">
                                         <?php else:?>
                                             <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
                                         <?php endif;?>
                                     </label>
-
-                                    
                                     <input type="file" id="upload-1" name="upload-1" style="display: none;">
 
                                     <label for="upload-2">
                                         <?php if(!empty($eventPictures[1])):?>
                                             <img src="<?=ROOT?><?= htmlspecialchars($eventPictures[1]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-2">
+                                            <img class="delete-btn" src="<?=ASSETS?>/icons/delete-button.png" alt="">
                                         <?php else:?>
                                             <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-2">
                                         <?php endif;?>
@@ -127,6 +127,7 @@
                                     <label for="upload-3">
                                         <?php if(!empty($eventPictures[2])):?>
                                             <img src="<?=ROOT?><?= htmlspecialchars($eventPictures[2]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-3">
+                                            <img class="delete-btn" src="<?=ASSETS?>/icons/delete-button.png" alt="">
                                         <?php else:?>
                                             <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-3">
                                         <?php endif;?>
@@ -136,6 +137,7 @@
                                     <label for="upload-4">
                                         <?php if(!empty($eventPictures[3])):?>
                                             <img src="<?=ROOT?><?= htmlspecialchars($eventPictures[3]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-4">
+                                            <img class="delete-btn" src="<?=ASSETS?>/icons/delete-button.png" alt="">
                                         <?php else:?>
                                             <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-4">
                                         <?php endif;?>
@@ -145,6 +147,8 @@
                                     <label for="upload-5">
                                         <?php if(!empty($eventPictures[4])):?>
                                             <img src="<?=ROOT?><?= htmlspecialchars($eventPictures[4]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-5">
+                                            <img class="delete-btn" src="<?=ASSETS?>/icons/delete-button.png" alt="">
+                                            
                                         <?php else:?>
                                             <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-5">
                                         <?php endif;?>
@@ -226,6 +230,23 @@
             reader.readAsDataURL(file);
         }
     });
+
+     document.querySelectorAll('.delete-btn').forEach((btn, index) => {
+        btn.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Find the associated image and set the input to empty
+            let uploadInput = document.getElementById('upload-' + (index + 1));
+            uploadInput.value = ''; // Clear the file input
+
+            // Hide the image preview and the delete button
+            let imagePreview = document.getElementById('profilePreview-' + (index + 1));
+            imagePreview.src = '<?=ASSETS?>/icons/uploadArea.png'; // Reset the preview image
+            this.style.display = 'none'; // Hide the delete button
+        });
+    });
+
+    
     </script>
     
 </body>

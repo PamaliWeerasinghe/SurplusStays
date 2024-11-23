@@ -43,28 +43,24 @@
                         <div class="images-container">
                         <?php if(!empty($eventPictures[1])):?>
                             <img src="<?=ROOT?><?= htmlspecialchars($eventPictures[1]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-1">
-                        <?php else:?>
-                            <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
+                        
                         <?php endif;?>
                         <?php if(!empty($eventPictures[2])):?>
                             <img src="<?=ROOT?><?= htmlspecialchars($eventPictures[2]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-1">
-                        <?php else:?>
-                            <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
+                        
                         <?php endif;?>
                         <?php if(!empty($eventPictures[3])):?>
                             <img src="<?=ROOT?><?= htmlspecialchars($eventPictures[3]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-1">
-                        <?php else:?>
-                            <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
+                        
                         <?php endif;?>
                         <?php if(!empty($eventPictures[4])):?>
                             <img src="<?=ROOT?><?= htmlspecialchars($eventPictures[4]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-1">
-                        <?php else:?>
-                            <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
+                        
                         <?php endif;?>
                         </div>
                         <div class="bottom">
-                            <p><strong>starting date and time :</strong><?=$row[0]->start_dateTime?></p>
-                            <p><strong>starting date and time :</strong> <?=$row[0]->end_dateTime?></p>
+                            <p><strong>Starting date and time :</strong><?=$row[0]->start_dateTime?></p>
+                            <p><strong>Ending date and time :</strong> <?=$row[0]->end_dateTime?></p>
                             <p><strong>Description:</strong></p>
                             <p>
                             <?=$row[0]->event_description?>

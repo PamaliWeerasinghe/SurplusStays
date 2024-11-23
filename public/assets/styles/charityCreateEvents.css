@@ -101,7 +101,16 @@ body, html {
     width: 150px; /* Set a fixed width */
     height: 150px; /* Set a fixed height to maintain square shape */
     object-fit: cover; /* Ensures the image is cropped properly */
-    border-radius: 8px; /* Optional: adds rounded corners to the images */
+    border-radius: 10px; /* Optional: adds rounded corners to the images */
+}
+
+.delete-btn{
+    height: 20px;
+    margin-bottom: 160px;
+    margin-left: -20px;
+    position: absolute;
+    width: 20px;
+    z-index: 2;
 }
 
 .upload-group input[type="file"] {
@@ -145,6 +154,9 @@ button {
 
 button:hover {
     opacity: 0.9;
+}
+.delete-btn:hover {
+    opacity: 0.8;
 }
 
 .small{

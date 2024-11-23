@@ -65,7 +65,7 @@ class Charity extends Controller
     {
         $event = new Event();
         $row = $event->where('id', $id);
-        $this->view('charityViewEvent', [
+        $this->view('charityViewEvent2', [
             'row' => $row,
         ]);
     }
@@ -113,7 +113,7 @@ class Charity extends Controller
             }
     
             if (empty($errors) && $event->validate($_POST)) {
-                $arr['organization_id'] = Auth::getUserId();
+                $arr['organization_id'] = Auth::getId();
                 $arr['event'] = $_POST['event-name'];
                 $arr['event_description'] = $_POST['description'];
                 $arr['start_dateTime'] = $_POST['start-date'];
@@ -173,7 +173,7 @@ class Charity extends Controller
         
         $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/charityImages/";
 
-        // Loop through upload slots (assuming there are 4 upload slots)
+        // Loop through upload slots (assuming there are 5 upload slots)
         for ($i = 0; $i < 5; $i++) {
             $uploadKey = 'upload-' . $i+1;
         

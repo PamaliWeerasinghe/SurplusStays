@@ -17,7 +17,7 @@ body, html {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 210vh;
+    height: 280vh;
   }
   
   .top-half {
@@ -54,6 +54,117 @@ body, html {
     text-align: center;
     border-radius: 20px 20px 0 0;
 }
+
+.slidersection{
+    align-items: center;
+    justify-content: center;
+    display: flex;
+}
+
+.slider{
+    width: 800px;
+    height: 600px;
+    border-radius: 10px;
+    overflow: hidden;
+}
+
+.slide{
+    width: 500%;
+    height: 500px;
+    display: flex;
+}
+
+.slide input{
+    display: none;
+}
+
+.st{
+    width: 20%;
+    transition: 2s;
+}
+
+.st img{
+    width: 800px;
+    height: 550px;
+}
+
+.nav-m{
+    position: absolute;
+    width: 800px;
+    margin-top: -40px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    
+}
+
+.m-btn{
+    height: 1px;
+    border: 2px solid #28a745;
+    padding: 5px;
+    border-radius: 10px;
+    cursor: pointer;
+    transition: 1s;
+}
+
+.m-btn:not(:last-child){
+    margin-right: 30px;
+}
+
+.m-btn:hover{
+    background-color: #28a745;
+}
+
+#radio1:checked ~.first{
+    margin-left: 0;
+}
+#radio2:checked ~.first{
+    margin-left: -20%;
+}
+#radio3:checked ~.first{
+    margin-left: -40%;
+}
+#radio4:checked ~.first{
+    margin-left: -60%;
+}
+#radio5:checked ~.first{
+    margin-left: -80%;
+}
+.nav-auto{
+    position: absolute;
+    width: 800px;
+    margin-top: 460px;
+    display: flex;
+    justify-content: center;
+}
+
+.nav-auto div{
+    border: 2px solid #28a745;
+    padding: 5px;
+    border-radius: 10px;
+    transition: 1s;
+}
+.nav-auto div:not(:last-child){
+    margin-right: 30px;
+    justify-content: center;
+}
+
+#radio1:checked ~ .nav-auto .a-b1{
+    background-color: #28a745;
+}
+#radio2:checked ~ .nav-auto .a-b2{
+    background-color: #28a745;
+}
+#radio3:checked ~ .nav-auto .a-b3{
+    background-color: #28a745;
+}
+#radio4:checked ~ .nav-auto .a-b4{
+    background-color: #28a745;
+}
+#radio5:checked ~ .nav-auto .a-b5{
+    background-color: #28a745;
+}
+
 .section h1{
     color: black;
     font-size: 50px;
@@ -73,18 +184,12 @@ body, html {
     padding-left: 30px;
 }
 
-.charity-overview {
-    display: flex;
-    padding: 20px;
-    margin-left: 30px;
-}
-
 .charity-info {
     padding: 20px;
     margin-left: 30px;
 }
 
-.image-container {
+.image-container2 {
     position: relative;
     display: inline-block;
     width: 400px; /* Adjust width based on your logo size */
@@ -93,20 +198,11 @@ body, html {
     margin-right: 30px;
 }
 
-.images-container{
-    margin-top: 20px;
-    margin-bottom: 20px;
-}
-
 .upload-icon {
     width: 200px; /* Set a fixed width */
     height: 200px; /* Set a fixed height to maintain square shape */
     object-fit: cover; /* Ensures the image is cropped properly */
     border-radius: 8px; /* Optional: adds rounded corners to the images */
-    padding-left: 50px;
-}
-
-.bottom {
     padding-left: 50px;
 }
 
@@ -122,12 +218,20 @@ body, html {
     border-radius: 8px;
 }
 
+.charity-title {
+    align-items: center;
+    text-align: center;
+
+}
+
 .charity-text {
     line-height: 1.6;
+    padding-left: 50px;
 }
 
 .charity-text h4{
     color: #555;
+
 }
 
 .section p {
