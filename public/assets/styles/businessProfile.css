@@ -106,7 +106,6 @@ body {
     display: inline-block;
     width: 200px; /* Adjust width based on your logo size */
     height: 200px; /* Adjust height based on your logo size */
-    border-radius: 68px;
     padding-top: 5%;
     margin-right: 30px;
     
@@ -120,6 +119,7 @@ body {
 .logo-img {
     width: 200px;
     height: 200px;
+    border-radius: 5%; /* Makes the logo circular */
 }
 
 

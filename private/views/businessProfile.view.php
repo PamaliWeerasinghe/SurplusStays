@@ -41,7 +41,7 @@
                             <div class="charity-text">
                                 <h4><?= Auth::getName() ?> ⭐ 4.9/5.0</h4>
                                 <p><strong>Business type : </strong> <?= Auth::getbusiness_type() ?></p>
-                                <p><strong>Phone Number:</strong> <?= Auth::getphone_No() ?></p>
+                                <p><strong>Phone Number:</strong> <?= Auth::getphone_no() ?></p>
                                 <p><strong>Email Address:</strong> <?= Auth::getemail() ?></p>
                             </div>
                         </div>

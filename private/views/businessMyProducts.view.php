@@ -37,28 +37,22 @@
                     <div class="order">
                         <label>Products</label>
                         <div>
-                            <select>
-                                <option>Quantity by count</option>
-                                <option>less than 10</option>
-                                <option>less than 50</option>
-                                <option>More than 50</option>
-                            </select>
-                            <select>
-                                <option>Expiery date</option>
-                                <option>This week</option>
-                                <option>This month</option>
-                            </select>
-
+                            <form method="GET" action="<?= ROOT ?>/business/myproducts">
+                                <select name="filter" onchange="this.form.submit()">
+                                    <option value="">Filter the products</option>
+                                    <option value="expiration_date" <?= isset($_GET['filter']) && $_GET['filter'] == 'expiration_date' ? 'selected' : '' ?>>By Expiration Date</option>
+                                    <option value="quantity" <?= isset($_GET['filter']) && $_GET['filter'] == 'quantity' ? 'selected' : '' ?>>By Quantity</option>
+                                    <option value="price" <?= isset($_GET['filter']) && $_GET['filter'] == 'price' ? 'selected' : '' ?>>By Price</option>
+                                </select>
+                            </form>
                         </div>
-
-
 
                     </div>
 
                     <table class="order-table">
                         <thead>
                             <tr>
-                                <th>Name</th>
+                                <th>Product</th>
                                 <th>Quantity</th>
                                 <th>Price</th>
                                 <th>Expiration date/time</th>
@@ -95,7 +89,7 @@
                                             </div>
 
                                             <div style="display: inline-block;">
-                                                <form action="<?= ROOT ?>/business/deleteproduct/<?= $row->id ?>" method="post" onsubmit="return confirm('Are you sure you want to delete this event?');">
+                                                <form action="<?= ROOT ?>/business/deleteproduct/<?= $row->id ?>" method="post" onsubmit="return confirm('Are you sure you want to delete this product?');">
                                                     <button type="submit" class="take-action">Delete</button>
                                                 </form>
                                             </div>

@@ -61,7 +61,8 @@ body {
 }
 
 .add-complain-btn:hover {
-    background-color: #F0F0F0;
+    background-color: #ffd7b4;
+    transition: background-color 0.3s ease;
 }
 
 .Business-complaints-order-status {
@@ -199,7 +200,7 @@ body {
 }
 
 .order-table tbody tr:hover {
-    background-color: #b6efc4; 
+    background-color: #ffd7b4; 
     cursor: pointer; 
     transition: background-color 0.3s ease; 
 }
@@ -225,5 +226,5 @@ body {
 .event-name img.event-img {
     width: 40px;
     height: 40px;
-    border-radius: 50%;
+    border-radius: 20%;
 }

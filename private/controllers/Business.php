@@ -9,24 +9,26 @@ class Business extends Controller
             $this->redirect('login');
         }
 
-        $this->view('businessWelcomePage');
-    }
-
-    function dashboard()
-    {
-        $this->view('businessWelcomePage');
+        $product = new Products();
+        $pro_id = Auth::getID();
+        $rowCount = $product->countRows($pro_id);
+        $this->view('businessWelcomePage', [
+            'rowCount' => $rowCount,
+        ]);
     }
 
     function myproducts()
     {
-
         if (!Auth::logged_in()) {
             $this->redirect('login');
         }
+
         $product = new Products();
-        $business_id = Auth::getUserId();
-        $data = $product->where('business_id', $business_id);
+        $business_id = Auth::getID();
+
+        // Handle expired products
         $currentDateTime = date('Y-m-d H:i:s');
+        $data = $product->where('business_id', $business_id);
         if (!empty($data)) {
             foreach ($data as $row) {
                 if ($currentDateTime > $row->expiration_date_time) {
@@ -34,9 +36,16 @@ class Business extends Controller
                 }
             }
         }
-        $data = $product->where('business_id', $business_id);
+
+        // Get filter from query parameters
+        $filter = $_GET['filter'] ?? null;
+
+        // Fetch filtered or default data
+        $data = $product->getFilteredProducts($business_id, $filter);
+
         $this->view('businessMyProducts', ['rows' => $data]);
     }
+
 
     function orders()
     {
@@ -147,51 +156,64 @@ class Business extends Controller
             $this->redirect('login');
         }
 
+        $errors = []; // Ensure this is declared before use.
         $product = new Products();
-        $errors = [];
 
-        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
-            $uploadedPictures = [];
-            $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/businessImages/";
+        $row = $product->where('id', $id);
+        $currentPictures = explode(',', $row[0]->pictures);
+        $uploadedPictures = [];
 
-            // Handle each upload field
-            foreach ($_FILES as $key => $file) {
-                if (strpos($key, 'upload-') === 0 && isset($file['name']) && $file['error'] === 0) {
-                    $fileName = basename($file['name']);
-                    $filePath = $targetDir . $fileName;
-                    $fileType = pathinfo($filePath, PATHINFO_EXTENSION);
+        $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/businessImages/";
 
-                    // Allow certain file formats
-                    $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
-                    if (in_array(strtolower($fileType), $allowedTypes)) {
-                        // Attempt to move the uploaded file
-                        if (move_uploaded_file($file['tmp_name'], $filePath)) {
-                            // Save the full path to the image in the array
-                            $uploadedPictures[] = '/assets/businessImages/' . $fileName; // Use relative path
-                        } else {
-                            $errors[] = "Failed to upload image: {$fileName}.";
-                        }
+        // Loop through upload slots (assuming there are 4 upload slots)
+        for ($i = 0; $i < 3; $i++) {
+            $uploadKey = 'upload-' . $i + 1;
+
+            if (isset($_FILES[$uploadKey]) && $_FILES[$uploadKey]['error'] === 0) {
+                // Get the original file name and extension
+                $fileName = basename($_FILES[$uploadKey]['name']);
+                $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+
+                // Generate a unique file name
+                $uniqueName = uniqid('img_', true) . '.' . $fileType;
+
+                // Define the file path
+                $filePath = $targetDir . $uniqueName;
+
+                // Allow certain file formats
+                $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+                if (in_array(strtolower($fileType), $allowedTypes)) {
+
+                    if (move_uploaded_file($_FILES[$uploadKey]['tmp_name'], $filePath)) {
+                        // Save the relative path to the uploaded image
+                        $uploadedPictures[$i] = '/assets/businessImages/' . $uniqueName;
                     } else {
-                        $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed for {$fileName}.";
+                        $errors[] = "Failed to upload image: {$fileName}.";
                     }
-                }
-            }
-
-            // Handle pictures field
-            if (!empty($uploadedPictures)) {
-                $_POST['pictures'] = implode(',', $uploadedPictures); // Store paths as a comma-separated string
-            } else {
-                // Fetch existing product details
-                $row = $product->where('id', $id);
-
-                if (!empty($row[0]->pictures)) {
-                    // Use the existing images if no new images are uploaded
-                    $_POST['pictures'] = $row[0]->pictures;
                 } else {
-                    $errors[] = "At least one product picture is required.";
+                    $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed for {$fileName}.";
                 }
+            } elseif (!empty($currentPictures[$i])) {
+                $uploadedPictures[$i] = $currentPictures[$i];
             }
+        }
 
+        // Ensure all 4 slots are accounted for
+        for ($i = 0; $i < 3; $i++) {
+            if (!isset($uploadedPictures[$i])) {
+                $uploadedPictures[$i] = ''; // Fill empty slots with an empty string
+            }
+        }
+        // Check if at least one image was uploaded or exists
+        if (!array_filter($uploadedPictures)) { // array_filter removes empty values
+            $errors[] = "At least one event picture is required.";
+        } else {
+            $_POST['pictures'] = implode(',', $uploadedPictures); // Store paths as a comma-separated string
+        }
+
+        $errors = array();
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($_POST) > 0) {
             // Process the form
             if ($product->validate($_POST)) {
                 $arr['business_id'] = Auth::getUserId();

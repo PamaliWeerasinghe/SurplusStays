@@ -38,7 +38,7 @@
                         <?php if (($row)): ?>
                             <div class="charity-overview">
                                 <div class="image-container">
-                                    <img class="logo-img" src="<?= ROOT ?><?= htmlspecialchars($businessPictures[0]) ?>" alt="Charity Logo">
+                                    <img class="logo-img" src="<?= ROOT ?><?= htmlspecialchars($businessPictures[0]) ?>" alt="Business Logo">
                                 </div>
                                 <div class="charity-text">
                                     <h1><?= $row[0]->name ?></h1>
