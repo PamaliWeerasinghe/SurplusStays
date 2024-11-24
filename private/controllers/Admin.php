@@ -150,15 +150,5 @@ class Admin extends Controller
         $this->view('home');
     }
 
-    function test($name)
-    {
-        $data = [
-            "username" => $name
-        ];
-        $this->view('aboutView', $data);
-    }
-
-    function img(){
-        $this->view('viewImg');
-    }
+  
 }

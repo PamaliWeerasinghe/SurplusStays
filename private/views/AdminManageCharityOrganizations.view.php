@@ -1,8 +1,10 @@
 <?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
-
+<?php require APPROOT . '/views/deleteConfirmation.view.php' ?>
 <link rel="stylesheet" href="<?= STYLES ?>/adminSidePanel.css" />
 <link rel="stylesheet" href="<?= STYLES ?>/adminManageActors.css" />
 <link rel="stylesheet" href="<?= STYLES ?>/admin.css">
+
+
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"   />
 </head>
 
@@ -77,7 +79,7 @@
 
 
                                     </button>
-                                    <button onclick="window.location.href='<?=ROOT ?>/AdminCharity/delete/<?=$row->id?>''">
+                                    <button onclick="openPopup(<?=$row->id?>)" value="<?=$row->id?>">
                                         <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
                                             person_remove
                                         </span>
@@ -121,3 +123,5 @@
 
 
     <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
+  
+    <script src="<?=ROOT?>/assets/js/deletePopup.js"></script>
