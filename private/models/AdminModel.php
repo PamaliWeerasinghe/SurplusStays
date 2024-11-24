@@ -100,67 +100,90 @@ class AdminModel extends Model
         $logoActualExt = strtolower(end($logoExt));
         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
         $fileDestination = '../../SurplusStays/public/assets/uploads/' . $logoNameNew;
-        $dbFileDestination='../../../SurplusStays/public/assets/uploads/'.$logoNameNew;
-        move_uploaded_file($_FILES['logo']['tmp_name'], $fileDestination);
+        $dbFileDestination = '../../../SurplusStays/public/assets/uploads/' . $logoNameNew;
+        move_uploaded_file($_FILES['file']['tmp_name'], $fileDestination);
 
         return $dbFileDestination;
     }
 
-    public function validateEditCharity($DATA){
+    public function validateEditCharity($DATA)
+    {
         $this->errors = array();
-        //validate the name
-        if (!preg_match('/^[a-z A-Z &]+$/', $DATA['name'])) {
-            $this->errors['name'] = "Only letters are allowed for the name";
-        }
-        //validate the image selection
+        $this->data = array();
 
-        $logo = $_FILES['profilePic']['name'];
+        if (!empty($DATA['name'])) {
+        
+            if (!preg_match('/^[a-z A-Z &]+$/', $DATA['name'])) {
+                
+                $this->errors['name'] = "Only letters are allowed for the name";
+            } else {
+            
+                $this->data['name'] = $DATA['name'];
+                
+            }
+        }
+        $logo = $_FILES['file']['name'];
+        print_r($logo);
         $logoExt = explode('.', $logo);
         $logoActualExt = strtolower(end($logoExt));
         $allowed = array('jpg', 'jpeg', 'png');
+
         if (in_array($logoActualExt, $allowed)) {
-            if ($_FILES['logo']['error'] != 0) {
+            if ($_FILES['file']['error'] != 0) {
                 $this->errors['logo'] = "There was an error uploading your file!";
+            } else if (!in_array($logoActualExt, $allowed)) {
+                $this->errors['logo'] = "You cannot upload files of this type!";
+            } else {
+                $editCharity = new AdminModel();
+                $this->data['picture'] = $editCharity->uploadLogo($logo);
             }
-        } else {
-            $this->errors['logo'] = "You cannot upload files of this type!";
         }
 
-        if (isset($DATA['logo'])) {
-            $this->errors['logo'] = "Select a logo for the Organization";
+        if (!empty($DATA['city'])) {
+            if (!preg_match('/^[a-z A-Z]+$/', $DATA['city'])) {
+                $this->errors['city'] = "Only letters are allowed for the city";
+            } else {
+                $this->data['city'] = $DATA['city'];
+            }
         }
-        //validate the city
-        if (!preg_match('/^[a-z A-Z]+$/', $DATA['city'])) {
-            $this->errors['city'] = "Only letters are allowed for the city";
-        }
-        //validate the email
-        if (empty($DATA['email']) || !filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
-            $this->errors['email'] = "Email is not valid";
-        }
-        //validate the mobile phone number
-        if (!preg_match('/^(\+94|0)?((7|1)[0-9]{1})[0-9]{7}$/', $DATA['phone'])) {
-            $this->errors['phone'] = "Invalid phone number";
-        }
-        //validate the organization description
-        if (empty($DATA['description'])) {
-            $this->errors['description'] = "Description cannot be empty";
-        }
-        //validate the username
-        if (empty($DATA['username'])) {
-            $this->errors['username'] = "Username should not be empty";
-        }
-        
 
+        if (!empty($DATA['email'])) {
+            if (empty($DATA['email']) || !filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
+                $this->errors['email'] = "Email is not valid";
+            } else {
+                $this->data['email'] = $DATA['email'];
+            }
+        }
+
+        if (!empty($DATA['phone'])) {
+            if (!preg_match('/^(\+94|0)?((7|1)[0-9]{1})[0-9]{7}$/', $DATA['phone'])) {
+                $this->errors['phone'] = "Invalid phone number";
+            } else {
+                $this->data['phoneNo'] = $DATA['phone'];
+            }
+        }
+
+        if (!empty($DATA['description'])) {
+            $this->data['charity_description'] = $DATA['description'];
+        }
+
+        if (!empty($DATA['username'])) {
+            $this->data['username'] = $DATA['username'];
+        }
+
+        if (!empty($DATA['password']) || !empty($DATA['confirm_password'])) {
+            if ($DATA['password'] != $DATA['confirm_password']) {
+                $this->errors['password'] = "Passwords does not match";
+            } else {
+                $this->data['password'] = $DATA['password'];
+                
+            }
+        }
 
         if (count($this->errors) == 0) {
             return true;
         } else {
             return false;
         }
-
     }
-
-
-
-
 }

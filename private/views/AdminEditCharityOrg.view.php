@@ -35,7 +35,7 @@
                 <?php endif; ?>
 
                 <h4>ORGANIZATION NAME :</h4>
-                <input placeholder="ENTER YOUR ORGANIZATION NAME" value='<?=$rows->name?>' type="text" name="name" class="input" >
+                <input placeholder="<?=$rows->name?>" value='<?=get_var('name')?>' type="text" name="name" class="input" >
                 
                 <h4>ORGANIZATION LOGO :</h4>
                 <!-- <input placeholder="ADD ORGANIZATION OF THE LOGO" value="<?=get_var('logo')?>" type="file" name="logo" class="input" > -->
@@ -52,25 +52,22 @@
                 <div class="upload-container">
                         <div class="logo-icon-preview">
                         <img src="<?=$rows->picture?>" alt="Profile Picture" id="profile-pic-preview">
-                        <input type="file" id="profilePic" name="profilePic" accept=".jpg, .jpeg, .png">
+                        <input type="file" id="profilePic" name="file" />
                         </div>
-                        <!-- <div class="upload-details">
-                        <div class="upload-icon">⬆</div>
-                        <div class="upload-message">Image size should be under 5MB</div>
-                        </div> -->
+                       
                         
                 </div>
 
                 <h4>ORGANIZATION CITY :</h4>
-                <input placeholder="ENTER YOUR ORGANIZATION CITY" value='<?=$rows->name?>' type="text" name="city" class="input">
+                <input placeholder="<?=$rows->city?>" value='<?=get_var('city')?>' type="text" name="city" class="input">
                 <h4>ORGANIZATION EMAIL:</h4>
-                <input placeholder="ENTER AN EMAIL" value='<?=$rows->email?>' type="text" name="email" class="input"> 
+                <input placeholder="<?=$rows->email?>" value='<?=get_var('email')?>' type="text" name="email" class="input"> 
                 <h4>PHONE NUMBER :</h4>
-                <input placeholder="ENTER A PHONE NUMBER" value='<?=$rows->phoneNo?>' type="text" name="phone" class="input" >
+                <input placeholder="<?=$rows->phoneNo?>" value='<?=get_var('phone')?>' type="text" name="phone" class="input" >
                 <h4>ORGANIZATION DESCRIPTION :</h4>
-                <input placeholder="ENTER A BRIEF DESCRIPTION ABOUT THE ORGANIZATION" value='<?=$rows->charity_description?>' type="text" name="description" class="input"> 
+                <input placeholder="<?=$rows->charity_description?>" value='<?=get_var('description')?>' type="text" name="description" class="input"> 
                 <h4>USERNAME :</h4>
-                <input placeholder="ENTER A USERNAME" value='<?=$rows->username?>' type="username" name="username" class="input" >
+                <input placeholder="<?=$rows->username?>" value='<?=get_var('username')?>' type="username" name="username" class="input" >
                 <h4>PASSWORD :</h4>
                 <input placeholder="ENTER NEW PASSWORD" value="<?=get_var('password')?>" type="text" name="password" class="input">
                 <h4>CONFIRM PASSWORD  :</h4>

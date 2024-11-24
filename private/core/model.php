@@ -4,6 +4,8 @@ class Model extends Database
 {
      public $table;
      public $errors = array();
+     public $data=array();
+     
 
      public function __construct()
      {
@@ -43,37 +45,27 @@ class Model extends Database
           return $this->query($query, $data);
      }
 
-     public function update($id, $data)
+     public function update($id,$data,$table)
      {
-          $str = "";
+          $this->table=$table;
+          
 
+          $str = "";
+          $data['id']=$id;
           foreach ($data as $key => $value) {
                $str .= $key . "=:" . $key . ",";
           }
+     
           $str = trim($str, ",");
 
-          $data['id'] = $id;
+         
+
           $query = "update $this->table set $str where id = :id";
 
           return $this->query($query, $data);
      }
 
-     //Update charity organization except password field
-     public function updateExceptPassword($name,$picture,$city,$email,$phoneNo,$description,$username,$date,$id){
-          $this->table='organization';
-          $query="update $this->table set 
-          name = :$name,
-          picture =:$picture,
-          city=:$city,
-          email=:$email,
-          phoneNo=:$phoneNo,
-          charity_description=:$description,
-          username=:$username,
-          date=:$date
-          where id=:$id";
-
-          return $this->query($query);
-     }
+     
 
      public function delete($id,$table)
      {    
