@@ -146,3 +146,15 @@ button:hover {
     font-weight: 300px;
 }
 
+.delete-btn{
+    height: 20px;
+    margin-bottom: 160px;
+    margin-left: -20px;
+    position: absolute;
+    width: 20px;
+    z-index: 2;
+}
+
+.delete-btn:hover {
+    opacity: 0.8;
+}

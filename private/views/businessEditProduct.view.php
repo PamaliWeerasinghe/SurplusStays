@@ -85,6 +85,7 @@
                                     <label for="upload-1">
                                         <?php if (!empty($productPictures[0])): ?>
                                             <img src="<?= ROOT ?><?= htmlspecialchars($productPictures[0]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-1">
+                                            <img class="delete-btn" src="<?= ASSETS ?>/icons/delete-button.png" alt="">
                                         <?php else: ?>
                                             <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
                                         <?php endif; ?>
@@ -94,6 +95,7 @@
                                     <label for="upload-2">
                                         <?php if (!empty($productPictures[1])): ?>
                                             <img src="<?= ROOT ?><?= htmlspecialchars($productPictures[1]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-2">
+                                            <img class="delete-btn" src="<?= ASSETS ?>/icons/delete-button.png" alt="">
                                         <?php else: ?>
                                             <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-2">
                                         <?php endif; ?>
@@ -103,6 +105,7 @@
                                     <label for="upload-3">
                                         <?php if (!empty($productPictures[2])): ?>
                                             <img src="<?= ROOT ?><?= htmlspecialchars($productPictures[2]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-3">
+                                            <img class="delete-btn" src="<?= ASSETS ?>/icons/delete-button.png" alt="">
                                         <?php else: ?>
                                             <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-3">
                                         <?php endif; ?>
@@ -117,14 +120,14 @@
                             </div>
 
                             <div class="button-group">
-
-
                                 <a href="<?= ROOT ?>/business/myproducts">
                                     <button type="button" class="btn-cancel">Cancel</button>
                                 </a>
                                 <button type="submit" class="btn-create">Save</button>
                             </div>
+
                         </form>
+
                     <?php else: ?>
                         <p>The product was not found.</p>
                     <?php endif; ?>
@@ -166,6 +169,19 @@
                 };
                 reader.readAsDataURL(file);
             }
+        });
+
+        document.querySelectorAll('.delete-btn').forEach((btn, index) => {
+            btn.addEventListener('click', function(event) {
+                event.preventDefault();
+                // Find the associated image and set the input to empty
+                let uploadInput = document.getElementById('upload-' + (index + 1));
+                uploadInput.value = ''; // Clear the file input
+                // Hide the image preview and the delete button
+                let imagePreview = document.getElementById('profilePreview-' + (index + 1));
+                imagePreview.src = '<?= ASSETS ?>/icons/uploadArea.png'; // Reset the preview image
+                this.style.display = 'none'; // Hide the delete button
+            });
         });
     </script>
 </body>
