@@ -42,7 +42,7 @@
                         </div>
                         <div class="main-img-details">
                             <div class="see-product-img">
-                                <img src="<?= ASSETS ?>/images/bread-lg.png" />
+                                <img src='<?= $rows->picture ?>' />
                             </div>
                             <div class="see-product-details">
                                 <div>
