@@ -1,7 +1,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Change Account Password</title>
+    <title>Lodge A Complaint</title>
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="../../public/assets/styles/CustSidePanel.css">
     <link rel="stylesheet" href="../../public/assets/styles/CustTopPanel.css">
-    <link rel="stylesheet" href="../../public/assets/styles/custChangePassword.css">
+    <link rel="stylesheet" href="../../public/assets/styles/CustLodgeComplaint.css">
 </head>
 
 
@@ -50,33 +50,42 @@
             <div class="content">
                 <div class="box">
                     <div class="box-header">
-                        Change password
+                        Lodge A Complaint
                     </div>
 
                     <div class="box-content">
                         <br/>
-                        <div class="name-area">
-                            JANITHA CHATHUNI
-                        </div>
-                        
+
                         <div class="form-area">
-                            <form class="password-form">
-                                <div class="input-group">
-                                    <label for="current-password">Current Password :</label>
-                                    <input type="password" id="current-password" placeholder="Enter Current Password">
+                        <form class="complaint-form">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" id="name" placeholder="Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="contact">Contact Number:</label>
+                                <input type="tel" id="contact" placeholder="Contact Number">
+                            </div>
+                            <div class="form-group">
+                                <label for="date">Date Of Order:</label>
+                                <div class="date-input-wrapper">
+                                <input type="text" id="date" placeholder="DD/MM/YY">
+                                <span class="calendar-icon">📅</span>
                                 </div>
-                                <div class="input-group">
-                                    <label for="new-password">New Password :</label>
-                                    <input type="password" id="new-password" placeholder="Enter New Password">
-                                </div>
-                                <div class="input-group">
-                                    <label for="reenter-password">Re-Enter New Password :</label>
-                                    <input type="password" id="reenter-password" placeholder="Re-enter New Password">
-                                </div>
-                                <div class="button-group">
-                                    <button type="submit" class="save-btn">Save Password</button>
-                                    <button type="button" class="cancel-btn">Cancel</button>
-                                </div>
+                            </div>
+                            <div class="form-group">
+                                <label for="shop-name">Shop Name:</label>
+                                <input type="text" id="shop-name" placeholder="Shop Name">
+                            </div>
+                            <div class="form-group">
+                                <label for="related-items">Related Items:</label>
+                                <input type="text" id="related-items" placeholder="Related Items">
+                            </div>
+                            <div class="form-group">
+                                <label for="complaint">Complaint:</label>
+                                <textarea id="complaint" placeholder="Add Complaint Description"></textarea>
+                            </div>
+                            <button type="submit" class="submit-button">Submit</button>
                             </form>
                             
                         </div>

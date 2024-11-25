@@ -5,7 +5,12 @@ body {
 
 .container {
     display: flex;
-    height: 100vh;
+}
+
+.main-content {
+    flex: 1; /* Allow .main-content to take up all the remaining space */
+    display: flex;
+    flex-direction: column; /* Ensures children stack vertically */
 }
 
 /* Top Navigation */
@@ -30,11 +35,10 @@ body {
     border-radius: 20px;
     outline: none;
     width: 250px;
-    margin-left: 30%;
+    margin-left: 0%;
     background-color: #0B3D3B;
     border: #6e7683;
     border-style: solid;
-    font-family: "Outfit, sans serif";
 }
 
 .notification {
@@ -86,4 +90,3 @@ body {
     font-weight: 700;
     display: block;
 }
-
