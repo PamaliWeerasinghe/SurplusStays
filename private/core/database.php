@@ -4,8 +4,8 @@ class Database
 {
     private function connect() 
     {
-        $string = DBDRIVER .":host=". DBHOST .";dbname=".DBNAME;
-        if(!$con = new PDO($string,DBUSER,DBPASS)){
+        $string = DBDRIVER . ":host=".DBHOST.";dbname=".DBNAME;
+        if(!$con = new PDO($string,'root','')){
             die("could not connect to the database");
         }
 
@@ -36,7 +36,6 @@ class Database
         return false;
     }
 
-  
 }
 
 
