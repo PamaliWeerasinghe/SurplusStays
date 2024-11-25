@@ -207,3 +207,40 @@ body {
 
 
 /* young-crowd */
+
+.surrounding{
+    width: 100%;
+    height: 70vh;
+    background-image: url('../images/surrounding.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+}
+.surrounding1{
+    display: flex;
+    flex: 1;
+    background-color: black;
+    opacity: 0.5;
+    justify-content: center;
+    align-items: center;
+}
+.surrounding2{
+    display: flex;
+    flex: 3;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+
+}
+.surrounding2 label{
+    color: white;
+    font-size: larger;
+}
+.surround-label1{
+    color: white;
+    
+}
+.surround-label2{
+    color: #95D5B2;
+}

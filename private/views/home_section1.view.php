@@ -131,5 +131,22 @@ require APPROOT . '/views/includes/htmlHeader.view.php' ?>
 
     </div>
     <?php echo $this->view('RecentItems') ?>
+    <div class="surrounding">
+        <div class="surrounding1">
+            <h3 class="surround-label1">BENEFITS OF USING <h3 class="surround-label2"> &nbsp; SURPLUS STAYS</h3></h3>
+        </div>
+        <div class="surrounding2">
+            <label>Reduce Food Waste</label>
+            <label>|</label>
+            <label>Save Money</label>
+            <label>|</label>
+            <label>Support Local Businesses</label>
+            <label>|</label>
+            <label>Variety And Quality</label>
+            <label>|</label>
+            <label>Convenient And Easy To Use</label>
+        </div>
+    </div>
+    
     <?php echo $this->view('includes/footer') ?>
     <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
