@@ -1,12 +1,11 @@
-<?php 
-require APPROOT . '/views/includes/htmlHeader.view.php' ?>
+<?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
 <title><?php echo SITENAME ?></title>
 
 <link rel="stylesheet" href="<?= STYLES ?>/home_section1.css">
 </head>
 
 <body>
-    <?php echo $this->view('includes/navbar_unregistered') ?>
+    <?php echo $this->view('includes/navbar') ?>
     <div class="search-section">
         <div class="searchdiv">
             <input type="text" class="search" placeholder="Search..." />
@@ -130,6 +129,3 @@ require APPROOT . '/views/includes/htmlHeader.view.php' ?>
     <div class="young-crowd">
 
     </div>
-    <?php echo $this->view('RecentItems') ?>
-    <?php echo $this->view('includes/footer') ?>
-    <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
