@@ -5,8 +5,9 @@ class AdminAuth
     public static function authenticate($row)
     {
         if (session_status() == PHP_SESSION_NONE) {
-            $_SESSION['ADMIN'] = $row;
+           session_start();
         }
+        $_SESSION['ADMIN'] = $row;
     }
 
     //logout
@@ -18,6 +19,9 @@ class AdminAuth
     //check whether an admin is logged in
     public static function logged_in()
     {
+        if(session_status()==PHP_SESSION_NONE){
+            session_start();
+        }
         if (isset($_SESSION['ADMIN'])) {
             return true;
         }

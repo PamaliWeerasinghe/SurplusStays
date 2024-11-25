@@ -60,23 +60,26 @@ class Admin extends Controller
             if (count($_POST) > 0) {
                 $user = new AdminModel();
                 $charityOrg = $user->findAll('organization');
-                if ($row = $user->where('email', $_POST['email'], 'admin')) {
+                $row = $user->where('email', $_POST['email'], 'admin');
+                if ($row) {
+                    $row = $row[0];
+                    
                     AdminAuth::authenticate($row);
 
-                    $this->view('adminWelcomePage', ['charityOrg' => $charityOrg]);
+                    $this->view('adminWelcomePage', ['charityOrg' => $row]);
                 } else {
                     if ($user->validate($_POST)) {
 
                         $this->view('adminWelcomePage', ['charityOrg' => $charityOrg]);
                     } else {
                         $errors = $user->errors;
-                        $this->view('AdminLoginStep1', ['errors' => $errors]);
+                        $this->view('AdminLoginStep1',['errors' => $errors]);
                     }
 
                     // $errors['email'] = "wrong email or password";
                 }
             } else {
-                $this->view('AdminLoginStep1', ['errors' => $errors]);
+                $this->view('AdminLoginStep1');
             }
         }
 
@@ -87,7 +90,7 @@ class Admin extends Controller
 
     function dashboard()
     {
-        if (Auth::logged_in()) {
+        if (AdminAuth::logged_in()) {
             $this->view('adminWelcomePage');
         } else {
             $this->redirect('register');
@@ -124,7 +127,7 @@ class Admin extends Controller
     }
     function ManageCharityOrg()
     {
-        if (AdminAuth::logged_in()) {
+        if (!AdminAuth::logged_in()) {
             $this->redirect('register');
         } else {
             $user = new AdminModel();

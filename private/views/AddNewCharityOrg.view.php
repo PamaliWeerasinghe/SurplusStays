@@ -38,7 +38,16 @@
                 <h4>ORGANIZATION NAME :</h4>
                 <input placeholder="ENTER YOUR ORGANIZATION NAME" value="<?=get_var('name')?>" type="text" name="name" class="input" >
                 <h4>ORGANIZATION LOGO :</h4>
-                <input placeholder="ADD ORGANIZATION OF THE LOGO" value="<?=get_var('logo')?>" type="file" name="logo" class="input" >
+                <div class="img-container">
+                <div id="profile-pic-preview" class="preview-container">
+                    <p class="preview-placeholder">No image selected</p>
+                    
+                </div>
+                   
+                    <input type="file" id="profilePic" accept="image/*"/>
+                
+                
+                </div>
                 <h4>ORGANIZATION CITY :</h4>
                 <input placeholder="ENTER YOUR ORGANIZATION CITY" value="<?=get_var('city')?>" type="text" name="city" class="input">
                 <h4>ORGANIZATION EMAIL:</h4>
@@ -60,5 +69,37 @@
     </div>
 
 <?php echo $this->view('includes/footer')?>
+
+<script>
+      document
+        .getElementById("profilePic")
+        .addEventListener("change", function (e) {
+          const file = e.target.files[0];
+          const previewContainer = document.getElementById(
+            "profile-pic-preview"
+          );
+          previewContainer.innerHTML = ""; // Clear previous preview or placeholder
+
+          if (file) {
+            const reader = new FileReader();
+            reader.onload = function (e) {
+              const img = document.createElement("img");
+              img.src = e.target.result;
+              img.alt = "Profile Preview";
+              img.style.width = "100px";
+              img.style.height = "100px";
+              previewContainer.appendChild(img);
+            };
+            reader.readAsDataURL(file);
+          } else {
+            // If no file is selected, display a placeholder text
+            const placeholder = document.createElement("p");
+            placeholder.className = "preview-placeholder";
+            placeholder.textContent = "No image selected";
+            previewContainer.appendChild(placeholder);
+          }
+        });
+    </script>
+
 </body>
 </html>
