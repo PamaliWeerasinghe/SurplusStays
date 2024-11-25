@@ -61,14 +61,13 @@
                                 <?php endif; ?>
 
                             </div>
-                            <div class="bottom">
+                            <div class="bottom" >
                                 <p>
                                     <strong>expiration date and time :</strong>
                                     <span class="red-text"><?= $row[0]->expiration_date_time ?></span>
                                 </p>
 
-                                <p><strong>Description:</strong></p>
-                                <textarea name="description" readonly><?= get_var('description', $row[0]->description) ?></textarea>
+                                <p><strong>Description:</strong><?= $row[0]->description ?></p>
 
                                 <button onclick="window.location.href='<?= ROOT ?>/business/editproduct/<?= $row[0]->id ?>'">Edit Product</button>
                             </div>
@@ -81,26 +80,7 @@
         </div>
         <?php echo $this->view('includes/footer') ?>
     </div>
-    <script>
-        document.addEventListener("DOMContentLoaded", function() {
-            const textareas = document.querySelectorAll("textarea");
-
-            textareas.forEach((textarea) => {
-                // Adjust height initially
-                adjustHeight(textarea);
-
-                // Adjust height on input
-                textarea.addEventListener("input", function() {
-                    adjustHeight(this);
-                });
-            });
-
-            function adjustHeight(textarea) {
-                textarea.style.height = "auto"; // Reset height
-                textarea.style.height = textarea.scrollHeight + "px"; // Set height to match content
-            }
-        });
-    </script>
+    
 </body>
 
 </html>

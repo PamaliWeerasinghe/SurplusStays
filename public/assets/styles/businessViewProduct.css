@@ -111,7 +111,7 @@ p {
     color: #555;
 }
 
-textarea {
+/*textarea {
     width: 80%;
     min-height: 50px;
     padding: 10px;
@@ -124,7 +124,7 @@ textarea {
     box-sizing: border-box;
     overflow: hidden;
     cursor: not-allowed;
-}
+}*/
 
 .red-text {
     color: red;
