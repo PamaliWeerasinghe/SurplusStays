@@ -2,7 +2,7 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta noame="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charity</title>
     <link rel="stylesheet" href="<?=STYLES?>/charityViewEvent2.css">
 </head>
@@ -146,6 +146,7 @@
         </div>
     </div>
     <?php echo $this->view('includes/footer')?>
+    
     <script type="text/javascript">
     <?php $imgcount = count($eventPictures); ?>
     var imgcount = <?php echo $imgcount; ?>; // Pass PHP variable to JavaScript
@@ -156,7 +157,7 @@
         if(counter > imgcount){
             counter = 1;
         }
-    }, 5000);
+    }, 3000);
 </script>
 
     

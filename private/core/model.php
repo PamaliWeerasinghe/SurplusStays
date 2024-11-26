@@ -58,5 +58,6 @@ class Model extends Database
      $query = "delete from $this->table where id = :id";
      $data['id'] = $id;
      return $this->query($query,$data);
-}
+   }
+ 
 }

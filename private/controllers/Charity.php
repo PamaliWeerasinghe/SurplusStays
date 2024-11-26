@@ -201,13 +201,26 @@ class Charity extends Controller
                     $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed for {$fileName}.";
                 }
             } 
+             // If no file uploaded, check if it's a delete request
+            elseif (isset($_POST['delete-' . ($i + 1)]) && $_POST['delete-' . ($i + 1)] === "delete.png") {
+                // If delete request, remove the image from the server
+                if (!empty($currentPictures[$i])) {
+                    $filePathToDelete = $_SERVER['DOCUMENT_ROOT'] . $currentPictures[$i];
+                    if (file_exists($filePathToDelete)) {
+                        unlink($filePathToDelete);  // Delete the file from server
+                    }
+                    // Mark the image slot as deleted
+                    $uploadedPictures[$i] = '';  // Mark as empty or deleted
+                }
+            }
+             // If no file uploaded, keep the current picture
             elseif (!empty($currentPictures[$i])) {
                 $uploadedPictures[$i] = $currentPictures[$i];
             }
         }
         
 
-        // Ensure all 4 slots are accounted for
+        // Ensure all 5 slots are accounted for
         for ($i = 0; $i < 5; $i++) {
             if (!isset($uploadedPictures[$i])) {
                 $uploadedPictures[$i] = ''; // Fill empty slots with an empty string
@@ -253,8 +266,5 @@ class Charity extends Controller
             'errors' => $errors,
         ]);
     }
-
-
-
-
+    
 }

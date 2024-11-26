@@ -18,7 +18,7 @@
             </p>
         </div>
         <div class="right">
-            <button class="register-button">Customer Login</button>
+            <button class="register-button" onclick="window.location.href='<?=ROOT?>/login/customerLogin'">Customer Login</button>
             <button class="register-button">Business Login</button>
             <button class="register-button" onclick="window.location.href='<?=ROOT?>/login/charityLogin'">Charity Login</button>
                 <p>Don't have an account? <a href='<?=ROOT?>/register'>SIGN UP HERE</a></p>

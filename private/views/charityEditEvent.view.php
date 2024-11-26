@@ -107,12 +107,14 @@
                                     <label for="upload-1">
                                         <?php if(!empty($eventPictures[0])):?>
                                             <img src="<?=ROOT?><?= htmlspecialchars($eventPictures[0]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-1">
-                                            <img class="delete-btn" src="<?=ASSETS?>/icons/delete-button.png" alt="">
+                                            <img class="delete-btn" src="<?=ASSETS?>/icons/delete-button.png" alt="" onclick="">
                                         <?php else:?>
                                             <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
                                         <?php endif;?>
                                     </label>
                                     <input type="file" id="upload-1" name="upload-1" style="display: none;">
+                                    <input type="hidden" id="delete-1" name="delete-1" value="false">
+
 
                                     <label for="upload-2">
                                         <?php if(!empty($eventPictures[1])):?>
@@ -123,6 +125,7 @@
                                         <?php endif;?>
                                     </label>
                                     <input type="file" id="upload-2" name="upload-2" style="display: none;">
+                                    <input type="hidden" id="delete-2" name="delete-2" value="false">
 
                                     <label for="upload-3">
                                         <?php if(!empty($eventPictures[2])):?>
@@ -133,6 +136,7 @@
                                         <?php endif;?>
                                     </label>
                                     <input type="file" id="upload-3" name="upload-3" style="display: none;">
+                                    <input type="hidden" id="delete-3" name="delete-3" value="false">
 
                                     <label for="upload-4">
                                         <?php if(!empty($eventPictures[3])):?>
@@ -143,6 +147,7 @@
                                         <?php endif;?>
                                     </label>
                                     <input type="file" id="upload-4" name="upload-4" style="display: none;">
+                                    <input type="hidden" id="delete-4" name="delete-4" value="false">
 
                                     <label for="upload-5">
                                         <?php if(!empty($eventPictures[4])):?>
@@ -154,6 +159,7 @@
                                         <?php endif;?>
                                     </label>
                                     <input type="file" id="upload-5" name="upload-5" style="display: none;">
+                                    <input type="hidden" id="delete-5" name="delete-5" value="false">
                                 </div>
                             </div>
 
@@ -165,7 +171,7 @@
                             <div class="button-group">
                                 <button type="submit" class="btn-create">Edit Event</button>
                                 <button type="reset" class="btn-clear">Clear All</button>
-                                <button type="button" class="btn-cancel">Cancel</button>
+                                <button type="button" class="btn-cancel" onclick="window.location.href='<?=ROOT?>/charity/manage_events'">Cancel</button>
                             </div>
                         </form>
                     <?php else: ?>
@@ -246,7 +252,49 @@
         });
     });
 
+    document.querySelectorAll('.delete-btn').forEach((btn, index) => {
+        btn.addEventListener('click', function(event) {
+            event.preventDefault();
+
+            // Find the associated hidden input and set it to indicate deletion
+            let deleteInput = document.getElementById('delete-' + (index + 1));
+            deleteInput.value = 'delete.png'; // Set the deletion value
+
+            // Hide the image preview and the delete button
+            let imagePreview = document.getElementById('profilePreview-' + (index + 1));
+            imagePreview.src = '<?=ASSETS?>/icons/uploadArea.png'; // Reset the preview image
+            this.style.display = 'none'; // Hide the delete button
+        });
+    });
     
+    document.querySelector('.btn-clear').addEventListener('click', function(e) {
+        e.preventDefault();  // Prevent form submission
+        
+        // Clear all text, textarea, and select inputs
+        document.querySelectorAll('input[type="text"], input[type="datetime-local"], textarea, select').forEach(function(input) {
+            input.value = ''; 
+        });
+
+        // Clear file inputs and image previews
+        document.querySelectorAll('input[type="file"]').forEach(function(input) {
+            input.value = '';  // Reset file input
+        });
+        document.querySelectorAll('.upload-icon').forEach(function(icon) {
+            icon.src = '<?=ASSETS?>/icons/uploadArea.png';  // Reset image preview
+        });
+
+        // Clear delete button visibility
+        document.querySelectorAll('.delete-btn').forEach(function(btn) {
+            btn.style.display = 'none';  // Hide delete buttons
+        });
+
+        // Reset any hidden delete inputs to their initial values
+        document.querySelectorAll('input[type="hidden"]').forEach(function(hiddenInput) {
+            hiddenInput.value = 'false'; // Reset hidden delete flags
+        });
+    });
+
+
     </script>
     
 </body>
