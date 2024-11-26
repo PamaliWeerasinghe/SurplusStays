@@ -27,7 +27,7 @@ class Admin extends Controller
 
                 $charity->insert($arr, 'organization');
                 $data = $charity->findAll('organization');
-                
+
                 //include donors and complaints
                 $countd = new AdminCharityDetails();
                 foreach ($data as $row) {
@@ -38,7 +38,7 @@ class Admin extends Controller
                     $count = $countd->getComplaintsCount($row->id);
                     $row->donations = $count;
                 }
-                
+
                 //redirect to manage charity org 
                 $this->view('AdminManageCharityOrganizations', ['rows' => $data]);
             } else {
@@ -72,26 +72,24 @@ class Admin extends Controller
             if (count($_POST) > 0) {
                 $user = new AdminModel();
                 $charityOrg = $user->findAll('organization');
-                $email=$user->where('email',$_POST['email'],'admin');
+                $email = $user->where('email', $_POST['email'], 'admin');
 
 
-                if($email){
-                    $password=$user->where('verification_code',$_POST['email'],'admin');
-                    if($password){
-                        $password=$password[0];
-                        $this->view('AdminWelcomePage',[
-                            'adminDetails'=>$password
+                if ($email) {
+                    $password = $user->where('verification_code', $_POST['email'], 'admin');
+                    if ($password) {
+                        $password = $password[0];
+                        $this->view('AdminWelcomePage', [
+                            'adminDetails' => $password
                         ]);
-                    }else{
+                    } else {
                         $this->view('AdminLoginStep1');
                     }
                 }
-
+            }else{
+                $this->view('AdminLoginStep1');
             }
-
         }
-
-
     }
 
     function dashboard()
