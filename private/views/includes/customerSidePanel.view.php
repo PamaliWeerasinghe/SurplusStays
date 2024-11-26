@@ -8,29 +8,27 @@
             <label>Dashboard</label>
         </div>
         <div class="btn-nonSelected" data-path="/surplusstays/public/admin/TrackExpiry">
-            <label>Track Expiry</label>
+            <label>Browse Shops</label>
         </div>
         <div class="btn-nonSelected" data-path="/surplusstays/public/admin/Complaints">
-            <label>Complaints</label>
+            <label>Cart</label>
         </div>
         <div class="btn-nonSelected" data-path="/surplusstays/public/admin/ManageCustomers">
-            <label>Manage Customers</label>
+            <label>Wishlist</label>
         </div>
         <div class="btn-nonSelected" data-path="/surplusstays/public/admin/ManageBusinesses">
-            <label>Manage Businesses</label>
+            <label>Orders</label>
         </div>
         <div class="btn-nonSelected" data-path="/surplusstays/public/admin/ManageCharityOrg">
-            <label>Manage Charity Org</label>
+            <label>Payment History</label>
         </div>
         <div class="btn-nonSelected" data-path="/surplusstays/public/admin/Reports">
-            <label>Reports</label>
+            <label>Profile</label>
         </div>
         <div class="btn-nonSelected" data-path="/surplusstays/public/Logout">
             <label>Logout</label>
         </div>
-        <!-- <div class="btn-nonSelected" id="profile" onclick="profile();">
-            <label>Profile</label>
-        </div> -->
+        
     </div>
     <script src="<?=ROOT?>/assets/js/customerPagesNavigation.js"></script>
 </aside>
