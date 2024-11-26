@@ -6,7 +6,16 @@ require APPROOT . '/views/includes/htmlHeader.view.php' ?>
 </head>
 
 <body>
-    <?php echo $this->view('includes/navbar_unregistered') ?>
+    <?php
+        if(!Auth::logged_in())
+        {
+            echo $this->view('includes/navbar_unregistered'); 
+        }
+        else{
+            echo $this->view('includes/charityNavbar');
+        }
+    ?>
+    
     <div class="landing-section">
         <div class="aboutUs">
             <div class="us">

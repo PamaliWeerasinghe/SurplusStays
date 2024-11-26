@@ -12,8 +12,14 @@
         </div>
         <ul class="nav-links-right">
             <li><a href="#">Contact Us</a></li>
-            <li><a href="#"><img src="<?=ASSETS?>/images/sample_profile_pic.png" alt="profile icon"></a></li>
+            <?php if (Auth::getcharity_description() != "Unknown"):?>
+                <li><a href="<?=ROOT?>/charity"><img class="profile-img" src="<?=ASSETS?>/charityImages/<?=basename(Auth::getPicture())?>" alt="profile icon"></a></li>
+            <?php else:?>
+                <li><a href="#"><img src="<?=ASSETS?>/images/sample_profile_pic.png" alt="profile icon"></a></li>
+                
+            <?php endif;?>    
             <li><a href="#"><img src="<?=ASSETS?>/icons/heart-icon.png" alt="heart icon"></a></li>
-            <li><a href='<?=ROOT?>/logout'>Logout</a></li>
+            <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
+
     </nav>
