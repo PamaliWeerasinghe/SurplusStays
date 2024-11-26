@@ -45,6 +45,7 @@ class AdminCharity extends Controller
                 if ($data) {
                     $data = $data[0];
                 }
+                
                 $this->view('AdminEditCharityOrg', [
                     'rows' => $data,
                     'errors' => $errors

@@ -53,3 +53,17 @@
 .btn-Selected label{
     color: white;
 }
+
+.btn-nonSelected :hover{
+    color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    width: 240px;
+    height: 39px;
+    background-color: #FFAC96;
+    border-radius: 68px;
+    
+    cursor: pointer;
+
+}

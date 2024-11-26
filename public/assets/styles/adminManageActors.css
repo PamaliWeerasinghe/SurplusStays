@@ -47,6 +47,7 @@
 }
 .buyer-row{
     display: flex;
+    justify-content: space-between;
 }
 .customer-img{
     display: flex;

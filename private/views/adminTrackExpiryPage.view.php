@@ -1,4 +1,5 @@
 <?php require APPROOT.'/views/includes/htmlHeader.view.php'?>
+<?php require APPROOT.'/views/AdminTrackExpiryViewItemPopup.view.php'?>
     <title><?php echo SITENAME ?></title>
     <link rel="stylesheet" href="<?=STYLES?>/adminTrackExpiry.css" />
     <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
@@ -104,7 +105,7 @@
                             </tr>
                         </thead>
                         <tbody id="order-table-body">
-                            <tr>
+                            <tr onclick="openPopup()">
                                 <td>#154</td>
                                 <td>14.02.2024 <br/> 02: 45: 30</td>
                                 <td>Cargills - Rajagiriya</td>
@@ -225,4 +226,5 @@
         </div>
         <?php echo $this->view('includes/footer')?>
         <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>
-        
+    
+        <script src="<?=ROOT?>/assets/js/TrackExpiryPopup.js"></script>

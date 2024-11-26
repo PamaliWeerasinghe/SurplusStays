@@ -44,7 +44,7 @@
                     
                 </div>
                    
-                    <input type="file" id="profilePic" accept="image/*"/>
+                    <input type="file" id="profilePic" name="logo"/>
                 
                 
                 </div>

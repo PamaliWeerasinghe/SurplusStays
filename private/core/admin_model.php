@@ -25,7 +25,7 @@ class Admin_Model extends Database
                'value' => $value
           ]);
      }
-
+  
      public function findAll($table)
      {    
           $this->table=$table;

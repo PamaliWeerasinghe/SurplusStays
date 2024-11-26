@@ -93,7 +93,22 @@ class AdminModel extends Admin_Model
             return false;
         }
     }
+    //upload a logo
     public function uploadLogo($logo)
+    {
+
+        $logoExt = explode('.', $logo);
+        $logoActualExt = strtolower(end($logoExt));
+        $logoNameNew = uniqid('', true) . "." . $logoActualExt;
+        $fileDestination = '../../SurplusStays/public/assets/uploads/' . $logoNameNew;
+        $dbFileDestination = '../../../SurplusStays/public/assets/uploads/' . $logoNameNew;
+        move_uploaded_file($_FILES['logo']['tmp_name'], $fileDestination);
+
+        return $dbFileDestination;
+    }
+
+    //update a logo
+    public function updateLogo($logo)
     {
 
         $logoExt = explode('.', $logo);
@@ -105,6 +120,7 @@ class AdminModel extends Admin_Model
 
         return $dbFileDestination;
     }
+
 
     public function validateEditCharity($DATA)
     {
@@ -123,7 +139,7 @@ class AdminModel extends Admin_Model
             }
         }
         $logo = $_FILES['file']['name'];
-        print_r($logo);
+        
         $logoExt = explode('.', $logo);
         $logoActualExt = strtolower(end($logoExt));
         $allowed = array('jpg', 'jpeg', 'png');
@@ -135,7 +151,7 @@ class AdminModel extends Admin_Model
                 $this->errors['logo'] = "You cannot upload files of this type!";
             } else {
                 $editCharity = new AdminModel();
-                $this->data['picture'] = $editCharity->uploadLogo($logo);
+                $this->data['picture'] = $editCharity->updateLogo($logo);
             }
         }
 

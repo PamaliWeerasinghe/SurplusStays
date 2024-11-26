@@ -26,9 +26,21 @@ class Admin extends Controller
                 $arr['date'] = date("Y-m-d H:i:s");
 
                 $charity->insert($arr, 'organization');
-                $data=$charity->findAll('organization');
+                $data = $charity->findAll('organization');
+                
+                //include donors and complaints
+                $countd = new AdminCharityDetails();
+                foreach ($data as $row) {
+                    $count = $countd->getDonorCount($row->id);
+                    $row->donors = $count;
+                }
+                foreach ($data as $row) {
+                    $count = $countd->getComplaintsCount($row->id);
+                    $row->donations = $count;
+                }
+                
                 //redirect to manage charity org 
-                $this->view('AdminManageCharityOrganizations',['rows'=>$data]);
+                $this->view('AdminManageCharityOrganizations', ['rows' => $data]);
             } else {
 
                 $errors = $charity->errors;
@@ -45,7 +57,7 @@ class Admin extends Controller
     }
     function index()
     {
-        
+
         // $this->view('home_section1');
         $this->view('popup');
     }
@@ -60,31 +72,25 @@ class Admin extends Controller
             if (count($_POST) > 0) {
                 $user = new AdminModel();
                 $charityOrg = $user->findAll('organization');
-                $row = $user->where('email', $_POST['email'], 'admin');
-                if ($row) {
-                    $row = $row[0];
-                    
-                    AdminAuth::authenticate($row);
+                $email=$user->where('email',$_POST['email'],'admin');
 
-                    $this->view('adminWelcomePage', ['charityOrg' => $row]);
-                } else {
-                    if ($user->validate($_POST)) {
 
-                        $this->view('adminWelcomePage', ['charityOrg' => $charityOrg]);
-                    } else {
-                        $errors = $user->errors;
-                        $this->view('AdminLoginStep1',['errors' => $errors]);
+                if($email){
+                    $password=$user->where('verification_code',$_POST['email'],'admin');
+                    if($password){
+                        $password=$password[0];
+                        $this->view('AdminWelcomePage',[
+                            'adminDetails'=>$password
+                        ]);
+                    }else{
+                        $this->view('AdminLoginStep1');
                     }
-
-                    // $errors['email'] = "wrong email or password";
                 }
-            } else {
-                $this->view('AdminLoginStep1');
+
             }
+
         }
 
-
-        // print_r($_POST);
 
     }
 
@@ -152,9 +158,8 @@ class Admin extends Controller
     {
         $this->view('home');
     }
-    function landing(){
+    function landing()
+    {
         $this->view('home_section1');
     }
-
-  
 }

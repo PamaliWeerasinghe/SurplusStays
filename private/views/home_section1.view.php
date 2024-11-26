@@ -159,13 +159,46 @@ require APPROOT . '/views/includes/htmlHeader.view.php' ?>
             <label>HOW DO I REGISTER ON SURPLUSSTAYS ?</label>
             <img src="<?= ASSETS ?>/images/dropdown.png"/>
         </div>
+        <div class="faq-ans1">
+            <span>
+            Registering on SurplusStays is simple and takes only a 
+            few steps! Click on the "Sign Up" button located at the top right corner
+             of the homepage. Choose whether you want to register as a customer or 
+             a business. Fill in your details, such as your name, email address, 
+             and password, and follow the on-screen instructions to complete your 
+             registration. If you're signing up as a business, you'll be asked for 
+             additional details like your business name and location. Once you've 
+             registered, you'll be able to browse surplus food deals or list 
+            your own surplus food items to reduce waste and save money.
+            </span>
+        </div>
         <div class="faq2">
             <label>IS THERE A REGISTRATION FEE ?</label>
             <img src="<?= ASSETS ?>/images/dropdown.png"/>
         </div>
+        <div class="faq-ans2">
+            <span> 
+            No, there is no registration fee to join SurplusStays! 
+            Signing up as a customer or a business is completely free. 
+            Our platform is dedicated to making surplus food accessible to 
+            everyone while helping businesses reduce waste, 
+            so you can start using SurplusStays without any upfront costs.
+            </span>
+        </div>
         <div class="faq3">
             <label>HOW CAN MY BUSINESS LIST SURPLUS ITEMS ?</label>
             <img src="<?= ASSETS ?>/images/dropdown.png"/>
+        </div>
+        <div class="faq-ans3">
+        Listing surplus items on SurplusStays is quick and easy! 
+        After registering as a business, log in to your account and 
+        navigate to the "Dashboard." Click on the "Add Item" button, 
+        where you can provide details such as the name of the item, 
+        quantity, discounted price, and a brief description. You can also 
+        upload photos to make your listing more appealing. Once submitted, 
+        your surplus items will be visible to customers browsing the platform. 
+        This helps your business reduce food waste and attract new customers 
+        while contributing to sustainability efforts.
         </div>
         </div>
        

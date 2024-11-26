@@ -54,7 +54,7 @@
                             </div>
                             <div class="customer-details">
                                 
-                                <label>Kithmini Herath</label>
+                                <label>&nbsp;Kithmini Herath</label>
                                 
                                 
                                 <div class="customer-location">
