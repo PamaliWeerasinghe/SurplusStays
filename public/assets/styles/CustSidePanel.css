@@ -1,6 +1,7 @@
 
 .side-nav {
-    width: 380px;
+    flex-basis: 300px;
+    width: 200px;
     background-color: #f5f9ff;
     padding: 20px;
     display: flex;

@@ -7,6 +7,12 @@ body {
     display: flex;
 }
 
+.main-content {
+    flex: 1; /* Allow .main-content to take up all the remaining space */
+    display: flex;
+    flex-direction: column; /* Ensures children stack vertically */
+}
+
 /* Top Navigation */
 .top-nav {
     background-color: #0B3D3B;
@@ -29,7 +35,7 @@ body {
     border-radius: 20px;
     outline: none;
     width: 250px;
-    margin-left: 30%;
+    margin-left: 0%;
     background-color: #0B3D3B;
     border: #6e7683;
     border-style: solid;
