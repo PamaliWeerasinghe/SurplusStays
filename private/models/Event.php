@@ -1,6 +1,6 @@
 <?php
 
-class Event extends Model
+class Event extends Admin_Model
 {
     protected $table = "upcoming_events";
 

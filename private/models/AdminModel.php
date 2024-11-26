@@ -1,6 +1,6 @@
 <?php
 
-class AdminModel extends Model
+class AdminModel extends Admin_Model
 {
 
     public $table = 'organization';

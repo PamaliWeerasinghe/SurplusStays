@@ -1,7 +1,7 @@
 <?php
 
 
-class AdminCharityDetails extends Model
+class AdminCharityDetails extends Admin_Model
 {
     public function getDonorCount($id)
     {

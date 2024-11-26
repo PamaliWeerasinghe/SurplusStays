@@ -1,6 +1,6 @@
 <?php
 
-class Model extends Database
+class Admin_Model extends Database
 {
      public $table;
      public $errors = array();
