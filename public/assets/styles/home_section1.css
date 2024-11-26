@@ -244,3 +244,119 @@ body {
 .surround-label2{
     color: #95D5B2;
 }
+.goal-faq{
+    width: 100%;
+    height: 70vh;
+    background-color:#FFFFFF;
+    background-image: url('../images/home.png');
+    background-repeat: no-repeat;
+    background-size: cover;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+}
+.faq{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+.faq1{
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    width: 100%;
+    height: 4vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3%;
+    border-radius: 50px 0 50px 50px;
+    
+}
+.faq2{
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    width: 100%;
+    height: 4vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3%;
+    border-radius: 50px 0 50px 50px;
+   
+}
+.faq3{
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    width: 100%;
+    height: 4vh;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    padding: 3%;
+    border-radius: 50px 0 50px 50px;
+}
+.faq-ques{
+    display: flex;
+    flex: 10;
+    flex-direction: column;
+    width: 50%;
+    justify-content: space-evenly;
+}
+.faq1:hover{
+    cursor: pointer;
+}
+.faq2:hover{
+    cursor: pointer;
+}
+.faq3:hover{
+    cursor: pointer;
+}
+
+/* involve */
+.involve{
+    width: 100%;
+    height: 30vh;
+    background-color:#D8F3DC;
+    display: flex;
+    flex-direction: column;
+    justify-content:space-around;
+    align-items: center;
+    border-radius: 0 60px 0 0;
+}
+.involve-btns{
+    display: flex;
+    width: 60%;
+    justify-content: center;
+    align-items: center;
+    height: 6vh;
+}
+.involve-btn1{
+    width: 30%;
+    border-radius: 25px;
+    height: 6vh;
+    margin: 2%;
+    border: none;
+    letter-spacing: 2px;
+    background-color: #4AD66D;
+    color: white;
+    font-weight: bold;
+    font-size: medium;
+    
+}
+.involve-btn2{
+    width: 30%;
+    border-radius: 25px;
+    height: 6vh;
+    margin: 2%;
+    border-style: solid;
+    border-width: 1px;
+    border-color: black;
+    letter-spacing: 2px;
+    font-weight: bold;
+    font-size: medium;
+}

@@ -130,7 +130,8 @@ require APPROOT . '/views/includes/htmlHeader.view.php' ?>
     <div class="young-crowd">
 
     </div>
-    <?php echo $this->view('RecentItems') ?>
+    <!-- View Recent Items -->
+    <!-- <?php echo $this->view('home') ?> -->
     <div class="surrounding">
         <div class="surrounding1">
             <h3 class="surround-label1">BENEFITS OF USING <h3 class="surround-label2"> &nbsp; SURPLUS STAYS</h3></h3>
@@ -146,6 +147,38 @@ require APPROOT . '/views/includes/htmlHeader.view.php' ?>
             <label>|</label>
             <label>Convenient And Easy To Use</label>
         </div>
+    </div>
+
+    <!-- FAQS -->
+    <div class="goal-faq">
+        <div class="faq">
+        <h2>FAQS</h2>
+        </div>
+        <div class="faq-ques">
+        <div class="faq1">
+            <label>HOW DO I REGISTER ON SURPLUSSTAYS ?</label>
+            <img src="<?= ASSETS ?>/images/dropdown.png"/>
+        </div>
+        <div class="faq2">
+            <label>IS THERE A REGISTRATION FEE ?</label>
+            <img src="<?= ASSETS ?>/images/dropdown.png"/>
+        </div>
+        <div class="faq3">
+            <label>HOW CAN MY BUSINESS LIST SURPLUS ITEMS ?</label>
+            <img src="<?= ASSETS ?>/images/dropdown.png"/>
+        </div>
+        </div>
+       
+        
+    </div>
+
+    <!-- Involve with surplusstays -->
+     <div class="involve">
+     <label style="color: #2D6A4F;font-weight:bolder;font-size:xx-large">GET INVOLVED WITH <label style="color: black;"> SURPLUSSTAYS</label></label>
+     <div class="involve-btns">
+        <button class="involve-btn1">Register Now</button>
+        <button class="involve-btn2">Donate</button>
+     </div>
     </div>
     
     <?php echo $this->view('includes/footer') ?>
