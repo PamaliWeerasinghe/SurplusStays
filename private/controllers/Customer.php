@@ -7,7 +7,8 @@ class Customer extends Controller{
         $this->view('CustomerBrowseShops');
     }
     function cart(){
-        $this->view('CustomerCart');
+        $this->view('custCart');
     }
+    
 }
 ?>

@@ -63,7 +63,7 @@
                     <div class="row" style="padding:20px;">
                         <div class="column">
                             <div class="cart-item">
-                                <img src="../../public/assets/images/bread_image.jpg" alt="Bread" class="item-image">
+                                <img src="<?=assets?>/images/bread_image.jpg" alt="Bread" class="item-image">
                                 <div class="item-details">
                                     <h3 class="item-name">Bread</h3>
                                     <p class="item-price">Rs 27.51</p>
@@ -85,7 +85,7 @@
 
                         <div class="column">
                             <div class="cart-item">
-                                <img src="../../public/assets/images/bread_image.jpg" alt="Bread" class="item-image">
+                                <img src="<?=ASSETS?>/images/bread_image.jpg" alt="Bread" class="item-image">
                                 <div class="item-details">
                                     <h3 class="item-name">Bread</h3>
                                     <p class="item-price">Rs 27.51</p>
@@ -195,6 +195,20 @@
                             </div>
                         </div>
                     </div>
+                </div>
+            </div>
+
+            <div class="box">
+                <p style="padding:20px">Order summary</p>
+                <div style="padding: 30px;">
+                    PRICE DETAILS (18 items) <br/><br/>
+                    <b>TOTAL MRP /= RS</b> <br/><br/>
+                    <p style="font-weight:200">Select payment method<p> <br/>
+                    <button class="button1">Pay By Card</button>
+                    <button class="button1">Pay Cash On Pickup</button>
+                    <br /><br />
+                    <button class="button2">Place Order</button>
+
                 </div>
             </div>
         </div>
