@@ -1,9 +1,13 @@
 <?php
-
-class Customer extends Controller
-{
-    function index($id = '')
-    {
-        echo $this->view('customer');
+class Customer extends Controller{
+    function index(){
+        $this->view('CustomerDashboard');
+    }
+    function browseShops(){
+        $this->view('CustomerBrowseShops');
+    }
+    function cart(){
+        $this->view('CustomerCart');
     }
 }
+?>
