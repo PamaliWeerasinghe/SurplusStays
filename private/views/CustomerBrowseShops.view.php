@@ -59,11 +59,11 @@
                             <img src="<?=ASSETS?>/images/star-rating.png"/>
                             <label>3.0</label>
                         </div>
-                        <div>
-                            <label class="shop-label1">Open Today</label>
+                        <div class="browse-shop-div">
+                            <label class="browse-shop-label1">Open Today</label>
                             <label class="shop-label2">10.00 A.M -22.00 P.M</label>
                         </div>
-                        <button class="browseShop-btn">Send Request</button>
+                        <button class="shop-btn">Send Request</button>
                     </div>
                     <div class="browse-shop">
                         <img src="<?=ASSETS?>/images/keells.png"/>
