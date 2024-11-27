@@ -1,0 +1,84 @@
+.box{
+    background-color: #f5f9ff;
+    border-radius: 10px;
+    margin: 50px;
+}
+
+.box-header{
+    background-color: #FD5D34;
+    border-top-left-radius: 10px;
+    border-top-right-radius: 10px;
+    padding: 15px;
+    text-align: center;
+    color: white;
+}
+
+.name-area{
+    background-color: white;
+    padding: 10px;
+    padding-left: 50px;
+    font-weight: 700;
+}
+
+h1 {
+    background-color: #FF6B3B;
+    color: white;
+    padding: 10px 0;
+    margin-bottom: 20px;
+    border-radius: 8px 8px 0 0;
+}
+
+
+.button-group {
+    display: flex;
+    justify-content: space-around;
+    margin-top: 20px;
+}
+
+button {
+    padding: 10px 20px;
+    border-radius: 4px;
+    border: none;
+    cursor: pointer;
+}
+
+.save-btn {
+    background-color: #0B3D3B;
+    color: white;
+    width: 200px;
+    border-radius: 40px;
+}
+
+.cancel-btn {
+    background-color: white;
+    color: black;
+    width: 200px;
+    border-radius: 40px;
+}
+
+.cancel-btn:hover{
+    background-color: #0B3D3B;
+    color: white;
+}
+
+.back-link {
+    margin-top: 20px;
+}
+
+.back-link a {
+    text-decoration: none;
+    color: #333;
+    font-size: 14px;
+}
+
+.column {
+    float: left;
+    width: 33.33%;
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
+    content: "";
+    display: table;
+    clear: both;
+  }
