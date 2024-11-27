@@ -102,6 +102,8 @@ button {
 .column {
     flex: 1;
     margin: 10px;
+    align-items: center;
+    align-content: center;
 }
 
 /* Responsive Design */

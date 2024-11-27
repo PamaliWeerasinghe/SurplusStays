@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Orders</title>
+    <title>Cart</title>
     <!-- fonts -->
     <link rel="preconnect" href="https://fonts.googleapis.com">
     <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
@@ -55,6 +55,26 @@
                     Cart - 9 items
                 </div>
 
+                <!-- quantity summary -->
+                <p>
+                    Quantity Expiry Date Date added
+                </p>
+
+                <!-- wishlist items section -->
+                 <div>
+                 <div class="row" style="padding:20px;">
+                    <div class="column">
+
+                        hello
+
+                    </div>
+
+                    <div class="column">hello</div>
+
+                    <div class="column">hello</div>
+
+                </div>
+                </div>
 
 
 

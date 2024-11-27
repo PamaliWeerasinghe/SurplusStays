@@ -9,7 +9,7 @@
 
     <link rel="stylesheet" href="../../public/assets/styles/CustSidePanel.css">
     <link rel="stylesheet" href="../../public/assets/styles/CustTopPanel.css">
-    <link rel="stylesheet" href="../../public/assets/styles/custChangePassword.css">
+    <link rel="stylesheet" href="../../public/assets/styles/CustPayment.css">
 </head>
 
 
@@ -49,38 +49,12 @@
             <!-- main content -->
             <div class="content">
                 <div class="box">
-                    <div class="box-header">
-                        Change password
-                    </div>
+                    <div class="box-header">Payment</div>
+                    <div class="box-subheading">CREDIT/DEBIT CARD</div>
 
-                    <div class="box-content">
-                        <br/>
-                        <div class="name-area">
-                            JANITHA CHATHUNI
-                        </div>
-                        
-                        <div class="form-area">
-                            <form class="password-form">
-                                <div class="input-group">
-                                    <label for="current-password">Current Password :</label>
-                                    <input type="password" id="current-password" placeholder="Enter Current Password">
-                                </div>
-                                <div class="input-group">
-                                    <label for="new-password">New Password :</label>
-                                    <input type="password" id="new-password" placeholder="Enter New Password">
-                                </div>
-                                <div class="input-group">
-                                    <label for="reenter-password">Re-Enter New Password :</label>
-                                    <input type="password" id="reenter-password" placeholder="Re-enter New Password">
-                                </div>
-                                <div class="button-group">
-                                    <button type="submit" class="save-btn">Save Password</button>
-                                    <button type="button" class="cancel-btn">Cancel</button>
-                                </div>
-                            </form>
-                            
-                        </div>
-                    </div>
+
+                    //form
+                    
                 </div>
             </div>
         </div>
