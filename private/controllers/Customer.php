@@ -79,7 +79,7 @@ class Customer extends Controller{
                 $arr['date'] = $_POST['date'];
     
                 $event->insert($arr);
-                $this->redirect('customer');
+                $this->redirect('customer/manageComplaints');
             } else {
                 $errors = array_merge($errors, $event->errors);
             }
@@ -213,22 +213,6 @@ class Customer extends Controller{
             'row' => $row,
             'errors' => $errors,
         ]);
-    }
-}
-?>
-<?php
-class Customer extends Controller{
-    function index(){
-        $this->view('CustomerDashboard');
-    }
-    function browseShops(){
-        $this->view('CustomerBrowseShops');
-    }
-    function cart(){
-        $this->view('CustomerCart');
-    }
-    function orders(){
-        $this->view('CustomerOrders');
     }
 }
 ?>

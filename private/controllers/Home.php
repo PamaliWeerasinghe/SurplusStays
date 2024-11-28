@@ -6,7 +6,7 @@ class Home extends Controller
 {
     function index()
     {
-        $this->view('home_section1');
+        $this->view('home');
     }
 }
 

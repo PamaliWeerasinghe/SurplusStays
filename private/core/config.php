@@ -3,20 +3,19 @@
 define('APPROOT', dirname(dirname(__FILE__)));
 
 //URL ROOT
-define('URLROOT', 'http://localhost:8080/SurplusStays-main');
+define('URLROOT', 'http://localhost:8080/SurplusStays');
 
 //WEBSITE
-define('SITENAME', 'surplusStays-main');
+define('SITENAME', 'surplusStays');
 
 
-define('ROOT', 'http://localhost/SurplusStays/public');
-define('STYLES', 'http://localhost/SurplusStays/public/assets/styles');
-define('ASSETS', 'http://localhost/SurplusStays/public/assets');
+define('ROOT', 'http://localhost:8080/SurplusStays/public');
+define('STYLES', 'http://localhost:8080/SurplusStays/public/assets/styles');
+define('ASSETS', 'http://localhost:8080/SurplusStays/public/assets');
 define('SIDEPANELBUSINESS', '/SurplusStays/public/business');
-define('ADMINROOT','http://localhost/SurplusStays/public/admin');
 
 //DATABASE
-define('DBNAME','surplusstays');
+define('DBNAME','surplusstays2');
 define('DBHOST','localhost');
 define('DBUSER','root');
 define('DBPASS','');

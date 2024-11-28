@@ -5,8 +5,6 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charity</title>
     <link rel="stylesheet" href="<?=STYLES?>/charityManageEvents.css">
-    <title>Charity</title>
-    <link rel="stylesheet" href="<?=STYLES?>/charityManageEvents.css">
 </head>
 <body>
     <?php echo $this->view('includes/charityNavbar')?>

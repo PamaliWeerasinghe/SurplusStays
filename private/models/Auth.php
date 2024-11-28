@@ -10,7 +10,6 @@ class Auth
 
         $_SESSION['USER'] = $row;
     }
-    
 
     public static function logout()
     {

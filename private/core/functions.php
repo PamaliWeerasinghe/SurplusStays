@@ -1,27 +1,18 @@
 <?php
 
-//Used for input fields
-function get_var($key)
+function get_var($key, $default = "")
 {
     if(isset($_POST[$key]))
     {
         return $_POST[$key];
     }
 
-    return "";
+    return $default;
 }
 
-//Used for drop downs
-function get_select($key,$value)
+function get_select()
 {
-    if(isset($_POST[$key]))
-    {
-        if($_POST[$key]==$value)
-        {
-            return "selected";
-        }
-    }
-    return "";
+
 }
 
 function esc($var)
