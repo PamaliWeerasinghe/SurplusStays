@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/styles/charity_register.css">
 </head>
 <body>
-<?php echo $this->view('includes/navbar')?>
+<?php echo $this->view('includes/navbar_unregistered')?>
 
     <div class="container">
         <div class="left">
@@ -20,9 +20,9 @@
         <form method="post" class="right" enctype="multipart/form-data"> <!--enctype="multipart/form-data" allows file uploads-->
             <div class="details">
                 <div class="steps">
-                    <h4>STEP</h4>
-                    <div class="step-number"><h3>1</h3></div>
-                    <p>PERSONAL AND LOGIN INFORMATION</p>
+                    <h4></h4>
+                    <div class="step-number"><h3>PERSONAL AND LOGIN INFORMATION</h3></div>
+                    <p></p>
                 </div>
                 <?php if (!empty($errors)): ?>
                     <div class="error alert">
@@ -55,7 +55,7 @@
                 <input placeholder="ENTER A PASSWORD" value="<?=get_var('password')?>" type="text" name="password" class="input">
                 <h4>CONFIRM PASSWORD  :</h4>
                 <input placeholder="RE-ENTER A PASSWORD" value="<?=get_var('confirm_password')?>" type="text" name="confirm_password" class="input">   
-                <p>BY REGISTERING YOU AGREE TO OUR <a href="url">TERMS AND CONDITIONS</a> AND <a href="url">PRIVACY POLICY</a></p>                  
+                <p>BY REGISTERING YOU AGREE TO OUR <a style="text-decoration: none;" href="url">TERMS AND CONDITIONS</a> AND <a style="text-decoration: none;" href="url">PRIVACY POLICY</a></p>                  
             </div>
             <button class="register-button">REGISTER NOW</button>
 </form>

@@ -78,8 +78,6 @@
     </div>
 
     <div class="item_slider_b">
-        <img src="../../SURPLUSSTAYS/public/assets/images/arrow_left.png" alt="" class="back_btn"/>
-        <img src="../../SURPLUSSTAYS/public/assets/images/arrow_right.png" alt="" class="next_btn"/>
         <div class="slider_b" >
             <ul>
                 <li>

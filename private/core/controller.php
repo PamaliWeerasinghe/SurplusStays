@@ -15,6 +15,7 @@ class Controller
         }
         else {
             require ("../private/views/404.view.php");
+            require ("../private/views/404.view.php");
         }
     }
     //To load the model

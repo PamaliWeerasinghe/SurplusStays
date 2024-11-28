@@ -5,6 +5,8 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charity</title>
     <link rel="stylesheet" href="<?=STYLES?>/charityManageEvents.css">
+    <title>Charity</title>
+    <link rel="stylesheet" href="<?=STYLES?>/charityManageEvents.css">
 </head>
 <body>
     <?php echo $this->view('includes/charityNavbar')?>
@@ -57,13 +59,13 @@
                                         $eventPictures = explode(',', $row->pictures); // Assuming $row->pictures is a comma-separated string
                                         $eventImage = isset($eventPictures[0]) ? $eventPictures[0] : 'event_placeholder.png'; // Use placeholder if no image
                                     ?>
-                                    <tr>
+                                    <tr onclick="window.location.href='<?= ROOT ?>/charity/viewEvent/<?= $row->id ?>'">
                                         <td class="event">
                                             <div class="event-name">
                                             <img src="<?=ROOT?><?= htmlspecialchars($eventImage) ?>" alt="Event" class="event-img">
-                                                <a href="<?=ROOT?>/charity/viewEvent/<?=$row->id?>" style="text-decoration: none; color: black;">
+                        
                                                 <h3><?= htmlspecialchars($row->event) ?></h3>
-                                                </a>
+                                                
                                             </div>
                                         </td>
                                         <td class="date"><?= htmlspecialchars($row->start_dateTime) ?></td>
@@ -81,8 +83,8 @@
                                             <a href="<?=ROOT?>/charity/editEvent/<?=$row->id?>">
                                             <button class="action-btn edit">Edit</button>
                                             </a>
-                                            <form action="<?=ROOT?>/charity/deleteEvent/<?=$row->id?>" method="post" onsubmit="return confirm('Are you sure you want to delete this event?');">
-                                                <button type="submit" class="action-btn delete">Delete</button>
+                                            <form id="deleteForm<?= $row->id ?>" action="<?=ROOT?>/charity/deleteEvent/<?=$row->id?>" method="post" >
+                                            <button type="button" class="take-action" data-form-id="deleteForm<?= $row->id ?>">Delete</button>
                                             </form>
 
                                         </td>
@@ -100,6 +102,44 @@
         </div>
     </div>
     <?php echo $this->view('includes/footer')?>
+
+        <!-- Modal for Delete Confirmation -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <h3>Confirm Deletion</h3>
+            <p>Are you sure you want to delete this product?</p>
+            <div class="modal-buttons">
+                <button id="confirmDelete" class="modal-button confirm">Yes, Delete</button>
+                <button id="cancelDelete" class="modal-button cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    let deleteForm = null;
+
+        document.querySelectorAll('.take-action').forEach(button => {
+            button.addEventListener('click', event => {
+                event.preventDefault(); // Prevent form submission
+                deleteForm = document.getElementById(button.dataset.formId); // Store form reference
+                document.getElementById('deleteModal').style.display = 'block'; // Show modal
+            });
+        });
+
+        document.getElementById('confirmDelete').addEventListener('click', () => {
+            if (deleteForm) deleteForm.submit(); // Submit the form
+        });
+
+        document.getElementById('cancelDelete').addEventListener('click', () => {
+            document.getElementById('deleteModal').style.display = 'none'; // Hide modal
+        });
+        //stop the viewProduct page when clicking edit and delete
+        document.querySelectorAll('.completed, .take-action').forEach(button => {
+            button.addEventListener('click', event => {
+                event.stopPropagation();
+            });
+        });
+    </script>
     
 </body>
 </html>

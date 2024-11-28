@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/styles/register.css">
 </head>
 <body>
-<?php echo $this->view('includes/navbar')?>
+<?php echo $this->view('includes/navbar_unregistered')?>
 
     <div class="container">
         <div class="left">
