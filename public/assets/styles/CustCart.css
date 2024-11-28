@@ -1,3 +1,10 @@
+@media (max-width: 768px) {
+    .column {
+        width: 100%;
+    }
+}
+
+
 .box{
     background-color: #f5f9ff;
     border-radius: 10px;
@@ -79,7 +86,7 @@ button {
 .column {
     float: left;
     width: 33.33%;
-    text-align: center; /* Optional: Center-align text */
+    text-align: left; /* Optional: Center-align text */
 }
 
 .row {
@@ -140,5 +147,15 @@ button {
 }
 
 .button2:hover {
-    background-color: #095C5A; /* Add a hover effect */
+    background-color: #095C5A;
+}
+
+.remove-btn{
+    background-color: red;
+    color: white;
+    border-radius: 40px;
+    font-family: 'Outfit', sans-serif;
+    padding: 10px;
+    border: none;
+    cursor: pointer;
 }
