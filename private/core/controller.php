@@ -4,7 +4,6 @@
 
 class Controller
 {
-    //To load the view
     public function view($view,$data = array())
     {
         extract($data);
@@ -15,7 +14,7 @@ class Controller
         
         }
         else {
-            require("../private/views/404.view.php");
+            require ("../private/views/404.view.php");
         }
     }
     //To load the model

@@ -12,7 +12,6 @@
     <div class="container">
         <?php echo $this->view('includes/charitySidepanel')?>
         <div class="container-right">
-
             <div class="top-half">
                 <div class="top-bar">
                     <div class="notification">
@@ -28,7 +27,7 @@
                         <h3>Charity Details</h3>
                         <div class="charity-overview">
                             <div class="image-container">
-                                <img class="logo-img" src="<?=ASSETS?>/images/karuna.lk 1.png" alt="Charity Logo">
+                            <img class="logo-img" src="<?=ASSETS?>/charityImages/<?=basename(Auth::getPicture())?>" alt="Charity Logo">
                                 <div class="overlay">
                                     <div class="camera-icon">
                                         <img src="<?=ASSETS?>/icons/Camera.png" alt="Camera Icon">
@@ -38,8 +37,8 @@
                             <div class="charity-text">
                                 <h4><?=Auth::getName()?> ⭐ 4.7/5.0</h4>
                                 <p><strong>Owner:</strong> Dialog Axiata Foundation</p>
-                                <p><strong>Phone Number:</strong> 0716386868</p>
-                                <p><strong>Email Address:</strong> info@karuna.lk</p>
+                                <p><strong>Phone Number:</strong> <?=Auth::getphoneNo()?></p>
+                                <p><strong>Email Address:</strong> <?=Auth::getemail()?></p>
                             </div>
                         </div>
                     </div>

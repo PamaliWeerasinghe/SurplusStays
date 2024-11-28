@@ -52,11 +52,18 @@
                             <tbody>
                             <?php if ($rows): ?>
                                 <?php foreach ($rows as $row): ?>
+                                    <?php 
+                                        // Get the first image from the pictures array
+                                        $eventPictures = explode(',', $row->pictures); // Assuming $row->pictures is a comma-separated string
+                                        $eventImage = isset($eventPictures[0]) ? $eventPictures[0] : 'event_placeholder.png'; // Use placeholder if no image
+                                    ?>
                                     <tr>
                                         <td class="event">
                                             <div class="event-name">
-                                                <img src="<?=ASSETS?>/images/event_placeholder.png" alt="Event" class="event-img">
+                                            <img src="<?=ROOT?><?= htmlspecialchars($eventImage) ?>" alt="Event" class="event-img">
+                                                <a href="<?=ROOT?>/charity/viewEvent/<?=$row->id?>" style="text-decoration: none; color: black;">
                                                 <h3><?= htmlspecialchars($row->event) ?></h3>
+                                                </a>
                                             </div>
                                         </td>
                                         <td class="date"><?= htmlspecialchars($row->start_dateTime) ?></td>
@@ -71,7 +78,9 @@
                                             <?php endif; ?>
                                         </td>
                                         <td class="action">
+                                            <a href="<?=ROOT?>/charity/editEvent/<?=$row->id?>">
                                             <button class="action-btn edit">Edit</button>
+                                            </a>
                                             <form action="<?=ROOT?>/charity/deleteEvent/<?=$row->id?>" method="post" onsubmit="return confirm('Are you sure you want to delete this event?');">
                                                 <button type="submit" class="action-btn delete">Delete</button>
                                             </form>

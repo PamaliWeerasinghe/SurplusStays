@@ -1,98 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Lodge A Complaint</title>
-    <!-- fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-
-    <link rel="stylesheet" href="../../public/assets/styles/CustSidePanel.css">
-    <link rel="stylesheet" href="../../public/assets/styles/CustTopPanel.css">
-    <link rel="stylesheet" href="../../public/assets/styles/CustLodgeComplaint.css">
+    <title>Charity</title>
+    <link rel="stylesheet" href="<?=STYLES?>/CustLodgeComplaint.css">
+    <link rel="stylesheet" href="<?=STYLES?>/customer.css">
+    <link rel="stylesheet" href="<?=STYLES?>/customerDashboard.css">
+    <link rel="stylesheet" href="<?=STYLES?>/customerSidePanel.css">
 </head>
+<body>
+    <?php echo $this->view('includes/charityNavbar')?>
 
-
-<body style="font-family:Outfit, sans-serif">
     <div class="container">
-        <!-- sidebar -->
-        <div class="side-nav">
-            <div class="profile-section">
-                <img src="../../public/assets/images/sample_profile_pic.png" alt="Profile Image" class="profile-image">
-                <h2>Hi Janitha!</h2>
-            </div>
-            <ul class="nav-links">
-                <li class="nav-item "><a href="#">Dashboard</a></li>
-                <li class="nav-item"><a href="#">Manage Events</a></li>
-                <li class="nav-item"><a href="#">Donations</a></li>
-                <li class="nav-item"><a href="#">Browse Shops</a></li>
-                <li class="nav-item active"><a href="#">Orders</a></li>
-                <li class="nav-item"><a href="#">Reports</a></li>
-                <li class="nav-item"><a href="#">Profile</a></li>
-            </ul>
-        </div>
+        <?php echo $this->view('includes/customerSidePanel')?>
+        <div class="container-right">
 
-        <!-- main content area -->
-        <div class="main-content">
-            <div class="top-nav">
-                <div class="search-bar">
-                    <br/><br/>
-                    <input type="text" placeholder="Search..." />
-                </div>
-                <div class="notification">
-                    <br/><br/>
-                    <img src="../../public/assets/images/Bell.png" alt="Notification Bell" class="bell-icon">
-                </div>
-            </div>
-
-
-            <!-- main content -->
-            <div class="content">
-                <div class="box">
-                    <div class="box-header">
-                        Lodge A Complaint
+            <div class="top-half">
+                <div class="top-bar">
+                    <div class="notification">
+                        <img src="<?=ASSETS?>/images/bell.png" alt="Notification Bell" class="bell-icon">
                     </div>
+                </div>   
+                <div class="event-card">
+                    <div class="header">
+                        <h2>Lodge A Complaint</h2>
+                    </div>
+                    <form method="POST" enctype="multipart/form-data">
 
-                    <div class="box-content">
-                        <br/>
+                        <?php if (!empty($errors)): ?>
+                            <div class="error alert">
+                                <ul>
+                                    <?php foreach ($errors as $error): ?>
+                                        <li><?= $error ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
+                        <?php endif; ?>
 
-                        <div class="form-area">
-                        <form class="complaint-form">
-                            <div class="form-group">
-                                <label for="name">Name:</label>
-                                <input type="text" id="name" placeholder="Name">
-                            </div>
-                            <div class="form-group">
-                                <label for="contact">Contact Number:</label>
-                                <input type="tel" id="contact" placeholder="Contact Number">
-                            </div>
-                            <div class="form-group">
-                                <label for="date">Date Of Order:</label>
-                                <div class="date-input-wrapper">
-                                <input type="text" id="date" placeholder="DD/MM/YY">
-                                <span class="calendar-icon">📅</span>
-                                </div>
-                            </div>
-                            <div class="form-group">
-                                <label for="shop-name">Shop Name:</label>
-                                <input type="text" id="shop-name" placeholder="Shop Name">
-                            </div>
-                            <div class="form-group">
-                                <label for="related-items">Related Items:</label>
-                                <input type="text" id="related-items" placeholder="Related Items">
-                            </div>
-                            <div class="form-group">
-                                <label for="complaint">Complaint:</label>
-                                <textarea id="complaint" placeholder="Add Complaint Description"></textarea>
-                            </div>
-                            <button type="submit" class="submit-button">Submit</button>
-                            </form>
-                            
+                        <div class="input-group">
+                            <label for="order-id">Order ID :</label>
+                            <input value="<?=get_var('order-id')?>" type="text" name="order-id" placeholder="Enter The Order ID of the purchase">
                         </div>
-                    </div>
-                </div>
+
+                        <div class="input-group">
+                            <label for="shopName">Shop Name :</label>
+                            <input value="<?=get_var('shopName')?>" type="text" name="shopName" placeholder="Enter The Name Of The Shop">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="complaint">Description Of Your Complaint :</label>
+                            <textarea value="<?=get_var('complaint')?>" name="complaint" placeholder="Enter Your Complaint"></textarea>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="date">Date Of Order :</label>
+                            <input type="date" value="<?=get_var('date')?>" name="date">
+                        </div>
+
+                        <div class="input-group upload-group">
+                            <label>Images Related To The Complaint : <small>You Can Add Up To 5 Images.</small></label>
+                            <div class="upload-wrapper">
+                                <label for="upload-1">
+                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
+                                </label>
+                                <input type="file" id="upload-1" name="upload-1" style="display: none;">
+
+                                <label for="upload-2">
+                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-2">
+                                </label>
+                                <input type="file" id="upload-2" name="upload-2" style="display: none;">
+
+                                <label for="upload-3">
+                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-3">
+                                </label>
+                                <input type="file" id="upload-3" name="upload-3" style="display: none;">
+
+                                <label for="upload-4">
+                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-4">
+                                </label>
+                                <input type="file" id="upload-4" name="upload-4" style="display: none;">
+
+                                <label for="upload-5">
+                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-5">
+                                </label>
+                                <input type="file" id="upload-5" name="upload-5" style="display: none;">
+                            </div>
+                        </div>
+
+                        <div class="button-group">
+                            <button class="btn-create">Make Complaint</button>
+                            <button type="reset" class="btn-clear">Clear All</button>
+                            <button type="button" class="btn-cancel">Cancel</button>
+                        </div>
+                    </form>
+                </div>          
             </div>
         </div>
-        
     </div>
+
+    <?php echo $this->view('includes/footer')?>
+    
+    <!-- JavaScript to Show Preview -->
+    <script>
+    document.getElementById('upload-1').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePreview-1').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    document.getElementById('upload-2').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePreview-2').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    document.getElementById('upload-3').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePreview-3').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    document.getElementById('upload-4').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePreview-4').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    document.getElementById('upload-5').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePreview-5').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    </script>
 </body>
+</html>

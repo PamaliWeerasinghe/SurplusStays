@@ -6,7 +6,7 @@ require APPROOT . '/views/includes/htmlHeader.view.php' ?>
 </head>
 
 <body>
-    <?php echo $this->view('includes/navbar') ?>
+    <?php echo $this->view('includes/navbar_unregistered') ?>
     <div class="search-section">
         <div class="searchdiv">
             <input type="text" class="search" placeholder="Search..." />

@@ -1,6 +1,6 @@
 <?php
 
-class Event extends Admin_Model
+class Event extends Model
 {
     protected $table = "upcoming_events";
 
@@ -36,39 +36,19 @@ class Event extends Admin_Model
         if (!empty($DATA['goal']) && strlen($DATA['goal']) > 50) {
             $this->errors['goal'] = "Goal must be under 50 characters";
         }
+        if (empty($DATA['pictures'])) {
+            $this->errors['pictures'] = "At least one event picture is required.";
+        }
 
         // Return true if no errors
         return empty($this->errors);
     }
+
+    public function countRows($org_id) {
+        $query = "SELECT COUNT(*) as count FROM " . $this->table . " WHERE organization_id = :org_id";
+        $params = [':org_id' => $org_id];
+        $result = $this->query($query, $params); // Pass parameters for prepared statement
+        return $result[0]->count ?? 0; // Ensure query() returns array or object
+    }
+    
 }
-
-     // protected $allowedColumns = [
-    //     'organization_id',
-    //     'event',
-    //     'event_description',
-    //     'start_dateTime',
-    //     'end_dateTime',
-    //     'requesting_items',
-    //     'status',
-    //     'goal',
-    //     'district',
-    //     'location'
-    // ];
-
-    // protected $beforeInsert = [
-    //     'make_event_id',
-    //     'make_organization_id'
-    // ];
-
-    // protected function make_event_id($data)
-    // {
-    //     $data['event_id'] = random_string(60);
-    //     return $data;
-    // }
-
-    // protected function make_organization_id($data)
-    // {
-    //     $data['organization_id'] = random_string(60);
-    //     return $data;
-    // }
-

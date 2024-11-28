@@ -10,6 +10,7 @@ body {
     flex-direction: row;
     width: 100%; /* Ensure container takes full width */
     height: 140%; /* Adjust height to fill the screen */
+    height: 140%; /* Adjust height to fill the screen */
 }
 
 .left {
@@ -17,6 +18,7 @@ body {
     background-size: cover;
     color: white;
     width: 50%; /* Adjust width to fit with the right section */
+    position: relative;
     position: relative;
 }
 .left-image{
