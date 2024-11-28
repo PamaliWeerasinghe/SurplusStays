@@ -11,4 +11,62 @@
 .box-subheading{
     background-color: white;
     padding: 15px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 10px 20px;
+    border-top: 1px solid #d1e8ff; /* Optional: Border to match the image */
+    background-color: #f5f9ff;
 }
+
+
+.payment-text {
+    font-weight: bold;
+    font-size: 16px;
+    color: #000;
+}
+
+.payment-icons .icon {
+    width: 40px;
+    height: auto;
+    margin-left: 10px; 
+}
+
+.payment-form {
+    padding: 20px;
+    border-radius: 10px;
+    max-width: 500px;
+    width: 100%;
+  }
+  
+  .form-group {
+    margin-bottom: 20px;
+  }
+  
+  .form-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 8px;
+  }
+  
+  .form-group input {
+    width: 100%;
+    padding: 10px;
+    border: 1px solid #ddd;
+    border-radius: 20px;
+    font-size: 16px;
+    box-sizing: border-box;
+  }
+  
+  .form-group-row {
+    display: flex;
+    gap: 20px;
+  }
+  
+  .form-group-row .form-group {
+    flex: 1;
+  }
+  
+  .form-group-row .form-group input {
+    width: 100%;
+  }
