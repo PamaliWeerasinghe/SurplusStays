@@ -1,93 +1,162 @@
-.add-product-name{
-    display: flex;
-    flex-direction: column;
-    width: 90%;
-    padding: 2%;
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
 }
-.inp1{
-    border: none;
-    height: 4vh;
-    border-radius: 4px;
-    margin-top: 1%;
-    padding-left: 2%;
+
+body {
+    margin: 0;
 }
-.add-product-name textarea{
-    height: 18vh;
-}
-.imgs-div{
+
+.main-div {
     width: 100%;
+    height: 100vh;
+}
+
+.sub-div-1 {
     display: flex;
     flex-direction: row;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
     justify-content: flex-start;
     align-items: center;
-    /* background-color: red; */
-    height: 20vh;
-}
-.add-product-img-div{
-    width: 15%;
-    height: 15vh;
+    flex: 4;
     background-color: white;
-    margin-left: 2%;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
 }
-.discount-box{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 3%;
 
-}
-.inp2{
-    width: 25%;
-    height: 4vh;
-    border: none;
-    border-radius: 4px;
-    padding-left: 2%;
-    margin-left: 2%;
-    margin-right: 2%;
-}
-.submit-product{
+.summary {
     display: flex;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5%;
+    flex-direction: column;
+    width: 100%;
+    height: 40vh;
+    background-color: #1B4332;
+}
+
+.notifications {
+    display: flex;
+    justify-content: flex-end;
+    padding: 3%;
+}
+
+.inner-main {
+    width: 88%;
+    background-color: #F0F8FF;
+    margin-top: -14%;
+    border-radius: 20px;
     margin-bottom: 5%;
 }
-.add-product-btn{
+
+.header {
+    background-color: #e05b4a;
+    color: white;
+    padding: 4px;
+    text-align: center;
+    border-radius: 20px 20px 0 0;
+}
+
+.header h2 {
+    font-size: 18px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    width: 80%;
+    padding: 20px;
+    margin-left: 50px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 18px;
+    border: 1px solid #ccc;
+}
+
+.input-group textarea {
+    resize: none;
+    height: 80px;
+}
+
+.upload-group .upload-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+.upload-group .upload-icon {
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    padding-left: 70px;
+    width: 81%;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 65px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 180px;
+    height: 40px;
+}
+
+.btn-create {
     background-color: #1B4332;
     color: white;
-    border: none;
-    height: 6vh;
-    border-radius: 25px;
-    width: 25%;
-    margin-right: 2%;
-    margin-left: 2%;
 }
-.clear-btn{
-    background-color: transparent;
-    border-style: solid;
-    border-color: #FD5D34;
-    color: #FD5D34;
-    height: 6vh;
-    border-radius: 25px;
-    width: 25%;
-    margin-right: 2%;
-    margin-left: 2%;
+
+.btn-clear {
+    background-color: #f39c12;
+    color: white;
 }
-.cancel-btn{
-    background-color: white;
-    border: none;
-    color: black;
-    height: 6vh;
-    border-radius: 25px;
-    width: 25%;
-    margin-right: 2%;
-    margin-left: 2%;
+
+.btn-cancel {
+    background-color: #e74c3c;
+    color: white;
 }
-.back-to-products{
-    margin-top: 12%;
-    margin-bottom: 8%;
+
+button:hover {
+    opacity: 0.9;
+}
+.small{
+    font-weight: 300px;
+}
+.error.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.error.alert ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.error.alert li {
+    margin-bottom: 5px;
 }

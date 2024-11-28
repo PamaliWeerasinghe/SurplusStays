@@ -79,7 +79,7 @@ class Customer extends Controller{
                 $arr['date'] = $_POST['date'];
     
                 $event->insert($arr);
-                $this->redirect('customer');
+                $this->redirect('customer/manageComplaints');
             } else {
                 $errors = array_merge($errors, $event->errors);
             }

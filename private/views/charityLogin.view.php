@@ -4,10 +4,10 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
-    <link rel="stylesheet" href="<?=ROOT?>/assets/styles/register.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/styles/login.css">
 </head>
 <body>
-<?php echo $this->view('includes/navbar')?>
+<?php echo $this->view('includes/navbar_unregistered')?>
 
     <div class="container">
         <div class="left">
@@ -35,7 +35,7 @@
                 <h4>PASSWORD :</h4>
                 <input placeholder="ENTER YOUR PASSWORD" value="<?=get_var('password')?>" type="password" name="password" class="input">
 
-                <p>FORGOT YOUR PASSWORD? <a href="url">RESET PASSWORD</a> | DON'T HAVE AN ACCOUNT? <a href="url">REGISTER HERE</a></p>                  
+                <p>FORGOT YOUR PASSWORD? <a style="text-decoration: none;"  href="url">RESET PASSWORD</a> | DON'T HAVE AN ACCOUNT? <a style="text-decoration: none;" href="url">REGISTER HERE</a></p>                  
             </div>
             <button class="register-button">SIGN IN</button>
         </form>

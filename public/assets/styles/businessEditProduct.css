@@ -1,0 +1,160 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+}
+
+body {
+    margin: 0;
+}
+
+.main-div {
+    width: 100%;
+    height: 100vh;
+}
+
+.sub-div-1 {
+    display: flex;
+    flex-direction: row;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 4;
+    background-color: white;
+}
+
+.summary {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 40vh;
+    background-color: #1B4332;
+}
+
+.notifications {
+    display: flex;
+    justify-content: flex-end;
+    padding: 3%;
+}
+
+/*main inner side*/
+.inner-main {
+    width: 88%;
+    background-color: #F0F8FF;
+    margin-top: -14%;
+    border-radius: 20px;
+    margin-bottom: 5%;
+}
+
+.header {
+    background-color: #e05b4a;
+    color: white;
+    padding: 4px;
+    text-align: center;
+    border-radius: 20px 20px 0 0;
+}
+
+.header h2 {
+    color: white;
+    font-size: 18px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    width: 80%;
+    padding: 20px;
+    margin-left: 50px;
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 18px;
+    border: 1px solid #ccc;
+}
+
+.input-group textarea {
+    resize: none;
+    height: 80px;
+}
+
+.upload-group .upload-wrapper {
+    display: flex;
+    justify-content: space-evenly;
+    gap: 10px;
+}
+
+.upload-group .upload-icon {
+    width: 150px; /* Set a fixed width */
+    height: 150px; /* Set a fixed height to maintain square shape */
+    object-fit: cover; /* Ensures the image is cropped properly */
+    border-radius: 8px; /* Optional: adds rounded corners to the images */
+}
+
+.upload-group input[type="file"] {
+    width: 18%;
+    display: none;
+}
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    padding-left: 70px;
+    width: 81%;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 65px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 180px;
+    height: 40px;
+}
+
+.btn-create {
+    background-color: #1B4332;
+    color: white;
+}
+
+.btn-cancel {
+    background-color: #e74c3c;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+
+.small {
+    font-weight: 300px;
+}
+
+.delete-btn{
+    height: 20px;
+    margin-bottom: 160px;
+    margin-left: -20px;
+    position: absolute;
+    width: 20px;
+    z-index: 2;
+}
+
+.delete-btn:hover {
+    opacity: 0.8;
+}

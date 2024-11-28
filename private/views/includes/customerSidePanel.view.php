@@ -1,6 +1,6 @@
 <aside class="sidePanel">
     <div class="greeting">
-        <img class="profile-image" src="<?=ASSETS?>/charityImages/<?=basename(Auth::getPicture())?>" />
+        <img class="profile-image" src="<?=ASSETS?>/customerImages/<?=basename(Auth::getPicture())?>" />
         <label>Hi <span class="admin"><?=Auth::getusername()?></span></label>
     </div>
     <div class="buttons">

@@ -72,7 +72,7 @@
                                             <?php if ($row->complaint_status_id == 1): ?>
                                                 <button class="status ongoing">Resolved</button>
                                             <?php else: ?>
-                                                <button class="status closed">Unresolved</button>
+                                                <button class="status closed">Pending</button>
                                             <?php endif; ?>
                                         </td>
                                         <td class="action">
