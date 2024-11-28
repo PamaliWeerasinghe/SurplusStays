@@ -9,5 +9,8 @@ class Customer extends Controller{
     function cart(){
         $this->view('CustomerCart');
     }
+    function orders(){
+        $this->view('CustomerOrders');
+    }
 }
 ?>

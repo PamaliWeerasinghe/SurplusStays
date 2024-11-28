@@ -35,7 +35,7 @@
                 <h4>EMAIL ADDRESS :</h4>
                 <input value="<?=get_var('email')?>" placeholder="ENTER YOUR EMAIL ADDRESS" type="email" class="input"  name="email" required>
                 <h4>PASSWORD :</h4>
-                <input value="<?=get_var('password')?>" placeholder="ENTER YOUR PASSWORD" type="text" class="input"  name="password"  required>
+                <input value="<?=get_var('password')?>" placeholder="ENTER YOUR PASSWORD" type="password" class="input"  name="password"  required>
                
             </div>
             <button type="submit" class="register-button">LOG IN</button>

@@ -76,7 +76,7 @@ class Admin extends Controller
 
 
                 if ($email) {
-                    $password = $user->where('verification_code', $_POST['email'], 'admin');
+                    $password = $user->where('verification_code', $_POST['password'], 'admin');
                     if ($password) {
                         $password = $password[0];
                         $this->view('AdminWelcomePage', [
