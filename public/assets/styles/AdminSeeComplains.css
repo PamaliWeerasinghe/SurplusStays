@@ -10,6 +10,13 @@
     
     
 }
+.pic{
+    width: 200px; /* Set a fixed width */
+    height: 200px; /* Set a fixed height to maintain square shape */
+    object-fit: cover; /* Ensures the image is cropped properly */
+    border-radius: 8px; /* Optional: adds rounded corners to the images */
+    padding-left: 50px;
+}
 .seecomplain-bar{
     width: 99.4%;
     height: 7vh;

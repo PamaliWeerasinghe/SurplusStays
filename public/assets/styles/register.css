@@ -17,6 +17,24 @@ body {
     width: 100%; /* Ensure container takes full width */
     height: 140%; /* Adjust height to fill the screen */
 }
+.error.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.error.alert ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.error.alert li {
+    margin-bottom: 5px;
+}
 
 .left {
     background: url('<?=ASSETS?>/images/register_background.png') no-repeat center center;

@@ -25,7 +25,7 @@
         <div class="btn-nonSelected" data-path="/surplusstays/public/admin/Reports">
             <label>Reports</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/Logout">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/AdminLogout">
             <label>Logout</label>
         </div>
         <!-- <div class="btn-nonSelected" id="profile" onclick="profile();">

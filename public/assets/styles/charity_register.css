@@ -186,3 +186,13 @@ body {
     height: 200px; /* Make the image fill the height */
     object-fit: cover; /* Ensure the image retains aspect ratio and covers the square */
 }
+
+.pic{
+    width: 200px; /* Make the image fill the width */
+    height: 200px; /* Make the image fill the height */
+    position: relative;
+    display: flex;
+    border: none;
+    align-items: center;
+    justify-content: center
+}

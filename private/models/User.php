@@ -1,15 +1,8 @@
 <?php 
 
-class User extends Admin_Model{
-    
+class User extends Model{
+
+    protected $table = "user";
 }
-
-
-
-
-
-
-
-
 
 ?>

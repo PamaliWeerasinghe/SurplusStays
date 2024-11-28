@@ -21,9 +21,9 @@
         <form method="post" class="right" enctype="multipart/form-data">
             <div class="details">
                 <div class="steps">
-                    <h4>STEP</h4>
-                    <div class="step-number"><h3>1</h3></div>
-                    <p>ORGANIZATION DETAILS</p>
+                    <h4></h4>
+                    <div class="step-number"><h3>ORGANIZATION DETAILS</h3></div>
+                    <p></p>
                 </div>
                 <?php if (!empty($errors)): ?>
                     <div class="error alert">

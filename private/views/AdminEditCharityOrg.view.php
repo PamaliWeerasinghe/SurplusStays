@@ -51,7 +51,7 @@
                 </div> -->
                 <div class="upload-container">
                         <div class="logo-icon-preview">
-                        <img src="<?=$rows->picture?>" alt="Profile Picture" id="profile-pic-preview">
+                        <img class="pic" src="<?=ASSETS?>/charityImages/<?=$rows->picture?>" alt="Profile Picture" id="profile-pic-preview">
                         <input type="file" id="profilePic" name="file" />
                         </div>
                        

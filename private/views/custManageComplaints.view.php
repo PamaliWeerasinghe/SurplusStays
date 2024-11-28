@@ -79,9 +79,8 @@
                                             <a href="<?=ROOT?>/customer/editComplaint/<?=$row->id?>">
                                             <button class="action-btn edit">Edit</button>
                                             </a>
-                                            <form action="<?=ROOT?>/customer/deleteComplaint/<?=$row->id?>" method="post" onsubmit="return confirm('Are you sure you want to delete this event?');">
-                                                <button type="submit" class="action-btn delete">Delete</button>
-                                            </form>
+                                            <form id="deleteForm<?= $row->id ?>" action="<?=ROOT?>/customer/deleteComplaint/<?=$row->id?>" method="post" >
+                                            <button type="button" class="take-action" data-form-id="deleteForm<?= $row->id ?>">Delete</button>
 
                                         </td>
                                     </tr>
@@ -98,6 +97,44 @@
         </div>
     </div>
     <?php echo $this->view('includes/footer')?>
+
+    <!-- Modal for Delete Confirmation -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <h3>Confirm Deletion</h3>
+            <p>Are you sure you want to delete this product?</p>
+            <div class="modal-buttons">
+                <button id="confirmDelete" class="modal-button confirm">Yes, Delete</button>
+                <button id="cancelDelete" class="modal-button cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+    let deleteForm = null;
+
+        document.querySelectorAll('.take-action').forEach(button => {
+            button.addEventListener('click', event => {
+                event.preventDefault(); // Prevent form submission
+                deleteForm = document.getElementById(button.dataset.formId); // Store form reference
+                document.getElementById('deleteModal').style.display = 'block'; // Show modal
+            });
+        });
+
+        document.getElementById('confirmDelete').addEventListener('click', () => {
+            if (deleteForm) deleteForm.submit(); // Submit the form
+        });
+
+        document.getElementById('cancelDelete').addEventListener('click', () => {
+            document.getElementById('deleteModal').style.display = 'none'; // Hide modal
+        });
+        //stop the viewProduct page when clicking edit and delete
+        document.querySelectorAll('.completed, .take-action').forEach(button => {
+            button.addEventListener('click', event => {
+                event.stopPropagation();
+            });
+        });
+    </script>
     
 </body>
 </html>

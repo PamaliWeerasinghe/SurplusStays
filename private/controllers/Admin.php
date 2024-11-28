@@ -23,7 +23,6 @@ class Admin extends Controller
                 $arr['charity_description'] = $_POST['description'];
                 $arr['username'] = $_POST['username'];
                 $arr['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                $arr['date'] = date("Y-m-d H:i:s");
 
                 $charity->insert($arr, 'organization');
                 $data = $charity->findAll('organization');

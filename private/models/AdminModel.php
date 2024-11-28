@@ -100,8 +100,8 @@ class AdminModel extends Admin_Model
         $logoExt = explode('.', $logo);
         $logoActualExt = strtolower(end($logoExt));
         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
-        $fileDestination = '../../SurplusStays/public/assets/uploads/' . $logoNameNew;
-        $dbFileDestination = '../../../SurplusStays/public/assets/uploads/' . $logoNameNew;
+        $fileDestination =$_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages' . $logoNameNew;
+        $dbFileDestination = $logoNameNew;
         move_uploaded_file($_FILES['logo']['tmp_name'], $fileDestination);
 
         return $dbFileDestination;
@@ -114,8 +114,8 @@ class AdminModel extends Admin_Model
         $logoExt = explode('.', $logo);
         $logoActualExt = strtolower(end($logoExt));
         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
-        $fileDestination = '../../SurplusStays/public/assets/uploads/' . $logoNameNew;
-        $dbFileDestination = '../../../SurplusStays/public/assets/uploads/' . $logoNameNew;
+        $fileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages/' . $logoNameNew;
+        $dbFileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages/' . $logoNameNew;
         move_uploaded_file($_FILES['file']['tmp_name'], $fileDestination);
 
         return $dbFileDestination;
