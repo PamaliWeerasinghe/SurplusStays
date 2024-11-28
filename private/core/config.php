@@ -15,7 +15,7 @@ define('ASSETS', '../../../SurplusStays/public/assets');
 define('ADMINROOT','http://localhost/SurplusStays/public/admin');
 
 //DATABASE
-define('DBNAME','surplusstays2');
+define('DBNAME','surplusstays');
 define('DBHOST','localhost');
 define('DBUSER','root');
 define('DBPASS','');
