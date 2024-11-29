@@ -13,6 +13,22 @@ class Customer extends Controller{
     function payment(){
         $this->view('custPayment');
     }
-    
+
+    function viewOrders(){
+        $this->view('custViewOrders');
+    }
+
+    function wishlist(){
+        $this->view('custWishlist');
+    }
+
+    function profile(){
+        $this->view('custProfile');
+    }
+
+    function changePassword(){
+        $this->view('custChangePassword');
+    }
+
 }
 ?>
