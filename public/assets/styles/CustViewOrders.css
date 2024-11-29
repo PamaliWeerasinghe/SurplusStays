@@ -1,0 +1,89 @@
+.body{
+    font-family: 'Poppins', sans-serif;
+}
+
+.box{
+    width: 88%;
+    background-color: #F0F8FF;
+    border-radius: 20px;
+    margin-top: -20%;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    
+}
+
+.box-header{
+    background-color: #FD5D34;
+    color: white;
+    border-radius: 20px 20px 0px 0px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.orders-container {
+    background-color: #FFFFFF;
+    border-radius: 8px;
+    padding: 20px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.1);
+}
+
+.orders-header {
+    font-size: 24px;
+    font-weight: 500;
+    margin-bottom: 20px;
+    color: #000000;
+}
+
+.orders-table table {
+    width: 100%;
+    border-collapse: collapse;
+    text-align: left;
+}
+
+.orders-table th, .orders-table td {
+    padding: 12px 16px;
+    border-bottom: 1px solid #EAEAEA;
+}
+
+.orders-table th {
+    font-weight: 600;
+    color: #555555;
+    font-size: 14px;
+}
+
+.orders-table td {
+    font-weight: 400;
+    font-size: 14px;
+    color: #333333;
+}
+
+.status {
+    display: inline-block;
+    padding: 4px 8px;
+    font-size: 12px;
+    font-weight: 500;
+    border-radius: 4px;
+    margin-left: 8px;
+}
+
+.status.processing {
+    background-color: #FF7043;
+    color: #FFFFFF;
+}
+
+.status.completed {
+    background-color: #1B4332;
+    color: #FFFFFF;
+}
+
+.details-link {
+    color: #FF7043;
+    font-size: 12px;
+    text-decoration: none;
+    margin-left: 8px;
+}
+
+.details-link:hover {
+    text-decoration: underline;
+}
