@@ -1,24 +1,19 @@
-@media (max-width: 768px) {
-    .column {
-        width: 100%;
-    }
-}
-
-
 .box{
-    background-color: #f5f9ff;
-    border-radius: 10px;
-    margin: 50px;
-    margin-top: 30px;
+    width: 88%;
+    background-color: #F0F8FF;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    
 }
 
 .box-header{
     background-color: #FD5D34;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    padding: 15px;
-    text-align: center;
     color: white;
+    border-radius: 20px 20px 0px 0px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 40px;
 }
 
 .name-area{
@@ -79,46 +74,23 @@ button {
     font-size: 14px;
 }
 
-* {
-    box-sizing: border-box;
-}
-
 .column {
     float: left;
     width: 33.33%;
-    text-align: left; /* Optional: Center-align text */
-}
-
-.row {
-    width: 100%;
-    margin: 0 auto;
-}
-
-.row:after {
+  }
+  
+  /* Clear floats after the columns */
+  .row:after {
     content: "";
     display: table;
     clear: both;
+  }
+
+
+.item-expiry{
+    font-size: small;
 }
 
-/* Optional Flexbox Alternative */
-.row {
-    display: flex;
-    justify-content: space-between;
-}
-
-.column {
-    flex: 1;
-    margin: 10px;
-    align-items: center;
-    align-content: center;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    .column {
-        width: 100%; /* Stack columns on small screens */
-    }
-}
 
 .button1 {
     width: 170px;
@@ -148,14 +120,4 @@ button {
 
 .button2:hover {
     background-color: #095C5A;
-}
-
-.remove-btn{
-    background-color: red;
-    color: white;
-    border-radius: 40px;
-    font-family: 'Outfit', sans-serif;
-    padding: 10px;
-    border: none;
-    cursor: pointer;
 }
