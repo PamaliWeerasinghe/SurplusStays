@@ -1,68 +1,48 @@
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Payment</title>
-    <!-- fonts -->
-    <link rel="preconnect" href="https://fonts.googleapis.com">
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&display=swap" rel="stylesheet">
-    
-    
-    <link rel="stylesheet" href="../../public/assets/styles/CustSidePanel.css">
-    <link rel="stylesheet" href="../../public/assets/styles/CustTopPanel.css">
-    <link rel="stylesheet" href="../../public/assets/styles/CustPayment.css">
-    
+    <title><?php echo SITENAME ?></title>
+    <link rel="stylesheet" href="<?=STYLES?>/customer.css">
+    <link rel="stylesheet" href="<?=STYLES?>/customerDashboard.css">
+    <link rel="stylesheet" href="<?=STYLES?>/customerSidePanel.css">
+    <link rel="stylesheet" href="<?=STYLES?>/CustPayment.css">
 </head>
 
-<body style="font-family: 'Outfit', sans-serif;">
-    <div class="container">
-        <!-- Sidebar -->
-        <div class="side-nav">
-            <div class="profile-section">
-                <img src="../../public/assets/images/sample_profile_pic.png" alt="Profile Image" class="profile-image">
-                <h2>Hi Janitha!</h2>
-            </div>
-            <ul class="nav-links">
-                <li class="nav-item "><a href="#">Dashboard</a></li>
-                <li class="nav-item"><a href="#">Browse Shops</a></li>
-                <li class="nav-item"><a href="#">Cart</a></li>
-                <li class="nav-item"><a href="#">Wishlist</a></li>
-                <li class="nav-item active"><a href="#">Orders</a></li>
-                <li class="nav-item"><a href="#">View Payment History</a></li>
-                <li class="nav-item"><a href="#">Profile</a></li>
-            </ul>
-        </div>
+<body>
+    <!-- navbar -->
 
-        <!-- Main Content Area -->
-        <div class="main-content">
-            <!-- Top Navigation -->
-            <div class="top-nav">
-                <div class="top-bar">
-                    <div class="search-bar">
-                        <input type="text" placeholder="Search..." />
+    <div class="main-div">
+    <?php echo $this->view('includes/navbar')?>
+        <div class="sub-div-1">
+            <!-- included the admin side panel -->
+            <?php require APPROOT."/views/includes/customerSidePanel.view.php"?>
+            <div class="dashboard">
+                <div class="summary">
+                    <div class="top-bar">
+                        <div class="search-bar">
+                            <input type="text" placeholder="Search..." />
+                        </div>
+                        <div class="notification">
+                            <img src="<?=ASSETS?>/images/Bell.png" alt="Notification Bell" class="bell-icon">
+                        </div>
                     </div>
-                    <div class="notification">
-                        <img src="../../public/assets/images/Bell.png" alt="Notification Bell" class="bell-icon">
-                    </div>
-                </div> 
-            </div>
+                </div>
 
-            <!-- main content -->
-            <div class="content">
                 <div class="box">
                     <div class="box-header">Payment</div>
                     <div class="box-subheading" style="background-color: white;">
                         <div class="payment-text">CREDIT CARD/DEBIT CARD</div>
                         <div class="payment-icons">
-                            <img src="visa.png" alt="Visa" class="icon">
-                            <img src="mastercard.png" alt="Mastercard" class="icon">
+                            <img src="<?=ASSETS?>/images/visa.png" alt="Visa" class="icon">
+                            <img src="<?=ASSETS?>/images/mastercard.png" alt="Mastercard" class="icon">
                         </div>
                     </div>
 
 
-                    <div class="payment-form" style="margin: 40px;">
+                    <div class="payment-form" style="margin: 40px; font-weight: 200;">
                     <div class="payment-form">
                         <div class="form-group">
                         <label for="card-number">Card Number:</label>
@@ -83,14 +63,19 @@
                         </div>
                         </div>
                     </div>
+    
+                
+                    <div class="button-container">
+                    <p style="font-weight: 600;" onclick='window.location.href="http://localhost/surplusstays/public/customer/cart"'><b>&lt;</b> Back</p>
+                    <button class="pay-btn">Confirm And Pay</button>
                     </div>
 
-                    
-                </div>
             </div>
-
-
+            
         </div>
+        <?php echo $this->view('includes/footer')?>
     </div>
+    
 </body>
+
 </html>

@@ -16,7 +16,7 @@
         <div class="btn-nonSelected" data-path="/surplusstays/public/customer/wishlist">
             <label>Wishlist</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/orders">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/viewOrders">
             <label>Orders</label>
         </div>
         <div class="btn-nonSelected" data-path="/surplusstays/public/customer/paymentHistory">
@@ -28,6 +28,8 @@
         <div class="btn-nonSelected" data-path="/surplusstays/public/Logout">
             <label>Logout</label>
         </div>
+        <br/>
+        <br/>
         
     </div>
     <script src="<?=ROOT?>/assets/js/customerPagesNavigation.js"></script>
