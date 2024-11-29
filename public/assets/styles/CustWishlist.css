@@ -1,16 +1,20 @@
 .box{
-    background-color: #f5f9ff;
-    border-radius: 10px;
-    margin: 50px;
+    width: 88%;
+    background-color: #F0F8FF;
+    margin-top: -20%;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+
+    
 }
 
 .box-header{
     background-color: #FD5D34;
-    border-top-left-radius: 10px;
-    border-top-right-radius: 10px;
-    padding: 15px;
-    text-align: center;
     color: white;
+    border-radius: 20px 20px 0px 0px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 40px;
 }
 
 .name-area{
@@ -82,3 +86,8 @@ button {
     display: table;
     clear: both;
   }
+
+
+.item-expiry{
+    font-size: small;
+}
