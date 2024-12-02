@@ -242,5 +242,13 @@ require APPROOT . '/views/includes/htmlHeader.view.php' ?>
     const trackWidth = sliderTrack.offsetWidth;
     sliderTrack.style.animationDuration = `${trackWidth / 100}px`; // Adjust speed
 
+    document.querySelector('.learnMore').addEventListener('click', () => {
+        // Scroll down by 300 pixels (adjust the value as needed)
+        window.scrollBy({
+            top: 1600, // Number of pixels to scroll down
+            behavior: 'smooth' // Smooth scrolling effect
+        });
+    });
+
 
 </script>

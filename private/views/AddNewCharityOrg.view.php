@@ -62,7 +62,7 @@
                 <input placeholder="ENTER A PASSWORD" value="<?=get_var('password')?>" type="text" name="password" class="input">
                 <h4>CONFIRM PASSWORD  :</h4>
                 <input placeholder="RE-ENTER A PASSWORD" value="<?=get_var('confirm_password')?>" type="text" name="confirm_password" class="input">   
-                <p>BY REGISTERING YOU AGREE TO OUR <a href="url">TERMS AND CONDITIONS</a> AND <a href="url">PRIVACY POLICY</a></p>                  
+                <p>BY REGISTERING YOU AGREE TO OUR <a style="text-decoration:none;" href="url">TERMS AND CONDITIONS</a> AND <a style="text-decoration:none;" href="url">PRIVACY POLICY</a></p>                  
             </div>
             <button class="register-button" type="submit">REGISTER NOW</button>
 </form>

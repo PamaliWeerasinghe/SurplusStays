@@ -157,6 +157,6 @@ class Admin extends Controller
     }
     function landing()
     {
-        $this->view('home_section1');
+        $this->view('home');
     }
 }

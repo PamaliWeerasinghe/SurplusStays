@@ -58,7 +58,7 @@ class Register extends Controller
      
                  $userTable->insert($userData);
      
-                 $this->redirect('AdminLoginStep1');
+                 $this->redirect('login');
              } else {
                  $errors = $user->errors;
              }
@@ -204,8 +204,8 @@ class Register extends Controller
 
      function login()
     {    
-        $this->redirect('/Login');
-    }
+       $this->redirect('/Login');
+    } 
 }
 
 

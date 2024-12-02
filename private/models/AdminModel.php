@@ -100,7 +100,7 @@ class AdminModel extends Admin_Model
         $logoExt = explode('.', $logo);
         $logoActualExt = strtolower(end($logoExt));
         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
-        $fileDestination =$_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages' . $logoNameNew;
+        $fileDestination =$_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages/' . $logoNameNew;
         $dbFileDestination = $logoNameNew;
         move_uploaded_file($_FILES['logo']['tmp_name'], $fileDestination);
 
@@ -118,7 +118,7 @@ class AdminModel extends Admin_Model
         $dbFileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages/' . $logoNameNew;
         move_uploaded_file($_FILES['file']['tmp_name'], $fileDestination);
 
-        return $dbFileDestination;
+        return $logoNameNew;
     }
 
 

@@ -4,7 +4,7 @@
             <li><a href="<?=ROOT?>">Home</a></li>
             <li><a href="#">About Us</a></li>
             <li class="dropdown">
-                <a href="#">Shop <li><a href="#"><img src="<?=ASSETS?>/icons/sortdown-icon.png" class="dropdown-icon" alt="cart icon"></a></li></a>
+                <a href="<?=ROOT?>/customer">Shop <li><a href="#"><img src="<?=ASSETS?>/icons/sortdown-icon.png" class="dropdown-icon" alt="cart icon"></a></li></a>
             </li>
         </ul>
         <div class="logo">

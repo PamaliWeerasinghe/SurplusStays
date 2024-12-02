@@ -44,7 +44,7 @@
                             </div>
                             <div class="summaries-2">
                                 <label class="summaries-2-label1">Products</label>
-                                <label class="summaries-2-label2"><?=$rowCount?></label>
+                                <label class="summaries-2-label2">0</label>
                             </div>
                         </div>
                         <div class="summaries">

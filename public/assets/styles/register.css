@@ -15,7 +15,7 @@ body {
     background-color: #f4f4f4;
     flex-direction: row;
     width: 100%; /* Ensure container takes full width */
-    height: 140%; /* Adjust height to fill the screen */
+    height: 90vh; /* Adjust height to fill the screen */
 }
 .error.alert {
     background-color: #f8d7da;
@@ -140,10 +140,10 @@ body {
 .step-number{
     display: flex;
     color: white;
-    background-color: #FD5D34;
-    border-radius: 50%;
-    height: 40px;
-    width: 40px;
+    background-color: #00615F;
+    border-radius: 5%;
+    height: 100%;
+    width: 100%;
     align-items: center;
     justify-content: center;
     margin-right: 15px;
