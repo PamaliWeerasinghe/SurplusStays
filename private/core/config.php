@@ -3,22 +3,22 @@
 define('APPROOT', dirname(dirname(__FILE__)));
 
 //URL ROOT
-define('URLROOT', 'http://localhost:8080/SurplusStays');
+define('URLROOT', 'http://localhost/SurplusStays');
 
 //WEBSITE
 define('SITENAME', 'surplusStays');
 
 
-define('ROOT', 'http://localhost:8080/SurplusStays/public');
-define('STYLES', 'http://localhost:8080/SurplusStays/public/assets/styles');
-define('ASSETS', 'http://localhost:8080/SurplusStays/public/assets');
+define('ROOT', 'http://localhost/SurplusStays/public');
+define('STYLES', 'http://localhost/SurplusStays/public/assets/styles');
+define('ASSETS', 'http://localhost/SurplusStays/public/assets');
 define('SIDEPANELBUSINESS', '/SurplusStays/public/business');
 
 //DATABASE
-define('DBNAME','surplusstays2');
-define('DBHOST','localhost');
-define('DBUSER','root');
-define('DBPASS','');
+define('DBNAME','surplusstays_db');
+define('DBHOST','mysql-surplusstays.alwaysdata.net');
+define('DBUSER','386124_pamali');
+define('DBPASS','Pamali2002');
 define('DBDRIVER','mysql');
 
 
