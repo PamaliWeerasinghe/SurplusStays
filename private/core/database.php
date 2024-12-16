@@ -1,7 +1,14 @@
 <?php
 
 class Database
-{
+{   
+    private static $instance = null;
+
+    private function __construct()
+    {
+        $this->connect();
+    }
+
     private function connect() 
     {
         $string = DBDRIVER . ":host=".DBHOST.";dbname=".DBNAME;
@@ -12,7 +19,13 @@ class Database
         return $con;
         
     }
-
+    public static function getInstance() {
+        if (self::$instance === null) {
+            self::$instance = new Database();
+        }
+        return self::$instance;
+    }
+    
     public function query($query, $data = array(), $data_type = "object") 
     {
         $con = $this->connect();

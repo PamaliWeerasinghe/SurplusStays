@@ -1,17 +1,20 @@
 <?php
 
-class Admin_Model extends Database
+class Admin_Model 
 {
      public $table;
      public $errors = array();
      public $data=array();
      
+     protected $db;
 
      public function __construct()
      {
           if (!property_exists($this, 'table')) {
                $this->table = strtolower($this::class);
           }
+          $this->db=Database::getInstance();
+
      }
 
      public function where($column,$value,$table)
@@ -20,7 +23,7 @@ class Admin_Model extends Database
           //check whether the column exists before executing the query
           $column = addslashes($column);
           $query = "select * from $this->table where $column = :value";
-          return $this->query($query, [
+          return $this->db->query($query, [
                // 'column' => $column,
                'value' => $value
           ]);
@@ -30,7 +33,7 @@ class Admin_Model extends Database
      {    
           $this->table=$table;
           $query = "select * from $this->table";
-          return $this->query($query);
+          return $this->db->query($query);
      }
 
      public function insert($data)
@@ -42,7 +45,7 @@ class Admin_Model extends Database
 
           $query = "insert into $this->table ($columns) values (:$values)";
 
-          return $this->query($query, $data);
+          return $this->db->query($query, $data);
      }
 
      public function update($id,$data,$table)
@@ -62,7 +65,7 @@ class Admin_Model extends Database
 
           $query = "update $this->table set $str where id = :id";
 
-          return $this->query($query, $data);
+          return $this->db->query($query, $data);
      }
 
      
@@ -72,7 +75,7 @@ class Admin_Model extends Database
           $this->table=$table;
           $query = "delete from $this->table where id = :id";
           $data['id'] = $id;
-          return $this->query($query, $data);
+          return $this->db->query($query, $data);
      }
 
      //select the last inserted id 
@@ -80,6 +83,6 @@ class Admin_Model extends Database
      {
           $this->table=$table;
           $query="select MAX(id) AS last_id from $this->table";
-          return $this->query($query);
+          return $this->db->query($query);
      }
 }
