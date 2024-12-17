@@ -1,19 +1,28 @@
 <?php
 
-class AdminAuth
+class Auth
 {
-    public static function authenticate($row)
+    public static function authenticate($row,$user)
     {
+        
         if (session_status() == PHP_SESSION_NONE) {
            session_start();
         }
-        $_SESSION['ADMIN'] = $row;
+        $_SESSION['USER'] = $row;
+
+        $_SESSION['USER_EMAIL']=$user->email;
+        $_SESSION['USER_PIC']=$user->profile_pic;
+        $_SESSION['USER_REG_DATE']=$user->reg_date;
+
     }
 
     //logout
     public static function logout()
     {
-        unset($_SESSION['ADMIN']);
+        unset($_SESSION['USER']);
+        unset($_SESSION['USER_EMAIL']);
+        unset($_SESSION['USER_PIC']);
+        unset( $_SESSION['USER_REG_DATE']);
     }
 
     //check whether an admin is logged in
@@ -22,7 +31,7 @@ class AdminAuth
         if(session_status()==PHP_SESSION_NONE){
             session_start();
         }
-        if (isset($_SESSION['ADMIN'])) {
+        if (isset($_SESSION['USER'])) {
             return true;
         }
         return false;
@@ -31,8 +40,8 @@ class AdminAuth
     //retrieve details from the session variable
     public static function admin()
     {
-        if (isset($_SESSION['ADMIN'])) {
-            return $_SESSION['ADMIN']->name;
+        if (isset($_SESSION['USER'])) {
+            return $_SESSION['USER']->name;
         }
     }
 

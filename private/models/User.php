@@ -2,7 +2,7 @@
 
 class User extends Model{
 
-    protected $table = "user";
+    // protected $table = "user";
 }
 
 ?>
