@@ -48,7 +48,13 @@ class Charity extends Controller
 
     function browse_shops()
     {
-        $this->view('charityBrowseShops');
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $shops = new Business();
+        $rows = $shops->findAll();
+        $this->view('charityBrowseShops',['rows' => $rows]);
     }
 
     function reports()

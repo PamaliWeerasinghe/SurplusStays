@@ -31,9 +31,6 @@ class Business extends Model
         if(empty($DATA['phone']) || !is_numeric($DATA['phone'])) {
             $this->errors['phone'] = "A valid phone number is required";
         }
-        if(empty($DATA['address'])) {
-            $this->errors['address'] = "address is required";
-        }
 
         if (empty($DATA['picture'])) {
             $this->errors['picture'] = "Profile picture is required";

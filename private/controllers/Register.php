@@ -174,7 +174,8 @@ class Register extends Controller
                     'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
                     'business_type' => $_POST['type'],
                     'picture' => $_POST['picture'],
-                    'address' => $_POST['address'],
+                    'latitude' => $_POST['latitude'],
+                    'longitude' => $_POST['longitude'],
                     'status_id' => 1,
                 ];
 
