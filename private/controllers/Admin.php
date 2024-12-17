@@ -63,7 +63,7 @@ class Admin extends Controller
 
     function register()
     {
-        if (AdminAuth::logged_in()) {
+        if (Auth::logged_in()) {
             $this->view('adminWelcomePage');
         } else {
             $errors = array();
@@ -93,7 +93,7 @@ class Admin extends Controller
 
     function dashboard()
     {
-        if (AdminAuth::logged_in()) {
+        if (Auth::logged_in()) {
             $this->view('adminWelcomePage');
         } else {
             $this->redirect('register');
@@ -130,7 +130,7 @@ class Admin extends Controller
     }
     function ManageCharityOrg()
     {
-        if (!AdminAuth::logged_in()) {
+        if (!Auth::logged_in()) {
             $this->redirect('register');
         } else {
             $user = new AdminModel();
