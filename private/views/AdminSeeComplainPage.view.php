@@ -12,26 +12,19 @@
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary">
-                    <div class="notifications-type2">
-                        <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." />
-                            <img src="<?=ASSETS?>/images/search.png" class="bell2" />
-                        </div>
-
-                        <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
-                    </div>
+                  
                     
 
                 </div>
                 <div class="seecomplain-status">
                     <div class="seecomplain-bar">
-                        <label>Ms. Samashi Perera </label>
-                        <label>Ord. No : 001023</label>
+                        <label><?=$complaint_details->fname?>&nbsp;<?=$complaint_details->lname?></label>
+                        <label>Ord. No : 00<?=$complaint_details->order_id?></label>
                     </div>
                     <div class="see-product">
                         <div class="main-img-details">
                         <div class="see-product-img">
-                                <img src="<?=ASSETS?>/images/bread-lg.png"/>
+                                <img src="<?=ASSETS?>/complaints/breadlg.jpeg"/>
                             </div>
                             <div class="see-product-details">
                                     <div>
@@ -42,16 +35,13 @@
                                     </div>
                                     <div>
                                         <p>
-                                        The loaf of bread which was purchased today ,
-                                        It was not in a good condition and smelled bad too. 
-                                        Photos are attached here with as proof. please be kind enough to 
-                                        get actions to reduce these scenarios in the future
+                                        <?=$complaint_details->complaintDescription?>
                                         </p>
                                     </div>
                                     <div class="see-product-location">
                                         <div>
                                         <label>
-                                            Shop : Wishwas Bakers
+                                            Shop : <?=$complaint_details->business_name?>
                                         </label>
                                         </div>
                                             
@@ -63,32 +53,33 @@
                                        
                                     </div>
                                     <div>
-                                        <label>Amount Paid : Rs. 500</label>
+                                        <label>Amount Paid : Rs. <?=$complaint_details->total?></label>
                                     </div>
                                     <div>
-                                        <label>Quantity : 01</label>
+                                        <label>Quantity : <?=$complaint_details->itemQty?></label>
                                     </div>
                                     <div>
-                                        <label>Payment Method : Collected</label>
+                                        <label>Payment Method :<?=$complaint_details->paymentMethod?></label>
                                     </div>
                                    
                                     
                             </div>
                         </div>
                         <div class="sub-img">
-                        <img src="<?=ASSETS?>/images/bread.png"/>
-                        <img src="<?=ASSETS?>/images/bread.png"/>
+                        <?php foreach($complaint_imgs as $complaint_img):?>
+                        <img src="<?=ASSETS?><?=$complaint_img->path?>"/>
+                        <?php endforeach?>
                         </div>
                         <div class="sub-details" >
-                            <label>Mentioned expiration date and time : 2024.09.20  10:00 AM</label>
+                            <label>Mentioned expiration date and time : <?=$complaint_details->complaint_date?></label>
                         </div>
                         <div class="sub-details" >
-                            <label>Discounted price : Rs 12.50</label>
+                            <label>Discounted price : Rs <?=$complaint_details->discountPrice?></label>
                         </div>
                         <div class="sub-customer-details" >
                             <label>Customer  Details : </label>
-                            <span>Contact Number - 0773616815 </span>
-                            <span>Email Address - samashi12@gmail.com</span>
+                            <span>Contact Number - <?=$complaint_details->customer_phone?></span>
+                            <span>Email Address - <?=$complaint_details->customer_email?></span>
                         </div>
                         <div class="business-response-area">
                             <div>
@@ -96,10 +87,7 @@
                             </div>
                             <div>
                                         <p>
-                                        The loaf of bread which was purchased today ,
-                                        It was not in a good condition and smelled bad too. 
-                                        Photos are attached here with as proof. please be kind enough to 
-                                        get actions to reduce these scenarios in the future
+                                        <?=$complaint_details->feedback?>
                                         </p>
                                     </div>
                         </div>

@@ -15,10 +15,13 @@ define('ASSETS', 'http://localhost/SurplusStays/public/assets');
 define('SIDEPANELBUSINESS', '/SurplusStays/public/business');
 
 //DATABASE
-define('DBNAME','surplusstays_db');
-define('DBHOST','mysql-surplusstays.alwaysdata.net');
-define('DBUSER','386124_pamali');
-define('DBPASS','Pamali2002');
+define('DBNAME','surplusstays');
+define('DBHOST','localhost');
+//alwaysdata-host mysql-surplusstays.alwaysdata.net
+define('DBUSER','root');
+//alwaysdata-username  386124_pamali
+define('DBPASS','');
+//alwaysdata-password Pamali2002
 define('DBDRIVER','mysql');
 
 

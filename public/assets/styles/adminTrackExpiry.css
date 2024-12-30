@@ -14,7 +14,7 @@
     width: 80%;
     height: 6vh;
     border-style: solid;
-    border-color: #1B4332;
+    border-color: #005250;
     border-radius: 10px;
 }
 .slot1{
@@ -22,7 +22,7 @@
     justify-content: center;
     align-items: center;
     flex: 1;
-    background-color:#1B4332;
+    background-color:#005250;
     border-radius: 7px 10px 10px 7px; /*ltop rtop rbot lbot*/
     cursor: pointer;
 }

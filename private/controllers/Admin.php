@@ -104,24 +104,58 @@ class Admin extends Controller
         $this->view('adminLoginStep1');
     }
 
+    //Track the expiration products
     function TrackExpiry()
     {
-        $this->view('adminTrackExpiryPage');
+    
+        $user=new AdminModel();
+        
+        $rows=$user->findAll('trackexpiryproducts');
+        if($rows==false){
+            $no_of_data=0;
+        }else{
+            $no_of_data=1;
+        }
+        $this->view('adminTrackExpiryPage',[
+            "rows"=>$rows,
+            "rowCount"=>$no_of_data
+        ]);
+
     }
 
     function Complaints()
     {
+        $user=new AdminComplaints();
+        $complaints=$user->getAllComplaints();
         //AdminSeeComplainPage is the page to be directed after clicking on AdminBusinessComplaints
-        $this->view('AdminBusinessComplaints');
+        $this->view('AdminBusinessComplaints',[
+            "complaints"=>$complaints
+        ]);
     }
-    function ViewComplain()
+    function ViewComplain($complaint_id)
     {
-        $this->view('AdminSeeComplainPage');
+        $user=new AdminComplaints();
+        $complaint_details=$user->complaintDetails($complaint_id);
+        $complaint_images=$user->getComplaintImages($complaint_id);
+        $this->view('AdminSeeComplainPage',[
+            "complaint_details"=>$complaint_details[0],
+            "complaint_imgs"=>$complaint_images
+        ]);
     }
 
     function ManageCustomers()
     {
-        $this->view('AdminManageCustomers');
+        if(Auth::logged_in()){
+            $user=new AdminModel();
+            $customers=$user->findAll('customerDetails');
+            $this->view('AdminManageCustomers',[
+                "customers"=>$customers
+            ]);
+        }else{
+            $this->view('adminLoginStep1');
+        }
+       
+
     }
 
     function ManageBusinesses()

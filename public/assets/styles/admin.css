@@ -39,7 +39,7 @@ body {
     width: 100%;
     height: 60vh;
     /* padding-top: 5%; */
-    background-color: #1B4332;
+    background-color: #005250;
     /* position: absolute; */
 
 }
@@ -178,7 +178,7 @@ body {
     justify-content: center;
     align-items: center;
     flex: 1;
-    background-color:#1B4332;
+    background-color:#005250;
     border-radius: 7px 10px 10px 7px; /*ltop rtop rbot lbot*/
     cursor: pointer;
 }
@@ -291,6 +291,6 @@ body {
     width: 20%;
     height: 6vh;
     color: white;
-    background-color: #1B4332;
+    background-color: #005250;
     border-radius: 20px;
 }

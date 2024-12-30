@@ -76,6 +76,14 @@
 .sub-img{
     padding: 4%;
 }
+
+.sub-img img{
+    height: 14vh;
+
+}
+.sub-img img:hover{
+    cursor: pointer;
+}
 .sub-details{
     padding-left: 4%;
     margin-top: 2%;

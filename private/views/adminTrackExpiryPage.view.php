@@ -95,120 +95,45 @@
                     </div>
                     <table class="order-table" >
                         <thead>
-                            <t`r>
+                            <tr>
                                 <th>ItemID</th>
-                                <th>Expiry Date & Time</th>
+                                <th>Best Before</th>
                                 <th>Business</th>
                                 <th>Product</th>
                                 <th>Notify Status</th>
                                 <th>Price</th>
                             </tr>
                         </thead>
+                        
                         <tbody id="order-table-body">
-                            <tr onclick="openPopup()">
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
+                            <?php if($rowCount==0) {?>
+                                <!-- No products available -->
+
+                           <?php }else{?>
+                            <?php foreach($rows as $row):?>
+                            
+                            <tr>
+                                <td><?=$row->id?></td>
+                                <td>
+                                    <label id="days<?=$row->id?>">00</label>
+                                    <label id="hours<?=$row->id?>">00</label>
+                                    <label id="minutes<?=$row->id?>">00</label>
+                                    <label id="seconds<?=$row->id?>">00</label>
+                                    
+                                </td>
+                                <td><?=$row->business_name?></td>
+                                <td><?=$row->product_name?></td>
                                 <td><button class="take-action">Notify</button></td>
                                 <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
                             </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notify</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notify</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notify</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notify</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="completed">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="completed">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="completed">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="completed">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="completed">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
+                            <script>
+                                document.addEventListener("DOMContentLoaded",function(){
+                                    countDown('<?=$row->expiration_dateTime?>','<?=$row->id?>');
+                                });
+                                
+                            </script>
+                            <?php endforeach; ?>
+                           <?php }?>
                         </tbody>
                     </table>
                     <div class="arrow-div">
@@ -226,5 +151,5 @@
         </div>
         <?php echo $this->view('includes/footer')?>
         <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>
-    
-        <script src="<?=ROOT?>/assets/js/TrackExpiryPopup.js"></script>
+        <script src="<?= ROOT ?>/assets/js/adminCountdown.js"></script>
+        <!-- <script src="<?=ROOT?>/assets/js/TrackExpiryPopup.js"></script> -->

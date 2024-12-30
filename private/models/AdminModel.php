@@ -1,9 +1,11 @@
 <?php
 
-class AdminModel extends Admin_Model
+class AdminModel extends Model
 {
 
-    public $table = 'organization';
+
+
+   
 
     //Validate Admin login details
     public function validate($DATA)

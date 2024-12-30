@@ -66,84 +66,40 @@
                         <thead>
                             <tr>
                                 <th>Complaint ID</th>
+                                <th>Order No</th>
                                 <th>Date Submitted</th>
                                 <th style="text-align: center;">Status</th>
                                 
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach($complaints as $complaint):?>
                             <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="take-action">In Progress</button></td>
+                                <!-- <?php 
+                                $customer_complaint=array(
+
+                                );?> -->
+                                <td># <?= $complaint->complaint_id ?></td>
+                                <td><?=$complaint->order_id ?></td>
+                                <td><?=$complaint->complaint_date?></td>
+                                <?php if($complaint->complaint_status=='In Progress'){?>
+                                    <td style="text-align: center;"><button class="take-action">In Progress</button></td>
+                                <?php }else{?>
+                                    <td style="text-align: center;"><button class="completed">Resolved</button></td>
+                                <?php }?>
                                 <td style="text-align: center;">
+                                    
                                     <button 
                                     class="see-complain" 
                                     style="color:grey;background-color:transparent;border-style:solid;border-color:grey"
-                                    onclick="window.location.href='<?=ROOT?>/Admin/ViewComplain'"
+                                    onclick="window.location.href='<?=ROOT?>/Admin/ViewComplain/<?=$complaint->complaint_id?>'"
                                     >
                                     See Complain
                                     </button>
                                 </td>
                                 
                             </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="take-action">In Progress</button></td>
-                                <td style="text-align: center;">
-                                    <button 
-                                    class="see-complain" 
-                                    style="color:grey;background-color:transparent;border-style:solid;border-color:grey">
-                                    See Complain
-                                    </button>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;">
-                                    <button 
-                                    class="see-complain" 
-                                    style="color:grey;background-color:transparent;border-style:solid;border-color:grey">
-                                    See Complain
-                                    </button>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="take-action">In Progress</button></td>
-                                <td style="text-align: center;">
-                                    <button 
-                                    class="see-complain" 
-                                    style="color:grey;background-color:transparent;border-style:solid;border-color:grey">
-                                    See Complain
-                                    </button>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;">
-                                    <button 
-                                    class="see-complain" 
-                                    style="color:grey;background-color:transparent;border-style:solid;border-color:grey">
-                                    See Complain
-                                    </button>
-                                </td>
-                                
-                            </tr>
+                            <?php endforeach; ?>   
                            
                             
                             
