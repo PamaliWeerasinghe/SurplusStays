@@ -24,6 +24,11 @@ define('DBPASS','');
 //alwaysdata-password Pamali2002
 define('DBDRIVER','mysql');
 
+// Enable error displaying (for development only, consider disabling in production)
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
+
 
 
 

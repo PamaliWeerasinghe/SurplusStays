@@ -1,6 +1,48 @@
 <?php
 class Admin extends Controller
 {
+
+    function makeComplaints(){
+        $admin=new AdminComplaints();
+        $noOfOrders=$admin->getNoOfOrders(Auth::getUserId());
+        $orders=$admin->getAllOrders(Auth::getUserId());
+        $this->view('customerMakeComplaint',[
+            "orderCount"=>$noOfOrders[0]->orderCount,
+            "orders"=>$orders
+        ]);
+    }
+
+    function ReplyToComplaint(){
+        $errors=array();
+        
+        if(count($_POST)){
+            $id=$_POST['id'];
+            $admin=new AdminModel();
+            $arr['adminReply']=$_POST['feedback'];
+
+            //$feedback=$admin->update($id,$arr,'complaints');
+            // returns an empty array
+
+            if($admin->update($id,$arr,'complaints')){
+                
+                $this->view('AdminLoginStep1');
+            } else {
+                $user=new AdminComplaints();
+                $complaint_details=$user->complaintDetails($id);
+                $complaint_images=$user->getComplaintImages($id);
+                $this->view('AdminSeeComplainPage',[
+                    "complaint_details"=>$complaint_details[0],
+                    "complaint_imgs"=>$complaint_images,
+                    "errors"=>$errors
+
+                ]);
+            }
+         
+            
+
+        }
+
+    }
     //View a charity organization
     function CharityOrgView()
     {
@@ -193,4 +235,6 @@ class Admin extends Controller
     {
         $this->view('home');
     }
+
+    
 }

@@ -28,10 +28,10 @@ class Database
     
     public function query($query, $data = array(), $data_type = "object") 
     {
-        $con = $this->connect();
-        $stm = $con->prepare($query);
-
-        if($stm){
+        try {
+            $con = $this->connect();
+            $con->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
+            $stm = $con->prepare($query);
             $check = $stm->execute($data);
             if($check) {
                 if($data_type == "object") {
@@ -44,9 +44,13 @@ class Database
                     return $data; 
                 }
             }
-        }
 
-        return false;
+            return is_array($data) && count($data) > 0 ?$data:[];
+        } catch (PDOException $e) {
+            error_log("Database query error: ".$e->getMessage());
+            return false;
+        }
+       
     }
 
 }

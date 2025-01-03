@@ -47,6 +47,10 @@
     justify-content: center;
     align-items: center;
 }
+.see-product-img img{
+    height: 40vh;
+
+}
 .see-product-details{
     display: flex;
     flex: 1;

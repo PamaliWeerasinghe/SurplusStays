@@ -19,14 +19,19 @@
                 </div>
                 <div class="seecomplain-status">
                     <div class="seecomplain-bar">
-                        <label><?=$complaint_details->fname?>&nbsp;<?=$complaint_details->lname?></label>
-                        <label>Ord. No : 00<?=$complaint_details->order_id?></label>
+                        <label></label>
+                        <label>Ord. No :
+                        <select>
+                            <option>Order ID</option>
+                            <option><?=$orderCount?></option>
+                        </select>
+                        </label>
                         
                     </div>
                     <div class="see-product">
                         <div class="main-img-details">
                         <div class="see-product-img">
-                                <img src="<?=ASSETS?><?=$complaint_imgs[0]->path?>" id="lgComplainImg"/>
+                                <!-- <img src="<?=ASSETS?><?=$complaint_imgs[0]->path?>" id="lgComplainImg"/> -->
                             </div>
                             <div class="see-product-details">
                                     <div>
@@ -37,31 +42,31 @@
                                     </div>
                                     <div>
                                         <p>
-                                        <?=$complaint_details->complaintDescription?>
+                                        description
                                         </p>
                                     </div>
                                     <div class="see-product-location">
                                         <div>
                                         <label>
-                                            Shop : <?=$complaint_details->business_name?>
+                                            Shop :
                                         </label>
                                         </div>
                                             
                                         <div class="see-product-location-details">
-                                        <img src="<?=ASSETS?>/images/location.png"/>
+                                        <!-- <img src="<?=ASSETS?>/images/location.png"/> -->
                                         
                                         <label>Kaduwela</label>
                                         </div>
                                        
                                     </div>
                                     <div>
-                                        <label>Amount Paid : Rs. <?=$complaint_details->total?></label>
+                                        <label>Amount Paid : Rs. </label>
                                     </div>
                                     <div>
-                                        <label>Quantity : <?=$complaint_details->itemQty?></label>
+                                        <label>Quantity :</label>
                                     </div>
                                     <div>
-                                        <label>Payment Method :<?=$complaint_details->paymentMethod?></label>
+                                        <label>Payment Method :</label>
                                     </div>
                                    
                                     
@@ -69,19 +74,19 @@
                         </div>
                         <div class="sub-img">
                        
-                        <img src="<?=ASSETS?><?=$complaint_imgs[1]->path?>" id="complaintImg<?=$complaint_imgs[1]->id?>"/>
-                        <img src="<?=ASSETS?><?=$complaint_imgs[2]->path?>" id="complaintImg<?=$complaint_imgs[2]->id?>"/>
+                        <!-- <img src="<?=ASSETS?><?=$complaint_imgs[1]->path?>" id="complaintImg<?=$complaint_imgs[1]->id?>"/> -->
+                        <!-- <img src="<?=ASSETS?><?=$complaint_imgs[2]->path?>" id="complaintImg<?=$complaint_imgs[2]->id?>"/> -->
                         </div>
                         <div class="sub-details" >
-                            <label>Mentioned expiration date and time : <?=$complaint_details->complaint_date?></label>
+                            <label>Mentioned expiration date and time : </label>
                         </div>
                         <div class="sub-details" >
-                            <label>Discounted price : Rs <?=$complaint_details->discountPrice?></label>
+                            <label>Discounted price : Rs </label>
                         </div>
                         <div class="sub-customer-details" >
                             <label>Customer  Details : </label>
-                            <span>Contact Number - <?=$complaint_details->customer_phone?></span>
-                            <span>Email Address - <?=$complaint_details->customer_email?></span>
+                            <span>Contact Number - </span>
+                            <span>Email Address - </span>
                         </div>
                         <div class="business-response-area">
                             <div>
@@ -89,13 +94,13 @@
                             </div>
                             <div>
                                         <p>
-                                        <?=$complaint_details->feedback?>
+                                        
                                         </p>
                                     </div>
                         </div>
                         <div class="business-response-area-btn">
-                            <button class="complain-btn1" onclick="refundMoney(<?=$complaint_details->complaint_id?>);">Refund Money</button>
-                            <button class="complain-btn2" onclick="replyToCustomer(<?=$complaint_details->complaint_id?>);">Reply To Customer</button>
+                            <button class="complain-btn1" onclick="">Refund Money</button>
+                            <button class="complain-btn2" onclick="">Reply To Customer</button>
                         </div>
                            
                     </div>

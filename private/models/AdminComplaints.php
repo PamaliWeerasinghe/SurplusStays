@@ -72,6 +72,23 @@ class AdminComplaints extends AdminModel{
         ]);
     }
 
+    //get the number of orders made by a customer
+    public function getNoOfOrders($id){
+        $query="SELECT COUNT(`id`) AS `orderCount` FROM `order` WHERE `customer_id`=:value";
+        return $this->db->query($query,[
+            'value'=>$id
+        ]);
+
+    }
+
+    //get the orders belonging to a one customer
+    public function getAllOrders($id){
+        $query="SELECT * FROM `order` WHERE `customer_id`=:value";
+        return $this->db->query($query,[
+            'value'=>$id
+        ]);
+    }
+
 
 }
 

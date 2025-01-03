@@ -2,11 +2,6 @@
 
 class AdminModel extends Model
 {
-
-
-
-   
-
     //Validate Admin login details
     public function validate($DATA)
     {

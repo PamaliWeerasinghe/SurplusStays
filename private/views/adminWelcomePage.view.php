@@ -19,6 +19,7 @@
             <?php require APPROOT."/views/includes/adminSidePanel.view.php"?>
             <div class="dashboard">
                 <div class="summary">
+                    
                     <div class="notifications"><img src="<?=ASSETS?>/images/Bell.png" /></div>
                     <div class="summary-blocks">
                         <div class="summaries">
