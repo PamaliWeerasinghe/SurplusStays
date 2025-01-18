@@ -1,14 +1,28 @@
 <?php
 class Admin extends Controller
 {
-
+    function loadItems(){
+        
+        if(isset($_POST['order_id'])){
+            $order_id=$_POST['order_id'];
+            $admin=new AdminComplaints();
+            $items=$admin->getAllOrders($order_id);
+        
+            echo json_encode($items);
+        }else{
+            http_response_code(400);
+            echo json_encode(['error'=>'Invalid Request']);
+        }
+        
+        
+    }
     function makeComplaints(){
         $admin=new AdminComplaints();
-        $noOfOrders=$admin->getNoOfOrders(Auth::getUserId());
-        $orders=$admin->getAllOrders(Auth::getUserId());
+        $orders=$admin->getNoOfOrders(1);
+        $orderDetails=$admin->getAllOrders(1);
         $this->view('customerMakeComplaint',[
-            "orderCount"=>$noOfOrders[0]->orderCount,
-            "orders"=>$orders
+            "orders"=>$orders,
+            "orderDetails"=>$orderDetails
         ]);
     }
 

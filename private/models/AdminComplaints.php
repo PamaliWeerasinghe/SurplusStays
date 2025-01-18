@@ -72,9 +72,9 @@ class AdminComplaints extends AdminModel{
         ]);
     }
 
-    //get the number of orders made by a customer
+    //get the orders made by a customer
     public function getNoOfOrders($id){
-        $query="SELECT COUNT(`id`) AS `orderCount` FROM `order` WHERE `customer_id`=:value";
+        $query="SELECT * FROM `order` WHERE `customer_id`=:value";
         return $this->db->query($query,[
             'value'=>$id
         ]);
@@ -83,7 +83,15 @@ class AdminComplaints extends AdminModel{
 
     //get the orders belonging to a one customer
     public function getAllOrders($id){
-        $query="SELECT * FROM `order` WHERE `customer_id`=:value";
+        $query="SELECT 
+        `products`.`name` AS `product_name`,
+        `products`.`id` AS `product_id`,
+        `order_id`,
+        `order_items`.`id` AS `order_items_id`
+        FROM `order` 
+        INNER JOIN `order_items` ON `order`.`id`=`order_items`.`order_id`
+        INNER JOIN `products` ON `order_items`.`products_id`=`products`.`id`
+        WHERE `order_id`=:value";
         return $this->db->query($query,[
             'value'=>$id
         ]);
