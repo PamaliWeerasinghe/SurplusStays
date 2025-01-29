@@ -24,10 +24,19 @@ function loadOrderItems() {
   
           data.forEach(item => {
               const option= document.createElement("option");
-              option.value=item.id;
+              option.value=item.order_items_id;
+              // option.name='orderitem';
               option.textContent=item.product_name;
               itemsDropdown.appendChild(option);
+
+              // set the business name after selection
+              document.getElementById("shopName").innerHTML=item.business_name;
+              // set the business id after selection
+              document.getElementById("shopID").value=item.business_id;
           });
+
+          
+
         })
         .catch(error=>{
           console.error('Error fetching order items :');

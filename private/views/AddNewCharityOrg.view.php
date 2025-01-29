@@ -65,7 +65,7 @@
                 <p>BY REGISTERING YOU AGREE TO OUR <a style="text-decoration:none;" href="url">TERMS AND CONDITIONS</a> AND <a style="text-decoration:none;" href="url">PRIVACY POLICY</a></p>                  
             </div>
             <button class="register-button" type="submit">REGISTER NOW</button>
-</form>
+</form>         
     </div>
 
 <?php echo $this->view('includes/footer')?>

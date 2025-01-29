@@ -9,6 +9,15 @@ function get_var($key, $default = "")
 
     return $default;
 }
+function get_file($key)
+{
+    if(isset($_FILES[$key]))
+    {
+        return $_FILES[$key]['name'];
+    }
+
+    return null;
+}
 
 function get_select()
 {

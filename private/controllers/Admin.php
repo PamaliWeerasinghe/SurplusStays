@@ -1,8 +1,8 @@
 <?php
 class Admin extends Controller
 {
+    
     function loadItems(){
-        
         if(isset($_POST['order_id'])){
             $order_id=$_POST['order_id'];
             $admin=new AdminComplaints();
@@ -12,18 +12,103 @@ class Admin extends Controller
         }else{
             http_response_code(400);
             echo json_encode(['error'=>'Invalid Request']);
-        }
-        
-        
+        }    
     }
+    
     function makeComplaints(){
-        $admin=new AdminComplaints();
-        $orders=$admin->getNoOfOrders(1);
-        $orderDetails=$admin->getAllOrders(1);
-        $this->view('customerMakeComplaint',[
-            "orders"=>$orders,
-            "orderDetails"=>$orderDetails
-        ]);
+        
+        if(count($_POST)){
+            $errors=array();
+            $business_id=$_POST['shopID'];
+            $orderId=$_POST['orderid'];
+            $orderItem=$_POST['orderitem'];
+            $complaint=$_POST['complaint'];
+            $img1=$_FILES['complaintImg1']['name'];
+            $img2=$_FILES['complaintImg2']['name'];
+            $img3=$_FILES['complaintImg3']['name'];
+            $img4=$_FILES['complaintImg4']['name'];
+            $img5=$_FILES['complaintImg5']['name'];
+        
+            $images=array();
+
+            if(isset($img1)){
+                array_push($images,$img1);
+            }
+            if(isset($img2)){
+                array_push($images,$img2);
+            }
+            if(isset($img3)){
+                array_push($images,$img3);
+            }
+            if(isset($img4)){
+                array_push($images,$img4);
+            }
+            if(isset($img5)){
+                array_push($images,$img5);
+            }
+            
+            if($orderId=='oid'){
+                $errors["oid"]='Order ID not Selected';
+            }
+            if($orderItem=='selectItem'){
+                $errors["item"]='Order Item is not Selected';
+            } 
+            if(empty($complaint)){
+                $errors['complaint']="No complaint added";
+            }
+            if(empty($images[0]) && empty($images[1]) && empty($images[2]) && empty($images[3]) && empty($images[4])){
+                $errors['images']="Complaint should contain at least one image";
+            }
+
+           
+            $admin=new AdminComplaints();
+            
+            
+            $orders=$admin->getNoOfOrders(1);
+            $orderDetails=$admin->getAllOrders(1);
+
+            if(count($errors)>0){
+                $this->view('customerMakeComplaint',[
+                    "orders"=>$orders,
+                    "orderDetails"=>$orderDetails,
+                    "errors"=>$errors
+                ]);
+            }else{
+                $insertComplaint=new Admin_Model();
+                //find the complaint status - (not attended)
+                $complaint_status=$admin->where('name','Not Attended','complaint_status');
+                $complaint_status=$complaint_status[0];
+                
+                //insert into complaints
+                $arr['business_id']=$business_id;
+                $arr['complaint_status_id']=$complaint_status->id;
+                $arr['complaint_dateTime']=date('Y-m-d H:i:s');
+                $arr['customer_id']='1';
+                $arr['order_items_id']=$orderItem;
+                $arr['description']=$complaint;
+            
+                //insert complaint is not working
+                $insertComplaint->insert($arr,'complaints');
+                
+            
+                $this->view('customerMakeComplaint',[
+                    "orders"=>$orders,
+                    "orderDetails"=>$orderDetails
+                ]);
+            }
+
+        }else{
+            $admin=new AdminComplaints();
+            $orders=$admin->getNoOfOrders(1);
+            $orderDetails=$admin->getAllOrders(1);
+            $this->view('customerMakeComplaint',[
+                "orders"=>$orders,
+                "orderDetails"=>$orderDetails
+            ]);
+        }
+       
+
+
     }
 
     function ReplyToComplaint(){
@@ -72,15 +157,22 @@ class Admin extends Controller
 
                 //insert charity org
                 $arr['name'] = $_POST['name'];
-                $arr['picture'] = $charity->uploadLogo($_FILES['logo']['name']);
                 $arr['city'] = $_POST['city'];
-                $arr['email'] = $_POST['email'];
                 $arr['phoneNo'] = $_POST['phone'];
                 $arr['charity_description'] = $_POST['description'];
                 $arr['username'] = $_POST['username'];
-                $arr['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-
-                $charity->insert($arr, 'organization');
+                $arr['user_id']='5';
+                
+                
+                $user_arr['email'] = $_POST['email'];
+                $user_arr['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $user_arr['profile_pic'] = $charity->uploadLogo($_FILES['logo']['name']);
+                $user_arr['role']='charity';
+                $user_arr['reg_date']=date('Y-m-d H:i:s');
+                
+                $insertcharity=new Admin_Model();
+                $insertcharity->insert($user_arr,'user');
+                $insertcharity->insert($arr, 'organization');
                 $data = $charity->findAll('organization');
 
                 //include donors and complaints

@@ -36,15 +36,15 @@ class Admin_Model
           return $this->db->query($query);
      }
 
-     public function insert($data)
+     public function insert($data,$table)
      {    
-          // $this->table=$table;
+          $this->table=$table;
           $keys = array_keys($data);
           $columns = implode(',', $keys);
           $values = implode(',:', $keys);
-
+          
           $query = "insert into $this->table ($columns) values (:$values)";
-
+          
           return $this->db->query($query, $data);
      }
 
