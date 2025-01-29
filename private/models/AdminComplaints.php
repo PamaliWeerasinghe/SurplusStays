@@ -1,6 +1,25 @@
 <?php 
 class AdminComplaints extends AdminModel{
+       //insert the complaint
+       public function insertComplaint($complaint,$imgs){
+            try{
+                $this->db->beginTransaction();
+            }catch(Exception $e){
+                return $e->getMessage();
+            }
+       }
 
+       //upload complaint images
+        public function uploadImage($img,$id){
+            $imgExt=explode('.',$img);
+            $remake_ext=strtolower(end($imgExt));
+            $imgName=uniqid('',true).".".$remake_ext;
+            $fileDestination='http://localhost/SurplusStays/public/assets/complaints/'.$imgName;
+            $dbFileDestination=$imgName;
+            $tmp_name=$_FILES['complaintImg'.$id]['tmp_name'];
+            move_uploaded_file($tmp_name,$fileDestination);
+            return $dbFileDestination;
+        }
       //selecting all the complaints
       public function getAllComplaints(){
         $query="SELECT 

@@ -1,6 +1,6 @@
 <?php
 
-class AdminModel extends Model
+class AdminModel extends Admin_Model
 {
     //Validate Admin login details
     public function validate($DATA)
@@ -90,6 +90,7 @@ class AdminModel extends Model
             return false;
         }
     }
+   
     //upload a logo
     public function uploadLogo($logo)
     {

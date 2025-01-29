@@ -74,23 +74,38 @@ class Admin extends Controller
                     "errors"=>$errors
                 ]);
             }else{
-                $insertComplaint=new Admin_Model();
-                //find the complaint status - (not attended)
-                $complaint_status=$admin->where('name','Not Attended','complaint_status');
-                $complaint_status=$complaint_status[0];
+                try{
+                    
                 
-                //insert into complaints
-                $arr['business_id']=$business_id;
-                $arr['complaint_status_id']=$complaint_status->id;
-                $arr['complaint_dateTime']=date('Y-m-d H:i:s');
-                $arr['customer_id']='1';
-                $arr['order_items_id']=$orderItem;
-                $arr['description']=$complaint;
-            
-                //insert complaint is not working
-                $insertComplaint->insert($arr,'complaints');
-                
-            
+                    $insertComplaint=new Admin_Model();
+                    //find the complaint status - (not attended)
+                    $complaint_status=$admin->where('name','Not Attended','complaint_status');
+                    $complaint_status=$complaint_status[0];
+                    
+                    //insert into complaints
+                    $arr['business_id']=$business_id;
+                    $arr['complaint_status_id']=$complaint_status->id;
+                    $arr['complaint_dateTime']=date('Y-m-d H:i:s');
+                    $arr['customer_id']='1';
+                    $arr['order_items_id']=$orderItem;
+                    $arr['description']=$complaint;
+    
+                    //insert complaint 
+                    $insertComplaint->insert($arr,'complaints');
+                    //insert complaint images
+                    
+                    $insertImg;
+                    for($i=0;$i<count($images);$i++){
+                        $insertImg=array();
+                        $insertImg['complaints_id']=
+                        $imgPath=$admin->uploadImage($images[$i],$i);
+    
+                        $insertComplaint->insert();
+                    }
+                }catch(Exception $e){
+                    
+                }
+               
                 $this->view('customerMakeComplaint',[
                     "orders"=>$orders,
                     "orderDetails"=>$orderDetails
