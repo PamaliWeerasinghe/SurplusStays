@@ -3,7 +3,29 @@ class AdminComplaints extends AdminModel{
        //insert the complaint
        public function insertComplaint($complaint,$imgs){
             try{
+                //begin the transaction
                 $this->db->beginTransaction();
+                //insert the complaint
+                if($this->insert($complaint,'complaints')){
+                    $this->db->rollback();
+                    return false;
+                  
+                }
+                //Get the last id
+                $id=$this->db->lastInsertId();
+
+                //Insert complaint images
+                for($i=0;$i<count($imgs);$i++){
+                    $complaint_img=array();
+                    $complaint_img['complaints_id']=$id;
+                    $complaint_img['path']=$imgs[$i];
+                    if($this->insert($complaint_img,'complaint_imgs')){
+                        $this->db->rollback();
+                    }
+                }
+ 
+                //commit the transaction
+                $this->db->commit();
             }catch(Exception $e){
                 return $e->getMessage();
             }
@@ -14,9 +36,10 @@ class AdminComplaints extends AdminModel{
             $imgExt=explode('.',$img);
             $remake_ext=strtolower(end($imgExt));
             $imgName=uniqid('',true).".".$remake_ext;
-            $fileDestination='http://localhost/SurplusStays/public/assets/complaints/'.$imgName;
+            $target_dir=$_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/complaints/";
+            $fileDestination=$target_dir.$imgName;
             $dbFileDestination=$imgName;
-            $tmp_name=$_FILES['complaintImg'.$id]['tmp_name'];
+            $tmp_name=$_FILES['complaintImg'.$id+1]['tmp_name'];
             move_uploaded_file($tmp_name,$fileDestination);
             return $dbFileDestination;
         }

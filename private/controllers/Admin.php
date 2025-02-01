@@ -16,7 +16,7 @@ class Admin extends Controller
     }
     
     function makeComplaints(){
-        
+        $images=array();
         if(count($_POST)){
             $errors=array();
             $business_id=$_POST['shopID'];
@@ -29,7 +29,7 @@ class Admin extends Controller
             $img4=$_FILES['complaintImg4']['name'];
             $img5=$_FILES['complaintImg5']['name'];
         
-            $images=array();
+           
 
             if(isset($img1)){
                 array_push($images,$img1);
@@ -74,10 +74,7 @@ class Admin extends Controller
                     "errors"=>$errors
                 ]);
             }else{
-                try{
-                    
-                
-                    $insertComplaint=new Admin_Model();
+                    $errors=array();
                     //find the complaint status - (not attended)
                     $complaint_status=$admin->where('name','Not Attended','complaint_status');
                     $complaint_status=$complaint_status[0];
@@ -89,23 +86,22 @@ class Admin extends Controller
                     $arr['customer_id']='1';
                     $arr['order_items_id']=$orderItem;
                     $arr['description']=$complaint;
-    
-                    //insert complaint 
-                    $insertComplaint->insert($arr,'complaints');
-                    //insert complaint images
                     
-                    $insertImg;
+                   
+                    // insert complaint images
+                    $insertImg=array();
+                  
                     for($i=0;$i<count($images);$i++){
-                        $insertImg=array();
-                        $insertImg['complaints_id']=
-                        $imgPath=$admin->uploadImage($images[$i],$i);
-    
-                        $insertComplaint->insert();
+                        if(!empty($images[$i])){
+                            $imgPath=$admin->uploadImage($images[$i],$i);
+                            array_push($insertImg,$imgPath);
+
+                        }  
                     }
-                }catch(Exception $e){
-                    
-                }
-               
+                    if(!$admin->insertComplaint($arr,$insertImg)){
+                        $errors["complaint_insertion"]="Couldn't insert";
+                    }
+              
                 $this->view('customerMakeComplaint',[
                     "orders"=>$orders,
                     "orderDetails"=>$orderDetails
