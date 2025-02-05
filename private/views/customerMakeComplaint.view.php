@@ -65,14 +65,39 @@
                         </div>
                         <div class="sub-img">
                        
-                        <div class="img-container">
-                
+                        <div class="img-container" >
+                        <div class="upload-wrapper">
+                            <label for="upload-1">
+                                <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
+                            </label>
+                            <input type="file" id="upload-1" name="complaintImg1" style="display: none;" accept="image/*"value='<?=get_file('complaintImg1')?>' >
+                        </div>
+                        <div class="upload-wrapper">
+                            <label for="upload-2">
+                                <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-2">
+                            </label>
+                            <input type="file" id="upload-2" name="complaintImg2" style="display: none;" accept="image/*" value='<?=get_file('complaintImg2')?>'>
+                        </div>
+                        <div class="upload-wrapper">
+                            <label for="upload-2">
+                                <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-3">
+                            </label>
+                            <input type="file" id="upload-3" name="complaintImg3" style="display: none;" accept="image/*" value='<?=get_file('complaintImg3')?>'>
+                        </div>
+                        <div class="upload-wrapper">
+                            <label for="upload-2">
+                                <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-4">
+                            </label>
+                            <input type="file" id="upload-4" name="complaintImg4" style="display: none;" accept="image/*" value='<?=get_file('complaintImg4')?>'>
+                        </div>
+                        <div class="upload-wrapper">
+                            <label for="upload-2">
+                                <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-5">
+                            </label>
+                            <input type="file" id="upload-5" name="complaintImg5" style="display: none;" accept="image/*" value='<?=get_file('complaintImg5')?>'>
+                        </div>
                    
-                    <input type="file" id="complaintImg1" name="complaintImg1" value='<?=get_file('complaintImg1')?>'/>
-                    <input type="file" id="complaintImg1" name="complaintImg2" value='<?=get_file('complaintImg2')?>'/>
-                    <input type="file" id="complaintImg1" name="complaintImg3" value='<?=get_file('complaintImg3')?>'/>
-                    <input type="file" id="complaintImg1" name="complaintImg4" value='<?=get_file('complaintImg4')?>'/>
-                    <input type="file" id="complaintImg1" name="complaintImg5" value='<?=get_file('complaintImg5')?>'/>
+                 
                 
                         </div>
                
@@ -90,4 +115,5 @@
         </div> 
         <?php echo $this->view('includes/footer')?>
         <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>
+
         <script src="<?=ROOT?>/assets/js/adminManageCustomers.js"></script>

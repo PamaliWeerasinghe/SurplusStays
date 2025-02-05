@@ -79,6 +79,8 @@
 }
 .sub-img{
     padding: 4%;
+    display: flex;
+    flex-direction: row;
 }
 
 .sub-img img{
@@ -131,4 +133,9 @@
 .complain-btn2{
     background-color: #fff;
     cursor: pointer;
+}
+.img-container{
+    display: flex; 
+    flex-direction:row;
+    gap: 12px;
 }

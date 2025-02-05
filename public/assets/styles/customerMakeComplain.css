@@ -24,3 +24,31 @@
     justify-content: center;
     align-items: center;
 }
+.upload-wrapper {
+    /* position: relative; */
+    width: 150px; /* Set the width of the square */
+    height: 150px; /* Set the height of the square */
+    border-radius: 10px; /* Optional: Rounded corners */
+    display: flex;
+    border: none;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    overflow: hidden; /* Ensure the image stays within the square */
+}
+
+.upload-wrapper img {
+    width: 200px; /* Make the image fill the width */
+    height: 200px; /* Make the image fill the height */
+    object-fit: cover; /* Ensure the image retains aspect ratio and covers the square */
+}
+
+.pic{
+    width: 200px; /* Make the image fill the width */
+    height: 200px; /* Make the image fill the height */
+    /* position: relative; */
+    display: flex;
+    border: none;
+    align-items: center;
+    justify-content: center
+}
