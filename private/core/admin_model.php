@@ -16,19 +16,47 @@ class Admin_Model
           $this->db=Database::getInstance();
 
      }
-
-     public function where($column,$value,$table)
+   
+     public function where($columns,$values,$table)
      {
           $this->table=$table;
-          //check whether the column exists before executing the query
-          $column = addslashes($column);
-          $query = "select * from $this->table where $column = :value";
-          return $this->db->query($query, [
-               // 'column' => $column,
-               'value' => $value
-          ]);
+
+          //Ensure that both columns and values are arrays of same length
+          if(!is_array($columns)|| !is_array($values)|| count($columns)!=count($values)){
+               throw new Exception("Column and values must be arrays of same length");
+          }
+
+          $conditions=[];
+          $queryParams=[];
+
+          foreach($columns as $index =>$column){
+               $paramName=":value$index";
+               $conditions[]="`$column`=$paramName"; // `column1`=value0
+               $queryParams[$paramName]=$values[$index]; //value0 = 'testing'
+          }
+
+          //Build the query with multiple conditions using AND
+          $whereClause =implode('AND',$conditions);
+          $query="SELECT * FROM `$this->table` WHERE $whereClause";
+          
+          return $this->db->query($query, $queryParams);
      }
-  
+     public function select($table,$limit,$offset)
+     {
+          $this->table=$table;
+          $query="select * from $this->table order by complaint_id desc limit $limit offset $offset";
+          // $countquery="select count(*) from $this->table";
+          // $data[
+          //      'data' =  $this->db->query($query)
+          //      'count' = $this->db->query($countquery)
+          // ];
+          return $this->db->query($query);
+     }
+     public function count($table){
+          $this->table=$table;
+          $query="select count(*) as totalrows from $this->table";
+          return $this->db->query($query)[0]->totalrows;
+     }
      public function findAll($table)
      {    
           $this->table=$table;

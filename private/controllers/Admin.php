@@ -14,7 +14,7 @@ class Admin extends Controller
             echo json_encode(['error'=>'Invalid Request']);
         }    
     }
-    
+    // customer make a complaint
     function makeComplaints(){
         $images=array();
         if(count($_POST)){
@@ -76,7 +76,7 @@ class Admin extends Controller
             }else{
                     $errors=array();
                     //find the complaint status - (not attended)
-                    $complaint_status=$admin->where('name','Not Attended','complaint_status');
+                    $complaint_status=$admin->where(['name'],['Not Attended'],'complaint_status');
                     $complaint_status=$complaint_status[0];
                     
                     //insert into complaints
@@ -98,8 +98,25 @@ class Admin extends Controller
 
                         }  
                     }
-                    if(!$admin->insertComplaint($arr,$insertImg)){
-                        $errors["complaint_insertion"]="Couldn't insert";
+
+                    // Columns
+                    $columns=['business_id','customer_id','order_items_id'];
+
+                    //values
+                    $values=[$business_id,'1',$orderItem];
+
+
+                    if(!$admin->insertComplaint($arr,$insertImg,$columns,$values)){
+                        $errors["complaint_insertion"]="Complaint already exists";
+                        $this->view('customerMakeComplaint',[
+                            "orders"=>$orders,
+                            "orderDetails"=>$orderDetails,
+                            "errors"=>$errors
+                        ]);
+                    }else{
+                        //send notification for the admin
+                        // new Mailer();
+                        
                     }
               
                 $this->view('customerMakeComplaint',[
@@ -121,7 +138,7 @@ class Admin extends Controller
 
 
     }
-
+    // Reply to a complaint
     function ReplyToComplaint(){
         $errors=array();
         
@@ -208,18 +225,12 @@ class Admin extends Controller
             $this->view('AddNewCharityOrg', ['errors' => $errors]);
         }
     }
-
+    //Add new product of a business
     function AddProduct()
     {
         $this->view('business_AddProduct');
     }
-    function index()
-    {
-
-        // $this->view('home_section1');
-        $this->view('popup');
-    }
-
+    
     function register()
     {
         if (Auth::logged_in()) {
@@ -253,7 +264,25 @@ class Admin extends Controller
     function dashboard()
     {
         if (Auth::logged_in()) {
-            $this->view('adminWelcomePage');
+           $admin=new AdminModel();
+           $limit =3;
+           $complaintCountData=$admin->count('complaintDetails');
+        //    print_r($complaintCountData);
+           $noOfPages= ceil($complaintCountData/$limit);
+           print_r($noOfPages);
+           $pager=new Pager($noOfPages,$limit);
+           $offset=$pager->offset;
+
+          
+
+        //    $complaints=$admin->select('complaintdetails',$limit,$offset);
+           $complaints=$admin->select('complaintdetails',$limit,$offset);
+           
+            
+           $this->view('adminWelcomePage',[
+                "complaints"=>$complaints,
+                "pager"=>$pager
+           ]);
         } else {
             $this->redirect('register');
         }
@@ -281,7 +310,7 @@ class Admin extends Controller
         ]);
 
     }
-
+    //View all the complaints
     function Complaints()
     {
         $user=new AdminComplaints();
@@ -291,17 +320,18 @@ class Admin extends Controller
             "complaints"=>$complaints
         ]);
     }
+    //View a respective complaint made by a customer
     function ViewComplain($complaint_id)
     {
-        $user=new AdminComplaints();
-        $complaint_details=$user->complaintDetails($complaint_id);
-        $complaint_images=$user->getComplaintImages($complaint_id);
+        $admin=new AdminComplaints();
+        $complaint_details=$admin->complaintDetails($complaint_id);
+        $complaint_images=$admin->getComplaintImages($complaint_id);
         $this->view('AdminSeeComplainPage',[
             "complaint_details"=>$complaint_details[0],
             "complaint_imgs"=>$complaint_images
         ]);
     }
-
+    //Manage all the customers
     function ManageCustomers()
     {
         if(Auth::logged_in()){
@@ -321,6 +351,8 @@ class Admin extends Controller
     {
         $this->view('AdminManageBusinesses');
     }
+    
+    //Managing charity organizations
     function ManageCharityOrg()
     {
         if (!Auth::logged_in()) {
@@ -352,6 +384,12 @@ class Admin extends Controller
     {
         $this->view('home');
     }
+    //Default page
+    function index()
+    {
 
+        // $this->view('home_section1');
+        $this->view('popup');
+    }
     
 }

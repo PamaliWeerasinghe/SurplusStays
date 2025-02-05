@@ -20,7 +20,7 @@
             <div class="dashboard">
                 <div class="summary">
                     
-                    <div class="notifications"><img src="<?=ASSETS?>/images/Bell.png" /></div>
+                    
                     <div class="summary-blocks">
                         <div class="summaries">
                             <div class="summaries-1">
@@ -195,32 +195,20 @@
       </tr>
     </thead>
     <tbody>
+    
+      <?php foreach($complaints as $complaint) : ?>
       <tr>
-        <td>14.02.2024</td>
-        <td>Umanga Padukka</td>
-        <td>Full Bread</td>
-        <td><button class="completed">Completed</button></td>
+        
+        <td><?= $complaint->complaint_date ?></td>
+        <td><?=$complaint->fname?>&nbsp;<?=$complaint->lname?> </td>
+        <td><?=$complaint->product?></td>
+        <td><button class="completed"><?=$complaint->complaint_status?></button></td>
       </tr>
-      <tr>
-        <td>20.02.2024</td>
-        <td>Nadun Wickramasinghe</td>
-        <td>Fried Rice(Dinner)</td>
-        <td><button class="take-action">Take Action</button></td>
-      </tr>
-      <tr>
-        <td>07.02.2024</td>
-        <td>Pamali Weerasinghe</td>
-        <td>Orange Juice</td>
-        <td><button class="completed">Completed</button></td>
-      </tr>
-      <tr>
-        <td>27.02.2024</td>
-        <td>Lochana Samarasekara</td>
-        <td>2*Green Chips + 2 Bread</td>
-        <td><button class="take-action">Take Action</button></td>
-      </tr>
+      <?php endforeach; ?>
     </tbody>
   </table>
+  <?php $pager->display()?>
+  
 </div>
 
 

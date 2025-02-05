@@ -75,10 +75,7 @@
                         <tbody>
                             <?php foreach($complaints as $complaint):?>
                             <tr>
-                                <!-- <?php 
-                                $customer_complaint=array(
-
-                                );?> -->
+                
                                 <td># <?= $complaint->complaint_id ?></td>
                                 <td><?=$complaint->order_id ?></td>
                                 <td><?=$complaint->complaint_date?></td>

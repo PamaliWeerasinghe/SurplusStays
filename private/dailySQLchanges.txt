@@ -1,20 +1,29 @@
--- MySQL Workbench Synchronization
--- Generated: 2025-01-25 14:24
--- Model: New Model
--- Version: 1.0
--- Project: Name of the project
--- Author: user
-
-SET @OLD_UNIQUE_CHECKS=@@UNIQUE_CHECKS, UNIQUE_CHECKS=0;
-SET @OLD_FOREIGN_KEY_CHECKS=@@FOREIGN_KEY_CHECKS, FOREIGN_KEY_CHECKS=0;
-SET @OLD_SQL_MODE=@@SQL_MODE, SQL_MODE='ONLY_FULL_GROUP_BY,STRICT_TRANS_TABLES,NO_ZERO_IN_DATE,NO_ZERO_DATE,ERROR_FOR_DIVISION_BY_ZERO,NO_ENGINE_SUBSTITUTION';
-
-ALTER TABLE `surplusstays`.`complaints` 
-ADD COLUMN `complaint_dateTime` DATETIME NULL DEFAULT NULL AFTER `adminReply`;
-
-ALTER TABLE `surplusstays`.`complaints` 
-CHANGE COLUMN `feedback` `feedback` TEXT NULL DEFAULT NULL ;
-
-SET SQL_MODE=@OLD_SQL_MODE;
-SET FOREIGN_KEY_CHECKS=@OLD_FOREIGN_KEY_CHECKS;
-SET UNIQUE_CHECKS=@OLD_UNIQUE_CHECKS;
+CREATE VIEW complaintDetails As
+SELECT `complaints`.`id` AS `complaint_id`,
+            `order_items_id`,
+            `feedback`,
+            `order`.`id` AS `order_id`,
+            `complaint_status`.`name` AS `complaint_status`,
+            `complaints`.`business_id` AS `businessID`,
+            `complaints`.`complaint_dateTime` AS `complaint_date`,
+            `complaints`.`description` AS `complaintDescription`,
+            `business`.`name` AS `business_name`,
+            `business`.`phoneNo` AS `business_phone`,
+            `fname`,
+            `lname`,
+            `total`,
+            `order_items`.`qty` AS `itemQty`,
+            `paymentMethod`,
+            `user`.`email` AS `customer_email`,
+            `customer`.`phoneNo` AS `customer_phone`,
+            `expiration_dateTime` AS `product_expirationTime`,
+            `discountPrice`,
+            `products`.`name` AS product
+         FROM `complaints` 
+        INNER JOIN `order_items` ON `complaints`.`order_items_id`=`order_items`.`id` 
+        INNER JOIN `products` ON `products`.`id`=`order_items`.`products_id`
+        INNER JOIN `order` ON `order_items`.`order_id`=`order`.`id`
+        INNER JOIN `complaint_status` ON `complaints`.`complaint_status_id`=`complaint_status`.`id`
+        INNER JOIN `business` ON `business`.`id`=`complaints`.`business_id`
+        INNER JOIN `customer` ON `customer`.`id`=`complaints`.`customer_id`
+        INNER JOIN `user`  ON `user`.`id`=`customer`.`user_id`

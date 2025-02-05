@@ -33,6 +33,12 @@ class Database
             $con = $this->con;
             $con->setAttribute(PDO::ATTR_ERRMODE,PDO::ERRMODE_EXCEPTION);
             $stm = $con->prepare($query);
+            
+            //Binding parameters
+            foreach($data as $key=>$value){
+                $type=is_int($value)?PDO::PARAM_INT : PDO::PARAM_STR;
+                $stm->bindValue(":$key",$value,$type);
+            }
 
             $check = $stm->execute($data);
             if($check) {

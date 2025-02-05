@@ -26,7 +26,7 @@
                     <div class="see-product">
                         <div class="main-img-details">
                         <div class="see-product-img">
-                                <img src="<?=ASSETS?><?=$complaint_imgs[0]->path?>" id="lgComplainImg"/>
+                                <img src="<?=COMPLAINTS?><?=$complaint_imgs[0]->path?>" id="lgComplainImg"/>
                             </div>
                             <div class="see-product-details">
                                     <div>
@@ -68,9 +68,9 @@
                             </div>
                         </div>
                         <div class="sub-img">
-                       
-                        <img src="<?=ASSETS?><?=$complaint_imgs[1]->path?>" id="complaintImg<?=$complaint_imgs[1]->id?>"/>
-                        <img src="<?=ASSETS?><?=$complaint_imgs[2]->path?>" id="complaintImg<?=$complaint_imgs[2]->id?>"/>
+                        <?php foreach ($complaint_imgs as $complaint_img): ?>
+                            <img src="<?=COMPLAINTS?><?=$complaint_img->path?>" id="complaintImg<?=$complaint_img->id?>"/>
+                        <?php endforeach ?>
                         </div>
                         <div class="sub-details" >
                             <label>Mentioned expiration date and time : <?=$complaint_details->complaint_date?></label>
