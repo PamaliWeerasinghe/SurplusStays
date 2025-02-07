@@ -144,11 +144,11 @@
                                     }
                                 ?>
                                 
-                                <td style="text-align: center;">Rs. <?=$row->price_per_unit?> <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. <?=$row->price?> <br/><label>View Full Details</label></td>
                             </tr>
                             <script>
                                 document.addEventListener("DOMContentLoaded",function(){
-                                    countDown('<?=$row->best_before?>','<?=$row->product_id?>');
+                                    countDown('<?=$row->bestBefore?>','<?=$row->product_id?>');
                                 });
                                 
                             </script>
@@ -158,8 +158,9 @@
                     </table>
                     <div class="arrow-div">
                         <div class="arrows">
-                            <img src="<?=ASSETS?>/images/Arrow right-circle.png" id="prevBtn"/>
-                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png" id="nextBtn"/>
+                            <!-- <img src="<?=ASSETS?>/images/Arrow right-circle.png" id="prevBtn"/>
+                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png" id="nextBtn"/> -->
+                            <?php $products_pager->display()?>
                             
                         </div>
                     </div>

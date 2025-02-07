@@ -52,19 +52,23 @@ class Pager{
         <div style="display:flex;flex-direction:row;justify-content:center;gap: 8px;">
            
                     <button 
-                    style="border-radius: 100%;border:none;width:3%;"
+                    style="border-radius: 100%;border:none;"
                     >
-                        <a href="<?=$this->links['prev']?>" style="text-decoration:none">&laquo;</a>
+                        <a href="<?=$this->links['prev']?>" style="text-decoration:none">
+                            <img src="<?=ASSETS?>/images/Arrow right-circle.png" id="prevBtn"/>
+                        </a>
                     </button>
                     
-                    <?php for($x=$this->start;$x<=$this->end;$x++):?>
+                    <!-- <?php for($x=$this->start;$x<=$this->end;$x++):?>
                         <button style="width: 3%;"><a href="<?=$this->links['current']?>"style="text-decoration:none"><?=$x?></a></button>
-                    <?php endfor; ?>
+                    <?php endfor; ?> -->
 
                     <button 
-                    style="border-radius: 100%;border:none;width:3%;"
+                    style="border-radius: 100%;border:none;"
                     >
-                        <a href="<?=$this->links['next']?>" style="text-decoration:none">&raquo;</a>
+                        <a href="<?=$this->links['next']?>" style="text-decoration:none">
+                        <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png" id="nextBtn"/>
+                        </a>
                     </button>
                    
              

@@ -47,11 +47,6 @@ class Admin_Model
           $this->table=$table;
           $this->column=$column;
           $query="select * from $this->table order by $this->column desc limit $limit offset $offset";
-          // $countquery="select count(*) from $this->table";
-          // $data[
-          //      'data' =  $this->db->query($query)
-          //      'count' = $this->db->query($countquery)
-          // ];
           return $this->db->query($query);
      }
      public function count($table){

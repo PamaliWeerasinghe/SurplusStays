@@ -310,11 +310,23 @@ class Admin extends Controller
     function TrackExpiry()
     {
     
-        $user=new AdminModel();
+        $admin=new AdminModel();
         
-        $rows=$user->where(['status_id'],[3],'trackexpiry');
+        $product_limit=1;
+        //count the no of products in the table products
+        $productsCountData=$admin->count('about_to_expire_products');
+        //calculate the no of pages
+        $noOfPages_products= ceil($productsCountData/$product_limit);
+        
+        //Pagination for products
+        $products_pager=Pager::getInstance('about_to_expire_products',$noOfPages_products,$product_limit);
+        $products_offset=$products_pager->offset;
+        $products=$admin->select('about_to_expire_products','bestBefore',$product_limit,$products_offset);
+     
         $this->view('adminTrackExpiryPage',[
-            "rows"=>$rows
+            "rows"=>$products,
+            "products_pager"=>$products_pager
+
         ]);
 
     }
