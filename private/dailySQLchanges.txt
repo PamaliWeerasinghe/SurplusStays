@@ -31,7 +31,9 @@ SELECT `complaints`.`id` AS `complaint_id`,
 
 
 CREATE VIEW trackExpiry AS 
-SELECT products.id AS product_id,products.expiration_dateTime AS best_before,products.name AS product_name,
+SELECT products.id AS product_id,products.expiration_dateTime AS best_before,products.name AS product_name,notify_status.status AS notify_status,
 business.name AS business_name, products.price_per_unit
 FROM products
 INNER JOIN business ON products.business_id=business.id
+INNER JOIN notify_status ON notify_status.id=products.notify_status_id
+order BY products.expiration_dateTime DESC

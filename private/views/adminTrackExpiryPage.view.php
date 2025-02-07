@@ -127,7 +127,23 @@
                                 </td>
                                 <td><?=$row->business_name?></td>
                                 <td><?=$row->product_name?></td>
-                                <td><button class="take-action">Notify</button></td>
+                                <?php 
+                                    if($row->notify_status=='Notified'){
+                                        ?>
+                                        <td><button class="completed">Notified</button></td>
+                                        <?php
+                                    }else if($row->notify_status=='Notify'){
+                                        ?>
+                                        <td><button class="take-action">Notify</button></td>
+                                        <?php
+                                    }else{
+                                        ?>
+                                        <td><button class="notify">Action Taken</button></td>
+                                        <?php
+
+                                    }
+                                ?>
+                                
                                 <td style="text-align: center;">Rs. <?=$row->price_per_unit?> <br/><label>View Full Details</label></td>
                             </tr>
                             <script>

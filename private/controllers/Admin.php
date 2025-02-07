@@ -312,7 +312,7 @@ class Admin extends Controller
     
         $user=new AdminModel();
         
-        $rows=$user->findAll('trackexpiry');
+        $rows=$user->where(['status_id'],[3],'trackexpiry');
         $this->view('adminTrackExpiryPage',[
             "rows"=>$rows
         ]);
