@@ -5,6 +5,7 @@ class Admin_Model
      public $table;
      public $errors = array();
      public $data=array();
+     public $column;
      
      protected $db;
 
@@ -41,10 +42,11 @@ class Admin_Model
           
           return $this->db->query($query, $queryParams);
      }
-     public function select($table,$limit,$offset)
+     public function select($table,$column,$limit,$offset)
      {
           $this->table=$table;
-          $query="select * from $this->table order by complaint_id desc limit $limit offset $offset";
+          $this->column=$column;
+          $query="select * from $this->table order by $this->column desc limit $limit offset $offset";
           // $countquery="select count(*) from $this->table";
           // $data[
           //      'data' =  $this->db->query($query)

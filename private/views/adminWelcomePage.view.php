@@ -5,26 +5,26 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITENAME ?></title>
-    <link rel="stylesheet" href="<?=STYLES?>/admin.css">
-    <link rel="stylesheet" href="<?=STYLES?>/adminDashboard.css">
+    <link rel="stylesheet" href="<?= STYLES ?>/admin.css">
+    <link rel="stylesheet" href="<?= STYLES ?>/adminDashboard.css">
 </head>
 
 <body>
     <!-- navbar -->
 
     <div class="main-div">
-    <?php echo $this->view('includes/navbar')?>
+        <?php echo $this->view('includes/navbar') ?>
         <div class="sub-div-1">
             <!-- included the admin side panel -->
-            <?php require APPROOT."/views/includes/adminSidePanel.view.php"?>
+            <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary">
-                    
-                    
+
+
                     <div class="summary-blocks">
                         <div class="summaries">
                             <div class="summaries-1">
-                                <img src="<?=ASSETS?>/images/manifest.png" />
+                                <img src="<?= ASSETS ?>/images/manifest.png" />
                             </div>
                             <div class="summaries-2">
                                 <label class="summaries-2-label1">Remove Users</label>
@@ -33,7 +33,7 @@
                         </div>
                         <div class="summaries">
                             <div class="summaries-1">
-                                <img src="<?=ASSETS?>/images/manifest.png" />
+                                <img src="<?= ASSETS ?>/images/manifest.png" />
                             </div>
                             <div class="summaries-2">
                                 <label class="summaries-2-label1">Complaints</label>
@@ -42,7 +42,7 @@
                         </div>
                         <div class="summaries">
                             <div class="summaries-1">
-                                <img src="<?=ASSETS?>/images/box-mark.png" />
+                                <img src="<?= ASSETS ?>/images/box-mark.png" />
                             </div>
                             <div class="summaries-2">
                                 <label class="summaries-2-label1">Donations</label>
@@ -51,7 +51,7 @@
                         </div>
                         <div class="summaries">
                             <div class="summaries-1">
-                                <img src="<?=ASSETS?>/images/rating.png" />
+                                <img src="<?= ASSETS ?>/images/rating.png" />
                             </div>
                             <div class="summaries-2">
                                 <label class="summaries-2-label1">Customers</label>
@@ -95,137 +95,167 @@
 
                 </div>
 
+                <!-- <div class="product-status">
+                    <div>
+                        <label>Recent Expiration Products</label>
+                    </div>
+                        <div class="order-dropdown">
+                            <div></div>
+                            <select>
+                                <option>By 2 weeks</option>
+                            </select>
+                        </div>
+                    
+
+                    <div class="product-summaries">
+                    <div class="table-container">
+                        <table class="admin-order-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Customer</th>
+                                    <th>Product</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                <?php foreach ($complaints as $complaint) : ?>
+                                    <tr>
+
+                                        <td><?= $complaint->complaint_date ?></td>
+                                        <td><?= $complaint->fname ?>&nbsp;<?= $complaint->lname ?> </td>
+                                        <td><?= $complaint->product ?></td>
+                                        <td><button class="completed"><?= $complaint->complaint_status ?></button></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+
+                    </div>
+                        
+                        <div class="product-row">
+                            <div class="product-item">
+                                <div>
+                                    <img src="<?= ASSETS ?>/images/popcorn.png" />
+                                </div>
+                                <div class="product-summaries-item">
+                                    <label class="product-summaries-label1">Popcorn</label>
+                                    <label class="product-summaries-label2">Rs. 32</label>
+                                </div>
+
+                            </div>
+                            <div class="product-item">
+                                <div>
+                                    <img src="<?= ASSETS ?>/images/pasta.png" />
+                                </div>
+                                <div class="product-summaries-item">
+                                    <label class="product-summaries-label1">Pasta</label>
+                                    <label class="product-summaries-label2">Rs. 75</label>
+                                </div>
+
+                            </div>
+                            <div class="product-item">
+                                <div>
+                                    <img src="<?= ASSETS ?>/images/peanuts.png" />
+                                </div>
+                                <div class="product-summaries-item">
+                                    <label class="product-summaries-label1">Nuts</label>
+                                    <label class="product-summaries-label2">Rs. 28</label>
+                                </div>
+
+                            </div>
+                        </div>
+                    </div>
+                    <div class="next">
+                        <img src="<?= ASSETS ?>/images/down.png" />
+                    </div>
+
+                </div> -->
                 <div class="product-status">
                     <div>
                         <label>Recent Expiration Products</label>
-                        <div class="order-dropdown">
-                        <div></div>
-                        <select>
-                            <option>By 2 weeks</option>
-                        </select>
+
                     </div>
+                    <div class="order-dropdown">
+                            <div></div>
+                            <select>
+                                <option>By 2 weeks</option>
+                            </select>
+                        </div>
+                    
+                    <div class="table-container">
+                        <table class="admin-order-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Product</th>
+                                    <th>Product</th>
+                                    <th>Expires In</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                
+                                <?php foreach ($products as $product):?>
+                                    <tr>
+                                        <td><img src="<?= ASSETS ?>/images/<?=$product->pictures?>" /></td>
+                                        <td> <?=$product->name?></td>
+                                        <!-- <td>Rs. <?=$product->price_per_unit?>-<?=$product->discountPrice?></td> -->
+                                        <td>02:30:10</td>
+                                    </tr>
+                                <?php endforeach ?>
+                            </tbody>
+                        </table>
+
                     </div>
-                   
-                    <div class="product-summaries">
-                            <div class="product-row">
-                                <div class="product-item">
-                                    <div>
-                                        <img src="<?=ASSETS?>/images/bread.png"/>
-                                    </div>
-                                    <div class="product-summaries-item">
-                                    <label class="product-summaries-label1">Bread</label>
-                                    <label class="product-summaries-label2">Rs. 27.5</label>
-                                    </div>
 
-                                </div>
-                                <div class="product-item">
-                                    <div>
-                                        <img src="<?=ASSETS?>/images/rice.png"/>
-                                    </div>
-                                    <div class="product-summaries-item">
-                                    <label class="product-summaries-label1">Rice</label>
-                                    <label class="product-summaries-label2">Rs. 105.51</label>
-                                    </div>
+                    <?php $products_pager->display() ?>
 
-                                </div>
-                                <div class="product-item">
-                                    <div>
-                                        <img src="<?=ASSETS?>/images/chips.png"/>
-                                    </div>
-                                    <div class="product-summaries-item">
-                                    <label class="product-summaries-label1">Chips</label>
-                                    <label class="product-summaries-label2">Rs. 55</label>
-                                    </div>
-
-                                </div>
-                            </div>
-                            <div class="product-row">
-                                <div class="product-item">
-                                    <div>
-                                        <img src="<?=ASSETS?>/images/popcorn.png"/>
-                                    </div>
-                                    <div class="product-summaries-item">
-                                    <label class="product-summaries-label1">Popcorn</label>
-                                    <label class="product-summaries-label2">Rs. 32</label>
-                                    </div>
-
-                                </div>
-                                <div class="product-item">
-                                    <div>
-                                        <img src="<?=ASSETS?>/images/pasta.png"/>
-                                    </div>
-                                    <div class="product-summaries-item">
-                                    <label class="product-summaries-label1">Pasta</label>
-                                    <label class="product-summaries-label2">Rs. 75</label>
-                                    </div>
-
-                                </div>
-                                <div class="product-item">
-                                    <div>
-                                        <img src="<?=ASSETS?>/images/peanuts.png"/>
-                                    </div>
-                                    <div class="product-summaries-item">
-                                    <label class="product-summaries-label1">Nuts</label>
-                                    <label class="product-summaries-label2">Rs. 28</label>
-                                    </div>
-
-                                </div>
-                            </div>
-                    </div>
-                    <div class="next">
-                        <img src="<?=ASSETS?>/images/down.png"/>
-                    </div>
 
                 </div>
-               
 
                 <div class="complaints-status">
                     <div>
                         <label>Recent Complaints Recieved</label>
-                       
+
                     </div>
                     <div class="table-container">
-  <table class="admin-order-table">
-    <thead>
-      <tr>
-        <th>Date</th>
-        <th>Customer</th>
-        <th>Product</th>
-        <th>Action</th>
-      </tr>
-    </thead>
-    <tbody>
-    
-      <?php foreach($complaints as $complaint) : ?>
-      <tr>
-        
-        <td><?= $complaint->complaint_date ?></td>
-        <td><?=$complaint->fname?>&nbsp;<?=$complaint->lname?> </td>
-        <td><?=$complaint->product?></td>
-        <td><button class="completed"><?=$complaint->complaint_status?></button></td>
-      </tr>
-      <?php endforeach; ?>
-    </tbody>
-  </table>
-  <?php $pager->display()?>
-  
-</div>
+                        <table class="admin-order-table">
+                            <thead>
+                                <tr>
+                                    <th>Date</th>
+                                    <th>Customer</th>
+                                    <th>Product</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
+                            <tbody>
 
+                                <?php foreach ($complaints as $complaint) : ?>
+                                    <tr>
 
-                   
-                   
-                    <div class="next">
-                        <img src="<?=ASSETS?>/images/down.png"/>
+                                        <td><?= $complaint->complaint_date ?> &nbsp; &nbsp;<?=$complaint->complaint_id?></td>
+                                        <td><?= $complaint->fname ?>&nbsp;<?= $complaint->lname ?> </td>
+                                        <td><?= $complaint->product ?></td>
+                                        <td><button class="completed"><?= $complaint->complaint_status ?></button></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+
                     </div>
+
+                    <?php $complaints_pager->display() ?>
+
 
                 </div>
 
             </div>
-            
+
         </div>
-        <?php echo $this->view('includes/footer')?>
+        <?php echo $this->view('includes/footer') ?>
     </div>
-    
+
 </body>
 
 </html>

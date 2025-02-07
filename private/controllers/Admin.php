@@ -265,23 +265,37 @@ class Admin extends Controller
     {
         if (Auth::logged_in()) {
            $admin=new AdminModel();
-           $limit =3;
+           $complaint_limit =3;
+           //count the no of complaints in the table complaints
            $complaintCountData=$admin->count('complaintDetails');
-        //    print_r($complaintCountData);
-           $noOfPages= ceil($complaintCountData/$limit);
-           print_r($noOfPages);
-           $pager=new Pager($noOfPages,$limit);
-           $offset=$pager->offset;
-
-          
-
-        //    $complaints=$admin->select('complaintdetails',$limit,$offset);
-           $complaints=$admin->select('complaintdetails',$limit,$offset);
-           
+           //calculate the no of pages
+           $noOfPages_complaints= ceil($complaintCountData/$complaint_limit);
             
+           //Pagination for complaints
+
+           $complaints_pager=Pager::getInstance('complaints',$noOfPages_complaints,$complaint_limit);
+           $complaints_offset=$complaints_pager->offset;
+           $complaints=$admin->select('complaintdetails','complaint_id',$complaint_limit,$complaints_offset);
+           
+           
+           $product_limit=1;
+           //count the no of products in the table products
+           $productsCountData=$admin->count('products');
+           //calculate the no of pages
+           $noOfPages_products= ceil($productsCountData/$product_limit);
+           
+           //Pagination for products
+           $products_pager=Pager::getInstance('products',$noOfPages_products,$product_limit);
+           $products_offset=$products_pager->offset;
+           $products=$admin->select('products','expiration_dateTime',$product_limit,$products_offset);
+        
+          
            $this->view('adminWelcomePage',[
                 "complaints"=>$complaints,
-                "pager"=>$pager
+                "complaints_pager"=>$complaints_pager,
+                "products"=>$products,
+                "products_pager"=>$products_pager
+
            ]);
         } else {
             $this->redirect('register');
