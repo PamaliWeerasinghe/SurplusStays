@@ -106,29 +106,33 @@
                         </thead>
                         
                         <tbody id="order-table-body">
-                            <?php if($rowCount==0) {?>
+                            <?php if(count($rows)==0) {?>
                                 <!-- No products available -->
+                                </tbody>
+                                     </table>
+                                <label>No recently expiriing items</label>
+                                
 
                            <?php }else{?>
                             <?php foreach($rows as $row):?>
                             
                             <tr>
-                                <td><?=$row->id?></td>
+                                <td><?=$row->product_id?></td>
                                 <td>
-                                    <label id="days<?=$row->id?>">00</label>
-                                    <label id="hours<?=$row->id?>">00</label>
-                                    <label id="minutes<?=$row->id?>">00</label>
-                                    <label id="seconds<?=$row->id?>">00</label>
+                                    <label id="days<?=$row->product_id?>">00</label>
+                                    <label id="hours<?=$row->product_id?>">00</label>
+                                    <label id="minutes<?=$row->product_id?>">00</label>
+                                    <label id="seconds<?=$row->product_id?>">00</label>
                                     
                                 </td>
                                 <td><?=$row->business_name?></td>
                                 <td><?=$row->product_name?></td>
                                 <td><button class="take-action">Notify</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. <?=$row->price_per_unit?> <br/><label>View Full Details</label></td>
                             </tr>
                             <script>
                                 document.addEventListener("DOMContentLoaded",function(){
-                                    countDown('<?=$row->expiration_dateTime?>','<?=$row->id?>');
+                                    countDown('<?=$row->best_before?>','<?=$row->product_id?>');
                                 });
                                 
                             </script>

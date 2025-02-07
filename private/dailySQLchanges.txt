@@ -27,3 +27,11 @@ SELECT `complaints`.`id` AS `complaint_id`,
         INNER JOIN `business` ON `business`.`id`=`complaints`.`business_id`
         INNER JOIN `customer` ON `customer`.`id`=`complaints`.`customer_id`
         INNER JOIN `user`  ON `user`.`id`=`customer`.`user_id`
+
+
+
+CREATE VIEW trackExpiry AS 
+SELECT products.id AS product_id,products.expiration_dateTime AS best_before,products.name AS product_name,
+business.name AS business_name, products.price_per_unit
+FROM products
+INNER JOIN business ON products.business_id=business.id

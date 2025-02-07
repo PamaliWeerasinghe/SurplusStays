@@ -312,15 +312,9 @@ class Admin extends Controller
     
         $user=new AdminModel();
         
-        $rows=$user->findAll('trackexpiryproducts');
-        if($rows==false){
-            $no_of_data=0;
-        }else{
-            $no_of_data=1;
-        }
+        $rows=$user->findAll('trackexpiry');
         $this->view('adminTrackExpiryPage',[
-            "rows"=>$rows,
-            "rowCount"=>$no_of_data
+            "rows"=>$rows
         ]);
 
     }
