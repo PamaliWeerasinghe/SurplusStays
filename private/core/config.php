@@ -14,6 +14,8 @@ define('STYLES', 'http://localhost/SurplusStays/public/assets/styles');
 define('ASSETS', 'http://localhost/SurplusStays/public/assets');
 define('SIDEPANELBUSINESS', '/SurplusStays/public/business');
 define('COMPLAINTS', 'http://localhost/SurplusStays/public/assets/complaints/');
+define('CUSTOMER','http://localhost/SurplusStays/public/assets/customerImages');
+
 //DATABASE
 define('DBNAME','surplusstays');
 define('DBHOST','localhost');

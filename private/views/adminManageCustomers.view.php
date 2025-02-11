@@ -20,7 +20,7 @@
 
                         <img src="<?= ASSETS ?>/images/Bell.png" class="bell" />
                     </div>
-                    <div class="add-buyer">
+                    <div class="add-buyer" onclick="window.location.href='<?= ROOT ?>/Admin/addNewCustomer'">
                         <div>
                             <label>
                                 + Add Buyer
@@ -61,8 +61,8 @@
                         <tbody>
                         <?php foreach( $customers as $customer):?>
                             <tr>
-                                <td></td>
-                                <td>#<?=$customer->customer_id?></td>
+                                <td><img src="<?=CUSTOMER.'/'.$customer->profile_pic?>" class="customer-profile-pic"/></td>
+                                <td>#<?=$customer->cus_id?></td>
                                 <td><?=$customer->phoneNo?></td>
                                 <td><?=$customer->reg_date?></td>
                                 <td>

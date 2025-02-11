@@ -28,6 +28,71 @@ class AdminModel extends Admin_Model
         //Contains errors
         return false;
     }
+    //validate customer before inserting
+    public function validateCustomer($DATA)
+    {
+        $this->errors=array();
+        //validate fname and lname
+        if (!preg_match('/^[a-z A-Z &]+$/', $DATA['fname'])) {
+            $this->errors['fname'] = "Only letters are allowed for the first name";
+        }
+        if (!preg_match('/^[a-z A-Z &]+$/', $DATA['lname'])) {
+            $this->errors['lname'] = "Only letters are allowed for the last name";
+        }
+         
+         //validate the email
+        if (empty($DATA['email']) || !filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
+            $this->errors['email'] = "Email is not valid";
+        }
+
+         //validate the mobile phone number
+         if (!preg_match('/^(\+94|0)?((7|1)[0-9]{1})[0-9]{7}$/', $DATA['phone'])) {
+            $this->errors['phone'] = "Invalid phone number";
+        }
+
+         //validate the username
+         if (empty($DATA['username'])) {
+            $this->errors['username'] = "Username should not be empty";
+        }
+
+         //validate the image selection
+         $logo = $_FILES['profile_picture']['name'];
+         $logoExt = explode('.', $logo);
+         $logoActualExt = strtolower(end($logoExt));
+         $allowed = array('jpg', 'jpeg', 'png');
+         if (in_array($logoActualExt, $allowed)) {
+             if ($_FILES['profile_picture']['error'] != 0) {
+                 $this->errors['profile_picture'] = "There was an error uploading your profile picture!";
+             }
+         } else {
+             $this->errors['profile_picture'] = "You cannot add images of this type!";
+         }
+ 
+         if (isset($DATA['profile_picture'])) {
+             $this->errors['profile_picture'] = "Select a profile photo";
+         }
+        
+        //validate passowrd and the confirm_password
+        if (empty($DATA['password'])) {
+            $this->errors['password'] = "Password cannot be empty";
+        } else if (empty($DATA['confirm_password'])) {
+            $this->errors['password'] = "Confirm Password cannot be empty";
+        } else {
+            if ($DATA['password'] != $DATA['confirm_password']) {
+                $this->errors['passwords'] = "Passwords do not match";
+            }
+        }
+
+
+        if (count($this->errors) == 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
+    //Validate charity org before inserting
     public function validateCharity($DATA)
     {
         $this->errors = array();
@@ -104,7 +169,7 @@ class AdminModel extends Admin_Model
 
         return $dbFileDestination;
     }
-
+    
     //update a logo
     public function updateLogo($logo)
     {
@@ -119,7 +184,7 @@ class AdminModel extends Admin_Model
         return $logoNameNew;
     }
 
-
+    //validate Edit Charity
     public function validateEditCharity($DATA)
     {
         $this->errors = array();

@@ -66,7 +66,7 @@
                         <thead>
                             <tr>
                                 <th>Complaint ID</th>
-                                <th>Order No</th>
+                                <th>Complaint Description</th>
                                 <th>Date Submitted</th>
                                 <th style="text-align: center;">Status</th>
                                 
@@ -77,10 +77,10 @@
                             <tr>
                 
                                 <td># <?= $complaint->complaint_id ?></td>
-                                <td><?=$complaint->order_id ?></td>
-                                <td><?=$complaint->complaint_date?></td>
-                                <?php if($complaint->complaint_status=='In Progress'){?>
-                                    <td style="text-align: center;"><button class="take-action">In Progress</button></td>
+                                <td><?=$complaint->DESCRIPTION?></td>
+                                <td><?=$complaint->complaint_dateTime?></td>
+                                <?php if($complaint->status=='Not Attended'){?>
+                                    <td style="text-align: center;"><button class="take-action">Attend</button></td>
                                 <?php }else{?>
                                     <td style="text-align: center;"><button class="completed">Resolved</button></td>
                                 <?php }?>
@@ -104,8 +104,8 @@
                     </table>
                     <div class="arrow-div">
                         <div class="arrows">
-                            <img src="<?=ASSETS?>/images/Arrow right-circle.png"/>
-                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png"/>
+                           
+                            <?php $complaints_pager->display()?>
                             
                         </div>
                     </div>

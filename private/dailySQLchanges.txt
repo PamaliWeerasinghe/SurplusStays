@@ -48,3 +48,18 @@ ON notify_status.id=products.notify_status_id
 INNER JOIN business
 ON business.id=products.business_id
 WHERE status.`status`!='Inactive'
+
+CREATE VIEW non_resolved_complaints AS
+SELECT complaints.id AS complaint_id,
+complaints.feedback AS feedback,
+business_id,
+DATETIME,
+DESCRIPTION,
+customer_id,
+order_items_id,
+adminReply,
+complaint_dateTime
+FROM complaints 
+INNER JOIN complaint_status
+ON complaints.complaint_status_id=complaint_status.id
+WHERE complaint_status.`name`='Not Attended'
