@@ -18,6 +18,7 @@ class Admin extends Controller
     // customer make a complaint
     function makeComplaints()
     {
+        print_r(__DIR__);
         $images=array();
         if(count($_POST)){
             $errors=array();

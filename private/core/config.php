@@ -36,7 +36,7 @@ define('SMTP_SETTINGS',[
     'smtp_host'=>'smtp.gmail.com',
     'smtp_auth'=>true,
     'smtp_username'=>'pamaliweerasinghe@gmail.com',
-    'smtp_password'=>'pyzs cuxk abpk bjsz',
+    'smtp_password'=>'*********',
     'smtp_secure'=>'tls',
     'smtp_port'=>587,
     'from_email'=>'pamaliweerasinghe@gmail.com',
@@ -44,6 +44,6 @@ define('SMTP_SETTINGS',[
 ]);
 
 
-
+define('VENDOR','E:\xampp\htdocs\SurplusStays\vendor\autoload.php');
 
 ?>
