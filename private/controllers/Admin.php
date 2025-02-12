@@ -110,21 +110,18 @@ class Admin extends Controller
 
                     if(!$admin->insertComplaint($arr,$insertImg,$columns,$values)){
                         $errors["complaint_insertion"]="Complaint already exists";
-                        $this->view('customerMakeComplaint',[
-                            "orders"=>$orders,
-                            "orderDetails"=>$orderDetails,
-                            "errors"=>$errors
-                        ]);
+                       
                     }else{
-                        //send notification for the admin
-                        // new Mailer();
+                        // send notification for the admin
+                        Mail::sendMail('a','b','c','d');
                         
                     }
+                    $this->view('customerMakeComplaint',[
+                        "orders"=>$orders,
+                        "orderDetails"=>$orderDetails,
+                        "errors"=>$errors
+                    ]);
               
-                $this->view('customerMakeComplaint',[
-                    "orders"=>$orders,
-                    "orderDetails"=>$orderDetails
-                ]);
             }
 
         }else{

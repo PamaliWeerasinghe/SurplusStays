@@ -31,7 +31,17 @@ ini_set('display_errors', 1);
 ini_set('display_startup_errors', 1);
 error_reporting(E_ALL);
 
-
+//mail config
+define('SMTP_SETTINGS',[
+    'smtp_host'=>'smtp.gmail.com',
+    'smtp_auth'=>true,
+    'smtp_username'=>'pamaliweerasinghe@gmail.com',
+    'smtp_password'=>'pyzs cuxk abpk bjsz',
+    'smtp_secure'=>'tls',
+    'smtp_port'=>587,
+    'from_email'=>'pamaliweerasinghe@gmail.com',
+    'from_name'=>'SurplusStays'
+]);
 
 
 

@@ -6,7 +6,7 @@ class AdminComplaints extends AdminModel
     {
         try {
 
-            if(!empty($this->where($columns,$values,'complaints'))){
+            if(empty($this->where($columns,$values,'complaints'))){
                 //begin the transaction
                 $this->db->beginTransaction();
                 //insert the complaint
