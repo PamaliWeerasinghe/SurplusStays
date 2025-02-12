@@ -263,8 +263,14 @@ class Admin extends Controller
     //Track the expiration products
     function TrackExpiry()
     {
-    
         $admin=new AdminModel();
+        if(count($_POST)>0){
+           
+            $data['notify_status_id']=1;
+            $admin->update($_POST['product_id'],$data,'products');
+        }
+    
+       
         
         $product_limit=1;
         //count the no of products in the table products

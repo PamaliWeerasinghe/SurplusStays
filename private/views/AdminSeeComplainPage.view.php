@@ -18,7 +18,7 @@
 
                 </div>
                 <div class="seecomplain-status">
-                    <div class="seecomplain-bar">
+                    <div class="seecomplain-bar" style="background-color:  #e05b4a;">
                         <label><?=$complaint_details->fname?>&nbsp;<?=$complaint_details->lname?></label>
                         <label>Ord. No : 00<?=$complaint_details->order_id?></label>
                         

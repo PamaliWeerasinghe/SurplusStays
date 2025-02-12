@@ -22,7 +22,7 @@ class Login extends Controller{
                 switch ($user_details->role) {
                     case 'admin':
                         $admin= new AdminUser();
-                        $admin_details=$admin->where('user_id1',$user_details->id,'admin');
+                        $admin_details=$admin->where(['user_id1'],[$user_details->id],'admin');
                         Auth::authenticate($admin_details,$user_details);
                         $this->view('AdminWelcomePage',[
                             'adminDetails'=>$admin,

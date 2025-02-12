@@ -7,6 +7,7 @@
     background-color: #F0F8FF;
     margin-top: -28%;
     border-radius: 10px;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)
     
     
 }
@@ -21,7 +22,7 @@
     width: 99.4%;
     height: 7vh;
     border-radius: 10px 10px 0 0;
-    background-color: #FD5D34;
+    background-color: #e05b4a;
     display: flex;
     justify-content: space-between;
     align-items: center;
@@ -46,9 +47,11 @@
     flex: 1;
     justify-content: center;
     align-items: center;
+   
 }
 .see-product-img img{
     height: 40vh;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)
 
 }
 .see-product-details{
@@ -85,6 +88,7 @@
 
 .sub-img img{
     height: 14vh;
+    box-shadow: 5px 5px 10px rgba(0, 0, 0, 0.3)
 
 }
 .sub-img img:hover{
@@ -121,7 +125,7 @@
 .business-response-area-btn button{
     width: 25%;
     height: 5vh;
-    border-radius: 20px;
+    border-radius: 10px;
     border: none;
     text-align: center;
 }
@@ -129,6 +133,7 @@
     background-color: #FFAC96;
     cursor: pointer;
     text-align: center;
+    margin-right: 1%;
 }
 .complain-btn2{
     background-color: #fff;

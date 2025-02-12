@@ -63,3 +63,8 @@ FROM complaints
 INNER JOIN complaint_status
 ON complaints.complaint_status_id=complaint_status.id
 WHERE complaint_status.`name`='Not Attended'
+
+CREATE EVENT delete_expired_items
+ON SCHEDULE EVERY 1 MINUTE 
+DO
+UPDATE products SET `status_id`=3 WHERE expiration_dateTime <=NOW(); 

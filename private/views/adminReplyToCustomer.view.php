@@ -15,19 +15,22 @@
             <div class="msg-div">
                 <div class="close-btn" onclick="closePopup()">&times;</div>
             </div>
+            <form action="<?= ROOT ?>/Admin/ReplyToComplaint" method="POST" id="form1">
             <div class="reply-box">
                 <img src="<?= ASSETS ?>/icons/reply.png" class="popup-img" />
-                <form action="<?= ROOT ?>/Admin/ReplyToComplaint" method="POST" id="form1">
-
-                    <textarea type="text" class="msg" id="replyText" name="feedback"></textarea>
+                
+                <div>
+                <textarea type="text" class="msg" id="replyText" name="feedback"></textarea>
                     <input type="hidden" id="complaintID" name="id"/>
-                    <button type="submit" class="send-icon" onclick="sendReply();">
-                    <img src="<?= ASSETS ?>/icons/send-msg.png" class="send-icon"/>
-                    </button>
                     
-                </form>
+                
+                <button type="submit" class="send-icon" onclick="sendReply();">
+                        <img src="<?= ASSETS ?>/icons/send-msg.png" class="send-icon"/>
+                </button>  
+                </div>  
+                
             </div>
-
+            </form>
         </div>
     </div>
 

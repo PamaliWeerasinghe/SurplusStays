@@ -134,7 +134,11 @@
                                         <?php
                                     }else if($row->notify_status=='Notify'){
                                         ?>
-                                        <td><button class="take-action">Notify</button></td>
+                                        <form method="post">
+                                            <td><button class="take-action" type="submit">Notify</button></td>
+                                            <input type="hidden" value="<?=$row->product_id?>" name="product_id"/>
+                                        </form>
+                                       
                                         <?php
                                     }else{
                                         ?>
