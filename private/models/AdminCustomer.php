@@ -2,22 +2,24 @@
 
 class AdminCustomer extends AdminModel
 {
-    public function insertCustomer(
-        $user_columns,$user_values,$customer_columns,
-        $customer_values,$user,$add_customer
-        )
+    public function insertCustomer($user_columns,$user_values,$customer_columns,$customer_values,$user,$add_customer)
     {
         try {
-            if(!empty($this->where($user_columns,$user_values,'user')) && !empty($this->where($customer_columns,$customer_values,'customer'))){
+            
+            if(empty($this->where($user_columns,$user_values,'user')) && empty($this->where($customer_columns,$customer_values,'customer'))){
                 //begin the transaction
                 $this->db->beginTransaction();
+                
                 //insert the user
                 if($this->insert($user,'user')){
+                    
                     $this->db->rollback();
                     return false;
                 }
+                
                 //get the last id
                 $id=$this->db->lastInsertId();
+                
                 //Insert into customer table
                 $add_customer['user_id']=$id;
                 if($this->insert($add_customer,'customer')){
@@ -25,7 +27,7 @@ class AdminCustomer extends AdminModel
                     return false;
                 }
                 //commit the transaction
-                $this->db->rollback();
+                $this->db->commit();
                 return true;
             }else{
                 return false;

@@ -2,7 +2,8 @@
 class Admin extends Controller
 {
     
-    function loadItems(){
+    function loadItems()
+    {
         if(isset($_POST['order_id'])){
             $order_id=$_POST['order_id'];
             $admin=new AdminComplaints();
@@ -15,7 +16,8 @@ class Admin extends Controller
         }    
     }
     // customer make a complaint
-    function makeComplaints(){
+    function makeComplaints()
+    {
         $images=array();
         if(count($_POST)){
             $errors=array();
@@ -139,7 +141,8 @@ class Admin extends Controller
 
     }
     // Reply to a complaint
-    function ReplyToComplaint(){
+    function ReplyToComplaint()
+    {
         $errors=array();
         
         if(count($_POST)){
@@ -370,15 +373,18 @@ class Admin extends Controller
                     $customer_columns=['fname','lname','phoneNo'];
                     $customer_values=[$add_customer['fname'],$add_customer['lname'],$add_customer['phoneNo']];
                     
-                    if(!$customer->insertCustomer(
+                    if(!($customer->insertCustomer(
                         $user_columns,$user_values,$customer_columns,
                         $customer_values,$user,$add_customer
-                        )){
+                    )))
+                    {
                             $errors["customer_insertion"]="Customer already exists";
                             $this->view('AdminAddNewCustomer',[
                                 "errors"=>$errors
                             ]);
-                        }
+                    }else{
+                        $this->view('AdminAddNewCustomer');
+                    }
 
                    
                 }else{
