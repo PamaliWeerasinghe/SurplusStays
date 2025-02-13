@@ -18,7 +18,7 @@ class Admin extends Controller
     // customer make a complaint
     function makeComplaints()
     {
-        print_r(__DIR__);
+    
         $images=array();
         if(count($_POST)){
             $errors=array();
@@ -114,8 +114,13 @@ class Admin extends Controller
                        
                     }else{
                         // send notification for the admin
-                        Mail::sendMail('a','b','c','d');
-                        
+                        $subject="Customer Complaints";
+                        $body="New complaint received from the customer with ID ".$arr['customer_id'];
+                        if(!Mail::sendMail($_SESSION['USER_EMAIL'],'Pamali Weerasinghe',$subject,$body)){
+                            error_log("Could't send the email");
+                        }
+                           
+                                               
                     }
                     $this->view('customerMakeComplaint',[
                         "orders"=>$orders,
