@@ -68,3 +68,15 @@ CREATE EVENT delete_expired_items
 ON SCHEDULE EVERY 1 MINUTE 
 DO
 UPDATE products SET `status_id`=3 WHERE expiration_dateTime <=NOW(); 
+
+CREATE VIEW admin_details AS
+SELECT admin.id AS admin_id,
+admin.`name` AS admin_name,
+token,
+email,
+`password`,
+profile_pic,
+reg_date
+FROM admin
+INNER JOIN user 
+ON user.id=admin.user_id1

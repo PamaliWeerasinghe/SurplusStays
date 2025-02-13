@@ -197,20 +197,29 @@ class Admin extends Controller
 
             if (count($_POST) > 0) {
                 $user = new AdminModel();
-                $charityOrg = $user->findAll('organization');
-                $email = $user->where('email', $_POST['email'], 'admin');
+                
+                $email = $user->where(['email'], [$_POST['email']], 'user');
 
 
-                if ($email) {
-                    $password = $user->where('verification_code', $_POST['password'], 'admin');
-                    if ($password) {
-                        $password = $password[0];
-                        $this->view('AdminWelcomePage', [
-                            'adminDetails' => $password
-                        ]);
-                    } else {
-                        $this->view('AdminLoginStep1');
+                if (count($email)==0) {
+                    $subject='Admin Verification Code';
+                    $otp=random_int(100000,999999);
+                    $body='Your OTP '.$otp;
+                    if(Mail::sendMail($_POST['email'],'pamaliweerasinghe@gmail.com',$subject,$body)){
+                        // diret 
+                        // $this->view();
+                        
                     }
+                    
+                    
+                    // if ($password) {
+                    //     $password = $password[0];
+                    //     $this->view('AdminWelcomePage', [
+                    //         'adminDetails' => $password
+                    //     ]);
+                    // } else {
+                    //     $this->view('AdminLoginStep1');
+                    // }
                 }
             }else{
                 $this->view('AdminLoginStep1');
@@ -505,5 +514,6 @@ class Admin extends Controller
         // $this->view('home_section1');
         $this->view('popup');
     }
+   
     
 }

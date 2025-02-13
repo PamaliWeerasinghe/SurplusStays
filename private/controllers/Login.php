@@ -16,18 +16,26 @@ class Login extends Controller{
                 
                 //check the password
                 $password=$user_details->password;
-                if(!password_verify($_POST['password'],$password)){
+                // if(password_verify($_POST['password'],$password)){
                 
                 //check the roles
                 switch ($user_details->role) {
                     case 'admin':
-                        $admin= new AdminUser();
+                        $admin= new AdminModel();
                         $admin_details=$admin->where(['user_id1'],[$user_details->id],'admin');
+                        //generate the tocken
+                        $token=TokenHandler::generateToken();
+
                         Auth::authenticate($admin_details,$user_details);
-                        $this->view('AdminWelcomePage',[
-                            'adminDetails'=>$admin,
-                            'commonDetails'=>$user
-                        ]);
+                        //insert the token into the database
+                        $data['token']=$token;
+                        $admin->update($user_details->id,$data,'admin_details');
+
+                        Mail::sendAdminDashboard($_POST['email'],$token);
+                        
+                        // TODO: view email sent 
+                        die('Email sent');
+                        self::verifyEmail();
                         break;
                     case 'customer':
                         $customer=new AdminUser();
@@ -61,12 +69,12 @@ class Login extends Controller{
                         break;
                 }
                 //password doesn't match
-                }else{
-                    $errors['password'] = "Please check your password";
-                    $this->view('AdminLoginStep1', [
-                        'errors' => $errors
-                    ]);
-                }
+                // }else{
+                //     $errors['password'] = "Please check your password";
+                //     $this->view('AdminLoginStep1', [
+                //         'errors' => $errors
+                //     ]);
+                // }
 
 
             }else{
@@ -76,12 +84,26 @@ class Login extends Controller{
                     'errors'=>$errors
                 ]);
             }
-
-
         }else{
             $this->view('AdminLoginStep1');
         }
         
+    }
+
+    public function verifyEmail(){
+        $token = $_GET['token'];
+        //get token details from database
+        $admin =new AdminModel();
+        $find_token=$admin->where(['token'],[$token],'admin_details');
+        
+        $find_token=$find_token[0];
+        if($_GET['token']==$find_token->token){
+            $this->view('AdminWelcomePage',[
+                'rows'=>$find_token
+            ]);
+        }
+
+        // $this->redirect('admin/dashboard');
     }
 
 }

@@ -6,7 +6,7 @@ use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
 //Load Composer's autoloader
-require VENDOR;
+require_once __DIR__.'/../../vendor/autoload.php';
 
 class Mail
 {
@@ -26,7 +26,7 @@ class Mail
         
             //Recipients
             $mail->setFrom(SMTP_SETTINGS['from_email'], SMTP_SETTINGS['from_name']);
-            $mail->addAddress('sakiththewmika@gmail.com', 'Sakith Thewmika');     //Add a recipient
+            $mail->addAddress($toEmail, $toName);     //Add a recipient
         
             //Attachments
             // $mail->addAttachment('/var/tmp/file.tar.gz');         //Add attachments
@@ -34,10 +34,9 @@ class Mail
         
             //Content
             $mail->isHTML(true);                                  //Set email format to HTML
-            $mail->Subject = 'Here is the subject';
-            $mail->Body    = 'This is the HTML message body <b>in bold!</b>';
-            $mail->AltBody = 'This is the body in plain text for non-HTML mail clients';
-        
+            $mail->Subject = $subject;
+            $mail->Body    = $body;
+           
             if ($mail->send()) {
                 return true;
             } else {
@@ -46,6 +45,22 @@ class Mail
         } catch (Exception $e) {
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
+    }
+
+    //send admin the dashboard link to continue
+    public static function sendAdminDashboard($toEmail,$token){
+        //load the teamplate
+        $template=file_get_contents(TEMPLATEROOT.'/sendAdminToDashboard.html');
+        //create link
+        $link= LOGIN.'/verifyEmail?token='.$token;
+
+        //replace placeholders
+        $template=str_replace('{{verification_link}}',$link,$template);
+        $template=str_replace('{{year}}',date('Y'),$template);
+
+        $subject="Login to Dashboard";
+
+        return self::sendMail($toEmail,'',$subject,$template);
     }
 }
 
