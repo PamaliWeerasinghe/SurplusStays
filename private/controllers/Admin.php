@@ -202,14 +202,7 @@ class Admin extends Controller
 
 
                 if (count($email)==0) {
-                    $subject='Admin Verification Code';
-                    $otp=random_int(100000,999999);
-                    $body='Your OTP '.$otp;
-                    if(Mail::sendMail($_POST['email'],'pamaliweerasinghe@gmail.com',$subject,$body)){
-                        // diret 
-                        // $this->view();
-                        
-                    }
+                    
                     
                     
                     // if ($password) {
