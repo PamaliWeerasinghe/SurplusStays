@@ -25,10 +25,11 @@ class Login extends Controller{
                         $admin_details=$admin->where(['user_id1'],[$user_details->id],'admin');
                         //generate the tocken
                         $token=TokenHandler::generateToken();
-
+                        $expiry=TokenHandler::generateExpiryDate();
                         Auth::authenticate($admin_details,$user_details);
                         //insert the token into the database
                         $data['token']=$token;
+                        $data['token_expiry']=$expiry;
                         $admin->update($user_details->id,$data,'admin_details');
 
                         Mail::sendAdminDashboard($_POST['email'],$token);
@@ -95,13 +96,22 @@ class Login extends Controller{
         //get token details from database
         $admin =new AdminModel();
         $find_token=$admin->where(['token'],[$token],'admin_details');
-        
         $find_token=$find_token[0];
-        if($_GET['token']==$find_token->token){
-            $this->view('AdminWelcomePage',[
-                'rows'=>$find_token
-            ]);
+        if($find_token->token_expiry>date("Y-m-d H:i:s")){
+            if($_GET['token']==$find_token->token){
+                $this->view('AdminWelcomePage',[
+                    'rows'=>$find_token
+                ]);
+            }else{
+                //prepare a page for invalid login
+                $this->view('404');
+            }
+        }else{
+            $errors["token_expiry"]="Token is expired. Retry to login";
+            //prepare a page for invalid login
+            $this->view('404');
         }
+       
 
     
     }

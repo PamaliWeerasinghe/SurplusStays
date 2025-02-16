@@ -190,34 +190,47 @@ class Admin extends Controller
     
     function register()
     {
-        if (Auth::logged_in()) {
-            $this->view('adminWelcomePage');
-        } else {
-            $errors = array();
+        $errors=array();
+        $verify=new AdminModel();
+        if(count($_POST)>0){
+          
+                if(!$verify->validateAdminRegister($_POST)){
+                    $errors=$verify->errors;
+                }else{
+                    
+                    $search=$verify->where(['email'],[$_POST['email']],'admin_details');
+                    if(isset($search[0]->email)){
+                        $errors['admin']="An admin already exists";
+                    }else{
+                        $user_table['email']=$_POST['email'];
+                        $user_table['password']=password_hash($_POST['password'], PASSWORD_DEFAULT);
+                        $user_table['role']='admin';
+                        $user_table['profile_pic']=$verify->uploadProfilePic($_FILES['profile_pic']['name']);
+                        $user_table['reg_date']=date("Y-m-d H:i:s");
 
-            if (count($_POST) > 0) {
-                $user = new AdminModel();
+                        $token=TokenHandler::generateToken();
+                        $expiry=TokenHandler::generateExpiryDate();
+
+                        $admin_table['name']=$_POST['name'];
+                        $admin_table['token']=$token;
+                        $admin_table['token_expiry']=$expiry;
+
+                        
+                        $admin=new AdminRegister();
+                        if($admin->insertAdmin($user_table,$admin_table)){
+                            //send email to be directed into the dashboard
+                            print_r("hello");
+                        }else{
+                            print_r("No");
+                        }
+                    }
                 
-                $email = $user->where(['email'], [$_POST['email']], 'user');
-
-
-                if (count($email)==0) {
-                    
-                    
-                    
-                    // if ($password) {
-                    //     $password = $password[0];
-                    //     $this->view('AdminWelcomePage', [
-                    //         'adminDetails' => $password
-                    //     ]);
-                    // } else {
-                    //     $this->view('AdminLoginStep1');
-                    // }
-                }
-            }else{
-                $this->view('AdminLoginStep1');
             }
+           
         }
+        $this->view('AdminRegister',[
+            'errors'=>$errors
+        ]);
     }
 
     function dashboard()

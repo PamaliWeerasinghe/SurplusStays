@@ -6,10 +6,48 @@ class AdminModel extends Admin_Model
     public function validate($DATA)
     {
         $this->errors = array();
-        //validating the name
-        // if (!preg_match('/^[a-z A-Z]+$/', $DATA['fullName'])) {
-        //     $this->errors['name'] = "Only letters are allowed for the full name";
-        // }
+      
+
+        //validating the email
+        if (empty($DATA['email']) || !filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
+            $this->errors['email'] = "Email is not valid";
+        }
+        //validate the name
+        if (!preg_match('/^[a-z A-Z &]+$/', $DATA['fname'])) {
+            $this->errors['name'] = "Only letters are allowed for the name";
+        }
+        //validating the password
+        if (empty($DATA['password'])) {
+            $this->errors['password'] = "Password is empty";
+        }
+          //validate the image selection
+          $logo = $_FILES['profile_picture']['name'];
+          $logoExt = explode('.', $logo);
+          $logoActualExt = strtolower(end($logoExt));
+          $allowed = array('jpg', 'jpeg', 'png');
+          if (in_array($logoActualExt, $allowed)) {
+              if ($_FILES['profile_picture']['error'] != 0) {
+                  $this->errors['profile_picture'] = "There was an error uploading your profile picture!";
+              }
+          } else {
+              $this->errors['profile_picture'] = "You cannot add images of this type!";
+          }
+  
+          if (isset($DATA['profile_picture'])) {
+              $this->errors['profile_picture'] = "Select a profile photo";
+          }
+
+        //No errors
+        if (count($this->errors) == 0) {
+            return true;
+        }
+        //Contains errors
+        return false;
+    }
+    //Validate Admin Register details
+    public function validateAdminRegister($DATA){
+        $this->errors = array();
+      
 
         //validating the email
         if (empty($DATA['email']) || !filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
@@ -19,7 +57,30 @@ class AdminModel extends Admin_Model
         if (empty($DATA['password'])) {
             $this->errors['password'] = "Password is empty";
         }
+        //validating the name
+        if (!preg_match('/^[a-z A-Z &]+$/', $DATA['name'])) {
+            $this->errors['name'] = "Only letters are allowed for the name";
+        }
+        
+         if (!isset($_FILES['profile_pic'])) {
 
+             $this->errors['profile_pic'] = "Select a profile photo";
+         }else{
+             //validate the image selection
+            $logo = $_FILES['profile_pic']['name'];
+            $logoExt = explode('.', $logo);
+             $logoActualExt = strtolower(end($logoExt));
+             $allowed = array('jpg', 'jpeg', 'png');
+                if (in_array($logoActualExt, $allowed)) {
+                    if ($_FILES['profile_pic']['error'] != 0) {
+                        $this->errors['profile_pic'] = "There was an error uploading your profile picture!";
+                    }
+                } else {
+                    $this->errors['profile_pic'] = "You cannot add images of this type!";
+                }
+ 
+         }
+        
 
         //No errors
         if (count($this->errors) == 0) {
@@ -27,6 +88,7 @@ class AdminModel extends Admin_Model
         }
         //Contains errors
         return false;
+
     }
     //validate customer before inserting
     public function validateCustomer($DATA)
@@ -169,7 +231,19 @@ class AdminModel extends Admin_Model
 
         return $dbFileDestination;
     }
-    
+     //upload admin profile picture
+     public function uploadProfilePic($logo)
+     {
+ 
+         $logoExt = explode('.', $logo);
+         $logoActualExt = strtolower(end($logoExt));
+         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
+         $fileDestination =$_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/adminImages/' . $logoNameNew;
+         $dbFileDestination = $logoNameNew;
+         move_uploaded_file($_FILES['profile_pic']['tmp_name'], $fileDestination);
+ 
+         return $dbFileDestination;
+     }
     //update a logo
     public function updateLogo($logo)
     {
