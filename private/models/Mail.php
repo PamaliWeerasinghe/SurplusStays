@@ -62,6 +62,22 @@ class Mail
 
         return self::sendMail($toEmail,'',$subject,$template);
     }
+    //send the login page link to the regiatered user
+    public static function sendLoginToRegistered($toEmail,$token){
+        //load the template
+        $template=file_get_contents(TEMPLATEROOT.'/sendLoginToRegistered.html');
+        //create link
+        $link=ADMIN.'/verifyEmail?token='.$token;
+        //replace placeholders
+        $template=str_replace('{{verification_link}}',$link,$template);
+        $template=str_replace('{{year}}',date('Y'),$template);
+
+        $subject="Login Now";
+
+        return self::sendMail($toEmail,'',$subject,$template);
+
+    }
 }
+
 
 

@@ -219,7 +219,12 @@ class Admin extends Controller
                         $admin=new AdminRegister();
                         if($admin->insertAdmin($user_table,$admin_table)){
                             //send email to be directed into the dashboard
-                            print_r("hello");
+                            Mail::sendLoginToRegistered($_POST['email'],$token);
+                        
+                            // TODO:view=>email sent
+                            die('Email sent');
+                            self::verifyEmail();
+                        
                         }else{
                             print_r("No");
                         }
@@ -232,7 +237,67 @@ class Admin extends Controller
             'errors'=>$errors
         ]);
     }
+    //verify email when logging in after registered
+    public function verifyEmail(){
+        $token = $_GET['token'];
+        //get token details from database
+        $admin =new AdminModel();
+        $find_token=$admin->where(['token'],[$token],'admin_details');
+        $find_token=$find_token[0];
+        if($find_token->token_expiry>date("Y-m-d H:i:s")){
+            if($_GET['token']==$find_token->token){
+                $this->redirect('admin/login');
+            }else{
+                //prepare a page for invalid login
+                $this->view('404');
+            }
+        }else{
+            $errors["token_expiry"]="Token is expired. Retry to login";
+            //prepare a page for invalid login
+            $this->view('404');
+        }
+       
 
+    
+    }
+     //login after registering
+     public function login(){
+        $errors=array();
+        // check the POST method
+        if(count($_POST)>0){
+            $adminModel=new AdminModel();
+            //find the user with the relevant email
+            $user=$adminModel->where(['email'],[$_POST['email']],'user');
+           
+            
+            //check the user exists
+            if(isset($user)){
+                $user_details=$user[0];
+                $admin=$adminModel->where(['user_id1'],[$user_details->id],'admin');
+                //check the password
+                $password=$user_details->password;
+                if(password_verify($_POST['password'],$password)){
+                    Auth::authenticate($admin,$user_details);
+                    $this->view('AdminWelcomePage');
+                }
+                //password doesn't match
+                }else{
+                    $errors['password'] = "Please check your password";
+                    $this->view('AdminLoginStep1', [
+                        'errors' => $errors
+                    ]);
+                }
+
+
+            }else{
+                //No email found
+                $errors['email']="Please check your email";
+                $this->view('AdminLoginStep1',[
+                    'errors'=>$errors
+                ]);
+            }
+       
+     }
     function dashboard()
     {
         if (Auth::logged_in()) {
