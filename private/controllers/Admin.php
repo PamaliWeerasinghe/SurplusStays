@@ -256,9 +256,6 @@ class Admin extends Controller
             //prepare a page for invalid login
             $this->view('404');
         }
-       
-
-    
     }
      //login after registering
      public function login(){
@@ -276,9 +273,11 @@ class Admin extends Controller
                 $admin=$adminModel->where(['user_id1'],[$user_details->id],'admin');
                 //check the password
                 $password=$user_details->password;
+                
                 if(password_verify($_POST['password'],$password)){
                     Auth::authenticate($admin,$user_details);
-                    $this->view('AdminWelcomePage');
+                    
+                    $this->redirect('admin/dashboard');
                 }
                 //password doesn't match
                 }else{
@@ -291,7 +290,7 @@ class Admin extends Controller
 
             }else{
                 //No email found
-                $errors['email']="Please check your email";
+                // $errors['email']="Please check your email";
                 $this->view('AdminLoginStep1',[
                     'errors'=>$errors
                 ]);
@@ -301,6 +300,7 @@ class Admin extends Controller
     function dashboard()
     {
         if (Auth::logged_in()) {
+        
            $admin=new AdminModel();
            $complaint_limit =3;
            //count the no of complaints in the table complaints

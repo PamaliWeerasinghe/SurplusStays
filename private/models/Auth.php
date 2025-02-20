@@ -9,7 +9,6 @@ class Auth
            session_start();
         }
         $_SESSION['USER'] = $row;
-
         $_SESSION['USER_EMAIL']=$user->email;
         $_SESSION['USER_PIC']=$user->profile_pic;
         $_SESSION['USER_REG_DATE']=$user->reg_date;
@@ -39,6 +38,16 @@ class Auth
         if(isset($_SESSION['USER']))
         {
             return $_SESSION['USER']->username;
+        }
+
+        return false;
+    
+    }
+    public static function admin()
+    {   
+        if(isset($_SESSION['USER']))
+        {
+            return $_SESSION['USER'][0]->name;
         }
 
         return false;

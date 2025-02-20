@@ -99,9 +99,7 @@ class Login extends Controller{
         $find_token=$find_token[0];
         if($find_token->token_expiry>date("Y-m-d H:i:s")){
             if($_GET['token']==$find_token->token){
-                $this->view('AdminWelcomePage',[
-                    'rows'=>$find_token
-                ]);
+                $this->redirect('admin/dashboard');
             }else{
                 //prepare a page for invalid login
                 $this->view('404');
