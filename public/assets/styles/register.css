@@ -200,3 +200,21 @@ body {
     display: none;
     border: 2px solid #ddd;
 }
+.success.alert {
+    background-color: #3cb371;
+    color:#008000;
+    border: 1px solid #3cb371;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.success.alert ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.success.alert li {
+    margin-bottom: 5px;
+}

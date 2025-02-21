@@ -8,7 +8,7 @@
     <div class="container">
         <div class="left">
         <img src="<?=ASSETS?>/images/register_background.png" class="left-image" alt="Register image">
-            <h3>Join the SurplusStays Networkt</h3>
+            <h3>Join the SurplusStays Network</h3>
             <p>Are you a charity organization looking to receive surplus food donations from local businesses? 
                 Register with SurplusStays to connect with donors and help feed those in need.
             </p>
@@ -29,6 +29,15 @@
                             <?php endforeach; ?>
                         </ul>
                     </div>
+                <?php elseif (!empty($successfull)):?>
+                <div class="success alert">
+                        <ul>
+                            <?php foreach ($successfull as $notify): ?>
+                                <li><?= $notify ?></li>
+                            <?php endforeach; ?>
+                        </ul>
+                    </div>
+                
                 <?php endif; ?>
                 <form method="post">
                 

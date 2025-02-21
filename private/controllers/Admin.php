@@ -260,6 +260,7 @@ class Admin extends Controller
      //login after registering
      public function login(){
         $errors=array();
+        
         // check the POST method
         if(count($_POST)>0){
             $adminModel=new AdminModel();

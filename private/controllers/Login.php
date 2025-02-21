@@ -5,6 +5,7 @@ class Login extends Controller{
 
     function index(){
         $errors=array();
+        $successfull=array();
         // check the POST method
         if(count($_POST)>0){
             $user=new User();
@@ -36,6 +37,10 @@ class Login extends Controller{
                         
                         // TODO: view email sent 
                         die('Email sent');
+                        // $successfull["email"]="Email Sent. Check Yor Email";
+                        // $this->view('AdminLoginStep1',[
+                        //     "successfull"=>$successfull
+                        // ]);
                         self::verifyEmail();
                         break;
                     case 'customer':
