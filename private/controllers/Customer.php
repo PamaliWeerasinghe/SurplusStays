@@ -12,7 +12,7 @@ class Customer extends Controller{
 
         $event = new Complaint();
         $customer_id = Auth::getID();
-        $data = $event->where('customer_id', $customer_id);
+        $data = $event->where('id', $customer_id,'customer');
 
         $this->view('custManageComplaints',['rows' => $data]);
         
@@ -214,5 +214,37 @@ class Customer extends Controller{
             'errors' => $errors,
         ]);
     }
+
+    function browseShops(){
+        $this->view('CustomerBrowseShops');
+    }
+    function cart(){
+        $this->view('CustomerCart');
+    }
+
+    function payment(){
+        $this->view('custPayment');
+    }
+
+    function orders(){
+        $this->view('custViewOrders');
+    }
+
+    function wishlist(){
+        $this->view('custWishlist');
+    }
+
+    function profile(){
+        $this->view('custProfile');
+    }
+
+    function changePassword(){
+        $this->view('custChangePassword');
+    }
+
+    function cart2(){
+        $this->view('cart');
+    }
 }
+
 ?>

@@ -7,13 +7,13 @@
         <div class="btn-nonSelected" data-path="/surplusstays/public/customer">
             <label>Dashboard</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/TrackExpiry">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/customer">
             <label>Browse Shops</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/Complaints">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/cart">
             <label>Cart</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/ManageCustomers">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/wishlist">
             <label>Wishlist</label>
         </div>
         <div class="btn-nonSelected" data-path="/surplusstays/public/customer/orders">
@@ -22,10 +22,10 @@
         <div class="btn-nonSelected" data-path="/surplusstays/public/customer/manageComplaints">
             <label>Complaints</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/ManageCharityOrg">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/payment-history">
             <label>Payment History</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/Reports">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/profile">
             <label>Profile</label>
         </div>
         <div class="btn-nonSelected" data-path="/surplusstays/public/Logout">
