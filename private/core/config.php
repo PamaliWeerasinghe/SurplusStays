@@ -15,7 +15,9 @@ define('ASSETS', 'http://localhost/SurplusStays/public/assets');
 define('SIDEPANELBUSINESS', '/SurplusStays/public/business');
 define('COMPLAINTS', 'http://localhost/SurplusStays/public/assets/complaints/');
 define('CUSTOMER','http://localhost/SurplusStays/public/assets/customerImages');
-
+define('LOGIN','http://localhost/SurplusStays/public/login');
+define('TEMPLATEROOT', 'http://localhost/SurplusStays/templates');
+define('ADMIN','http://localhost/SurplusStays/public/admin');
 //DATABASE
 define('DBNAME','surplusstays');
 define('DBHOST','localhost');
@@ -36,7 +38,7 @@ define('SMTP_SETTINGS',[
     'smtp_host'=>'smtp.gmail.com',
     'smtp_auth'=>true,
     'smtp_username'=>'pamaliweerasinghe@gmail.com',
-    'smtp_password'=>'*********',
+    'smtp_password'=>'nali tmjm kdfg apde',
     'smtp_secure'=>'tls',
     'smtp_port'=>587,
     'from_email'=>'pamaliweerasinghe@gmail.com',
