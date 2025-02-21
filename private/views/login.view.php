@@ -4,9 +4,9 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
-    <link rel="stylesheet" href="<?=ROOT?>/assets/styles/register.css">
+    <link rel="stylesheet" href="<?=ROOT?>/assets/styles/login.css">
 <body>
-<?php echo $this->view('includes/navbar')?>
+<?php echo $this->view('includes/navbar_unregistered'); ?>
 
     <div class="container">
         <div class="left">
@@ -18,10 +18,10 @@
             </p>
         </div>
         <div class="right">
-            <button class="register-button">Customer Login</button>
-            <button class="register-button">Business Login</button>
+            <button class="register-button" onclick="window.location.href='<?=ROOT?>/login/customerLogin'">Customer Login</button>
+            <button class="register-button" onclick="window.location.href='<?=ROOT?>/login/businessLogin'">Business Login</button>
             <button class="register-button" onclick="window.location.href='<?=ROOT?>/login/charityLogin'">Charity Login</button>
-                <p>Don't have an account? <a href='<?=ROOT?>/register'>SIGN UP HERE</a></p>
+                <p>Don't have an account? <a style="text-decoration: none;" href='<?=ROOT?>/register'>SIGN UP HERE</a></p>
             </div>
         </div>
     </div>

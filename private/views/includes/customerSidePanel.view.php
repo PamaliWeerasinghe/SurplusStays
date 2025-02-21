@@ -1,35 +1,36 @@
 <aside class="sidePanel">
     <div class="greeting">
-        <img src="<?=ASSETS?>/images/sample_profile_pic.png" />
-        <label>Hi <span class="admin">Janitha!</span></label>
+        <img class="profile-image" src="<?=ASSETS?>/customerImages/<?=basename(Auth::getPicture())?>" />
+        <label>Hi <span class="admin"><?=Auth::getusername()?></span></label>
     </div>
     <div class="buttons">
-        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/dashboard">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/customer">
             <label>Dashboard</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/browseShops">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/TrackExpiry">
             <label>Browse Shops</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/cart">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/Complaints">
             <label>Cart</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/wishlist">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/ManageCustomers">
             <label>Wishlist</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/viewOrders">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/orders">
             <label>Orders</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/paymentHistory">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/manageComplaints">
+            <label>Complaints</label>
+        </div>
+        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/ManageCharityOrg">
             <label>Payment History</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/profile">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/Reports">
             <label>Profile</label>
         </div>
         <div class="btn-nonSelected" data-path="/surplusstays/public/Logout">
             <label>Logout</label>
         </div>
-        <br/>
-        <br/>
         
     </div>
     <script src="<?=ROOT?>/assets/js/customerPagesNavigation.js"></script>

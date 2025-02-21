@@ -5,7 +5,7 @@ class Logout extends Controller
     function index()
     {
         Auth::logout();        
-        $this->view('login');
+        $this->redirect('/Login');
     }
 
     
