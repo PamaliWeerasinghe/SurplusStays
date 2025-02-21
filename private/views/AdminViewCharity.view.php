@@ -26,7 +26,7 @@
                 </div>
                 <div class="seecomplain-status">
                     <div class="seecomplain-bar">
-                        <label>INGOUDE FOUNDATION</label>
+                        <label><?= $rows->name?></label>
                         <label>Org. ID :000<?= $rows->id ?></label>
 
                     </div>
@@ -42,7 +42,7 @@
                         </div>
                         <div class="main-img-details">
                             <div class="see-product-img">
-                                <img src='<?= $rows->picture ?>' />
+                                <img class="pic" src='<?=ASSETS?>/charityImages/<?= $rows->picture ?>' />
                             </div>
                             <div class="see-product-details">
                                 <div>
@@ -79,11 +79,6 @@
                                 <div>
                                     <label>Username : <?= $rows->username ?></label>
                                 </div>
-                                <div>
-                                    <label>Date Joined : <?= $rows->date ?></label>
-                                </div>
-
-
                             </div>
                         </div>
 

@@ -24,7 +24,7 @@
                         <img src="<?=ASSETS?>/images/profit-growth.png" alt="Events Icon" class="stat-icon">
                         <div>
                             <span class="stat-title">Events</span>
-                            <span class="stat-value">25</span>
+                            <span class="stat-value">5</span>
                         </div>
                     </div>
                     <div class="stat-item">

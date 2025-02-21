@@ -33,6 +33,11 @@
     align-items: center;
     
 }
+.pic{
+    height: 80px;
+    width: 80px;
+    border-radius: 50%;
+}
 .add-buyer div label{
     font-weight: bold;
 }
@@ -156,4 +161,7 @@
 }
 .business-joined label{
     color: red;
+}
+.customer-profile-pic{
+    width: 100px;
 }

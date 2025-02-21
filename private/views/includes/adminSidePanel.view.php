@@ -1,7 +1,7 @@
 <aside class="sidePanel">
     <div class="greeting">
         <img src="<?=ASSETS?>/images/sample_profile_pic.png" />
-        <label>Hi <span class="admin">Pamali!</span></label>
+        <label>Hi <span class="admin"><?=  (Auth::logged_in()) ? (Auth::admin()):''?>!</span></label>
     </div>
     <div class="buttons">
         <div class="btn-nonSelected" data-path="/surplusstays/public/admin/dashboard">
@@ -25,7 +25,7 @@
         <div class="btn-nonSelected" data-path="/surplusstays/public/admin/Reports">
             <label>Reports</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/Logout">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/AdminLogout">
             <label>Logout</label>
         </div>
         <!-- <div class="btn-nonSelected" id="profile" onclick="profile();">

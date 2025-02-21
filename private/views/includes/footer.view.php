@@ -3,18 +3,18 @@
         <div class="footer">
             <div class="row">
                 <div class="column">
-                    <img src="../../../SURPLUSSTAYS/public/assets/images/logo.png" height="80%" width="80%"/>
+                    <img src="<?=ASSETS?>/images/logo.png" height="80%" width="80%"/>
                     <p class="logoDisc" style="margin-top: -10%;">SURPLUSSTAYS</p>
 
                     <div style="margin-left: 80px; margin-right: 40px; display: flex; padding-top:3%;">
                         <div style="width: 33%; margin-right: -19px;">
-                            <img src="../../../SURPLUSSTAYS/public/assets/images/Twitter.png" height="25px" width="25px"/>
+                            <img src="<?=ASSETS?>/images/Twitter.png" height="25px" width="25px"/>
                         </div>
                         <div style="width: 33%;">
-                            <img src="../../../SURPLUSSTAYS/public/assets/images/Youtube.png" height="25px" width="25px"/>
+                            <img src="<?=ASSETS?>/images/Youtube.png" height="25px" width="25px"/>
                         </div>
                         <div style="width: 33%; margin-left: -19px;">
-                            <img src="../../../SURPLUSSTAYS/public/assets/images/Facebook.png" height="25px" width="25px"/>
+                            <img src="<?=ASSETS?>/images/Facebook.png" height="25px" width="25px"/>
                         </div>
                     </div>
                     

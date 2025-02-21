@@ -1,0 +1,50 @@
+<?php
+
+class Auth
+{
+    public static function authenticate($row,$user)
+    {
+        
+        if (session_status() == PHP_SESSION_NONE) {
+           session_start();
+        }
+        $_SESSION['USER'] = $row;
+
+        $_SESSION['USER_EMAIL']=$user->email;
+        $_SESSION['USER_PIC']=$user->profile_pic;
+        $_SESSION['USER_REG_DATE']=$user->reg_date;
+
+    }
+
+    //logout
+    public static function logout()
+    {
+        unset($_SESSION['USER']);
+        unset($_SESSION['USER_EMAIL']);
+        unset($_SESSION['USER_PIC']);
+        unset( $_SESSION['USER_REG_DATE']);
+    }
+
+    //check whether an admin is logged in
+    public static function logged_in()
+    {
+        if(session_status()==PHP_SESSION_NONE){
+            session_start();
+        }
+        if (isset($_SESSION['USER'])) {
+            return true;
+        }
+        return false;
+    }
+
+    //retrieve details from the session variable
+    public static function admin()
+    {
+        if (isset($_SESSION['USER'])) {
+            return $_SESSION['USER']->name;
+        }
+    }
+
+    //get a function that doesn't exist
+
+}

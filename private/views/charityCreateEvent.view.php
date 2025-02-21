@@ -23,7 +23,7 @@
                     <div class="header">
                         <h2>Create New Event</h2>
                     </div>
-                    <form method="POST">
+                    <form method="POST" enctype="multipart/form-data">
 
                         <?php if (!empty($errors)): ?>
                             <div class="error alert">
@@ -100,27 +100,27 @@
                             <label>Upload Images : <small>You Can Add Up To 5 Images.</small></label>
                             <div class="upload-wrapper">
                                 <label for="upload-1">
-                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon">
+                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
                                 </label>
                                 <input type="file" id="upload-1" name="upload-1" style="display: none;">
 
                                 <label for="upload-2">
-                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon">
+                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-2">
                                 </label>
                                 <input type="file" id="upload-2" name="upload-2" style="display: none;">
 
                                 <label for="upload-3">
-                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon">
+                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-3">
                                 </label>
                                 <input type="file" id="upload-3" name="upload-3" style="display: none;">
 
                                 <label for="upload-4">
-                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon">
+                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-4">
                                 </label>
                                 <input type="file" id="upload-4" name="upload-4" style="display: none;">
 
                                 <label for="upload-5">
-                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon">
+                                    <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-5">
                                 </label>
                                 <input type="file" id="upload-5" name="upload-5" style="display: none;">
                             </div>
@@ -144,5 +144,58 @@
 
     <?php echo $this->view('includes/footer')?>
     
+    <!-- JavaScript to Show Preview -->
+    <script>
+    document.getElementById('upload-1').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePreview-1').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    document.getElementById('upload-2').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePreview-2').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    document.getElementById('upload-3').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePreview-3').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    document.getElementById('upload-4').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePreview-4').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    document.getElementById('upload-5').addEventListener('change', function(event) {
+        const file = event.target.files[0];
+        if (file) {
+            const reader = new FileReader();
+            reader.onload = function(e) {
+                document.getElementById('profilePreview-5').src = e.target.result;
+            };
+            reader.readAsDataURL(file);
+        }
+    });
+    </script>
 </body>
 </html>

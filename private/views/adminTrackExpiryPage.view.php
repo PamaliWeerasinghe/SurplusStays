@@ -95,126 +95,76 @@
                     </div>
                     <table class="order-table" >
                         <thead>
-                            <t`r>
+                            <tr>
                                 <th>ItemID</th>
-                                <th>Expiry Date & Time</th>
+                                <th>Best Before</th>
                                 <th>Business</th>
                                 <th>Product</th>
                                 <th>Notify Status</th>
                                 <th>Price</th>
                             </tr>
                         </thead>
+                        
                         <tbody id="order-table-body">
-                            <tr onclick="openPopup()">
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
+                            <?php if(count($rows)==0) {?>
+                                <!-- No products available -->
+                                </tbody>
+                                     </table>
+                                <label>No recently expiriing items</label>
+                                
+
+                           <?php }else{?>
+                            <?php foreach($rows as $row):?>
+                            
                             <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
+                                <td><?=$row->product_id?></td>
+                                <td>
+                                    <label id="days<?=$row->product_id?>">00</label>
+                                    <label id="hours<?=$row->product_id?>">00</label>
+                                    <label id="minutes<?=$row->product_id?>">00</label>
+                                    <label id="seconds<?=$row->product_id?>">00</label>
+                                    
+                                </td>
+                                <td><?=$row->business_name?></td>
+                                <td><?=$row->product_name?></td>
+                                <?php 
+                                    if($row->notify_status=='Notified'){
+                                        ?>
+                                        <td><button class="completed">Notified</button></td>
+                                        <?php
+                                    }else if($row->notify_status=='Notify'){
+                                        ?>
+                                        <form method="post">
+                                            <td><button class="take-action" type="submit">Notify</button></td>
+                                            <input type="hidden" value="<?=$row->product_id?>" name="product_id"/>
+                                        </form>
+                                       
+                                        <?php
+                                    }else{
+                                        ?>
+                                        <td><button class="notify">Action Taken</button></td>
+                                        <?php
+
+                                    }
+                                ?>
+                                
+                                <td style="text-align: center;">Rs. <?=$row->price?> <br/><label>View Full Details</label></td>
                             </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="completed">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="completed">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="completed">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="completed">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 <br/> 02: 45: 30</td>
-                                <td>Cargills - Rajagiriya</td>
-                                <td>Full Bread</td>
-                                <td><button class="completed">Notified</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
-                            </tr>
+                            <script>
+                                document.addEventListener("DOMContentLoaded",function(){
+                                    countDown('<?=$row->bestBefore?>','<?=$row->product_id?>');
+                                });
+                                
+                            </script>
+                            <?php endforeach; ?>
+                           <?php }?>
                         </tbody>
                     </table>
                     <div class="arrow-div">
                         <div class="arrows">
-                            <img src="<?=ASSETS?>/images/Arrow right-circle.png" id="prevBtn"/>
-                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png" id="nextBtn"/>
+                            <!-- <img src="<?=ASSETS?>/images/Arrow right-circle.png" id="prevBtn"/>
+                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png" id="nextBtn"/> -->
+                            <?php $products_pager->display()?>
                             
                         </div>
                     </div>
@@ -226,5 +176,5 @@
         </div>
         <?php echo $this->view('includes/footer')?>
         <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>
-    
-        <script src="<?=ROOT?>/assets/js/TrackExpiryPopup.js"></script>
+        <script src="<?= ROOT ?>/assets/js/adminCountdown.js"></script>
+        <!-- <script src="<?=ROOT?>/assets/js/TrackExpiryPopup.js"></script> -->

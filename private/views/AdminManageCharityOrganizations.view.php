@@ -57,15 +57,10 @@
                         <div class="business-row">
                             <div class="business-wrap">
                                 <div class="business">
-                                    <img src="<?= $row->picture ?>" />
+                                    <img class="pic" src="<?=ASSETS?>/charityImages/<?= $row->picture ?>" />
                                 </div>
                                 <div class="business-details">
                                     <label style="font-weight: bold;font-size:larger"><?= $row->name ?></label>
-                                    <div>
-                                        <label>Date Joined : <?= $row->date ?> </label>
-
-                                    </div>
-
                                 </div>
                                 <div class="business-summary">
                                     <label>Donors Engaged : <?= $row->donors ?></label>

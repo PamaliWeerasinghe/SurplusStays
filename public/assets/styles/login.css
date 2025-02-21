@@ -1,9 +1,147 @@
-body {
-    margin: 0;
-    font-family: Arial, sans-serif;
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+
+    font-family: 'Poppins', sans-serif;
 }
 
-.container{
+body {
+    margin: 0;
+    overflow-x: hidden; /* Prevents horizontal scroll due to potential overflow */
+}
+
+.container {
+    display: flex;
+    background-color: #f4f4f4;
+    flex-direction: row;
+    width: 100%; /* Ensure container takes full width */
+    height: 90vh; /* Adjust height to fill the screen */
+}
+
+.left {
+    background: url('<?=ASSETS?>/images/register_background.png') no-repeat center center;
+    background-size: cover;
+    color: white;
+    width: 50%; /* Adjust width to fit with the right section */
+    position: relative;
+}
+.left-image{
+    width: 105%;
+    height: 100%;
+}
+
+.left h3, .left p {
+    position: absolute;
+    top: 30%;
+    left: 10%;
+    z-index: 2; 
+    padding-left: 10px;
+    padding-right: 140px;
+    border-radius: 8px;
+}
+
+.left h3 {
+    font-size: 28px;
+    font-weight: bold;
+}
+
+.left p {
+    font-size: 16px;
+    line-height: 1.2;
+    margin-top: 80px;
+}
+
+.right {
+    width: 50%; /* Adjust to 50% to match the left */
+    background-color: #F0F8FF;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 0; /* Remove padding to eliminate gaps */
+    margin: 0; /* Remove margin to eliminate gaps */
+    border-radius: 40px;
+    z-index: 1;
+}
+
+.register-button {
+    background-color: #00615F;
+    border: none;
+    color: white;
+    height: 70px;
+    width: 60%;
+    border-radius: 40px;
+    font-size: 22px;
+    font-weight: 600;
+    margin-top: 5%;
+    margin-bottom: 10px;
+    cursor: pointer;
+}
+
+.register-button:hover {
+    background-color: #007A78;
+    transition: 0.5s;
+}
+
+.login-link {
+    margin-top: 20px;
+}
+
+.login-link p {
+    font-size: 14px;
+    color: black;
+}
+
+.login-link a {
+    color: #1B4332;
+    text-decoration: underline;
+}
+
+.login-link a:hover {
+    text-decoration: underline;
+}
+.details{
+    align-items: right;
+    display: flex;
+    flex-direction: column;
+    padding: 10px;
+    align-items: right;
+    width: 60%;
+}
+
+.steps{
     display: flex;
     flex-direction: row;
+    align-items: center;
+    gap: 6px;
+    margin-bottom: 40px;
+}
+.input{
+    width: 100%;
+}
+.step-number{
+    display: flex;
+    color: white;
+    background-color: #FD5D34;
+    border-radius: 50%;
+    height: 40px;
+    width: 40px;
+    align-items: center;
+    justify-content: center;
+    margin-right: 15px;
+}
+
+.input{
+    background-color: white;
+    border-radius: 40px 40px 40px 40px ;
+    border: none;
+    height: 20px;
+    padding: 25px;
+    padding-left: 30px;
+}
+.right h4{
+    font-weight: 500;
+}
+.a{
+    color: #1B4332;
 }

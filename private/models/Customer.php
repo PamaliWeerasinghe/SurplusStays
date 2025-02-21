@@ -41,4 +41,8 @@ class Customer extends Model
         // Return true if no errors
         return empty($this->errors);
     }
+<<<<<<< HEAD
 }
+=======
+}
+>>>>>>> origin/Admin_Backend
