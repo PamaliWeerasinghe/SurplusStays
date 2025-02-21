@@ -99,11 +99,25 @@ class Login extends Controller{
     public function verifyEmail(){
         $token = $_GET['token'];
         //get token details from database
+        
         $admin =new AdminModel();
         $find_token=$admin->where(['token'],[$token],'admin_details');
         $find_token=$find_token[0];
+        $admin_details=$admin->where(['token'],[$token],'admin');
+        
+        if(isset($admin_details[0]->id)){
+            $admin_details=$admin_details[0];
+            $id=$admin_details->user_id1;
+        }
+        $user_details=$admin->where(['user_id1'],[$id],'user');
+        if(isset($user_details[0]->id)){
+            $user_details=$user_details[0];
+           
+        }
+        
         if($find_token->token_expiry>date("Y-m-d H:i:s")){
             if($_GET['token']==$find_token->token){
+                Auth::authenticate($admin_details,$user_details);
                 $this->redirect('admin/dashboard');
             }else{
                 //prepare a page for invalid login

@@ -199,6 +199,7 @@ class Admin extends Controller
                 }else{
                     
                     $search=$verify->where(['email'],[$_POST['email']],'admin_details');
+                    
                     if(isset($search[0]->email)){
                         $errors['admin']="An admin already exists";
                     }else{
@@ -411,8 +412,9 @@ class Admin extends Controller
     }
     //Manage all the customers
     function ManageCustomers()
+
     {
-        // if(Auth::logged_in()){
+        if(Auth::logged_in()){
             $admin=new AdminModel();
         
             $customer_limit=5;
@@ -432,9 +434,9 @@ class Admin extends Controller
     
             ]);
             
-        // }else{
-            // $this->view('adminLoginStep1');
-        // }
+        }else{
+            $this->view('adminLoginStep1');
+        }
        
 
     }

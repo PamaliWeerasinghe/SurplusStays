@@ -25,9 +25,6 @@ class Auth
 
    public static function logged_in()
    {
-       if(session_status()==PHP_SESSION_NONE){
-           session_start();
-       }
        if (isset($_SESSION['USER'])) {
            return true;
        }
@@ -47,7 +44,7 @@ class Auth
     {   
         if(isset($_SESSION['USER']))
         {
-            return $_SESSION['USER'][0]->name;
+            return $_SESSION['USER']->name;
         }
 
         return false;
