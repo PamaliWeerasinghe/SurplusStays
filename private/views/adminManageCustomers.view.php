@@ -1,4 +1,5 @@
 <?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
+<?php require APPROOT . '/views/adminViewCustomerPopup.view.php'?>
 <link rel="stylesheet" href="<?= STYLES ?>/adminSidePanel.css" />
 <link rel="stylesheet" href="<?= STYLES ?>/adminManageActors.css" />
 <link rel="stylesheet" href="<?= STYLES ?>/admin.css">
@@ -18,13 +19,47 @@
                             <img src="<?= ASSETS ?>/images/search.png" class="bell2" />
                         </div>
 
-                        <img src="<?= ASSETS ?>/images/Bell.png" class="bell" />
+                        <!-- <img src="<?= ASSETS ?>/images/Bell.png" class="bell" /> -->
                     </div>
-                    <div class="add-buyer" onclick="window.location.href='<?= ROOT ?>/Admin/addNewCustomer'">
-                        <div>
-                            <label>
-                                + Add Buyer
-                            </label>
+                    <div class="summary-blocks">
+                        <div class="summaries">
+                            <div class="summaries-1">
+                                <label>Total Customers</label>
+                            </div>
+                            <div class="summaries-2">
+                                <label><?=$customer_count?></label>
+                            </div>
+
+
+                        </div>
+                        <div class="summaries">
+                            <div class="summaries-1">
+                                <label>Total Orders</label>
+                            </div>
+                            <div class="summaries-2">
+                                <label><?=$order_count?></label>
+                            </div>
+
+
+                        </div>
+                        <div class="summaries">
+                            <div class="summaries-1">
+                                <label>Total Complaints</label>
+                            </div>
+                            <div class="summaries-2">
+                                <label><?=$complaint_count?></label>
+                            </div>
+
+
+                        </div>
+                        <div class="summaries">
+                            <div class="summaries-1">
+                                <label>Total Revenue</label>
+                            </div>
+                            <div class="summaries-2">
+                                <label>Rs. <?=$total_price?></label>
+                            </div>
+
 
                         </div>
                     </div>
@@ -32,20 +67,13 @@
 
                 </div>
                 <div class="Business-complaints-order-status">
-                    <div class="order">
-                        <label>Buyers</label>
+                <div class="add-buyer" onclick="window.location.href='<?= ROOT ?>/Admin/addNewCustomer'">
                         <div>
-                            <select>
-                                <option>Business</option>
-                            </select>
-                            <select>
-                                <option>Location</option>
-                            </select>
-                            <select>
-                                <option>Total Amount</option>
-                            </select>
-                        </div>
+                            <label>
+                                + Add Buyer
+                            </label>
 
+                        </div>
                     </div>
                     <table class="order-table">
                         <thead>
@@ -60,46 +88,30 @@
                         </thead>
                         <tbody>
                         <?php foreach( $customers as $customer):?>
-                            <tr>
+                            <tr  onclick="viewCustomer(<?=$customer->cus_id?>)">
                                 <td><img src="<?=CUSTOMER.'/'.$customer->profile_pic?>" class="customer-profile-pic"/></td>
                                 <td>#<?=$customer->cus_id?></td>
                                 <td><?=$customer->phoneNo?></td>
                                 <td><?=$customer->reg_date?></td>
                                 <td>
-
-                                    <span class="material-symbols-outlined" onclick="CustomerEditPopup()">
+                               
+                                    <span class="material-symbols-outlined" style="z-index: 1;">
                                         edit_square
                                     </span>
-
-
-
-
                                     <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
                                         person_remove
                                     </span>
-
                                 </td>
-
                             </tr>
                         <?php endforeach;?>
                         </tbody>
                     </table>
-
-
+                    <?php $customers_pager->display() ?>
                 </div>
-
-
-
-
-
             </div>
-
-
         </div>
-
-
         <?php echo $this->view('includes/footer') ?>
     </div>
-    <script src="<?=ROOT?>/assets/js/adminManageCustomers.js"></script>
+    <script src="<?=ROOT?>/assets/js/adminViewCustomerDetails.js"></script>
     <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
     

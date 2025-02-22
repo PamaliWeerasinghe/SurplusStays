@@ -49,10 +49,17 @@ class Admin_Model
           $query="select * from $this->table order by $this->column desc limit $limit offset $offset";
           return $this->db->query($query);
      }
+     //get the count of items in a column
      public function count($table){
           $this->table=$table;
-          $query="select count(*) as totalrows from $this->table";
+          $query="select count(*) as totalrows from `$this->table`";
           return $this->db->query($query)[0]->totalrows;
+     }
+     //get the sum of values in a column
+     public function sum($table){
+          $this->table=$table;
+          $query="select sum(total) as total FROM `$this->table`";
+          return $this->db->query($query)[0]->total;
      }
      public function findAll($table)
      {    

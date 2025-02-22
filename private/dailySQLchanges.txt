@@ -1,6 +1,6 @@
-CREATE VIEW complaintDetails As
 SELECT `complaints`.`id` AS `complaint_id`,
             `order_items_id`,
+            `customer`.`id` AS `customer_id`,
             `feedback`,
             `order`.`id` AS `order_id`,
             `complaint_status`.`name` AS `complaint_status`,
@@ -26,9 +26,7 @@ SELECT `complaints`.`id` AS `complaint_id`,
         INNER JOIN `complaint_status` ON `complaints`.`complaint_status_id`=`complaint_status`.`id`
         INNER JOIN `business` ON `business`.`id`=`complaints`.`business_id`
         INNER JOIN `customer` ON `customer`.`id`=`complaints`.`customer_id`
-        INNER JOIN `user`  ON `user`.`id`=`customer`.`user_id`
-
-
+        INNER JOIN `user`  ON `user`.`id`=`customer`.`user_id` 
 
 CREATE VIEW trackExpiry AS 
 SELECT products.id AS product_id,products.expiration_dateTime AS best_before,products.name AS product_name,notify_status.status AS notify_status,

@@ -17,6 +17,7 @@
 .open-popup-container{
     visibility: visible;
     opacity: 1;
+    backdrop-filter: (8px);
     
 }
 .btn{
@@ -30,7 +31,9 @@
    border-radius: 30px;
 }
 .popup{
-    position: relative;  /* Change from absolute to relative */
+    position: fixed;  /* Change from absolute to relative */
+    top: 50%;
+    left: 50%;
     width: 400px;
     background: #fff;
     border-radius: 10px;
@@ -40,9 +43,12 @@
     box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.3);
     transform: scale(0.9);
     transition: transform 0.3s ease;
+    backdrop-filter: blur(5px);
 }
 .open-popup{
-    transform: translateY(0) scale(1);
+    
+    transform: translate(-50%,-50%) scale(1);
+    
     
 }
 .popup-img{

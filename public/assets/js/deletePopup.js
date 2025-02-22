@@ -2,9 +2,9 @@
     let popup=document.getElementById("popup");
     let popupContainer=document.getElementById("popup-container");
     function openPopup(rowId){
-        popup.classList.add("open-popup");
         popupContainer.className="open-popup-container";
-
+        popup.classList.add("open-popup");
+        
         //setting the ID in the hidden input field
         document.getElementById('popupRowId').value=rowId;
 

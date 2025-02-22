@@ -6,7 +6,7 @@ class AdminCustomer extends AdminModel
     {
         try {
             
-            if(empty($this->where($user_columns,$user_values,'user')) && empty($this->where($customer_columns,$customer_values,'customer'))){
+            if(empty($this->where(['email'],[$user_values[0]],'user')) ){
                 //begin the transaction
                 $this->db->beginTransaction();
                 

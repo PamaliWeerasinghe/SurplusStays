@@ -15,6 +15,22 @@ class Admin extends Controller
             echo json_encode(['error'=>'Invalid Request']);
         }    
     }
+    //view customer details - manage customers popup
+    function customerDetails($id){
+        if(Auth::logged_in()){
+            $admin=new AdminModel();
+            $customer=$admin->where(['cus_id'],[$id],'customer_details');
+            $customer_complaints=$admin->where(['customer_id'],[$id],'complaintdetails');
+            $data["customer"]=$customer;
+            $data["customer_complaints"]=$customer_complaints;
+            // print_r(json_encode($data["customer_complaints"]));
+            echo json_encode($data);
+           
+        
+        }else{
+            $this->redirect('register');
+        }
+    }
     // customer make a complaint
     function makeComplaints()
     {
@@ -239,7 +255,8 @@ class Admin extends Controller
         ]);
     }
     //verify email when logging in after registered
-    public function verifyEmail(){
+    public function verifyEmail()
+    {
         $token = $_GET['token'];
         //get token details from database
         $admin =new AdminModel();
@@ -412,7 +429,6 @@ class Admin extends Controller
     }
     //Manage all the customers
     function ManageCustomers()
-
     {
         if(Auth::logged_in()){
             $admin=new AdminModel();
@@ -420,18 +436,29 @@ class Admin extends Controller
             $customer_limit=5;
             //count the no of products in the table products
             $customersCountData=$admin->count('customer_details');
+            //count the no of orders in the table orders
+            $orderCountData=$admin->count('order');
+            //count the no of complaints in the complaints table
+            $complaintsCount=$admin->count('complaints');
+            //calculate the total purchase price in the order table
+            $totalPrice=$admin->sum('order');
             //calculate the no of pages
             $noOfPages_customers= ceil($customersCountData/$customer_limit);
             
             //Pagination for products
             $customers_pager=Pager::getInstance('customer_details',$noOfPages_customers,$customer_limit);
             $customers_offset=$customers_pager->offset;
-            $customers=$admin->select('customer_details','fname',$customer_limit,$customers_offset);
+            $customers=$admin->select('customer_details','cus_id',$customer_limit,$customers_offset);
          
             $this->view('adminManageCustomers',[
                 "customers"=>$customers,
-                "customers_pager"=>$customers_pager
-    
+                "customers_pager"=>$customers_pager,
+                "customer_count"=>$customersCountData,
+                "order_count"=>$orderCountData,
+                "complaint_count"=>$complaintsCount,
+                "total_price"=>$totalPrice,
+                
+
             ]);
             
         }else{
@@ -475,7 +502,7 @@ class Admin extends Controller
                                 "errors"=>$errors
                             ]);
                     }else{
-                        $this->view('AdminAddNewCustomer');
+                        $this->redirect('/Admin/ManageCustomers');
                     }
 
                    
