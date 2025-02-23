@@ -49,8 +49,18 @@ class Business extends Controller
 
     function orders()
     {
-        $this->view('businessOrders');
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $business_id = Auth::getID();
+        $orderModel = new OrderModel();
+
+        $orders = $orderModel->getOrdersByBusiness($business_id);
+
+        $this->view('businessOrders', ['orders' => $orders]);
     }
+
 
     function requests()
     {

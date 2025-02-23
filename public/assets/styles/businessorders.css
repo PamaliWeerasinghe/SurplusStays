@@ -85,5 +85,19 @@
     color: grey;
     
   }
+
+  .order-status.not-collected {
+    color: red;
+    font-weight: bold;
+  }
+  .order-status.ongoing {
+    color: orange;
+    font-weight: bold;
+  }
+  .order-status.completed {
+    color: white;
+    font-weight: bold;
+  }
+
   
 

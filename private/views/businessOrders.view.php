@@ -106,113 +106,33 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Sunil Gamachcchi</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Not Collected</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Chamindu Sanjana</td>
-                                <td>Popcorn</td>
-                                <td><button class="take-action">Not Collected</button></td>
-                                <td style="text-align: center;">Rs.55 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Desahit Gallge</td>
-                                <td>Corn</td>
-                                <td><button class="take-action">Not Collected</button></td>
-                                <td style="text-align: center;">Rs.75<br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Suriya Kumar</td>
-                                <td>Rice</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Wanindu Hasarnga</td>
-                                <td>Pasta</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Suriya Kumar</td>
-                                <td>Rice</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Wanindu Hasarnga</td>
-                                <td>Pasta</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Suriya Kumar</td>
-                                <td>Rice</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Wanindu Hasarnga</td>
-                                <td>Pasta</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Suriya Kumar</td>
-                                <td>Rice</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Wanindu Hasarnga</td>
-                                <td>Pasta</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Suriya Kumar</td>
-                                <td>Rice</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Wanindu Hasarnga</td>
-                                <td>Pasta</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
-                            </tr>
+                            <?php if (!empty($orders)) : ?>
+                                <?php foreach ($orders as $order) : ?>
+                                    <tr>
+                                        <td>#<?= htmlspecialchars($order->id) ?></td>
+                                        <td><?= htmlspecialchars($order->dateTime) ?></td>
+                                        <td><?= htmlspecialchars($order->Customer) ?></td>
+                                        <td><?= htmlspecialchars($order->Products) ?></td>
 
+                                        <!-- Display Order Status -->
+                                        <td>
+                                            <span class="order-status <?= strtolower(str_replace(' ', '-', $order->status)) ?>">
+                                                <?= htmlspecialchars($order->status) ?>
+                                            </span>
+                                        </td>
 
+                                        <td style="text-align: center;">Rs. <?= htmlspecialchars($order->total) ?> <br /><label>View Full Details</label></td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="6" style="text-align: center;">No Orders Found</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
+
+
+
                     </table>
                     <div class="arrow-div">
                         <div class="arrows">

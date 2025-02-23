@@ -6,7 +6,7 @@ class Model extends Database
     public function __construct()
     {
         if (!property_exists($this, 'table')) {
-            $this->table = strtoLower($this::class);
+            $this->table = strtolower($this::class);
         }
     }
     public function where($column, $value)
