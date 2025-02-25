@@ -61,6 +61,21 @@ class Business extends Controller
         $this->view('businessOrders', ['orders' => $orders]);
     }
 
+    function viewOrder($id = null)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $orderModel = new OrderModel();
+        $orderDetails = $orderModel->getOrderDetails($id);
+
+        if (!$orderDetails) {
+            $this->redirect('orders'); // Redirect if order is not found
+        }
+
+        $this->view('businessOrderDetails', ['order' => $orderDetails]);
+    }
 
     function requests()
     {
