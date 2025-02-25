@@ -30,14 +30,14 @@
                             </div>
                             <div class="view-customer-details">
                                 <h3>PERSONAL INFORMATION</h3>
-                                <label id="name">Name : Sakith Thewmika</label>
-                                <label>Email : sakiththewmika@gmail.com</label>
-                                <label>Phone : 0777312335</label>
+                                <label>Name : <label id="fname"></label>&nbsp;<label id="lname"></label></label></label>
+                                <label>Email : &nbsp;<label id="email"></label></label>
+                                <label>Phone : <label id="phoneNo"></label></label>
                             </div>
                         </div>
                         <div class="view-customer-row2">
-                            <label>No. of Orders : 2</label>
-                            <label>No. of Items  : 25</label>
+                            <label>No. of Orders : <label id="orders"></label></label>
+                            <!-- <label>No. of Items  : 25</label> -->
                         </div>
                         <div class="view-customer-row3">
 
@@ -52,9 +52,9 @@
                         </thead>
                         <tbody>
                             
-                            <tr>
+                            <!-- <tr> -->
                 
-                                <td># 01</td>
+                                <!-- <td># 01</td>
                                 <td>ddf dkcd cdbchdbfdsjdskc</td>
                                 <td>2025-01-12 4:10:02</td>
                                 
@@ -68,9 +68,9 @@
                                     >
                                     See Complain
                                     </button>
-                                </td>
+                                </td> -->
                                 
-                            </tr>
+                            <!-- </tr> -->
                               
                            
                             

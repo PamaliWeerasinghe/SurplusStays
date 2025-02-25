@@ -55,6 +55,31 @@ class Admin_Model
           $query="select count(*) as totalrows from `$this->table`";
           return $this->db->query($query)[0]->totalrows;
      }
+     //get the count with where clause
+     public function countWithWhere($table,$columns,$values){
+          $this->table=$table;
+          
+          //Ensure that both columns and values are arrays of same length
+          if(!is_array($columns)|| !is_array($values)|| count($columns)!=count($values)){
+               throw new Exception("Column and values must be arrays of same length");
+          }
+
+          $conditions=[];
+          $queryParams=[];
+
+          foreach($columns as $index =>$column){
+               $paramName=":value$index";
+               $conditions[]="`$column`=$paramName"; // `column1`=value0
+               $queryParams[$paramName]=$values[$index]; //value0 = 'testing'
+          }
+
+          //Build the query with multiple conditions using AND
+          $whereClause =implode('AND',$conditions);
+          $query="SELECT count(*) as totalRows FROM `$this->table` WHERE $whereClause";
+          $results=$this->db->query($query, $queryParams);
+          return isset($results[0]->totalRows) ? $results[0]->totalRows : 0;
+
+     }
      //get the sum of values in a column
      public function sum($table){
           $this->table=$table;

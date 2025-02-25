@@ -23,7 +23,12 @@ class Admin extends Controller
             $customer_complaints=$admin->where(['customer_id'],[$id],'complaintdetails');
             $data["customer"]=$customer;
             $data["customer_complaints"]=$customer_complaints;
+            $orders=$admin->countWithWhere('order',['customer_id'],[$id]);
+        
+            $data["no_of_orders"]=$orders;
+
             // print_r(json_encode($data["customer_complaints"]));
+            error_log("data: " . print_r($data, true));
             echo json_encode($data);
            
         
@@ -371,9 +376,6 @@ class Admin extends Controller
             $data['notify_status_id']=1;
             $admin->update($_POST['product_id'],$data,'products');
         }
-    
-       
-        
         $product_limit=1;
         //count the no of products in the table products
         $productsCountData=$admin->count('about_to_expire_products');
