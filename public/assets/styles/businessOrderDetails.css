@@ -56,10 +56,10 @@ body {
     margin-top: 0px;
     margin-bottom: 0px;
     border-radius: 10px 0px;
-    border-bottom: 2px solid #2dcc70;
+    
     border-radius: 10px 10px 0 0;
     color: #333;
-    background-color: white;
+    background-color: #2dcc70;
     padding: 10px;
     padding-left: 30px;
     text-align: center;
@@ -125,7 +125,7 @@ body {
 }
 
 .collected-btn {
-    background-color: #28a745; /* Green */
+    background-color: #2dcc70; /* Green */
 }
 
 .not-collected-btn {
@@ -133,11 +133,56 @@ body {
 }
 
 .collected-btn:hover {
-    background-color: #218838;
+    background-color:#2dcc70;
 }
 
 .not-collected-btn:hover {
     background-color: #c82333;
+}
+
+
+
+/*buttons*/
+
+.section-buttons{
+    margin-bottom: 40px;
+}
+
+.button-container {
+    display: flex;
+    justify-content: center;
+    gap: 15px; /* Adjust spacing between buttons */
+    margin-top: 20px;
+}
+
+.btn-success, .btn-danger {  
+    padding: 12px 20px;
+    font-size: 16px;
+    font-weight: bold;
+    border: none;
+    border-radius: 6px; 
+    cursor: pointer;
+    
+}
+
+/* Success Button (Green) */
+.btn-success {
+    background-color:#2dcc70;
+    color: white;
+}
+
+.btn-success:hover {
+    background-color: #1a4331;
+}
+
+/* Danger Button (Red) */
+.btn-danger {
+    background-color: #dc3545;
+    color: white;
+}
+
+.btn-danger:hover {
+    background-color: #1a4331;
 }
 
 

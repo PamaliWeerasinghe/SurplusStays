@@ -77,6 +77,26 @@ class Business extends Controller
         $this->view('businessOrderDetails', ['order' => $orderDetails]);
     }
 
+    function updateOrderStatus()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['order_id'], $_POST['status'])) {
+            $orderModel = new OrderModel();
+            $order_id = $_POST['order_id'];
+            $status = $_POST['status'];
+
+            $orderModel->updateOrderStatus($order_id, $status);
+
+            $this->redirect('business/orders');
+        } else {
+            $this->redirect('business/orders');
+        }
+    }
+
+
     function requests()
     {
         $this->view('businessRequests');

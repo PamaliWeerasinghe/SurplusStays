@@ -48,5 +48,11 @@ class OrderModel extends Model
         return $this->query($query, ['order_id' => $order_id]);
     }
 
-    
+    public function updateOrderStatus($order_id, $status)
+    {
+        $query = "UPDATE order_status 
+              SET order_status = :status 
+              WHERE order_id = :order_id";
+        return $this->query($query, ['order_id' => $order_id, 'status' => $status]);
+    }
 }

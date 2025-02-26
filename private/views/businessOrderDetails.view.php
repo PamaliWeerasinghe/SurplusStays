@@ -62,6 +62,20 @@
                             </div>
                         </div>
 
+                        <div class="section-buttons">
+                            <?php if ($order[0]->status === 'Ongoing') : ?>
+                                <form action="<?= ROOT ?>/business/updateOrderStatus" method="POST">
+                                    <input type="hidden" name="order_id" value="<?= htmlspecialchars($order[0]->id) ?>">
+                                    <div class="button-container">
+                                        <button type="submit" name="status" value="COMPLETED" class="btn-success"> ✔ ORDER COLLECTED</button>
+                                        <button type="submit" name="status" value="NOT COLLECTED" class="btn-danger">❌ ORDER NOT COLLECTED</button>
+                                    </div>
+                                </form>
+                            <?php else : ?>
+                                <p style="color: green; font-weight: bold; text-align: center;">You have already updated the order status.</p>
+                            <?php endif; ?>
+                        </div>
+
                     <?php else : ?>
                         <p>Order not found.</p>
                     <?php endif; ?>
