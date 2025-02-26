@@ -74,7 +74,8 @@ token,
 email,
 `password`,
 profile_pic,
-reg_date
+reg_date,
+token_expiry
 FROM admin
 INNER JOIN user 
 ON user.id=admin.user_id1
@@ -104,3 +105,13 @@ INNER JOIN order_items ON order_items.products_id=products.id
 INNER JOIN `order` ON `order`.id=order_items.order_id
 INNER JOIN `customer` ON `customer`.id=`order`.`customer_id`
 order BY `order`.dateTime DESC
+
+CREATE view order_and_the_business AS
+SELECT `order`.id AS order_id,
+business.id AS business_id,
+order_items.id AS order_item,
+products.id AS product_id
+FROM order_items
+INNER JOIN `order` ON `order`.id=order_items.order_id
+INNER JOIN products ON order_items.products_id=products.id
+INNER JOIN business ON products.business_id=business.id

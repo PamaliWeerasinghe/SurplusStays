@@ -1,6 +1,67 @@
 <?php
 class Admin extends Controller
 {
+    //Admin view business details
+    function viewBusiness($id){
+        {
+        
+            $customer = new AdminModel();
+            $errors=array();
+            $arr=array();
+            // print_r($_FILES);
+    
+            if (count($_POST) > 0) {
+                if ($customer->validateEditCustomer($_POST)) {
+                    $arr = $customer->data;
+                    $customer->update($id,$arr,'customer');
+                    $data = $customer->where(['cus_id'],[$id], 'customer_details');
+                    $data = $data[0];
+                    $this->view('AdminEditCustomer', [
+                        'rows' => $data,    
+                    ]);
+                } else {
+                    $errors = $customer->errors;
+                    $data = $customer->where(['cus_id'], [$id], 'customer_details');
+                    $data = $data[0];
+                    $this->view('AdminEditCustomer', [
+                        'rows' => $data,
+                        'errors' => $errors
+                    ]);
+                }
+            } else {
+    
+                $data = $customer->where(['cus_id'],[ $id], 'customer_details');
+                
+                $data = $data[0];
+                $this->view('AdminEditCustomer', [
+                    'rows' => $data
+                ]);
+            }
+        }   
+    }
+    //view business details - manage customers popup
+    function businessDetails($id){
+        if(Auth::logged_in()){
+            $admin=new AdminModel();
+            $business=$admin->where(['bus_id'],[$id],'business_details');
+            $business_complaints=$admin->where(['businessID'],[$id],'complaintdetails');
+            $data["business"]=$business;
+            $data["business_complaints"]=$business_complaints;
+            //get the number of orders
+            $orders=$admin->countWithWhere('order_and_the_business',['business_id'],[$id]);
+            $data["no_of_orders"]=$orders;
+            //get the images of recently added products
+            $items=$admin->whereWithLimit('products',['bus_id'],[$id],2);
+            $data["images"]=$items;
+            // print_r(json_encode($data["customer_complaints"]));
+            error_log("data: " . print_r($data, true));
+            echo json_encode($data);
+           
+        
+        }else{
+            $this->redirect('register');
+        }
+    }
     //Admin Deletes a customer
     function DeleteCustomer($id){
         $customer=new AdminModel();
@@ -54,36 +115,7 @@ class Admin extends Controller
                     'rows' => $data
                 ]);
             }
-        }
-        // $customer=new AdminModel();
-        // $data=$customer->where(['cus_id'],[$id],'customer_details');
-        // $data=$data[0];
-        // if(count($_POST)>0){
-        //    if($customer->validateCustomer($_POST)){
-        //          //have errors
-        //          $errors= array();
-        //          $errors=$customer->errors;
-        //          $this->view('AdminEditCustomer',[
-        //              'rows'=>$data,
-        //              'errors'=>$errors
-        //          ]);
- 
-        //    }else{
-               
-
-        //    }
-        // }else{
-           
-        //     if(isset($data)){
-                    
-        //              $this->view('AdminEditCustomer',[
-        //                 'rows'=>$data
-        //             ]);
-        //     }
-        // }
-      
-       
-        
+        }   
     }
 
     function loadItems()
