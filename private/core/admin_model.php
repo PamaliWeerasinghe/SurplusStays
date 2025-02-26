@@ -149,7 +149,25 @@ class Admin_Model
           return $this->db->query($query, $data);
      }
 
+     public function updateUserWhere($id,$data,$table)
+     {
+          $this->table=$table;
+          
+
+          $str = "";
+          $data['id']=$id;
+          foreach ($data as $key => $value) {
+               $str .= $key . "=:" . $key . ",";
+          }
      
+          $str = trim($str, ",");
+
+         
+
+          $query = "update $this->table set $str where user_id1 = :id";
+
+          return $this->db->query($query, $data);
+     }
 
      public function delete($id,$table)
      {    

@@ -31,7 +31,7 @@ class Login extends Controller{
                         //insert the token into the database
                         $data['token']=$token;
                         $data['token_expiry']=$expiry;
-                        $admin->update($user_details->id,$data,'admin_details');
+                        $admin->updateUserWhere($user_details->id,$data,'admin');
 
                         Mail::sendAdminDashboard($_POST['email'],$token);
                         
@@ -45,7 +45,7 @@ class Login extends Controller{
                         break;
                     case 'customer':
                         $customer=new AdminUser();
-                        $customer_details=$customer->where(['user_id'],[$user_details->id],'customer');
+                        $customer_details=$customer->where('user_id',$user_details->id,'customer');
                         Auth::authenticate($customer_details,$user_details);
                         $this->view('CustomerDashboard',[
                             'customerDetails'=>$customer,
@@ -54,7 +54,7 @@ class Login extends Controller{
                         break;
                     case 'business':
                         $business= new AdminUser();
-                        $business_details=$business->where(['user_id'],[$user_details->id],'business');
+                        $business_details=$business->where('user_id',$user_details->id,'business');
                         Auth::authenticate($business_details,$user_details);
                         $this->view('businessWelcomePage',[
                             'businessDetails'=>$business,
@@ -63,7 +63,7 @@ class Login extends Controller{
                         break;
                     case 'charity':
                         $charity= new AdminUser();
-                        $charity_details=$charity->where(['user_id'],[$user_details->id],'organization');
+                        $charity_details=$charity->where('user_id',$user_details->id,'organization');
                         Auth::authenticate($charity_details,$user_details);
                         $this->view('charity_dashboard',[
                             'charityDetails'=>$charity,
@@ -104,7 +104,7 @@ class Login extends Controller{
         $find_token=$admin->where(['token'],[$token],'admin_details');
         $find_token=$find_token[0];
         $admin_details=$admin->where(['token'],[$token],'admin');
-        
+    
         if(isset($admin_details[0]->id)){
             $admin_details=$admin_details[0];
             $id=$admin_details->user_id1;

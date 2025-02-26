@@ -613,7 +613,7 @@ class Admin extends Controller
     function ManageBusinesses()
     {
         $admin=new AdminModel();
-        $business_limit=1;
+        $business_limit=3;
         //count the no of businesses in the business_details view
         $businessCountData=$admin->count('business_details');
         //calculate the no of pages
