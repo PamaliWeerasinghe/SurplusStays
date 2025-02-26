@@ -16,7 +16,7 @@
         <div class="btn-nonSelected" data-path="/SurplusStays/public/business/requests">
             <label>Requests</label>
         </div>
-        <div class="btn-nonSelected" data-path="/SurplusStays/public/business/complains">
+        <div class="btn-nonSelected" data-path="/SurplusStays/public/business/complaints">
             <label>Complains</label>
         </div>
         <div class="btn-nonSelected" data-path="/SurplusStays/public/business/reports">

@@ -102,10 +102,36 @@ class Business extends Controller
         $this->view('businessRequests');
     }
 
-    function complains()
+    function complaints()
     {
-        $this->view('businessComplains');
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $business_id = Auth::getID();
+        $complaintModel = new ComplaintModel();
+
+        $complaints = $complaintModel->getComplainsByBusiness($business_id);
+
+        $this->view('businessComplaints', ['complaints' => $complaints]);
     }
+
+    function viewComplaint($id = null)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $complaintModel = new ComplaintModel();
+        $complaintDetails = $complaintModel->getComplaintDetails($id);
+
+        if (!$complaintDetails) {
+            $this->redirect('complaints'); // Redirect if complaint is not found
+        }
+
+        $this->view('businessComplaintDetails', ['complaint' => $complaintDetails]);
+    }
+
     function reports()
     {
         $this->view('businessReport');
