@@ -78,3 +78,29 @@ reg_date
 FROM admin
 INNER JOIN user 
 ON user.id=admin.user_id1
+
+CREATE VIEW business_details AS 
+SELECT business.id AS bus_id,
+business.`name` AS business_name,
+phoneNo,
+address,
+username,
+email,
+`password`,
+profile_pic,
+reg_date
+FROM business
+INNER JOIN user ON user.id=business.user_id
+WHERE user.`role`='business' 
+
+CREATE view products_in_items AS 
+SELECT products.pictures AS pictures,
+`order_items`.products_id AS product_id,
+`order_items`.order_id AS order_id,
+`order`.dateTime AS dateANDTime,
+`customer`.id AS cus_id
+FROM products
+INNER JOIN order_items ON order_items.products_id=products.id
+INNER JOIN `order` ON `order`.id=order_items.order_id
+INNER JOIN `customer` ON `customer`.id=`order`.`customer_id`
+order BY `order`.dateTime DESC

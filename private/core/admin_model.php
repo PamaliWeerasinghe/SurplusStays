@@ -80,6 +80,30 @@ class Admin_Model
           return isset($results[0]->totalRows) ? $results[0]->totalRows : 0;
 
      }
+     //get the details with where and limit
+     public function whereWithLimit($table,$columns,$values,$limit){
+          $this->table=$table;
+          
+          //Ensure that both columns and values are arrays of same length
+          if(!is_array($columns)|| !is_array($values)|| count($columns)!=count($values)){
+               throw new Exception("Column and values must be arrays of same length");
+          }
+
+          $conditions=[];
+          $queryParams=[];
+
+          foreach($columns as $index =>$column){
+               $paramName=":value$index";
+               $conditions[]="`$column`=$paramName"; // `column1`=value0
+               $queryParams[$paramName]=$values[$index]; //value0 = 'testing'
+          }
+
+          //Build the query with multiple conditions using AND
+          $whereClause =implode('AND',$conditions);
+          $query="SELECT * FROM `$this->table` WHERE $whereClause LIMIT $limit ";
+          $results=$this->db->query($query, $queryParams);
+          return $results;
+     }
      //get the sum of values in a column
      public function sum($table){
           $this->table=$table;

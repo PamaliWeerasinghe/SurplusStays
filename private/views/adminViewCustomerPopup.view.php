@@ -1,3 +1,4 @@
+<?php require APPROOT . '/views/customerDeleteConfirmation.view.php'?>
 <!DOCTYPE html>
 <html lang="en">
 
@@ -15,6 +16,16 @@
             <div class="msg-div">
                 <div class="close-btn" onclick="closeCustomer()">&times;</div>
             </div>
+            <div class="edit-delete">
+                <span class="material-symbols-outlined" style="z-index:999;" id="edit_customer" >
+                    edit_square
+                </span>
+                <span class="material-symbols-outlined action-btn deactivate" style="color: red;" id="delete_customer">
+                    person_remove
+                </span>
+                <input type="hidden" id="hidden_id"/>
+            </div>
+           
             <div class="view-customer-location">
                         <iframe src="https://www.google.com/maps/embed?pb=YourMapURL"
                         width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy">
@@ -84,10 +95,10 @@
                     </div>
                     <div class="profile-details">
                         <h3>RECENTLY PURCHASED</h3>
-                        <div class="profile-section-1">
+                        <div class="profile-section-1" id="profile-section-1">
                            
                         </div>
-                        <div class="profile-section-2">
+                        <div class="profile-section-2" id="profile-section-2">
 
                         </div>
                     </div>
@@ -100,7 +111,7 @@
     </div>
 
     <script src="<?= ROOT ?>/assets/js/adminViewCustomerDetails.js"></script>
-
+    <script src="<?=ROOT?>/assets/js/deletePopup.js"></script>
 </body>
 
 </html>

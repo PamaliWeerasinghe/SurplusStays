@@ -45,7 +45,7 @@ class Login extends Controller{
                         break;
                     case 'customer':
                         $customer=new AdminUser();
-                        $customer_details=$customer->where('user_id',$user_details->id,'customer');
+                        $customer_details=$customer->where(['user_id'],[$user_details->id],'customer');
                         Auth::authenticate($customer_details,$user_details);
                         $this->view('CustomerDashboard',[
                             'customerDetails'=>$customer,
@@ -54,7 +54,7 @@ class Login extends Controller{
                         break;
                     case 'business':
                         $business= new AdminUser();
-                        $business_details=$business->where('user_id',$user_details->id,'business');
+                        $business_details=$business->where(['user_id'],[$user_details->id],'business');
                         Auth::authenticate($business_details,$user_details);
                         $this->view('businessWelcomePage',[
                             'businessDetails'=>$business,
@@ -63,7 +63,7 @@ class Login extends Controller{
                         break;
                     case 'charity':
                         $charity= new AdminUser();
-                        $charity_details=$charity->where('user_id',$user_details->id,'organization');
+                        $charity_details=$charity->where(['user_id'],[$user_details->id],'organization');
                         Auth::authenticate($charity_details,$user_details);
                         $this->view('charity_dashboard',[
                             'charityDetails'=>$charity,

@@ -8,6 +8,7 @@ document.getElementById('upload-1').addEventListener('change', function(event) {
       reader.readAsDataURL(file);
   }
 });
+
 document.getElementById('upload-2').addEventListener('change', function(event) {
   const file = event.target.files[0];
   if (file) {
@@ -18,6 +19,7 @@ document.getElementById('upload-2').addEventListener('change', function(event) {
       reader.readAsDataURL(file);
   }
 });
+
 function loadOrderItems() {
   const oid = document.getElementById("orderID");
   if(oid!="oid"){

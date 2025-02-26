@@ -42,7 +42,17 @@
     transition: transform 0.3s ease-in-out, opacity 0.3s;
     opacity: 0;
 }
-
+.edit-delete{
+    width: 100%;
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 5%;
+    gap: 12px;
+}
+.edit-delete :hover{
+    cursor: pointer;
+    transform: scale(1.02);
+}
 /* Opened Popup */
 .open-popup {
     visibility: visible;
@@ -103,6 +113,9 @@
     background-color: rgb(255, 255, 255);
     border-radius: 10px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 .profile-section-2{
     width: 95%;
@@ -111,6 +124,9 @@
     border-radius: 10px;
     box-shadow: 4px 4px 10px rgba(0, 0, 0, 0.2);
     margin-top: 3%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
     
 }
 .profile-section-1:hover{

@@ -1,5 +1,6 @@
 <?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
 <?php require APPROOT . '/views/adminViewCustomerPopup.view.php'?>
+
 <link rel="stylesheet" href="<?= STYLES ?>/adminSidePanel.css" />
 <link rel="stylesheet" href="<?= STYLES ?>/adminManageActors.css" />
 <link rel="stylesheet" href="<?= STYLES ?>/admin.css">
@@ -87,15 +88,16 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <!-- onclick="viewCustomer(<?=$customer->cus_id?>)" -->
                         <?php foreach( $customers as $customer):?>
-                            <tr  onclick="viewCustomer(<?=$customer->cus_id?>)">
+                            <tr id="customer_row<?=$customer->cus_id?>" onclick="viewCustomer(<?=$customer->cus_id?>)">
                                 <td><img src="<?=CUSTOMER.'/'.$customer->profile_pic?>" class="customer-profile-pic"/></td>
                                 <td>#<?=$customer->cus_id?></td>
                                 <td><?=$customer->phoneNo?></td>
                                 <td><?=$customer->reg_date?></td>
                                 <td>
                                
-                                    <span class="material-symbols-outlined" style="z-index: 1;">
+                                    <span class="material-symbols-outlined" style="z-index:999;" >
                                         edit_square
                                     </span>
                                     <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
@@ -113,5 +115,6 @@
         <?php echo $this->view('includes/footer') ?>
     </div>
     <script src="<?=ROOT?>/assets/js/adminViewCustomerDetails.js"></script>
+   
     <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
     

@@ -1,3 +1,30 @@
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("delete_customer").onclick = function () {
+        closeCustomer();
+        customer_id=document.getElementById("hidden_id").value;
+        deletePopup(customer_id);
+    };
+});
+function deletePopup(rowId){
+    let popup=document.getElementById("popup");
+    let popupContainer=document.getElementById("popup-container");
+    
+        popupContainer.className="open-popup-container";
+        popup.classList.add("open-popup");
+        
+        //setting the ID in the hidden input field
+        document.getElementById('popupRowId').value=rowId;
+
+        //dynamically set the form action
+        const form=document.querySelector('#popup form');
+        form.action=`http://localhost:8080/surplusstays/public/Admin/DeleteCustomer/${rowId}`;
+        
+    
+}
+function closedeletePopup(){
+    popup.classList.remove("open-popup");
+    popupContainer.className="popup-container";
+}
 function viewCustomer(id){
   
     let rcpopup = document.getElementById("rcpopup");
@@ -21,7 +48,11 @@ function viewCustomer(id){
             document.getElementById("email").innerHTML = data.customer[0].email;
             document.getElementById("phoneNo").innerHTML = data.customer[0].phoneNo;
             document.getElementById("orders").innerHTML = data.no_of_orders;
-        
+            document.getElementById("edit_customer").onclick=function(){
+                window.location.href=`http://localhost/SurplusStays/public/admin/viewCustomer/${data.customer[0].cus_id}`
+            }
+            document.getElementById("hidden_id").value=data.customer[0].cus_id;
+            
             //selects the table body
             let tbody=document.querySelector(".order-table tbody");
             // //clear the rows
@@ -59,6 +90,42 @@ function viewCustomer(id){
                 row.innerHTML=`<td>No complaints</td>`;
                 tbody.appendChild(row);
             }
+            //check recent images
+            let container1=document.getElementById('profile-section-1');
+            let container2=document.getElementById('profile-section-2'); 
+            if(data.images && Array.isArray(data.images) && data.images.length>0){
+                path='http://localhost/SurplusStays/public/assets/images/'
+               
+                data.images.forEach((images,index)=>{
+                    container1.innerHTML="";              
+                    container2.innerHTML="";
+                    let container=document.getElementById(`profile-section-${index+1}`);
+
+                    // const img=document.createElement("img");
+                    
+                    if(images.pictures==null){
+                        container.innerHTML="No image Found"
+                    }else{
+                        src=path+images.pictures;
+                        container.style.backgroundRepeat='no-repeat'
+                        container.style.backgroundImage=`url('${src}')`
+                        // container.appendChild(img);
+                    }
+
+                  
+                   
+                })
+                
+            }else{
+                
+                                    
+                 container1.innerHTML="No Recent Purchases";
+                                   
+                 container2.innerHTML="No Recent Purchases";
+                    
+
+            }
+
 
         } else {
             console.error("Customer data not found", data);
@@ -75,7 +142,7 @@ function viewCustomer(id){
      
     
 }
-function closeCustomer(id){
+function closeCustomer(){
     let rcpopup = document.getElementById("rcpopup");
     let rcpopupContainer = document.getElementById("rcpopup-container");
     rcpopup.classList.remove("open-popup");

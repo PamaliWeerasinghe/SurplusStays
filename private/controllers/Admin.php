@@ -1,7 +1,91 @@
 <?php
 class Admin extends Controller
 {
+    //Admin Deletes a customer
+    function DeleteCustomer($id){
+        $customer=new AdminModel();
+        $customer->delete($id,'organization');
+        $data=$customer->findAll('organization');
+        $countd = new AdminCharityDetails();
+        foreach ($data as $row) {
+            $count = $countd->getDonorCount($row->id);
+            $row->donors = $count;
+        }
+        foreach ($data as $row) {
+            $count = $countd->getComplaintsCount($row->id);
+            $row->donations = $count;
+        }
+        $this->view('AdminManageCharityOrganizations',['rows'=>$data]);
+
+    }
+    //Adminv views a customer
+    function viewCustomer($id){
+        {
+        
+            $customer = new AdminModel();
+            $errors=array();
+            $arr=array();
+            // print_r($_FILES);
     
+            if (count($_POST) > 0) {
+                if ($customer->validateEditCustomer($_POST)) {
+                    $arr = $customer->data;
+                    $customer->update($id,$arr,'customer');
+                    $data = $customer->where(['cus_id'],[$id], 'customer_details');
+                    $data = $data[0];
+                    $this->view('AdminEditCustomer', [
+                        'rows' => $data,    
+                    ]);
+                } else {
+                    $errors = $customer->errors;
+                    $data = $customer->where(['cus_id'], [$id], 'customer_details');
+                    $data = $data[0];
+                    $this->view('AdminEditCustomer', [
+                        'rows' => $data,
+                        'errors' => $errors
+                    ]);
+                }
+            } else {
+    
+                $data = $customer->where(['cus_id'],[ $id], 'customer_details');
+                
+                $data = $data[0];
+                $this->view('AdminEditCustomer', [
+                    'rows' => $data
+                ]);
+            }
+        }
+        // $customer=new AdminModel();
+        // $data=$customer->where(['cus_id'],[$id],'customer_details');
+        // $data=$data[0];
+        // if(count($_POST)>0){
+        //    if($customer->validateCustomer($_POST)){
+        //          //have errors
+        //          $errors= array();
+        //          $errors=$customer->errors;
+        //          $this->view('AdminEditCustomer',[
+        //              'rows'=>$data,
+        //              'errors'=>$errors
+        //          ]);
+ 
+        //    }else{
+               
+
+        //    }
+        // }else{
+           
+        //     if(isset($data)){
+                    
+        //              $this->view('AdminEditCustomer',[
+        //                 'rows'=>$data
+        //             ]);
+        //     }
+        // }
+      
+       
+        
+    }
+
     function loadItems()
     {
         if(isset($_POST['order_id'])){
@@ -23,10 +107,12 @@ class Admin extends Controller
             $customer_complaints=$admin->where(['customer_id'],[$id],'complaintdetails');
             $data["customer"]=$customer;
             $data["customer_complaints"]=$customer_complaints;
+            //get the number of orders
             $orders=$admin->countWithWhere('order',['customer_id'],[$id]);
-        
             $data["no_of_orders"]=$orders;
-
+            //get the images of recently purchased items
+            $items=$admin->whereWithLimit('products_in_items',['cus_id'],[$id],2);
+            $data["images"]=$items;
             // print_r(json_encode($data["customer_complaints"]));
             error_log("data: " . print_r($data, true));
             echo json_encode($data);
@@ -436,7 +522,7 @@ class Admin extends Controller
             $admin=new AdminModel();
         
             $customer_limit=5;
-            //count the no of products in the table products
+            //count the no of customers in the table customer_details
             $customersCountData=$admin->count('customer_details');
             //count the no of orders in the table orders
             $orderCountData=$admin->count('order');
@@ -526,7 +612,23 @@ class Admin extends Controller
     //Admin Manage Business
     function ManageBusinesses()
     {
-        $this->view('AdminManageBusinesses');
+        $admin=new AdminModel();
+        $business_limit=1;
+        //count the no of businesses in the business_details view
+        $businessCountData=$admin->count('business_details');
+        //calculate the no of pages
+        $noOfPages_business= ceil($businessCountData/$business_limit);
+        
+        //Pagination for businesses
+        $business_pager=Pager::getInstance('business_details',$noOfPages_business,$business_limit);
+        $business_offset=$business_pager->offset;
+        $business=$admin->select('business_details','bus_id',$business_limit,$business_offset);
+
+       
+        $this->view('AdminManageBusinesses',[
+            "business"=>$business,
+            "business_pager"=>$business_pager
+        ]);
     }
     //Managing charity organizations
     function ManageCharityOrg()
