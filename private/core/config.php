@@ -8,7 +8,7 @@ define('URLROOT', 'http://localhost/SurplusStays');
 //WEBSITE
 define('SITENAME', 'surplusStays');
 
-
+define('PHPMAILER',dirname(dirname(dirname(__FILE__))) . '/PHPMailer');
 define('ROOT', 'http://localhost/SurplusStays/public');
 define('STYLES', 'http://localhost/SurplusStays/public/assets/styles');
 define('ASSETS', 'http://localhost/SurplusStays/public/assets');
@@ -38,14 +38,15 @@ define('SMTP_SETTINGS',[
     'smtp_host'=>'smtp.gmail.com',
     'smtp_auth'=>true,
     'smtp_username'=>'pamaliweerasinghe@gmail.com',
-    'smtp_password'=>'nali tmjm kdfg apde',
+    'smtp_password'=>'dhne nmbj mtup cldi',
     'smtp_secure'=>'tls',
     'smtp_port'=>587,
     'from_email'=>'pamaliweerasinghe@gmail.com',
     'from_name'=>'SurplusStays'
 ]);
 
-
-define('VENDOR','E:\xampp\htdocs\SurplusStays\vendor\autoload.php');
+//start a session
+session_start();
+define('VENDOR','D:\xampp\htdocs\SurplusStays\vendor\autoload.php');
 
 ?>
