@@ -43,7 +43,15 @@ class Charity extends Controller
 
     function donations()
     {
-        $this->view('charityDonations');
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+        $requests = new Donation();
+        $rows = $requests->where('organization_id', Auth::getID());;
+
+        $shop = new Business();
+        $shopRows = $shop->findAll();
+        $this->view('charityDonations',['rows' => $rows, 'shopRows' => $shopRows]);
     }
 
     function browse_shops()
@@ -54,7 +62,18 @@ class Charity extends Controller
 
         $shops = new Business();
         $rows = $shops->findAll();
-        $this->view('charityBrowseShops',['rows' => $rows]);
+        $this->view('charityBrowseShops2',['rows' => $rows]);
+    }
+
+    function browse_charities()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $orgs = new Organization();
+        $rows = $orgs->findAll();
+        $this->view('charityBrowseOrganizations',['rows' => $rows]);
     }
 
     function reports()
@@ -76,32 +95,44 @@ class Charity extends Controller
         ]);
     }
 
+    function viewOrganization($id = null)
+    {
+        $org = new Organization();
+        $row = $org->where('id', $id);
+
+        $event = new Event();
+        $eventRows = $event->where('organization_id', $id);
+
+        $this->view('charityViewOrganization', [
+            'row' => $row,
+            'eventRows' => $eventRows
+        ]);
+    }   
+
     function createEvent()
     {
         if (!Auth::logged_in()) {
             $this->redirect('login');
         }
-    
+
         $errors = [];
         if (count($_POST) > 0) {
             $event = new Event();
             $uploadedPictures = [];
             $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/charityImages/";
-    
-            // Handle each upload field
+
+            // Handle image uploads
             foreach ($_FILES as $key => $file) {
                 if (strpos($key, 'upload-') === 0 && isset($file['name']) && $file['error'] === 0) {
                     $fileName = basename($file['name']);
                     $filePath = $targetDir . $fileName;
                     $fileType = pathinfo($filePath, PATHINFO_EXTENSION);
-    
+
                     // Allow certain file formats
                     $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
                     if (in_array(strtolower($fileType), $allowedTypes)) {
-                        // Attempt to move the uploaded file
                         if (move_uploaded_file($file['tmp_name'], $filePath)) {
-                            // Save the full path to the image in the array
-                            $uploadedPictures[] = '/assets/charityImages/' . $fileName; // Use relative path
+                            $uploadedPictures[] = '/assets/charityImages/' . $fileName;
                         } else {
                             $errors[] = "Failed to upload image: {$fileName}.";
                         }
@@ -110,38 +141,55 @@ class Charity extends Controller
                     }
                 }
             }
-    
             // Check if at least one image was uploaded
             if (!empty($uploadedPictures)) {
                 $_POST['pictures'] = implode(',', $uploadedPictures); // Store paths as a comma-separated string
             } else {
                 $errors[] = "At least one event picture is required.";
             }
-    
+
+            // Validate required-food input
+            $requiredFood = $_POST['required-food'] ?? '';
+            if (!empty($requiredFood)) {
+                try {
+                    $correctedFood = $this->callOpenAI($requiredFood);
+                    if($requiredFood != $correctedFood){
+                        $errors[] = "Did you mean {$correctedFood}.";
+                    }else{
+                        $_POST['required-food'] = $requiredFood;
+                    }
+                } catch (Exception $e) {
+                    $errors[] = "Error validating food names: " . $e->getMessage();
+                }
+            }
+
+            // Process the event if no errors
             if (empty($errors) && $event->validate($_POST)) {
                 $arr['organization_id'] = Auth::getId();
                 $arr['event'] = $_POST['event-name'];
                 $arr['event_description'] = $_POST['description'];
                 $arr['start_dateTime'] = $_POST['start-date'];
                 $arr['end_dateTime'] = $_POST['end-date'];
-                $arr['requesting_items'] = $_POST['required-food'] ?? '';  // Optional field
-                $arr['status'] = 1;  // Default status for new event
+                $arr['requesting_items'] = $_POST['required-food'];
+                $arr['status'] = 1;
                 $arr['goal'] = $_POST['event-goal'];
                 $arr['district'] = $_POST['district'];
                 $arr['location'] = $_POST['location'];
                 $arr['pictures'] = $_POST['pictures']; // Store full file paths in the database
-    
+
+
                 $event->insert($arr);
                 $this->redirect('charity/manage_events');
             } else {
                 $errors = array_merge($errors, $event->errors);
             }
         }
-    
+
         $this->view('charityCreateEvent', [
             'errors' => $errors,
         ]);
     }
+
     
     function deleteEvent($id)
     {
@@ -269,6 +317,37 @@ class Charity extends Controller
         
         $this->view('charityEditEvent',[
             'row' => $row,
+            'errors' => $errors,
+        ]);
+    }
+
+    function sendDonationRequest()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $errors = [];
+        if (count($_POST) > 0) {
+            $request = new Donation();
+
+            // Process the event if no errors
+            if (empty($errors) && $request->validate($_POST)) {
+                $arr['organization_id'] = Auth::getId();
+                $arr['business_id'] = $_POST['business_id'];
+                $arr['title'] = $_POST['title'];
+                $arr['message'] = $_POST['message'];
+                $arr['status'] = 0;
+                $arr['date'] = date('Y-m-d');
+
+                $request->insert($arr);
+                $this->redirect('charity/manage_events');
+            } else {
+                $errors = array_merge($errors, $request->errors);
+            }
+        }
+
+        $this->view('charityBrowseShops', [
             'errors' => $errors,
         ]);
     }

@@ -44,83 +44,103 @@
                 </div>
                 <div class="complaints-status">
                     <div class="table-container">
-                        <h2>Donation Requests</h2>
+                        <h2>Sent Donation Requests</h2>
                         <div class="toggle-slider">
-                            <button class="toggle-option active" data-status="all">All</button>
-                            <button class="toggle-option" data-status="yet-to-decide">Yet To Decide</button>
-                            <button class="toggle-option" data-status="accepted">Accepted</button>
-                            <button class="toggle-option" data-status="rejected">Rejected</button>
+                            <button class="toggle-option1 active" data-status="all">All</button>
+                            <button class="toggle-option1" data-status="yet-to-decide">Pending</button>
+                            <button class="toggle-option1" data-status="accepted">Accepted</button>
+                            <button class="toggle-option1" data-status="rejected">Rejected</button>
                         </div>
                         <table class="admin-order-table">
                             <thead>
                                 <tr>
-                                    <th>Donation ID</th>
                                     <th>Date</th>
                                     <th>Shop</th>
-                                    <th>Product</th>
+                                    <th>Title</th>
                                     <th>Status</th>
                                     <th>Action</th>
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php if ($rows): ?>
+                                    <?php foreach ($rows as $row): ?>
+                                        <tr>
+                                            <td class="date"><?= htmlspecialchars($row->date) ?></td>
+                                            <td>
+                                                <?php foreach ($shopRows as $shopRow): ?>
+                                                    <?php if ($shopRow->id == $row->business_id): ?>
+                                                        <?= htmlspecialchars($shopRow->name) ?>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+                                            </td>
+                                            <td><?= htmlspecialchars($row->title) ?></td>
+                                            <?php if(htmlspecialchars($row->status)==2): ?>
+                                                <td><button class="status ongoing">Accepted</button></td>
+                                            <?php elseif(htmlspecialchars($row->status)==0): ?>
+                                                <td><button class="status draft">Pending</button></td>
+                                            <?php elseif(htmlspecialchars($row->status)==1): ?>
+                                                <td><button class="status closed">Rejected</button></td>
+                                            <?php endif; ?>    
+                                            <td class="action">
+                                                <button class="action-btn edit">View More</button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                <tr><td colspan="5"><h4>You currently have 0 donation requests.</h4></td></tr>
+                                <?php endif; ?>
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="complaints-status">
+                    <div class="table-container">
+                        <h2>Recieved Donation Requests</h2>
+                        <div class="toggle-slider">
+                            <button class="toggle-option2 active" data-status="all">All</button>
+                            <button class="toggle-option2" data-status="yet-to-decide">Yet To Decide</button>
+                            <button class="toggle-option2" data-status="accepted">Accepted</button>
+                            <button class="toggle-option2" data-status="rejected">Rejected</button>
+                        </div>
+                        <table class="admin-order-table">
+                            <thead>
                                 <tr>
-                                    <td class="event">
-                                        <div class="event-name">
-                                            <span>#154</span>
-                                        </div>
-                                    </td>
-                                    <td class="date">Fri, Aug 14, 2024</td>
-                                    <td>Perera And Sons</td>
-                                    <td>Full Bread</td>
-                                    <td><button class="status ongoing">Accepted</button></td>
-                                    <td class="action">
-                                        <button class="action-btn edit">Send Message</button>
-                                    </td>
+                                    <th>Date</th>
+                                    <th>Shop</th>
+                                    <th>Title</th>
+                                    <th>Status</th>
+                                    <th>Action</th>
                                 </tr>
-                                <tr>
-                                    <td class="event">
-                                        <div class="event-name">
-                                            <span>#156</span>
-                                        </div>
-                                    </td>
-                                    <td class="date">Mon, Aug 17, 2024</td>
-                                    <td>Keels Kalutara</td>
-                                    <td>Bakery Items</td>
-                                    <td><button class="status ongoing">Accepted</button></td>
-                                    <td class="action">
-                                        <button class="action-btn edit">Send Message</button>
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="event">
-                                        <div class="event-name">
-                                            <span>#158</span>
-                                        </div>
-                                    </td>
-                                    <td class="date">Sat, Sep 12, 2024</td>
-                                    <td>Jayashantha</td>
-                                    <td>Rice Packets</td>
-                                    <td><button class="status draft">Pending</button></td>
-                                    <td class="action">
-                                        <button class="action-btn edit">Send Message</button>
-                                        
-                                    </td>
-                                </tr>
-                                <tr>
-                                    <td class="event">
-                                        <div class="event-name">
-                                            <span>#160</span>
-                                        </div>
-                                    </td>
-                                    <td class="date">Sun, Dec 12, 2024</td>
-                                    <td>Simlo</td>
-                                    <td>Rice Packets</td>
-                                    <td><button class="status closed">Rejected</button></td>
-                                    <td class="action">
-                                        <button class="action-btn edit">Send Message</button>
-                                    </td>
-                                </tr>
-                                
+                            </thead>
+                            <tbody>
+                                <?php if ($rows): ?>
+                                    <?php foreach ($rows as $row): ?>
+                                        <tr>
+                                            <td class="date"><?= htmlspecialchars($row->date) ?></td>
+                                            <td>
+                                                <?php foreach ($shopRows as $shopRow): ?>
+                                                    <?php if ($shopRow->id == $row->business_id): ?>
+                                                        <?= htmlspecialchars($shopRow->name) ?>
+                                                    <?php endif; ?>
+                                                <?php endforeach; ?>
+                                            </td>
+                                            <td><?= htmlspecialchars($row->title) ?></td>
+                                            <?php if(htmlspecialchars($row->status)==2): ?>
+                                                <td><button class="status ongoing">Accepted</button></td>
+                                            <?php elseif(htmlspecialchars($row->status)==0): ?>
+                                                <td><button class="status draft">Pending</button></td>
+                                            <?php elseif(htmlspecialchars($row->status)==1): ?>
+                                                <td><button class="status closed">Rejected</button></td>
+                                            <?php endif; ?>    
+                                            <td class="action">
+                                                <button class="action-btn edit">View More</button>
+                                            </td>
+                                        </tr>
+                                    <?php endforeach; ?>
+                                <?php else: ?>
+                                <tr><td colspan="5"><h4>You currently have 0 donation requests.</h4></td></tr>
+                                <?php endif; ?>
                             </tbody>
                         </table>
                     </div>

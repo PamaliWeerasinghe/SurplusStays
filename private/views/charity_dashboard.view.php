@@ -30,14 +30,14 @@
                     <div class="stat-item">
                         <img src="<?=ASSETS?>/images/manifest.png" alt="Donations Icon" class="stat-icon">
                         <div>
-                            <span class="stat-title">Donations</span>
+                            <span class="stat-title">Accepted Requests</span>
                             <span class="stat-value">450</span>
                         </div>
                     </div>
                     <div class="stat-item">
                         <img src="<?=ASSETS?>/images/box-mark.png" alt="Total Donations Icon" class="stat-icon">
                         <div>
-                            <span class="stat-title">Total Donations</span>
+                            <span class="stat-title">Sent Requests</span>
                             <span class="stat-value">790</span>
                         </div>
                     </div>
