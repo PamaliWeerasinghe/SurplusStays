@@ -9,9 +9,6 @@ use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
 
-//Load Composer's autoloader
-require_once __DIR__.'/../../vendor/autoload.php';
-
 class Mail
 {
     public static function sendMail($toEmail,$toName,$subject,$body)
