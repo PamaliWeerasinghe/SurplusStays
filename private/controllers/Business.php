@@ -99,8 +99,55 @@ class Business extends Controller
 
     function requests()
     {
-        $this->view('businessRequests');
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $business_id = Auth::getID();
+        $requestModel = new RequestModel();
+
+        $requests = $requestModel->getRequestByBusiness($business_id);
+
+        $this->view('businessRequests', ['requests' => $requests]);
     }
+
+    function viewRequest($id = null)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $requestModel = new RequestModel();
+        $requestDetails = $requestModel->getRequestDetails($id);
+
+        if (!$requestDetails) {
+            $this->redirect('requests'); // Redirect if request is not found
+        }
+
+        $this->view('businessRequestDetails', ['request' => $requestDetails]);
+    }
+
+    function updateRequestStatus()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_id'], $_POST['status'])) {
+            $requestModel = new RequestModel();
+            $request_id = $_POST['request_id'];
+            $status = $_POST['status'];
+
+            // Update request status
+            $requestModel->updateRequestStatus($request_id, $status);
+
+            // Redirect back to the request details page
+            $this->redirect('business/requests/');
+        } else {
+            $this->redirect('business/requests');
+        }
+    }
+
 
     function complaints()
     {
@@ -126,11 +173,19 @@ class Business extends Controller
         $complaintDetails = $complaintModel->getComplaintDetails($id);
 
         if (!$complaintDetails) {
-            $this->redirect('complaints'); // Redirect if complaint is not found
+            $this->redirect('complaints');
+        }
+
+        // Handle response submission (safely check for POST data)
+        if (isset($_POST['response']) && !empty($_POST['response'])) {
+            $complaintModel->addResponse($id, $_POST['response']);
         }
 
         $this->view('businessComplaintDetails', ['complaint' => $complaintDetails]);
     }
+
+
+
 
     function reports()
     {

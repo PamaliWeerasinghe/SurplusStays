@@ -81,14 +81,57 @@ body {
 
 .section p{
     text-align: center;
-    margin-left: 50px;
-    margin-right: 50px;
+    margin: 30px auto;
     background-color: white;
+    width: 80%;
 }
 
 .advise{
     color: red;
     margin-bottom: 50px;
     margin-top: 50px;
+}
+
+/* Center the container */
+.complaint-response-container {
+    margin: 30px auto;
+    padding: 10px 0px;
+    width: 80%;
+    background-color: white;
+    border-radius: 8px;
+    text-align: center; /* Center the content */
+}
+
+.complaint-response-container p{
+    color: #828c95;
+}
+
+/* Style the textarea */
+.complaint-response-container textarea {
+    width: 80%; /* Adjust width */
+    height: 120px;
+    padding: 10px;
+    border: 1px solid #ccc;
+    border-radius: 6px;
+    font-size: 16px;
+    margin-bottom: 10px;
+    
+}
+
+/* Style the submit button */
+.complaint-response-container button {
+    width: 80%; /* Same as textarea width */
+    padding: 10px;
+    border: none;
+    background-color: #2dcc70;
+    color: white;
+    font-size: 16px;
+    border-radius: 6px;
+    cursor: pointer;
+    
+}
+
+.complaint-response-container button:hover {
+    background-color: black;
 }
 

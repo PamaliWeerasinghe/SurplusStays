@@ -34,7 +34,7 @@
                             <h3>Customer Details</h3>
                             <div class="inside">
                                 <p><strong>Name:</strong> <?= htmlspecialchars($order[0]->customer_name) ?></p>
-                                <p><strong>Email:</strong> <?= htmlspecialchars($order[0]->customer_email) ?></p>
+                                
                                 <p><strong>Phone:</strong> <?= htmlspecialchars($order[0]->customer_phone) ?></p>
                             </div>
                         </div>
@@ -67,8 +67,8 @@
                                 <form action="<?= ROOT ?>/business/updateOrderStatus" method="POST">
                                     <input type="hidden" name="order_id" value="<?= htmlspecialchars($order[0]->id) ?>">
                                     <div class="button-container">
-                                        <button type="submit" name="status" value="COMPLETED" class="btn-success"> ✔ ORDER COLLECTED</button>
-                                        <button type="submit" name="status" value="NOT COLLECTED" class="btn-danger">❌ ORDER NOT COLLECTED</button>
+                                        <button type="submit" name="status" value="Completed" class="btn-success"> ✔ ORDER COLLECTED</button>
+                                        <button type="submit" name="status" value="Not Collected" class="btn-danger">❌ ORDER NOT COLLECTED</button>
                                     </div>
                                 </form>
                             <?php else : ?>

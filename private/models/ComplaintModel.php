@@ -27,6 +27,7 @@ class ComplaintModel extends Model
                 m.id, 
                 m.dateTime, 
                 m.description,
+                m.adminReply,
                 c.fname AS customer_name, 
                 IFNULL(cs.name, 'Pending') AS status
               FROM `complaints` m
@@ -35,6 +36,11 @@ class ComplaintModel extends Model
               WHERE m.id = :complaint_id";
 
         return $this->query($query, ['complaint_id' => $complaint_id]);
-        
+    }
+
+    public function addResponse($complaint_id, $response)
+    {
+        $query = "UPDATE complaints SET feedback = :response WHERE id = :complaint_id";
+        $this->query($query, ['response' => $response, 'complaint_id' => $complaint_id]);
     }
 }

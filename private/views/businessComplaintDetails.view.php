@@ -31,11 +31,30 @@
                             </div>
                         </div>
 
-                        <div class="section">
-                            <h3>Complaint Details</h3>
+
+                        <div class="complaint-response-container">
+                            <h3>Customer Explanation</h3>
                             <p><?= htmlspecialchars($complaint[0]->description) ?></p>
-                            <p class="advise"><strong>Treat every complaint as an opportunity to improve your business and build customer loyalty.</strong> </p>
                         </div>
+
+
+
+
+                        <?php if ($complaint[0]->status === 'Pending') : ?>
+                            <div class="complaint-response-container">
+                                <h3>Respond to Complaint</h3>
+                                <form id="myform" method="POST" action="" autocomplete="off">
+                                    <textarea name="response" placeholder="Write your response here..."></textarea>
+                                    <button type="submit">Submit Response</button>
+                                    <p class="advise"><strong>Please wait for the admin's reply after submitting.</strong> </p>
+                                </form>
+                            </div>
+                        <?php else : ?>
+                            <div class="complaint-response-container">
+                                <h3>Admin Response</h3>
+                                <p style="color: red;"><?= htmlspecialchars($complaint[0]->adminReply) ?></p>
+                            </div>
+                        <?php endif; ?>
 
                     <?php else : ?>
                         <p>Complaint not found.</p>

@@ -57,7 +57,7 @@
                             <?php if (!empty($complaints)) : ?>
                                 <?php foreach ($complaints as $complaint) : ?>
                                     <tr class="order-row"
-                                        data-status="<?= strtolower($complaint->status) ?>"
+                                        data-status="<?= htmlspecialchars($complaint->status) ?>"
                                         onclick="window.location.href='<?= ROOT ?>/business/viewComplaint/<?= $complaint->id ?>'">
                                         <td class="order-id">#<?= htmlspecialchars($complaint->id) ?></td>
                                         <td><?= htmlspecialchars($complaint->dateTime) ?></td>

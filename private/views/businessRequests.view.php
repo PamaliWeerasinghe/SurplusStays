@@ -29,8 +29,8 @@
                             <h3>Donated</h3>
 
                         </div>
-                        <div class="order-card cancelled" onclick="filterByStatus('Cancelled')">
-                            <h3>Cancelled</h3>
+                        <div class="order-card rejected" onclick="filterByStatus('Rejected')">
+                            <h3>Rejected</h3>
 
                         </div>
                     </div>
@@ -52,7 +52,7 @@
                                 <th>RequestID</th>
                                 <th>Date</th>
                                 <th>Organization Name</th>
-                                <th>Reason</th>
+                                <th>Title</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
@@ -61,14 +61,14 @@
                             <?php if (!empty($requests)) : ?>
                                 <?php foreach ($requests as $request) : ?>
                                     <tr class="order-row"
-                                        data-status="<?= strtolower(str_replace(' ', '-', $request->status)) ?>"
+                                        data-status="<?= htmlspecialchars($request->status) ?>"
                                         onclick="window.location.href='<?= ROOT ?>/business/viewRequest/<?= $request->id ?>'">
                                         <td class="order-id">#<?= htmlspecialchars($request->id) ?></td>
-                                        <td><?= htmlspecialchars($request->dateTime) ?></td>
+                                        <td><?= htmlspecialchars($request->date) ?></td>
                                         <td><?= htmlspecialchars($request->organization) ?></td>
-                                        <td><?= htmlspecialchars($request->reason) ?></td>
+                                        <td><?= mb_strimwidth(htmlspecialchars($request->title), 0, 15, '...') ?></td>
                                         <td>
-                                            <span class="order-status <?= strtolower(str_replace(' ', '-', $request->status)) ?>">
+                                            <span class="order-status <?= strtolower($request->status) ?>">
                                                 <?= htmlspecialchars($request->status) ?>
                                             </span>
                                         </td>

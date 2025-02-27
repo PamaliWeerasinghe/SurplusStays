@@ -175,15 +175,15 @@ body {
     background-color: #3498db;
 }
 
-.not-collected {
+.rejected { 
     background-color: #e74c3c;
 }
 
-.ongoing {
+.pending {
     background-color: #f39c12;
 }
 
-.completed {
+.donated {
     background-color: #2ecc71;
 }
                 

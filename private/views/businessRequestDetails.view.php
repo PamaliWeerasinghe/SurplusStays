@@ -25,53 +25,42 @@
                             <h3>Request Details</h3>
                             <div class="inside">
                                 <p><strong>Order ID:</strong> #<?= htmlspecialchars($request[0]->id) ?></p>
-                                <p><strong>Date:</strong> <?= htmlspecialchars($request[0]->dateTime) ?></p>
-                                <p><strong>Date:</strong> <?= htmlspecialchars($request[0]->organization) ?></p>
+                                <p><strong>Date:</strong> <?= htmlspecialchars($request[0]->date) ?></p>
+                                <p><strong>Title:</strong> <?= htmlspecialchars($request[0]->title) ?></p>
                                 <p><strong>Status:</strong> <?= htmlspecialchars($request[0]->status) ?></p>
                             </div>
                         </div>
 
                         <div class="section">
-                            <h3>Request Details</h3>
+                            <h3>Organization Details</h3>
                             <div class="inside">
-                                <p style="text-align: center;"><?= htmlspecialchars($request[0]->reason) ?></p>
+                                <p><strong>Organization Name:</strong><?= htmlspecialchars($request[0]->organization) ?></p>
+                                <p><strong>Contact Number:</strong><?= htmlspecialchars($request[0]->phone) ?></p>
+                                <p><strong>email:</strong><?= htmlspecialchars($request[0]->email) ?></p>
                             </div>
                         </div>
 
                         <div class="section">
-                            <h3>Requsted Products</h3>
-                            <div class="inside-table">
-                                <table class="order-details-table">
-                                    <tr>
-                                        <th>ProductID</th>
-                                        <th>product</th>
-                                        <th>Requsted Amount</th>
-                                    </tr>
-                                    <?php foreach ($request as $item) : ?>
-                                        <tr>
-                                            <td><?= htmlspecialchars($item->productid) ?></td>
-                                            <td><?= htmlspecialchars($item->productname) ?></td>
-                                            <td><?= htmlspecialchars($item->quantity) ?></td>
-                                        </tr>
-                                    <?php endforeach; ?>
-                                </table>
-                                
+                            <h3>Requested Reason</h3>
+                            <div class="inside">
+                                <p style="text-align: center;"><?= htmlspecialchars($request[0]->message) ?></p>
                             </div>
                         </div>
 
                         <div class="section-buttons">
                             <?php if ($request[0]->status === 'Pending') : ?>
-                                <form action="<?= ROOT ?>/business/updateRequestStatus" method="POST">
-                                    <input type="hidden" name="order_id" value="<?= htmlspecialchars($request[0]->id) ?>">
+                                <form method="POST" action="<?= ROOT ?>/business/updateRequestStatus">
+                                    <input type="hidden" name="request_id" value="<?= htmlspecialchars($request[0]->id) ?>">
                                     <div class="button-container">
-                                        <button type="submit" name="status" value="COMPLETED" class="btn-success"> ✔ ACCEPT REQUEST</button>
-                                        <button type="submit" name="status" value="CANCELLED" class="btn-danger">❌ CANCEL REQUEST</button>
-                                    </div>
+                                    <button type="submit" name="status" value="Donated" class="btn-success">✔ ACCEPT REQUEST</button>
+                                    <button type="submit" name="status" value="Rejected" class="btn-danger">❌ CANCEL REQUEST</button>
+                                    <div>
                                 </form>
                             <?php else : ?>
                                 <p style="color: green; font-weight: bold; text-align: center;">You have already set the request status.</p>
                             <?php endif; ?>
                         </div>
+
 
                     <?php else : ?>
                         <p>Request not found.</p>
