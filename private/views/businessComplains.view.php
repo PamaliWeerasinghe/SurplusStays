@@ -5,9 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITENAME ?></title>
-    <link rel="stylesheet" href="<?= STYLES ?>/businesscomplains.css" />
+    <link rel="stylesheet" href="<?= STYLES ?>/businesscomplaints.css" />
     <link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
-    <link rel="stylesheet" href="<?= STYLES ?>/business.css">
 </head>
 
 <body>
@@ -17,164 +16,98 @@
             <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
                 <div class="summary">
-                    <div class="notifications-type2">
-                        <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." />
-                            <img src="<?= ASSETS ?>/images/search.png" class="bell2" />
+                    <!-- Complaint Status Cards -->
+                    <div class="order-status-cards">
+                        <div class="order-card all" onclick="filterByStatus('all')">
+                            <h3>All</h3>
                         </div>
+                        <div class="order-card pending" onclick="filterByStatus('Pending')">
+                            <h3>Pending</h3>
 
-                        <img src="<?= ASSETS ?>/images/Bell.png" class="bell" />
-                    </div>
+                        </div>
+                        <div class="order-card resolved" onclick="filterByStatus('Resolved')">
+                            <h3>Resolved</h3>
 
-                    <div class="add-buyer">
-                        <button class="add-complain-btn">+ Add A Complain</button>
+                        </div>
                     </div>
 
                 </div>
+
+
                 <div class="order-status">
                     <div class="order">
-                        <label>Complains</label>
-                        <select>
-                            <option>All Time</option>
-                        </select>
-                    </div>
-
-                    <div class="order-nav">
-                        <div class="view-slots">
-                            <div class="slot1">
-                                <label>Customer Complains</label>
-                            </div>
-                            <div class="slot2">
-                                <label>My Complains</label>
-                            </div>
+                        <label>Complaints</label>
+                        <div class="searchdiv">
+                            <input type="text" id="orderSearch" class="search" placeholder="Search by Complaint ID..." onkeyup="filterOrders()" />
                         </div>
                     </div>
 
-                    <div class="order-nav">
-                        <div class="view-slots">
-                            <div class="slot1">
-                                <label>All</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Pending</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Resolved</label>
-                            </div>
-                        </div>
-                    </div>
+                    <!-- Complaints Table -->
                     <table class="order-table">
                         <thead>
                             <tr>
-                                <th>ID</th>
+                                <th>ComplaintID</th>
                                 <th>Date</th>
                                 <th>Customer</th>
-                                <th>Order ID</th>
                                 <th>Status</th>
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>F and S lanka</td>
-                                <td>3689</td>
-                                <td><button class="take-action">In Progress</button></td>
-                                <td style="text-align: center;"><label>See Complain</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Suwasetha Foundation</td>
-                                <td>5874</td>
-                                <td><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;"><label>See Complain</label></td>
-                            </tr>
+                        <tbody id="orderTableBody">
+                            <?php if (!empty($complaints)) : ?>
+                                <?php foreach ($complaints as $complaint) : ?>
+                                    <tr class="order-row"
+                                        data-status="<?= strtolower($complaint->status) ?>"
+                                        onclick="window.location.href='<?= ROOT ?>/business/viewComplaint/<?= $complaint->id ?>'">
+                                        <td class="order-id">#<?= htmlspecialchars($complaint->id) ?></td>
+                                        <td><?= htmlspecialchars($complaint->dateTime) ?></td>
+                                        <td><?= htmlspecialchars($complaint->Customer) ?></td>
+                                        <td>
+                                            <span class="order-status <?= strtolower($complaint->status) ?>">
+                                                <?= htmlspecialchars($complaint->status) ?>
+                                            </span>
+                                        </td>
+                                        <td style="text-align: center;"><label>View Full Details</label></td>
+                                    </tr>
 
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Sadaham sewana</td>
-                                <td>7894</td>
-                                <td><button class="take-action">In Progress</button></td>
-                                <td style="text-align: center;"><label>See Complain</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Sunil Gamachcchi</td>
-                                <td>2158</td>
-                                <td><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;"><label>See Complain</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Suriya Kumar</td>
-                                <td>7469</td>
-                                <td><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;"><label>See Complain</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Suriya Kumar</td>
-                                <td>2536</td>
-                                <td><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;"><label>See Complain</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Sunil Gamachcchi</td>
-                                <td>2103</td>
-                                <td><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;"><label>See Complain</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Sunil Gamachcchi</td>
-                                <td>9683</td>
-                                <td><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;"><label>See Complain</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Sunil Gamachcchi</td>
-                                <td>8647</td>
-                                <td><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;"><label>See Complain</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Sunil Gamachcchi</td>
-                                <td>8967</td>
-                                <td><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;"><label>See Complain</label></td>
-                            </tr>
-
-
-
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="6" style="text-align: center;">No Complaints Found</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
-                    <div class="arrow-div">
-                        <div class="arrows">
-                            <img src="<?= ASSETS ?>/images/Arrow right-circle.png" />
-                            <img src="<?= ASSETS ?>/images/Arrow right-circle-bold.png" />
-
-                        </div>
-                    </div>
-
                 </div>
 
+                <!-- JavaScript to Handle Filtering -->
+                <script>
+                    function filterOrders() {
+                        let input = document.getElementById("orderSearch").value.toUpperCase();
+                        let rows = document.querySelectorAll(".order-row");
 
+                        rows.forEach(row => {
+                            let complaintId = row.querySelector(".order-id").textContent.toUpperCase();
+                            row.style.display = complaintId.includes(input) ? "" : "none";
+                        });
+                    }
+
+                    function filterByStatus(status) {
+                        let rows = document.querySelectorAll(".order-row");
+                        let formattedStatus = status.toLowerCase(); // Convert selected status to lowercase
+
+                        rows.forEach(row => {
+                            let rowStatus = row.getAttribute("data-status").toLowerCase(); // Get row status in lowercase
+                            row.style.display = (formattedStatus === "all" || rowStatus === formattedStatus) ? "" : "none";
+                        });
+                    }
+                </script>
+                </table>
             </div>
         </div>
         <?php echo $this->view('includes/footer') ?>
+    </div>
+
 </body>
 
 </html>

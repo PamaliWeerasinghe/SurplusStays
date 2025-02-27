@@ -1,53 +1,90 @@
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
 
-.order-nav{
+* {
+
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+}
+
+body {
+    margin: 0;
+}
+
+
+.main-div {
+
+    width: 100%;
+    height: 100vh; 
+}
+
+.sub-div-1 {
     display: flex;
-    justify-content: center;
+    flex-direction: row;
+
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
     align-items: center;
-    width: 60%;
-    height: 4vh;
-    margin-top: 5%;
+    flex: 4;
+    background-color: white;
+
+}
+
+.summary {
+    width: 100%;
+    height: 60vh;
+    background-color: #1B4332;
+}
+
+
+
+/*for section with table*/ 
+
+.order-status{
+    width: 86%;
+    /* height: 50vh; */
+    background-color: #F0F8FF;
+    margin-top: -19%;
+    border-radius: 10px;
+    padding: 2%;
+    margin-bottom: 5%;
     
 }
-.view-slots{
+.order{
     display: flex;
-
-    width: 80%;
-    height: 6vh;
-    border-style: solid;
-    border-color: #1B4332;
-    border-radius: 10px;
+    flex-direction: row;
+    justify-content: space-between;
+    
 }
-.slot1{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-    background-color:#1B4332;
-    border-radius: 7px 10px 10px 7px; /*ltop rtop rbot lbot*/
-    cursor: pointer;
-}
-.slot1 label{
-    color: white;
-}
-.slot2{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    flex: 1;
-    background-color: white;
-    border-radius: 7px 10px 10px 7px; /*ltop rtop rbot lbot*/
-}
-.order-nav :hover{
-    cursor: pointer;
+.order select{
+    border: none;
+    background-color: #F0F8FF;
 }
 
+.search{
+  border-radius: 5px;
+  border: 2px solid #2ecc71;
+  padding-left:5%;
+  width: 250px; /* Increase width */
+  height: 5vh;
+  background-color: white;
+}
+
+.searchdiv{
+  display: flex;
+  flex-direction: row;
+}
+
+/*table*/
 
 .order-table {
     width: 100%;
     border-collapse: collapse;
-    margin-top: 5%;
+    margin-top: 3%;
     margin-bottom: 4%;
-    /* font-family: Arial, sans-serif; */
   }
   
   .order-table thead tr {
@@ -71,6 +108,13 @@
     border-bottom: 1px solid #e0e0e0;
     background-color: white;
   }
+
+  .order-table tbody tr:hover {
+    background-color:#b6efc4; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
   
   .order-table tbody tr:last-child {
     margin-top: 4%;
@@ -85,35 +129,60 @@
     color: grey;
     
   }
+
   
+/*order states cards*/
 
-
-.add-complain-btn {
-    
-    width: 89%;
-    height: 8vh;
-    font-size: 1.2rem;
-    background-color: white;
-    color: #23483C;
-    padding: 15px 30px;
-    border: none;
-    border-radius: 8px;
-    font-weight: bold;
-    cursor: pointer;
-    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+.order-status-cards {
+    display: flex;
+    gap: 20px;
+    padding: 20px;
+    width: 86%;
+    height: 5vh;
+    background-color: #fff;
+    margin-top: 7%;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+    margin-left: 5%;
     
 }
 
-.add-complain-btn:hover {
-    background-color: #F0F0F0;
-}
-
-.add-buyer{
+.order-card {
+  width: 193px;
+  height: 50px;
+    background-color: #FFFFFF;
+    border-radius: 10px;
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 3%;
-    
+    flex-direction: column;              
+    cursor: pointer;
+    color: white;
+    transition: 0.3s;
 }
 
+.order-card:hover {
+    transform: scale(1.05);
+}
+
+.order-card h3 {
+
+    font-size: 15px;
+}
+
+.all {
+    background-color: #3498db;
+}
+
+.pending {
+    background-color: #f39c12;
+}
+
+.resolved {
+    background-color: #2ecc71;
+}
+                
+
+  
 

@@ -49,18 +49,89 @@ class Business extends Controller
 
     function orders()
     {
-        $this->view('businessOrders');
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $business_id = Auth::getID();
+        $orderModel = new OrderModel();
+
+        $orders = $orderModel->getOrdersByBusiness($business_id);
+
+        $this->view('businessOrders', ['orders' => $orders]);
     }
+
+    function viewOrder($id = null)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $orderModel = new OrderModel();
+        $orderDetails = $orderModel->getOrderDetails($id);
+
+        if (!$orderDetails) {
+            $this->redirect('orders'); // Redirect if order is not found
+        }
+
+        $this->view('businessOrderDetails', ['order' => $orderDetails]);
+    }
+
+    function updateOrderStatus()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['order_id'], $_POST['status'])) {
+            $orderModel = new OrderModel();
+            $order_id = $_POST['order_id'];
+            $status = $_POST['status'];
+
+            $orderModel->updateOrderStatus($order_id, $status);
+
+            $this->redirect('business/orders');
+        } else {
+            $this->redirect('business/orders');
+        }
+    }
+
 
     function requests()
     {
         $this->view('businessRequests');
     }
 
-    function complains()
+    function complaints()
     {
-        $this->view('businessComplains');
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $business_id = Auth::getID();
+        $complaintModel = new ComplaintModel();
+
+        $complaints = $complaintModel->getComplainsByBusiness($business_id);
+
+        $this->view('businessComplaints', ['complaints' => $complaints]);
     }
+
+    function viewComplaint($id = null)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $complaintModel = new ComplaintModel();
+        $complaintDetails = $complaintModel->getComplaintDetails($id);
+
+        if (!$complaintDetails) {
+            $this->redirect('complaints'); // Redirect if complaint is not found
+        }
+
+        $this->view('businessComplaintDetails', ['complaint' => $complaintDetails]);
+    }
+
     function reports()
     {
         $this->view('businessReport');
