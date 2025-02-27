@@ -13,15 +13,22 @@ class Register extends Controller
      function charity()
      {
         $errors = array();
+<<<<<<< Updated upstream
         if(count($_POST)>0)
         {
             $user = new Organization();
+=======
+        if (count($_POST) > 0) {
+            $organization = new Organization();
+            $userTable = new User(); // User model for the `user` table
+>>>>>>> Stashed changes
 
             if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
                 $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/charityImages/";
                 $fileName = basename($_FILES['profile_picture']['name']);
                 $filePath = $targetDir . $fileName;
                 $fileType = pathinfo($filePath, PATHINFO_EXTENSION);
+<<<<<<< Updated upstream
 
                 // Allow certain file formats
                 $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
@@ -65,6 +72,64 @@ class Register extends Controller
 
      function customer()
      {
+=======
+
+                $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+                if (in_array($fileType, $allowedTypes)) {
+                    if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $filePath)) {
+                        $_POST['picture'] = $fileName;
+                    } else {
+                        $errors[] = "Failed to upload the profile picture.";
+                    }
+                } else {
+                    $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed.";
+                }
+            } else {
+                $errors[] = "Please upload a profile picture.";
+            }
+
+            if ($organization->validate($_POST)) {
+                // Insert into `user` table first
+                $userData = [
+                    'email' => $_POST['email'],
+                    'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                    'role' => 'charity'
+                ];
+                    
+                $userTable->insert($userData); // Insert and get user ID
+                //I removed the column user_id and the foreing key as well
+                //if ($user_id) {
+                    // Now insert into `organization` table
+                    $orgData = [
+                        'name' => $_POST['name'],
+                        'email' => $_POST['email'],
+                        'phoneNo' => $_POST['phone'],
+                        'username' => $_POST['username'],
+                        'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                        'city' => $_POST['city'],
+                        'charity_description' => $_POST['description'],
+                        'picture' => $_POST['picture'],
+                        //'user_id' => $user_id // Use the newly inserted user ID
+                    ];
+
+                    $organization->insert($orgData);
+                    $this->redirect('login');
+                } else {
+                    $errors[] = "Failed to create user.";
+                }
+            //} else {
+            //    $errors = $organization->errors;
+            //}
+        }
+
+        $this->view('charity_register-1', [
+            'errors' => $errors,
+        ]);
+    }
+
+    function customer()
+    {
+>>>>>>> Stashed changes
         $errors = array();
         if(count($_POST)>0)
         {
@@ -113,7 +178,80 @@ class Register extends Controller
         $this->view('/customerRegistration',[
             'errors'=>$errors,
         ]);
+<<<<<<< Updated upstream
      }
+=======
+    }
+
+    function business()
+    {
+        $errors = array();
+        if (count($_POST) > 0) {
+            $business = new Business(); // Model for `business` table
+            $userTable = new User();    // Model for `user` table
+
+            // Handle file upload for profile picture
+            if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
+                $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/businessImages/";
+                $fileName = basename($_FILES['profile_picture']['name']);
+                $filePath = $targetDir . $fileName;
+                $fileType = pathinfo($filePath, PATHINFO_EXTENSION);
+
+                $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+                if (in_array($fileType, $allowedTypes)) {
+                    if (move_uploaded_file($_FILES['profile_picture']['tmp_name'], $filePath)) {
+                        $_POST['picture'] = $fileName; // Save file name to $_POST
+                    } else {
+                        $errors[] = "Failed to upload the profile picture.";
+                    }
+                } else {
+                    $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed.";
+                }
+            } else {
+                $errors[] = "Please upload a profile picture.";
+            }
+
+            // Validate and process form data
+            if ($business->validate($_POST)) {
+                // Save data to `business` table
+                $businessData = [
+                    'name' => $_POST['name'],
+                    'email' => $_POST['email'],
+                    'phoneNo' => $_POST['phone'],//phone_no
+                    'username' => $_POST['username'],
+                    'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                    //'businessType_id' => $_POST['type'], changed to type
+                    'type' => $_POST['type'], //business_type
+                    'picture' => $_POST['picture'],
+                    'latitude' => $_POST['latitude'],
+                    'longitude' => $_POST['longitude'],
+                    //'status_id' => 1,
+                ];
+
+                $business->insert($businessData);
+
+                // Save data to `user` table
+                $userData = [
+                    'email' => $_POST['email'],
+                    'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                    'role' => 'business',
+                ];
+
+                $userTable->insert($userData);
+
+                $this->redirect('login');
+            } else {
+                $errors = $business->errors;
+            }
+        }
+
+        // Render the business registration view
+        $this->view('business_register', [
+            'errors' => $errors,
+        ]);
+    }
+
+>>>>>>> Stashed changes
 
      function login()
     {    

@@ -17,7 +17,7 @@ body, html {
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 130vh;
+    height: 190vh;
 }
 
 .top-half {
@@ -94,7 +94,7 @@ body, html {
     background-color: #fff;
 }
 
-.toggle-option {
+.toggle-option1, .toggle-option2{
     padding: 10px 20px;
     flex: 1;
     border: none;
@@ -105,16 +105,29 @@ body, html {
     font-weight: bold;
 }
 
-.toggle-option.active {
-    background-color: #1f3826;
+.toggle-option1.active {
+    background-color: #005250;
     color: #fff;
 }
 
-.toggle-option:not(.active):hover {
+.toggle-option1:not(.active):hover {
     background-color: #e0e0e0;
 }
 
-.toggle-option:focus {
+.toggle-option1:focus {
+    outline: none;
+}
+
+.toggle-option2.active {
+    background-color: #005250;
+    color: #fff;
+}
+
+.toggle-option2:not(.active):hover {
+    background-color: #e0e0e0;
+}
+
+.toggle-option2:focus {
     outline: none;
 }
 
@@ -133,6 +146,8 @@ body, html {
 
 .table-container {
     background-color: #F0F8FF;
+    max-height: 400px;
+    overflow: hidden;
     padding: 20px;
     padding-bottom: 80px;
     border-radius: 10px;
@@ -152,6 +167,18 @@ body, html {
     font-family: Arial, sans-serif;
 }
 
+.admin-order-table thead{
+    display: table;
+    width: 100%;
+    table-layout: fixed;
+}
+.admin-order-table tbody {
+    display: block;
+    max-height: 250px; /* Adjust based on row height */
+    overflow-y: auto;
+}
+
+
 .admin-order-table thead tr {
     background-color: #F0F8FF;
     text-align: left;
@@ -169,6 +196,9 @@ body, html {
 }
 
 .admin-order-table tbody tr {
+    display: table;
+    width: 100%;
+    table-layout: fixed;
     border-bottom: 1px solid #E0E0E0;
 }
 

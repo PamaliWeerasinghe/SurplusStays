@@ -14,7 +14,7 @@ define('STYLES', 'http://localhost:8080/SurplusStays/public/assets/styles');
 define('ASSETS', 'http://localhost:8080/SurplusStays/public/assets');
 
 //DATABASE
-define('DBNAME','surplusstays2');
+define('DBNAME','surplusstays');
 define('DBHOST','localhost');
 define('DBUSER','root');
 define('DBPASS','');

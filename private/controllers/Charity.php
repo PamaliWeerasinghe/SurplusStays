@@ -43,12 +43,41 @@ class Charity extends Controller
 
     function donations()
     {
-        $this->view('charityDonations');
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+        $requests = new Donation();
+        $rows = $requests->where('organization_id', Auth::getID());;
+
+        $shop = new Business();
+        $shopRows = $shop->findAll();
+        $this->view('charityDonations',['rows' => $rows, 'shopRows' => $shopRows]);
     }
 
     function browse_shops()
     {
+<<<<<<< Updated upstream
         $this->view('charityBrowseShops');
+=======
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $shops = new Business();
+        $rows = $shops->findAll();
+        $this->view('charityBrowseShops2',['rows' => $rows]);
+    }
+
+    function browse_charities()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $orgs = new Organization();
+        $rows = $orgs->findAll();
+        $this->view('charityBrowseOrganizations',['rows' => $rows]);
+>>>>>>> Stashed changes
     }
 
     function reports()
@@ -70,32 +99,92 @@ class Charity extends Controller
         ]);
     }
 
+    function viewOrganization($id = null)
+    {
+        $org = new Organization();
+        $row = $org->where('id', $id);
+
+        $event = new Event();
+        $eventRows = $event->where('organization_id', $id);
+
+        $this->view('charityViewOrganization', [
+            'row' => $row,
+            'eventRows' => $eventRows
+        ]);
+    }
+
+    function callOpenAI($input) 
+    {
+        $apiKey = "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"; // Replace with your OpenAI API key
+        $url = "https://api.openai.com/v1/chat/completions";
+
+        $data = [
+            "model" => "gpt-3.5-turbo",
+            "messages" => [
+                ["role" => "system", "content" => "You are an expert in food names in english and sinhala spelled in english who only returns the corrected word if the name seems off It's crucial that you only respond with a single word only."],
+                ["role" => "user", "content" => "Correct and validate the following food name inputted in english or sinhala languages using English spelling: \"$input\". Return the corrected name only 
+                example - 1.Input:Mlu Paan The output you should give:Malu Paan,example - 2.Input:Brd The output you should give:Bread."]
+            ],
+            "max_tokens" => 100,
+            "temperature" => 0.7
+        ];
+
+        $options = [
+            "http" => [
+                "header"  => "Content-Type: application/json\r\n" .
+                            "Authorization: Bearer " . $apiKey . "\r\n",
+                "method"  => "POST",
+                "content" => json_encode($data)
+            ]
+        ];
+
+        $context = stream_context_create($options);
+        $response = @file_get_contents($url, false, $context);
+
+        if ($response === false) {
+            $error = error_get_last();
+            $httpCode = isset($http_response_header) && isset($http_response_header[0]) ? (int)explode(' ', $http_response_header[0])[1] : null;
+
+            // Check for 429 Too Many Requests
+            if ($httpCode === 429) {
+                // Retry after a delay, for example, 10 seconds
+                sleep(10);
+                return callOpenAI($input);  // Retry the request
+            }
+
+            throw new Exception("Error communicating with OpenAI API: " . $error['message']);
+        }
+
+        $result = json_decode($response, true);
+        return trim($result['choices'][0]['message']['content']);
+    }
+
+
+
     function createEvent()
     {
         if (!Auth::logged_in()) {
             $this->redirect('login');
         }
-    
+
         $errors = [];
         if (count($_POST) > 0) {
             $event = new Event();
             $uploadedPictures = [];
             $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/charityImages/";
-    
-            // Handle each upload field
+
+            // Handle image uploads
             foreach ($_FILES as $key => $file) {
                 if (strpos($key, 'upload-') === 0 && isset($file['name']) && $file['error'] === 0) {
                     $fileName = basename($file['name']);
                     $filePath = $targetDir . $fileName;
                     $fileType = pathinfo($filePath, PATHINFO_EXTENSION);
-    
+
                     // Allow certain file formats
                     $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
                     if (in_array(strtolower($fileType), $allowedTypes)) {
-                        // Attempt to move the uploaded file
                         if (move_uploaded_file($file['tmp_name'], $filePath)) {
-                            // Save the full path to the image in the array
-                            $uploadedPictures[] = '/assets/charityImages/' . $fileName; // Use relative path
+                            $uploadedPictures[] = '/assets/charityImages/' . $fileName;
                         } else {
                             $errors[] = "Failed to upload image: {$fileName}.";
                         }
@@ -104,38 +193,55 @@ class Charity extends Controller
                     }
                 }
             }
-    
             // Check if at least one image was uploaded
             if (!empty($uploadedPictures)) {
                 $_POST['pictures'] = implode(',', $uploadedPictures); // Store paths as a comma-separated string
             } else {
                 $errors[] = "At least one event picture is required.";
             }
-    
+
+            // Validate required-food input
+            $requiredFood = $_POST['required-food'] ?? '';
+            if (!empty($requiredFood)) {
+                try {
+                    $correctedFood = $this->callOpenAI($requiredFood);
+                    if($requiredFood != $correctedFood){
+                        $errors[] = "Did you mean {$correctedFood}.";
+                    }else{
+                        $_POST['required-food'] = $requiredFood;
+                    }
+                } catch (Exception $e) {
+                    $errors[] = "Error validating food names: " . $e->getMessage();
+                }
+            }
+
+            // Process the event if no errors
             if (empty($errors) && $event->validate($_POST)) {
                 $arr['organization_id'] = Auth::getId();
                 $arr['event'] = $_POST['event-name'];
                 $arr['event_description'] = $_POST['description'];
                 $arr['start_dateTime'] = $_POST['start-date'];
                 $arr['end_dateTime'] = $_POST['end-date'];
-                $arr['requesting_items'] = $_POST['required-food'] ?? '';  // Optional field
-                $arr['status'] = 1;  // Default status for new event
+                $arr['requesting_items'] = $_POST['required-food'];
+                $arr['status'] = 1;
                 $arr['goal'] = $_POST['event-goal'];
                 $arr['district'] = $_POST['district'];
                 $arr['location'] = $_POST['location'];
                 $arr['pictures'] = $_POST['pictures']; // Store full file paths in the database
-    
+
+
                 $event->insert($arr);
                 $this->redirect('charity/manage_events');
             } else {
                 $errors = array_merge($errors, $event->errors);
             }
         }
-    
+
         $this->view('charityCreateEvent', [
             'errors' => $errors,
         ]);
     }
+
     
     function deleteEvent($id)
     {
@@ -263,6 +369,37 @@ class Charity extends Controller
         
         $this->view('charityEditEvent',[
             'row' => $row,
+            'errors' => $errors,
+        ]);
+    }
+
+    function sendDonationRequest()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $errors = [];
+        if (count($_POST) > 0) {
+            $request = new Donation();
+
+            // Process the event if no errors
+            if (empty($errors) && $request->validate($_POST)) {
+                $arr['organization_id'] = Auth::getId();
+                $arr['business_id'] = $_POST['business_id'];
+                $arr['title'] = $_POST['title'];
+                $arr['message'] = $_POST['message'];
+                $arr['status'] = 0;
+                $arr['date'] = date('Y-m-d');
+
+                $request->insert($arr);
+                $this->redirect('charity/manage_events');
+            } else {
+                $errors = array_merge($errors, $request->errors);
+            }
+        }
+
+        $this->view('charityBrowseShops', [
             'errors' => $errors,
         ]);
     }
