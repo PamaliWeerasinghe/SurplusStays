@@ -19,9 +19,7 @@
         <div class="btn-nonSelected" data-path="/SurplusStaysNew/public/business/complaints">
             <label>Complains</label>
         </div>
-        <div class="btn-nonSelected" data-path="/SurplusStaysNew/public/business/reports">
-            <label>Reports</label>
-        </div>
+        
         <div class="btn-nonSelected" data-path="/SurplusStaysNew/public/business/profile">
             <label>Profile</label>
         </div>

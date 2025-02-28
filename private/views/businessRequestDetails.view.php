@@ -42,9 +42,9 @@
 
                         <div class="section">
                             <h3>Requested Reason</h3>
-                            <div class="inside">
+                           
                                 <p style="text-align: center;"><?= htmlspecialchars($request[0]->message) ?></p>
-                            </div>
+                            
                         </div>
 
                         <div class="section-buttons">

@@ -262,6 +262,8 @@ class Business extends Controller
                 $arr['expiration_date_time'] = $_POST['expiration'];
                 $arr['discount_price'] = $_POST['discount'];
                 $arr['pictures'] = $_POST['pictures'];
+                $arr['notify_status_id'] = 2;
+                $arr['status_id'] = 1;
                 $product->insert($arr);
                 $this->redirect('business/myproducts');
             } else {
