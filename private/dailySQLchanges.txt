@@ -1,3 +1,4 @@
+create view complaintDetails as 
 SELECT `complaints`.`id` AS `complaint_id`,
             `order_items_id`,
             `customer`.`id` AS `customer_id`,
@@ -56,7 +57,8 @@ DESCRIPTION,
 customer_id,
 order_items_id,
 adminReply,
-complaint_dateTime
+complaint_dateTime,
+complaint_status.name as status
 FROM complaints 
 INNER JOIN complaint_status
 ON complaints.complaint_status_id=complaint_status.id
@@ -115,3 +117,17 @@ FROM order_items
 INNER JOIN `order` ON `order`.id=order_items.order_id
 INNER JOIN products ON order_items.products_id=products.id
 INNER JOIN business ON products.business_id=business.id
+
+CREATE VIEW customer_details AS 
+SELECT customer.id AS cus_id,
+customer.`fname` AS fname,
+customer.`lname` AS lname,
+phoneNo,
+username,
+email,
+`password`,
+profile_pic,
+reg_date
+FROM customer
+INNER JOIN user ON user.id=customer.user_id
+WHERE user.`role`='customer'

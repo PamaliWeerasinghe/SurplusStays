@@ -1,12 +1,13 @@
 <?php
 //Import PHPMailer classes into the global namespace
+require PHPMAILER . '/PHPMailer.php';
+require PHPMAILER . '/SMTP.php';
+require PHPMAILER . '/Exception.php';
+
 //These must be at the top of your script, not inside a function
 use PHPMailer\PHPMailer\PHPMailer;
 use PHPMailer\PHPMailer\SMTP;
 use PHPMailer\PHPMailer\Exception;
-
-//Load Composer's autoloader
-require_once __DIR__.'/../../vendor/autoload.php';
 
 class Mail
 {

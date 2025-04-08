@@ -8,7 +8,7 @@ define('URLROOT', 'http://localhost/SurplusStays');
 //WEBSITE
 define('SITENAME', 'surplusStays');
 
-
+define('PHPMAILER',dirname(dirname(dirname(__FILE__))) . '/PHPMailer');
 define('ROOT', 'http://localhost/SurplusStays/public');
 define('STYLES', 'http://localhost/SurplusStays/public/assets/styles');
 define('ASSETS', 'http://localhost/SurplusStays/public/assets');
@@ -47,7 +47,6 @@ define('SMTP_SETTINGS',[
 
 //start a session
 session_start();
-
-define('VENDOR','E:\xampp\htdocs\SurplusStays\vendor\autoload.php');
+define('VENDOR','D:\xampp\htdocs\SurplusStays\vendor\autoload.php');
 
 ?>
