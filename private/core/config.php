@@ -38,13 +38,15 @@ define('SMTP_SETTINGS',[
     'smtp_host'=>'smtp.gmail.com',
     'smtp_auth'=>true,
     'smtp_username'=>'pamaliweerasinghe@gmail.com',
-    'smtp_password'=>'nali tmjm kdfg apde',
+    'smtp_password'=>'dhne nmbj mtup cldi',
     'smtp_secure'=>'tls',
     'smtp_port'=>587,
     'from_email'=>'pamaliweerasinghe@gmail.com',
     'from_name'=>'SurplusStays'
 ]);
 
+//start a session
+session_start();
 
 define('VENDOR','E:\xampp\htdocs\SurplusStays\vendor\autoload.php');
 
