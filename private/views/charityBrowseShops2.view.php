@@ -190,10 +190,7 @@
                         <div class="map">
                         <div class="search">
                             <div class="search-container">
-                                <input type="text" class="search-input" placeholder="Search Shops...">
-                                <button class="search-button">
-                                <i class="search-icon"></i>
-                                </button>
+                                <input type="text" class="search-input" id="searchInput" placeholder="Search Shops...">
                             </div>
                             <button class="create-event-button">Search</button>
                         </div>
@@ -227,6 +224,32 @@
     
 </body>
 <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.querySelector(".search-input");
+        const searchButton = document.querySelector(".create-event-button");
+        const rows = document.querySelectorAll(".admin-order-table  button");
+
+        function filterEvents() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+
+            rows.forEach(row => {
+                const eventName = row.querySelector(".event-name h3").textContent.toLowerCase();
+                let showRow = true;
+
+                // Filter by search
+                if (searchTerm && !eventName.includes(searchTerm)) {
+                    showRow = false;
+                }
+
+                row.style.display = showRow ? "" : "none";
+            });
+        }
+
+        searchButton.addEventListener("click", filterEvents);
+    });
+
+
     // Get modal elements
     const popupModal = document.getElementById('popupModal'); // Modal container
     const closeModal = document.getElementById('closeModal'); // Close button
@@ -284,12 +307,6 @@
         form.reset();
     });
 
-    document.querySelectorAll('.filter-btn').forEach(button => {
-            button.addEventListener('click', function() {
-                document.querySelectorAll('.filter-btn').forEach(btn => btn.classList.remove('active'));
-                this.classList.add('active');
-            });
-        });
 </script>
 
 </html>

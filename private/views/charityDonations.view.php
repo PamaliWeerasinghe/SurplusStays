@@ -21,18 +21,18 @@
                 <div class="stats">
                     <div class="stat-item">                                   
                             <div class="stat-title">Total Requests</div>
-                            <div class="stat-value">28</div>
+                            <div class="stat-value"><?= isset($AllReqCount) ? htmlspecialchars($AllReqCount) : 0 ?></div>
                     </div>
                     <div class="stat-item">
                         <div>
                             <div class="stat-title">Accepted</div>
-                            <div class="stat-value">3</div>
+                            <div class="stat-value"><?= isset($AccReqCount) ? htmlspecialchars($AccReqCount) : 0 ?></div>
                         </div>
                     </div>
                     <div class="stat-item">
                         <div>
                             <div class="stat-title">Rejected</div>
-                            <div class="stat-value">2</div>
+                            <div class="stat-value"><?= isset($RejReqCount) ? htmlspecialchars($RejReqCount) : 0 ?></div>
                         </div>
                     </div>
                     <div class="stat-item">
@@ -94,6 +94,31 @@
                     </div>
                 </div>
 
+                <div class="stats">
+                    <div class="stat-item_r">                                   
+                            <div class="stat-title">Total Requests</div>
+                            <div class="stat-value"><?= isset($AllReqCount) ? htmlspecialchars($AllReqCount) : 0 ?></div>
+                    </div>
+                    <div class="stat-item_r">
+                        <div>
+                            <div class="stat-title">Accepted</div>
+                            <div class="stat-value"><?= isset($AccReqCount) ? htmlspecialchars($AccReqCount) : 0 ?></div>
+                        </div>
+                    </div>
+                    <div class="stat-item_r">
+                        <div>
+                            <div class="stat-title">Rejected</div>
+                            <div class="stat-value"><?= isset($RejReqCount) ? htmlspecialchars($RejReqCount) : 0 ?></div>
+                        </div>
+                    </div>
+                    <div class="stat-item_r">
+                        <div>
+                            <div class="stat-title">No response</div>
+                            <div class="stat-value">23</div>
+                        </div>
+                    </div>
+                </div>
+
                 <div class="complaints-status">
                     <div class="table-container">
                         <h2>Recieved Donation Requests</h2>
@@ -114,8 +139,8 @@
                                 </tr>
                             </thead>
                             <tbody>
-                                <?php if ($rows): ?>
-                                    <?php foreach ($rows as $row): ?>
+                                <?php if ($rows_r): ?>
+                                    <?php foreach ($rows_r as $row): ?>
                                         <tr>
                                             <td class="date"><?= htmlspecialchars($row->date) ?></td>
                                             <td>
@@ -126,11 +151,18 @@
                                                 <?php endforeach; ?>
                                             </td>
                                             <td><?= htmlspecialchars($row->title) ?></td>
-                                            <?php if(htmlspecialchars($row->status)==2): ?>
+                                            <?php if(htmlspecialchars($row->status)=='accepted'): ?>
                                                 <td><button class="status ongoing">Accepted</button></td>
-                                            <?php elseif(htmlspecialchars($row->status)==0): ?>
-                                                <td><button class="status draft">Pending</button></td>
-                                            <?php elseif(htmlspecialchars($row->status)==1): ?>
+                                            <?php elseif(htmlspecialchars($row->status)=='pending'): ?>
+                                                <td> 
+                                                    <div class="take-action-container">
+                                                        <form id="editStatusForm<?= $row->id ?>" action="<?=ROOT?>/charity/acceptDonationReq/<?=$row->id?>" method="POST">
+                                                            <button type="button" class="take-action_r" data-form-id="editStatusForm<?= $row->id ?>">Accept</button>
+                                                        </form>
+                                                        <button class="take-action">Reject</button>
+                                                    </div>
+                                                </td>
+                                            <?php elseif(htmlspecialchars($row->status)=='rejected'): ?>
                                                 <td><button class="status closed">Rejected</button></td>
                                             <?php endif; ?>    
                                             <td class="action">
@@ -150,6 +182,57 @@
         </div>
     </div>
     <?php echo $this->view('includes/footer')?>
+
+    <!-- Modal for Delete Confirmation -->
+    <div id="deleteModal" class="modal">
+        <div class="modal-content">
+            <h3>Confirm Request</h3>
+            <p>Are you sure you want to accept this donation request?</p>
+            <div class="modal-buttons">
+                <button id="confirmDelete" class="modal-button confirm">Accept</button>
+                <button id="cancelDelete" class="modal-button cancel">Cancel</button>
+            </div>
+        </div>
+    </div>
+
+    <script>
+document.addEventListener("DOMContentLoaded", function () {
+    document.querySelectorAll(".take-action_r").forEach(button => {
+        button.addEventListener("click", function () {
+            let formId = this.getAttribute("data-form-id");
+            document.getElementById(formId).submit();
+        });
+    });
+});
+</script>
+
+
+    <!-- <script>
+    let editStatusForm = null;
+
+    document.querySelectorAll('.take-action').forEach(button => {
+        button.addEventListener('click', event => {
+            event.preventDefault(); // Prevent form submission
+            editStatusForm = document.getElementById(button.dataset.formId); // Store form reference
+            document.getElementById('deleteModal').style.display = 'block'; // Show modal
+        });
+    });
+
+    document.getElementById('confirmDelete').addEventListener('click', () => {
+        if (editStatusForm) editStatusForm.submit(); // Submit the form
+    });
+
+    document.getElementById('cancelDelete').addEventListener('click', () => {
+        document.getElementById('deleteModal').style.display = 'none'; // Hide modal
+    });
+    //stop the viewProduct page when clicking edit and delete
+    document.querySelectorAll('.completed, .take-action').forEach(button => {
+        button.addEventListener('click', event => {
+            event.stopPropagation();
+        });
+    });
+
+    </script> -->
     <script src="<?=ASSETS?>/js/charityToggle.js"></script>
     
 </body>

@@ -1,8 +1,8 @@
 <?php
 
-class Donation extends Model
+class BusinessDonation extends Model
 {
-    protected $table = "donations";
+    protected $table = "business_donations";
 
     public function validate($DATA)
     {
@@ -20,7 +20,7 @@ class Donation extends Model
         return empty($this->errors);
     }
 
-    public function countRows($org_id, $status) {
+     public function countRows($org_id, $status) {
         $query = "SELECT COUNT(*) as count FROM " . $this->table . " WHERE organization_id = :org_id AND status = :status";
         $params = [':org_id' => $org_id, ':status' => $status];
         $result = $this->query($query, $params);

@@ -4,17 +4,25 @@ class Charity extends Controller
 {
     function index()
     {
-        if(!Auth::logged_in())
-        {
+        if (!Auth::logged_in()) {
             $this->redirect('login');
         }
-
+    
         $event = new Event();
+        $donation = new Donation();
+
         $org_id = Auth::getID();
-        $rowCount = $event->countRows($org_id);
+
+        $EventCount = $event->countRows($org_id);
+        $AllReqCount = $donation->countRows($org_id,0);
+        $AccReqCount = $donation->countRows($org_id,2);
+    
         $this->view('charity_dashboard', [
-            'rowCount' => $rowCount,
+            'EventCount' => $EventCount,
+            'AllReqCount' => $AllReqCount,
+            'AccReqCount' => $AccReqCount
         ]);
+
     }
 
     function manage_events()
@@ -46,12 +54,28 @@ class Charity extends Controller
         if (!Auth::logged_in()) {
             $this->redirect('login');
         }
-        $requests = new Donation();
-        $rows = $requests->where('organization_id', Auth::getID());;
 
+        $requests = new Donation();
+        $requests_r = new BusinessDonation();
         $shop = new Business();
+        $org_id = Auth::getID();
+
+        $rows = $requests->where('organization_id', Auth::getID());
+        $rows_r = $requests_r->where('organization_id', Auth::getID());
         $shopRows = $shop->findAll();
-        $this->view('charityDonations',['rows' => $rows, 'shopRows' => $shopRows]);
+
+        $AllReqCount = $requests->countRows($org_id,0);
+        $AccReqCount = $requests->countRows($org_id,2);
+        $RejReqCount = $requests->countRows($org_id,1);
+
+        $this->view('charityDonations',[
+            'rows' => $rows, 
+            'rows_r' => $rows_r,
+            'shopRows' => $shopRows,
+            'AllReqCount' => $AllReqCount,
+            'AccReqCount' => $AccReqCount,
+            'RejReqCount' => $RejReqCount
+        ]);
     }
 
     function browse_shops()
@@ -108,7 +132,7 @@ class Charity extends Controller
             'eventRows' => $eventRows
         ]);
     }   
-
+    
     function createEvent()
     {
         if (!Auth::logged_in()) {
@@ -210,6 +234,27 @@ class Charity extends Controller
             $this->redirect('charity/manage_events'); // Redirect back to the manage events page
         }
     }
+
+    function acceptDonationReq($id)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $event = new BusinessDonation();
+            $data = ['status' => 'accepted'];
+
+            if ($event->update($id, $data)) {
+                $_SESSION['message'] = 'Request Accepted';
+            } else {
+                $_SESSION['message'] = 'Failed to accept request';
+            }
+
+            $this->redirect('charity/manage_events');
+        }
+    }
+
 
     function editEvent($id = null)
     {

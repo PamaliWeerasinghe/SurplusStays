@@ -23,7 +23,7 @@
                 <div class="events-header">
                 <h2>Charity Organizations</h2>
                 <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Search Shops...">
+                    <input type="text" class="search-input" id="searchInput" placeholder="Search Shops...">
                     <button class="search-button">
                     <i class="search-icon"></i>
                     </button>
@@ -31,6 +31,7 @@
                 <div class="filter-container">
                     <p>City: </p>
                     <select id="filter" class="filter-select">
+                    <option value="All">All</option>
                     <option value="Ampara">Ampara</option>
                     <option value="Anuradhapura">Anuradhapura</option>
                     <option value="Badulla">Badulla</option>
@@ -124,6 +125,41 @@
     
 </body>
 <script>
+
+    document.addEventListener("DOMContentLoaded", function () {
+        const searchInput = document.getElementById("searchInput");
+        const searchButton = document.querySelector(".search-button");
+        const filterSelect = document.getElementById("filter");
+        const cards = document.querySelectorAll(".card");
+
+        function filterOrganizations() {
+            const searchTerm = searchInput.value.toLowerCase().trim();
+            const selectedCity = filterSelect.value.toLowerCase();
+
+            cards.forEach(card => {
+                const name = card.querySelector(".title").textContent.toLowerCase();
+                const city = card.querySelector(".location").textContent.toLowerCase();
+
+                let show = true;
+
+                if (searchTerm && !name.includes(searchTerm)) {
+                    show = false;
+                }
+
+                if (selectedCity !== "all" && !city.includes(selectedCity)) {
+                    show = false;
+                }
+
+                card.style.display = show ? "" : "none";
+            });
+        }
+
+        searchButton.addEventListener("click", filterOrganizations);
+        filterSelect.addEventListener("change", filterOrganizations);
+    });
+
+                                
+    
     // Get modal elements
     const popupModal = document.getElementById('popupModal'); // Modal container
     const closeModal = document.getElementById('closeModal'); // Close button
@@ -180,6 +216,8 @@
         // Optionally clear the form fields
         form.reset();
     });
+
+
 </script>
 
 </html>

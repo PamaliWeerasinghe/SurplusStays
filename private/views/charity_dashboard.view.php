@@ -24,21 +24,21 @@
                         <img src="<?=ASSETS?>/images/profit-growth.png" alt="Events Icon" class="stat-icon">
                         <div>
                             <span class="stat-title">Events</span>
-                            <span class="stat-value">5</span>
+                            <span class="stat-value"><?= isset($EventCount) ? htmlspecialchars($EventCount) : 0 ?></span>
                         </div>
                     </div>
                     <div class="stat-item">
                         <img src="<?=ASSETS?>/images/manifest.png" alt="Donations Icon" class="stat-icon">
                         <div>
                             <span class="stat-title">Accepted Requests</span>
-                            <span class="stat-value">450</span>
+                            <span class="stat-value"><?= isset($AccReqCount) ? htmlspecialchars($AccReqCount) : 0 ?></span>
                         </div>
                     </div>
                     <div class="stat-item">
                         <img src="<?=ASSETS?>/images/box-mark.png" alt="Total Donations Icon" class="stat-icon">
                         <div>
                             <span class="stat-title">Sent Requests</span>
-                            <span class="stat-value">790</span>
+                            <span class="stat-value"><?= isset($AllReqCount) ? htmlspecialchars($AllReqCount) : 0 ?></span>
                         </div>
                     </div>
                     <div class="stat-item">
