@@ -30,7 +30,7 @@
                             </div>
                             <div class="see-product-details">
                                     <div>
-                                    <h2>Bread</h2>
+                                    <h2><?=$complaint_details->product_name?></h2>
                                     </div>
                                     <div>
                                     <h3>Customer Feedback</h3>
@@ -48,9 +48,8 @@
                                         </div>
                                             
                                         <div class="see-product-location-details">
-                                        <img src="<?=ASSETS?>/images/location.png"/>
                                         
-                                        <label>Kaduwela</label>
+                                        
                                         </div>
                                        
                                     </div>

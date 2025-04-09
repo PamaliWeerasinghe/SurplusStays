@@ -102,6 +102,7 @@ class Login extends Controller{
         $admin =new AdminModel();
         $find_token=$admin->where(['token'],[$token],'admin_details');
         if(isset($find_token)){
+            print_r($find_token[0]);
             // $find_token=$find_token[0];
             if($find_token[0]->token_expiry>date("Y-m-d H:i:s")){
                 if($_GET['token']==$find_token[0]->token){

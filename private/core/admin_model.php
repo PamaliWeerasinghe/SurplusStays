@@ -6,6 +6,8 @@ class Admin_Model
      public $errors = array();
      public $data=array();
      public $column;
+     public $from_date;
+     public $to_date;
      
      protected $db;
 
@@ -41,6 +43,21 @@ class Admin_Model
           $query="SELECT * FROM `$this->table` WHERE $whereClause";
           
           return $this->db->query($query, $queryParams);
+     }
+     public function admin_bar($from_date,$to_date){
+          
+          $query="SELECT COUNT(`order_items`.`products_id`) AS product_count,`order`.`dateTime` AS date_time FROM `order_items`
+   INNER JOIN `order`
+   ON `order`.`id`=`order_items`.`order_id`
+   WHERE `order`.`dateTime` BETWEEN :from_date AND :to_date
+   GROUP BY `order`.`dateTime` ";
+
+          $data=[
+               'from_date'=>$from_date,
+               'to_date'=>$to_date
+          ];
+          
+          return $this->db->query($query,$data);
      }
      public function select($table,$column,$limit,$offset)
      {

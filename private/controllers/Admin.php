@@ -468,12 +468,78 @@ class Admin extends Controller
            $products_offset=$products_pager->offset;
            $products=$admin->select('products','expiration_dateTime',$product_limit,$products_offset);
         
-          
+           //bar chart
+           $now=new DateTime();
+           $date= $now->format('N');
+           //Initiaize the array to store week dates
+           $weekDates=[];
+           //Use switch-case to find Monday of the week
+           switch($date){
+            case 1://Monday
+                $monday=clone $now;
+                break;
+            case 2://Tuesday
+                $monday=clone $now;
+                $monday->modify('-1 day');//moves it backward by one day in the calendar.
+                break;
+            case 3://Wednesday
+                $monday=clone $now;
+                $monday->modify('-2 days');//moves it backward by two days in the calendar.
+                break;
+            case 4://Thursday   
+                $monday=clone $now;
+                $monday->modify('-3 days');//moves it backward by three days in the calendar.
+                break;
+            case 5://Friday 
+                $monday=clone $now;
+                $monday->modify('-4 days');//moves it backward by four days in the calendar.
+                break;
+            case 6://Saturday
+                $monday=clone $now;
+                $monday->modify('-5 days');//moves it backward by five days in the calendar.
+                break;
+            case 7://Sunday
+                $monday=clone $now;
+                $monday->modify('-6 days');//moves it backward by six days in the calendar.
+                break;
+           }
+           //Generate all week dates starting from Monday
+           for($i=0;$i<7;$i++){
+                $currentDate=clone $monday;
+                $currentDate->add(new DateInterval('P'.$i.'D'));
+
+                $weekDates[$i]=$monday->format('Y-m-d h:i:s');
+                $monday->modify('+1 day');//moves it forward by one day in the calendar.
+           }
+           //get the counts
+           $countsForBars=$admin->admin_bar($weekDates[0],$weekDates[6]);
+           //get the week days
+           $days = [
+            'Monday' => 0,
+            'Tuesday' => 0,
+            'Wednesday' => 0,
+            'Thursday' => 0,
+            'Friday' => 0,
+            'Saturday' => 0,
+            'Sunday' => 0
+            ];
+           //total for all the products
+           $total=0;
+           foreach($countsForBars as $countForBar){
+            $day1=new DateTime($countForBar->date_time);
+            $day=$day1->format('l');
+
+            $days[$day] = $countForBar->product_count;
+            $total+=$countForBar->product_count;
+        
+        }
            $this->view('adminWelcomePage',[
                 "complaints"=>$complaints,
                 "complaints_pager"=>$complaints_pager,
                 "products"=>$products,
-                "products_pager"=>$products_pager
+                "products_pager"=>$products_pager,
+                "days"=>$days,
+                "total"=>$total
 
            ]);
         } else {
@@ -494,7 +560,7 @@ class Admin extends Controller
             $data['notify_status_id']=1;
             $admin->update($_POST['product_id'],$data,'products');
         }
-        $product_limit=1;
+        $product_limit=3;
         //count the no of products in the table products
         $productsCountData=$admin->count('about_to_expire_products');
         //calculate the no of pages
