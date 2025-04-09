@@ -6,14 +6,11 @@
     padding: 0;
     font-family: 'Poppins', sans-serif;
 }
-.body{
-    background-color: #F9F3F0;
-}
 
 .rectangle {
     height: 305px;
     width: 100%;
-    background-color:#00615F;
+    background-color: #00615F;
     border-radius: 0 0 0 76px;
     z-index: 1;
     position: relative;
@@ -41,10 +38,11 @@
     margin-bottom: 3%; 
     align-items: center;
     justify-content: space-between;
-    overflow: visible;
-  
+    overflow: visible; 
 }
-.item_slider_b {
+
+.item_slider_b{
+    z-index: 1;
     margin: 80px auto;
     padding: 0px 80px;
     position: relative;
@@ -53,13 +51,47 @@
     margin-bottom: 3%; 
     align-items: center;
     justify-content: space-between;
-    overflow: hidden; /* Important for smooth sliding */
-    z-index: 1;
+    overflow: visible;
     margin-top: -90px;
     background-color: white;
     border-radius: 40px 40px 40px 40px;
     border: 1px solid #2DC653; 
     width: 75%;
+}
+
+.slider_b{
+    overflow-x: hidden;
+    overflow-y: visible;
+    position: relative; 
+    z-index: 1;
+    align-items: center;
+    justify-content: space-between;
+    margin-top: 10px;  
+}
+
+.slider_b ul{
+    display: flex;
+    width: 100%; /* Change from 200% */
+    animation: slide-left 15s linear infinite;
+    transition: 0.5s ease;
+    overflow-y: visible;  
+}
+
+@keyframes slide-left {
+    from {
+        transform: translateX(0);
+    }
+    to {
+        transform: translateX(-100%);
+    }
+}
+
+.slider_b ul li{
+    width: 100%; /* Ensure 3 items fit in the slider view */
+    list-style: none;
+    padding: 20px;
+    display: flex;
+    gap: 30px;
 }
 
 .back_btn, .next_btn {
@@ -88,26 +120,6 @@
     margin-top: 10px;
     
 }
-.slider_b {
-    position: relative;
-    z-index: 1;
-    align-items: center;
-    justify-content: space-between;
-    overflow: hidden; /* Hide overflowing content */
-}
-
-.slider_b ul {
-    display: flex;
-    animation: slide 10s linear infinite; /* Continuous scrolling */
-}
-
-.slider_b ul li {
-    width: 100%; 
-    list-style: none;
-    padding: 20px;
-    display: flex;
-    gap: 30px;
-}
 
 .slider ul{
     display: flex;
@@ -117,21 +129,13 @@
    
 }
 
+
 .slider ul li{
     width: 100%; /* Ensure 3 items fit in the slider view */
     list-style: none;
     padding: 20px;
     display: flex;
     gap: 30px;
-}
-/* Animation */
-@keyframes slide {
-    from {
-        transform: translateX(0%);
-    }
-    to {
-        transform: translateX(-100%);
-    }
 }
 
 .product {
@@ -195,7 +199,6 @@
     padding-top: 20px;
     width: 270px;
     background-color: white;
-    color: black;
     font-size: 26px;
     font-weight: 600;
     margin-bottom: 5%;

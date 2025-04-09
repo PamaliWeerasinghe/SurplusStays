@@ -12,35 +12,38 @@ require APPROOT . '/views/includes/htmlHeader.view.php' ?>
             echo $this->view('includes/navbar_unregistered'); 
         }
         else{
-            echo $this->view('includes/charityNavbar');
+            echo $this->view('includes/navbar');
         }
     ?>
     
     <div class="landing-section">
+        <video autoplay loop muted playsinline class="background-video">
+            <source src="<?= ASSETS ?>/videos/2.mp4" type="video/mp4">
+            Your browser does not support the video tag.
+        </video>
+        <div class="gradient-overlay"></div>
         <div class="aboutUs">
             <div class="us">
-            <span class="def">
-            <span style="color: white;">Surplus</span>
-            Stays
-            <span style="color: white;">
-            : <br/>
-            Addressing Food <br/>Surplus
-            </span>
-            </span>
-            <h5 style="color: white;font-weight:normal">
-            SurplusStays Connects Businesses With Excess 
-            Food To <br/>Customers And Donation Organizations.
-            </h5>
-            <button class="learnMore">
-                Learn More
-            </button>
+                <span class="def">
+                    <span style="color: white;">Surplus</span>
+                    Stays
+                    <span style="color: white;">
+                        : <br/>
+                        Addressing Food <br/>Surplus
+                    </span>
+                </span>
+                <h5 style="color: white;font-weight: 600;font-size:16px;">
+                    SurplusStays Connects Businesses With Excess 
+                    Food To <br/>Customers And Donation Organizations.
+                </h5>
+                <button class="learnMore">
+                    Learn More
+                </button>
             </div>
         </div>
-        <div class="right">
-
-        </div>
-        
+        <div class="right"></div>
     </div>
+
     <div class="availability">
         <div>
             <img src="<?= ASSETS ?>/images/24-hours (1) 1.png"/>
@@ -238,6 +241,14 @@ require APPROOT . '/views/includes/htmlHeader.view.php' ?>
     // Adjust animation duration based on content width
     const trackWidth = sliderTrack.offsetWidth;
     sliderTrack.style.animationDuration = `${trackWidth / 100}px`; // Adjust speed
+
+    document.querySelector('.learnMore').addEventListener('click', () => {
+        // Scroll down by 300 pixels (adjust the value as needed)
+        window.scrollBy({
+            top: 1600, // Number of pixels to scroll down
+            behavior: 'smooth' // Smooth scrolling effect
+        });
+    });
 
 
 </script>

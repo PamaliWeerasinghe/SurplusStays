@@ -1,6 +1,12 @@
+@import url("https://fonts.googleapis.com/css2?family=Outfit:wght@100..900&family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+
+* {
+
+    font-family: 'Poppins', sans-serif;
+}
+
 body {
     margin: 0;
-    font-family: Arial, sans-serif;
     overflow-x: hidden; /* Prevents horizontal scroll due to potential overflow */
 }
 
@@ -9,7 +15,25 @@ body {
     background-color: #f4f4f4;
     flex-direction: row;
     width: 100%; /* Ensure container takes full width */
-    height: 140%; /* Adjust height to fill the screen */
+    height: 90vh; /* Adjust height to fill the screen */
+}
+.error.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.error.alert ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.error.alert li {
+    margin-bottom: 5px;
 }
 
 .left {
@@ -59,7 +83,8 @@ body {
 }
 
 .register-button {
-    background-color: #1B4332;
+    background-color: #00615F;
+    border: none;
     color: white;
     height: 70px;
     width: 60%;
@@ -72,7 +97,7 @@ body {
 }
 
 .register-button:hover {
-    background-color: #FD5D34;
+    background-color: #007A78;
     transition: 0.5s;
 }
 
@@ -115,10 +140,10 @@ body {
 .step-number{
     display: flex;
     color: white;
-    background-color: #FD5D34;
-    border-radius: 50%;
-    height: 40px;
-    width: 40px;
+    background-color: #00615F;
+    border-radius: 5%;
+    height: 100%;
+    width: 100%;
     align-items: center;
     justify-content: center;
     margin-right: 15px;

@@ -4,7 +4,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Recent Items</title>
-    <link rel="stylesheet" href="<?= STYLES ?>/RecentItems.css"> 
+    <link rel="stylesheet" href="../../SURPLUSSTAYS/public/assets/styles/RecentItems.css"> 
 </head>
 <body>
     <div class="rectangle">
@@ -73,67 +73,56 @@
 
     <button class="transparent_btn">Explore More</button>
 
-    <<div class="rectangle" style="border-radius: 0 76px 0 0;">
-    <h2><span class="white">POPULAR</span> BUSINESSES</h2>
-</div>
-
-<div class="item_slider_b">
-    <div class="slider_b">
-        <ul>
-            <li>
-                <div class="buisness">
-                    <img src="../../SURPLUSSTAYS/public/assets/images/Keels.png" alt="">
-                </div>
-            </li>
-            <li>
-                <div class="buisness">
-                    <img src="../../SURPLUSSTAYS/public/assets/images/ElephantHouse.png" alt="">
-                </div>
-            </li>
-            <li>
-                <div class="buisness">
-                    <img src="../../SURPLUSSTAYS/public/assets/images/Cinnamon.png" alt="">
-                </div>
-            </li>
-            <li>
-                <div class="buisness">
-                    <img src="../../SURPLUSSTAYS/public/assets/images/Laughs.png" alt="">
-                </div>
-            </li>
-            <li>
-                <div class="buisness">
-                    <img src="../../SURPLUSSTAYS/public/assets/images/Glomark.png" alt="">
-                </div>
-            </li>
-            <li>
-                <div class="buisness">
-                    <img src="../../SURPLUSSTAYS/public/assets/images/Keels.png" alt="">
-                </div>
-            </li>
-            <li>
-                <div class="buisness">
-                    <img src="../../SURPLUSSTAYS/public/assets/images/ElephantHouse.png" alt="">
-                </div>
-            </li>
-            <li>
-                <div class="buisness">
-                    <img src="../../SURPLUSSTAYS/public/assets/images/Cinnamon.png" alt="">
-                </div>
-            </li>
-            <li>
-                <div class="buisness">
-                    <img src="../../SURPLUSSTAYS/public/assets/images/Laughs.png" alt="">
-                </div>
-            </li>
-            <li>
-                <div class="buisness">
-                    <img src="../../SURPLUSSTAYS/public/assets/images/Glomark.png" alt="">
-                </div>
-            </li>
-        </ul>
+    <div class="rectangle" style="border-radius: 0 76px 0 0;" >
+        <h2> <span class="white">POPULAR</span> BUISNESSES</h2>
     </div>
-</div>
 
+    <div class="item_slider_b">
+        <div class="slider_b" >
+            <ul>
+                <li>
+                        <div class="buisness">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/Keels.png" alt="">
+                        </div>
+                </li>
+                <li>
+                        <div class="buisness">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/ElephantHouse.png" alt="">
+                        </div>
+                </li>
+                <li>
+                        <div class="buisness">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/Cinnamon.png" alt="">
+                        </div>
+                </li>
+                <li>
+                        <div class="buisness">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/Laughs.png" alt="">
+                        </div>
+                </li>
+                <li>
+                        <div class="buisness">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/Glomark.png" alt="">
+                        </div>
+                </li>
+                <li>
+                        <div class="buisness">
+                            <img src="../../SURPLUSSTAYS/public/assets/images/ElephantHouse.png" alt="">
+                        </div>
+                </li>
+                <li>
+                    <div class="buisness">
+                        <img src="../../SURPLUSSTAYS/public/assets/images/Keels.png" alt="">
+                    </div>
+            </li>
+            <li>
+                <div class="buisness">
+                    <img src="../../SURPLUSSTAYS/public/assets/images/Cinnamon.png" alt="">
+                </div>
+        </li>
+            </ul>
+        </div>
+    </div>
 
     <button class="transparent_btn">More About Buisnesses</button>
 

@@ -1,0 +1,122 @@
+
+.orange-bar label{
+    color: white;
+}
+.seecomplain-status{
+    width: 86%;
+    background-color: #F0F8FF;
+    margin-top: -28%;
+    border-radius: 10px;
+    
+    
+}
+.pic{
+    width: 200px; /* Set a fixed width */
+    height: 200px; /* Set a fixed height to maintain square shape */
+    object-fit: cover; /* Ensures the image is cropped properly */
+    border-radius: 8px; /* Optional: adds rounded corners to the images */
+    padding-left: 50px;
+}
+.seecomplain-bar{
+    width: 99.4%;
+    height: 7vh;
+    border-radius: 10px 10px 0 0;
+    background-color: #FD5D34;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 0.3%;
+}
+.seecomplain-bar label{
+    color: white;
+}
+.see-product{
+    display: flex;
+    flex-direction:column;
+    padding: 1%;
+
+}
+.main-img-details{
+    display: flex;
+    flex-direction:row ;
+    padding: 1%;
+}
+.see-product-img{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: center;
+}
+.see-product-details{
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: flex-start;
+    flex-direction: column;
+}
+.see-product-details div p{
+    color: grey;
+}
+.see-product-details div{
+    margin-top: 1%;
+}
+.see-product-location{
+    display: flex;
+    flex-direction: row;
+    align-items:center;
+    justify-content: space-between;
+
+    width:100%;
+}
+.see-product-location-details{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+.sub-img{
+    padding: 4%;
+}
+.sub-details{
+    padding-left: 4%;
+    margin-top: 2%;
+}
+.sub-customer-details{
+    padding-left: 4%;
+    margin-top: 2%;
+    display: flex;
+    flex-direction: column;
+}
+.sub-customer-details span{
+    color: red;
+}
+.business-response-area{
+    display: flex;
+    flex-direction: column;
+    padding: 4%;
+}
+.business-response-area div p{
+    color: grey;
+}
+.business-response-area-btn{
+    padding: 4%;
+    display: flex;
+    justify-content: flex-end;
+    
+    
+}
+.business-response-area-btn button{
+    width: 25%;
+    height: 5vh;
+    border-radius: 20px;
+    border: none;
+    text-align: center;
+}
+.complain-btn1{
+    background-color: #FFAC96;
+    cursor: pointer;
+    text-align: center;
+}
+.complain-btn2{
+    background-color: #fff;
+    cursor: pointer;
+}

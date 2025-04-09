@@ -12,6 +12,7 @@ define('SITENAME', 'surplusStays');
 define('ROOT', 'http://localhost:8080/SurplusStays/public');
 define('STYLES', 'http://localhost:8080/SurplusStays/public/assets/styles');
 define('ASSETS', 'http://localhost:8080/SurplusStays/public/assets');
+define('SIDEPANELBUSINESS', '/SurplusStays/public/business');
 
 //DATABASE
 define('DBNAME','surplusstays');

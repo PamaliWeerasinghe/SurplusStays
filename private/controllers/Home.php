@@ -8,6 +8,10 @@ class Home extends Controller
     {
         $this->view('home');
     }
+
+    function shop(){
+        $this->view('unregShop');
+    }
 }
 
 

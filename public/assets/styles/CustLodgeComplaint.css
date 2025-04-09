@@ -1,0 +1,182 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .container{
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      margin: 0;
+  }
+  
+  .container-right{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 180vh;
+  }
+  
+  .top-half {
+      background-color: #1b4332;
+      color: white;
+      width: 100%;
+      height: 480px;
+      display: flex;
+      flex-direction: column;
+  }
+  
+  .bell-icon {
+      width: 28px;
+      height: 28px;
+      padding-top: 10px;
+      cursor: pointer;
+      margin-left: 96%;
+  }
+
+.event-card {
+    background-color: #f5f9ff;
+    border-radius: 20px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    width: 400px;
+    margin-left: 6.5%;
+    margin-top: 40px;
+    width: 88%;
+}
+
+.header {
+    background-color: #e05b4a;
+    color: white;
+    border-radius: 20px 20px 0px 0px;
+    padding: 10px;
+    text-align: center;
+    margin-bottom: 40px;
+}
+
+.header h2{
+    color: white;
+    font-size: 18px;
+    padding-left: 30px;
+}
+
+.input-group {
+    margin-bottom: 15px;
+    width: 80%;
+    padding: 20px;
+    margin-left: 50px;
+   
+}
+
+.input-group label {
+    display: block;
+    font-weight: bold;
+    margin-bottom: 20px;
+    color: black;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    padding: 8px;
+    border-radius: 18px;
+    border: 1px solid #ccc;
+}
+
+.input-group textarea {
+    resize: none;
+    height: 80px;
+}
+
+.upload-group .upload-wrapper {
+    display: flex;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.upload-group .upload-icon {
+    width: 150px; /* Set a fixed width */
+    height: 150px; /* Set a fixed height to maintain square shape */
+    object-fit: cover; /* Ensures the image is cropped properly */
+    border-radius: 10px; /* Optional: adds rounded corners to the images */
+}
+
+.delete-btn{
+    height: 20px;
+    margin-bottom: 160px;
+    margin-left: -20px;
+    position: absolute;
+    width: 20px;
+    z-index: 2;
+}
+
+.upload-group input[type="file"] {
+    width: 18%;
+    display: none; /* Hides the file input */
+}
+
+
+.button-group {
+    display: flex;
+    justify-content: space-between;
+    padding: 40px;
+    padding-left: 70px;
+    width: 81%;
+}
+
+button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 65px;
+    cursor: pointer;
+    font-weight: bold;
+    width: 180px;
+    height: 40px;
+}
+
+.btn-create {
+    background-color: #1B4332;
+    color: white;
+}
+
+.btn-clear {
+    background-color: #f39c12;
+    color: white;
+}
+
+.btn-cancel {
+    background-color: #e74c3c;
+    color: white;
+}
+
+button:hover {
+    opacity: 0.9;
+}
+.delete-btn:hover {
+    opacity: 0.8;
+}
+
+.small{
+    font-weight: 300px;
+}
+.error.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.error.alert ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
+}
+
+.error.alert li {
+    margin-bottom: 5px;
+}
