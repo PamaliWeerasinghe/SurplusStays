@@ -75,4 +75,16 @@ class OrderModel extends Model
             $this->query($updateQuery, ['qty' => $item->qty, 'product_id' => $item->products_id]);
         }
     }
+
+    public function countOrders($business_id)
+    {
+        $query = "SELECT COUNT(DISTINCT o.id) as count
+              FROM `order` o
+              JOIN order_items oi ON o.id = oi.order_id
+              JOIN products p ON oi.products_id = p.id
+              WHERE p.business_id = :business_id";
+
+        $result = $this->query($query, ['business_id' => $business_id]);
+        return $result[0]->count ?? 0;
+    }
 }

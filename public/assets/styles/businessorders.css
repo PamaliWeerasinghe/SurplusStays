@@ -89,7 +89,7 @@ body {
   
   .order-table thead tr {
     /* background-color: #f8f8f8; */
-    text-align: left;
+    text-align: center;
     
   }
   
@@ -107,6 +107,7 @@ body {
   .order-table tbody tr {
     border-bottom: 1px solid #e0e0e0;
     background-color: white;
+    text-align: center;
   }
 
   .order-table tbody tr:hover {

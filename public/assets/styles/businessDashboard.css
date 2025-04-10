@@ -35,74 +35,6 @@ body {
 
 }
 
-/*rest from here*/
-
-.sidePanel{
-    display: flex;
-    flex-direction: column;
-    /* width: 20%;; */
-    flex: 1;
-    /* height: 195vh; */
-    background-color: #F0F8FF;
-}
-
-.greeting{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 6%;
-}
-.greeting label{
-    font-size: larger;
-    font-weight: bolder;
-    margin-left: 2%;
-}
-.buttons{
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5%;
-}
-.btn-nonSelected{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 240px;
-    height: 39px;
-    background-color: #ffffff;
-    border-radius: 68px;
-    margin-top: 10%;
-    cursor: pointer;
-}
-.btn-nonSelected label{
-  cursor: pointer;
-}
-.btn-Selected{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 240px;
-    height: 39px;
-    background-color: #FD5D34;
-    border-radius: 68px;
-    margin-top: 10%;
-    cursor: pointer;
-}
-.btn-Selected label{
-    color: white;
-    cursor: pointer;
-}
-
-.profile-image {
-  width: 60px;
-  height: 60px;
-  border-radius: 50%;
-  margin-bottom: 10px;
-}
-
-/*dashboard start here*/
-
 .summary{
     display: flex;
     flex-direction: column;
@@ -112,53 +44,52 @@ body {
     /* position: absolute; */
     
 }
-.notifications{
-    display: flex;
-    justify-content: flex-end;
-    padding: 2%;
-}
-.summary-blocks{
+
+/*mini box section*/
+
+.mini-boxes{
     display: flex;
     flex-direction: row;
     justify-content: space-evenly;
     align-items: center;
+    margin-top: 7%;
 }
-.summaries{
-    width: 193px;
-    height: 71px;
-    background-color: #FFFFFF;
-    border-radius: 10px;
-    display: flex;
-    justify-content: center;
-    margin-bottom: 8%;
-}
-/*.admin{
-    color: #1B4332;
-}*/
-.summaries{
+
+.mini-box{
     width: 193px;
     height: 71px;
     background-color: #FFFFFF;
     border-radius: 10px;
     display: flex;
     flex-direction: row;
+    justify-content: center;
     padding: 0.5%;
 }
-.summaries-1{
+.mini-box-1{
     display: flex;
     justify-content: center;
     align-items: center;
+    
 }
-.summaries-2{
+
+.mini-box-1 img{
+  height: 50px;
+  width: 50px;
+}
+
+.mini-box-2{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding-left: 4%;
 }
-.summaries-2-label{
+.mini-box-2 label{
     font-weight: bold;
 }
+
+
+
 .admin-order-status{
   width: 86%;
   /*height: 50vh;*/ 
@@ -234,57 +165,75 @@ body {
     justify-content:center;
     margin-top: 10px;
 }
+
+/*product status box*/
+
 .product-status{
-    width: 86%;
-    height: 50vh;
+    width: 86%; 
     background-color: #F0F8FF;
     margin-top: 5%;
     border-radius: 10px;
     padding: 2% 1%;
 }
-.product-summaries{
-    display: flex;
-    flex-direction: column;
-    padding: 1%;
-
-}
 .product-row{
     display: flex;
     flex-direction: row;
-    padding: 1%;
-
+    padding: 2%;
+    margin-top: 2%;   
 }
+
 .product-item{
     display: flex;
     flex: 1;
     flex-direction: row;
-    padding-left: 4%;
+    padding-left: 2%;  
 }
 
-.product-summaries-item{
+.product-item :hover{
+  cursor: pointer;
+}
+
+.product-item img{
+  height: 100px;
+  width: 100px;
+  border-radius: 10px;
+}
+
+.product-item-colomn{
     display: flex;
     flex-direction: column;
     justify-content: center;
-    /*align-items: center;*/
-    padding-left: 4%;
-}
-.product-summaries-label1{
-    font-weight: bolder;
-}
-.product-summaries-label2{
-color:#1B4332;
-font-weight: bolder;
+    padding-left: 20px;
 
 }
-.next{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    
+
+.product-item-1{
+    font-weight: 700;
 }
-.complaints-status{
-    width: 86%;
-    height: 55vh;
+
+.product-item-2{
+color:#1B4332;
+font-weight: bolder;
+}
+
+/* pagination */
+
+.pagination{
+    display: flex;
+    justify-content: flex-end;
+    align-items: center; 
+}
+
+.pagination img{
+  height: 30px;
+  width: 30px;
+  margin: 0px 10px;
+}
+
+/*recent orders box*/
+
+.recent-orders{
+    width: 86%;   
     background-color: #F0F8FF;
     margin-top: 5%;
     margin-bottom: 5%;
@@ -292,74 +241,66 @@ font-weight: bolder;
     padding: 2% 1%;
    
 }
-.complaint-table{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-}
-.complaint-table table tr{
-    column-gap: 2%;
-}
-
-
-.table-container {
-    background-color: #f3faff;
-    padding: 20px;
-    border-radius: 10px;
-    max-width: 1000px;
-    margin: auto;
-  }
   
-  .admin-order-table {
-    width: 100%;
+  .order-table {
+    width: 90%;
     border-collapse: collapse;
-    font-family: Arial, sans-serif;
+    margin: 0 auto 2% auto;
   }
   
-  .admin-order-table thead tr {
-    background-color: #f8f8f8;
-    text-align: left;
+  .order-table thead tr {
+    /* background-color: #f8f8f8; */
+    text-align: center;
+    
   }
   
-  .admin-order-table th, .admin-order-table td {
+  .order-table th, .order-table td {
     padding: 12px 20px;
     font-size: medium;
     color: #333;
   }
   
-  .admin-order-table th {
+  .order-table th {
     color: #7e8a91;
     font-weight: 600;
   }
   
-  .admin-order-table tbody tr {
+  .order-table tbody tr {
     border-bottom: 1px solid #e0e0e0;
+    background-color: white;
+    text-align: center;
+  }
+
+  .order-table tbody tr:hover {
+    background-color:#b6efc4; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+  
+  .order-table tbody tr:last-child {
+    margin-top: 4%;
   }
   
-  .admin-order-table tbody tr:last-child {
-    border-bottom: none;
-  }
-  
-  .admin-order-table td {
+  .order-table td {
     vertical-align: middle;
-  }
-  
-  .admin-order-table button {
-    padding: 10px 20px;
-    border-radius: 20px;
-    border: none;
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
-    cursor: pointer;
-  }
-  
-  .admin-order-table .completed {
-    background-color: #1B4332;
 
   }
-  
-  .admin-order-table .take-action {
-    background-color: #FD5D34;
+  .order-table td label {
+    font-size:xx-small;
+    color: grey;
+    
   }
+
+.not-collected {
+    background-color: #e74c3c;
+}
+
+.ongoing {
+    background-color: #f39c12;
+}
+
+.completed {
+    background-color: #2ecc71;
+}
   

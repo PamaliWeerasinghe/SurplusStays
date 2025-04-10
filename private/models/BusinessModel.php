@@ -1,6 +1,6 @@
 <?php
 
-class Business extends Model
+class BusinessModel extends Model
 {
     protected $table = "business";
 

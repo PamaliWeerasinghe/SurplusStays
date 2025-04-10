@@ -145,7 +145,7 @@ class Register extends Controller
     {
         $errors = array();
         if (count($_POST) > 0) {
-            $business = new Business(); // Model for `business` table
+            $business = new BusinessModel(); // Model for `business` table
             $userTable = new User();    // Model for `user` table
 
             // Handle file upload for profile picture
@@ -175,7 +175,7 @@ class Register extends Controller
                 $businessData = [
                     'name' => $_POST['name'],
                     'email' => $_POST['email'],
-                    'phoneNo' => $_POST['phone'],//phone_no
+                    'phone_no' => $_POST['phone'],//phone_no
                     'username' => $_POST['username'],
                     'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
                     //'businessType_id' => $_POST['type'], changed to type

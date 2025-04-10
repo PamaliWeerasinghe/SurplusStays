@@ -20,13 +20,7 @@
 
             <div class="dashboard">
                 <div class="summary">
-                    <div class="notifications-type2">
-                        <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." />
-                            <img src="<?= ASSETS ?>/images/search.png" class="bell2" />
-                        </div>
-                        <img src="<?= ASSETS ?>/images/Bell.png" class="bell" />
-                    </div>
+                    
                     <div class="add-buyer">
                         <button class="add-complain-btn" onclick="window.location.href='<?= ROOT ?>/business/addproduct'">+ Add Product</button>
                     </div>
@@ -38,11 +32,12 @@
                         <form method="GET" action="<?= ROOT ?>/business/myproducts">
                             <select name="filter" onchange="this.form.submit()">
                                 <option value="">Filter the products</option>
-                                <option value="expiration_date" <?= isset($_GET['filter']) && $_GET['filter'] == 'expiration_date' ? 'selected' : '' ?>>By Expiration Date</option>
-                                <option value="quantity" <?= isset($_GET['filter']) && $_GET['filter'] == 'quantity' ? 'selected' : '' ?>>By Quantity</option>
-                                <option value="price" <?= isset($_GET['filter']) && $_GET['filter'] == 'price' ? 'selected' : '' ?>>By Price</option>
+                                <option value="Expiration" <?= ($_GET['filter'] ?? '') === 'Expiration' ? 'selected' : '' ?>>By Expiration Date</option>
+                                <option value="Quantity" <?= ($_GET['filter'] ?? '') === 'Quantity' ? 'selected' : '' ?>>By Quantity</option>
+                                <option value="Price" <?= ($_GET['filter'] ?? '') === 'Price' ? 'selected' : '' ?>>By Price</option>
                             </select>
                         </form>
+
                     </div>
 
                     <table class="order-table">
@@ -70,7 +65,7 @@
                                             </div>
                                         </td>
                                         <td><?= $row->qty ?></td>
-                                        <td><?= $row->price_per_unit ?></td>
+                                        <td>Rs <?= $row->price_per_unit ?></td>
                                         <td><?= $row->expiration_date_time ?></td>
                                         <td>
                                             <div style="display: inline-block; margin-right: 10px;">

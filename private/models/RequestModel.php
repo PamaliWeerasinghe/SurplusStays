@@ -44,4 +44,11 @@ class RequestModel extends Model
         $query = "UPDATE donations SET status = :status WHERE id = :request_id";
         return $this->query($query, ['status' => $status, 'request_id' => $request_id]);
     }
+
+    public function countRequests($business_id)
+    {
+        $query = "SELECT COUNT(*) as count FROM $this->table WHERE business_id = :business_id";
+        $result = $this->query($query, ['business_id' => $business_id]);
+        return $result[0]->count ?? 0;
+    }
 }

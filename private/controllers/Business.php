@@ -10,10 +10,23 @@ class Business extends Controller
         }
 
         $product = new Products();
-        $pro_id = Auth::getID();
-        $rowCount = $product->countRows($pro_id);
+        $ordermodel = new OrderModel();
+        $requestmodel = new RequestModel();
+        $business_id = Auth::getId();
+        $productcount = $product->countProducts($business_id);
+        $ordercount = $ordermodel->countOrders($business_id);
+        $requestcount = $requestmodel->countRequests($business_id);
+
+        $products = $product->gettopsalesproducts($business_id);//filter the top selling products
+        $orders = $ordermodel->getOrdersByBusiness($business_id);
+
         $this->view('businessWelcomePage', [
-            'rowCount' => $rowCount,
+            'productcount' => $productcount,
+            'ordercount' => $ordercount,
+            'requestcount' => $requestcount,
+            'orders'=>$orders,
+            'rows' => $products
+
         ]);
     }
 
@@ -26,175 +39,24 @@ class Business extends Controller
         $product = new Products();
         $business_id = Auth::getID();
 
-        // Handle expired products
+        // Delete expired products
         $currentDateTime = date('Y-m-d H:i:s');
-        $data = $product->where('business_id', $business_id);
-        if (!empty($data)) {
-            foreach ($data as $row) {
+        $allProducts = $product->where('business_id', $business_id);
+        if (!empty($allProducts)) {
+            foreach ($allProducts as $row) {
                 if ($currentDateTime > $row->expiration_date_time) {
                     $product->delete($row->id);
                 }
             }
         }
 
-        // Get filter from query parameters
         $filter = $_GET['filter'] ?? null;
+        $filteredProducts = $product->getFilteredProducts($business_id, $filter);
 
-        // Fetch filtered or default data
-        $data = $product->getFilteredProducts($business_id, $filter);
-
-        $this->view('businessMyProducts', ['rows' => $data]);
+        $this->view('businessMyProducts', ['rows' => $filteredProducts]);
     }
 
 
-    function orders()
-    {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
-
-        $business_id = Auth::getID();
-        $orderModel = new OrderModel();
-
-        $orders = $orderModel->getOrdersByBusiness($business_id);
-
-        $this->view('businessOrders', ['orders' => $orders]);
-    }
-
-    function viewOrder($id = null)
-    {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
-
-        $orderModel = new OrderModel();
-        $orderDetails = $orderModel->getOrderDetails($id);
-
-        if (!$orderDetails) {
-            $this->redirect('orders'); // Redirect if order is not found
-        }
-
-        $this->view('businessOrderDetails', ['order' => $orderDetails]);
-    }
-
-    function updateOrderStatus()
-    {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['order_id'], $_POST['status'])) {
-            $orderModel = new OrderModel();
-            $order_id = $_POST['order_id'];
-            $status = $_POST['status'];
-
-            $orderModel->updateOrderStatus($order_id, $status);
-
-            $this->redirect('business/orders');
-        } else {
-            $this->redirect('business/orders');
-        }
-    }
-
-
-    function requests()
-    {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
-
-        $business_id = Auth::getID();
-        $requestModel = new RequestModel();
-
-        $requests = $requestModel->getRequestByBusiness($business_id);
-
-        $this->view('businessRequests', ['requests' => $requests]);
-    }
-
-    function viewRequest($id = null)
-    {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
-
-        $requestModel = new RequestModel();
-        $requestDetails = $requestModel->getRequestDetails($id);
-
-        if (!$requestDetails) {
-            $this->redirect('requests'); // Redirect if request is not found
-        }
-
-        $this->view('businessRequestDetails', ['request' => $requestDetails]);
-    }
-
-    function updateRequestStatus()
-    {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_id'], $_POST['status'])) {
-            $requestModel = new RequestModel();
-            $request_id = $_POST['request_id'];
-            $status = $_POST['status'];
-
-            // Update request status
-            $requestModel->updateRequestStatus($request_id, $status);
-
-            // Redirect back to the request details page
-            $this->redirect('business/requests/');
-        } else {
-            $this->redirect('business/requests');
-        }
-    }
-
-
-    function complaints()
-    {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
-
-        $business_id = Auth::getID();
-        $complaintModel = new ComplaintModel();
-
-        $complaints = $complaintModel->getComplainsByBusiness($business_id);
-
-        $this->view('businessComplaints', ['complaints' => $complaints]);
-    }
-
-    function viewComplaint($id = null)
-    {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
-
-        $complaintModel = new ComplaintModel();
-        $complaintDetails = $complaintModel->getComplaintDetails($id);
-
-        if (!$complaintDetails) {
-            $this->redirect('complaints');
-        }
-
-        // Handle response submission (safely check for POST data)
-        if (isset($_POST['response']) && !empty($_POST['response'])) {
-            $complaintModel->addResponse($id, $_POST['response']);
-        }
-
-        $this->view('businessComplaintDetails', ['complaint' => $complaintDetails]);
-    }
-
-
-
-
-    function reports()
-    {
-        $this->view('businessReport');
-    }
-    function profile()
-    {
-        $this->view('businessProfile');
-    }
 
     function viewProduct($id = null)
     {
@@ -390,6 +252,234 @@ class Business extends Controller
             }
         }
     }
+
+
+    function orders()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $business_id = Auth::getID();
+        $orderModel = new OrderModel();
+
+        $orders = $orderModel->getOrdersByBusiness($business_id);
+
+        $this->view('businessOrders', ['orders' => $orders]);
+    }
+
+    function viewOrder($id = null)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $orderModel = new OrderModel();
+        $orderDetails = $orderModel->getOrderDetails($id);
+
+        if (!$orderDetails) {
+            $this->redirect('orders'); // Redirect if order is not found
+        }
+
+        $this->view('businessOrderDetails', ['order' => $orderDetails]);
+    }
+
+    function updateOrderStatus()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['order_id'], $_POST['status'])) {
+            $orderModel = new OrderModel();
+            $order_id = $_POST['order_id'];
+            $status = $_POST['status'];
+
+            $orderModel->updateOrderStatus($order_id, $status);
+
+            $this->redirect('business/orders');
+        } else {
+            $this->redirect('business/orders');
+        }
+    }
+
+
+    function requests()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $business_id = Auth::getID();
+        $requestModel = new RequestModel();
+
+        $requests = $requestModel->getRequestByBusiness($business_id);
+
+        $this->view('businessRequests', ['requests' => $requests]);
+    }
+
+    function viewRequest($id = null)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $requestModel = new RequestModel();
+        $requestDetails = $requestModel->getRequestDetails($id);
+
+        if (!$requestDetails) {
+            $this->redirect('requests'); // Redirect if request is not found
+        }
+
+        $this->view('businessRequestDetails', ['request' => $requestDetails]);
+    }
+
+    function updateRequestStatus()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_id'], $_POST['status'])) {
+            $requestModel = new RequestModel();
+            $request_id = $_POST['request_id'];
+            $status = $_POST['status'];
+
+            // Update request status
+            $requestModel->updateRequestStatus($request_id, $status);
+
+            // Redirect back to the request details page
+            $this->redirect('business/requests/');
+        } else {
+            $this->redirect('business/requests');
+        }
+    }
+
+
+    function complaints()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $business_id = Auth::getID();
+        $complaintModel = new ComplaintModel();
+
+        $complaints = $complaintModel->getComplainsByBusiness($business_id);
+
+        $this->view('businessComplaints', ['complaints' => $complaints]);
+    }
+
+    function viewComplaint($id = null)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $complaintModel = new ComplaintModel();
+        $complaintDetails = $complaintModel->getComplaintDetails($id);
+
+        if (!$complaintDetails) {
+            $this->redirect('complaints');
+        }
+
+        // Handle response submission (safely check for POST data)
+        if (isset($_POST['response']) && !empty($_POST['response'])) {
+            $complaintModel->addResponse($id, $_POST['response']);
+        }
+
+        $this->view('businessComplaintDetails', ['complaint' => $complaintDetails]);
+    }
+
+    function profile()
+    {
+        $this->view('businessProfile');
+    }
+
+
+    function editprofile()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $errors = [];
+
+        $businessModel = new BusinessModel();
+        $userTable = new User();
+
+        $businessId = Auth::getUserId(); // Get current user id
+        $row = $businessModel->where('id', $businessId);
+
+        if ($row) {
+            $row = $row[0]; // Get the first (and only) record
+        } else {
+            $errors[] = "Business not found.";
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/businessImages/";
+            $uploadedPicture = '';
+
+            if (isset($_FILES['upload-1']) && $_FILES['upload-1']['error'] === 0) {
+                $fileName = basename($_FILES['upload-1']['name']);
+                $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+                $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+
+                if (in_array(strtolower($fileType), $allowedTypes)) {
+                    $uniqueName = uniqid('img_', true) . '.' . $fileType;
+                    $filePath = $targetDir . $uniqueName;
+
+                    if (move_uploaded_file($_FILES['upload-1']['tmp_name'], $filePath)) {
+                        $uploadedPicture = '/assets/businessImages/' . $uniqueName;
+                    } else {
+                        $errors[] = "Failed to upload the image.";
+                    }
+                } else {
+                    $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed.";
+                }
+            } elseif (!empty($row->pictures)) {
+                $uploadedPicture = $row->pictures; // keep existing image if none is uploaded
+            } else {
+                $errors[] = "An event image is required.";
+            }
+
+            $_POST['pictures'] = $uploadedPicture;
+
+            if (count($errors) === 0 && $businessModel->validate($_POST)) {
+                $businessData = [
+                    'name' => $_POST['name'],
+                    'email' => $_POST['email'],
+                    'phone_no' => $_POST['phone'],
+                    'username' => $_POST['username'],
+                    'type' => $_POST['type'],
+                    'picture' => $_POST['picture'],
+                    'pictures' => $_POST['pictures'], // storing the image path here
+                    'latitude' => $_POST['latitude'],
+                    'longitude' => $_POST['longitude'],
+                ];
+
+                $businessModel->update($businessId, $businessData);
+
+                $userData = [
+                    'email' => $_POST['email'],
+                ];
+                $userTable->update($businessId, $userData);
+
+                $this->redirect('login');
+            } else {
+                $errors = array_merge($errors, $businessModel->errors);
+            }
+        }
+
+        $this->view('businessEditProfile', [
+            'errors' => $errors,
+            'row' => [$row], // Pass as array for get_var() compatibility
+        ]);
+    }
+
+
 
 
     function test($name)
