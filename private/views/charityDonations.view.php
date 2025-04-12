@@ -14,9 +14,6 @@
         <div class="container-right">
             <div class="top-half">
             <div class="top-bar">
-                    <div class="notification">
-                        <img src="<?=ASSETS?>/images/bell.png" alt="Notification Bell" class="bell-icon">
-                    </div>
                 </div>
                 <div class="stats">
                     <div class="stat-item">                                   
@@ -38,7 +35,7 @@
                     <div class="stat-item">
                         <div>
                             <div class="stat-title">No response</div>
-                            <div class="stat-value">23</div>
+                            <div class="stat-value"><?= isset($PenReqCount) ? htmlspecialchars($PenReqCount) : 0 ?></div>
                         </div>
                     </div>
                 </div>
@@ -97,24 +94,24 @@
                 <div class="stats">
                     <div class="stat-item_r">                                   
                             <div class="stat-title">Total Requests</div>
-                            <div class="stat-value"><?= isset($AllReqCount) ? htmlspecialchars($AllReqCount) : 0 ?></div>
+                            <div class="stat-value"><?= isset($AllReqCount_r) ? htmlspecialchars($AllReqCount_r) : 0 ?></div>
                     </div>
                     <div class="stat-item_r">
                         <div>
                             <div class="stat-title">Accepted</div>
-                            <div class="stat-value"><?= isset($AccReqCount) ? htmlspecialchars($AccReqCount) : 0 ?></div>
+                            <div class="stat-value"><?= isset($AccReqCount_r) ? htmlspecialchars($AccReqCount_r) : 0 ?></div>
                         </div>
                     </div>
                     <div class="stat-item_r">
                         <div>
                             <div class="stat-title">Rejected</div>
-                            <div class="stat-value"><?= isset($RejReqCount) ? htmlspecialchars($RejReqCount) : 0 ?></div>
+                            <div class="stat-value"><?= isset($RejReqCount_r) ? htmlspecialchars($RejReqCount_r) : 0 ?></div>
                         </div>
                     </div>
                     <div class="stat-item_r">
                         <div>
                             <div class="stat-title">No response</div>
-                            <div class="stat-value">23</div>
+                            <div class="stat-value"><?= isset($PenReqCount_r) ? htmlspecialchars($PenReqCount_r) : 0 ?></div>
                         </div>
                     </div>
                 </div>
@@ -128,7 +125,7 @@
                             <button class="toggle-option2" data-status="accepted">Accepted</button>
                             <button class="toggle-option2" data-status="rejected">Rejected</button>
                         </div>
-                        <table class="admin-order-table">
+                        <table class="admin-order-table2">
                             <thead>
                                 <tr>
                                     <th>Date</th>
@@ -195,7 +192,8 @@
         </div>
     </div>
 
-    <script>
+<script>
+
 document.addEventListener("DOMContentLoaded", function () {
     document.querySelectorAll(".take-action_r").forEach(button => {
         button.addEventListener("click", function () {
@@ -204,36 +202,76 @@ document.addEventListener("DOMContentLoaded", function () {
         });
     });
 });
+
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.toggle-option1');
+    const rows = document.querySelectorAll('.admin-order-table tbody tr');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            // Remove active class from all buttons
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const statusFilter = button.getAttribute('data-status');
+
+            rows.forEach(row => {
+                const statusCell = row.querySelector('td:nth-child(4) button');
+                if (!statusCell) return;
+
+                const statusText = statusCell.textContent.trim().toLowerCase();
+
+                if (statusFilter === 'all') {
+                    row.style.display = '';
+                } else if (
+                    (statusFilter === 'yet-to-decide' && statusText === 'pending') ||
+                    (statusFilter === 'accepted' && statusText === 'accepted') ||
+                    (statusFilter === 'rejected' && statusText === 'rejected')
+                ) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+
+document.addEventListener('DOMContentLoaded', () => {
+    const buttons = document.querySelectorAll('.toggle-option2');
+    const rows = document.querySelectorAll('.admin-order-table2 tbody tr');
+
+    buttons.forEach(button => {
+        button.addEventListener('click', () => {
+            buttons.forEach(btn => btn.classList.remove('active'));
+            button.classList.add('active');
+
+            const statusFilter = button.getAttribute('data-status');
+
+            rows.forEach(row => {
+                const statusCell = row.querySelector('td:nth-child(4)');
+                const hasActionDiv = statusCell.querySelector('.take-action-container');
+                const buttonText = statusCell.querySelector('button')?.textContent.trim().toLowerCase();
+
+                if (statusFilter === 'all') {
+                    row.style.display = '';
+                } else if (
+                    (statusFilter === 'yet-to-decide' && hasActionDiv) ||
+                    (statusFilter === 'accepted' && buttonText === 'accepted') ||
+                    (statusFilter === 'rejected' && buttonText === 'rejected')
+                ) {
+                    row.style.display = '';
+                } else {
+                    row.style.display = 'none';
+                }
+            });
+        });
+    });
+});
+
 </script>
 
-
-    <!-- <script>
-    let editStatusForm = null;
-
-    document.querySelectorAll('.take-action').forEach(button => {
-        button.addEventListener('click', event => {
-            event.preventDefault(); // Prevent form submission
-            editStatusForm = document.getElementById(button.dataset.formId); // Store form reference
-            document.getElementById('deleteModal').style.display = 'block'; // Show modal
-        });
-    });
-
-    document.getElementById('confirmDelete').addEventListener('click', () => {
-        if (editStatusForm) editStatusForm.submit(); // Submit the form
-    });
-
-    document.getElementById('cancelDelete').addEventListener('click', () => {
-        document.getElementById('deleteModal').style.display = 'none'; // Hide modal
-    });
-    //stop the viewProduct page when clicking edit and delete
-    document.querySelectorAll('.completed, .take-action').forEach(button => {
-        button.addEventListener('click', event => {
-            event.stopPropagation();
-        });
-    });
-
-    </script> -->
-    <script src="<?=ASSETS?>/js/charityToggle.js"></script>
+<script src="<?=ASSETS?>/js/charityToggle.js"></script>
     
 </body>
 </html>

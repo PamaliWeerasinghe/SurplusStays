@@ -15,8 +15,7 @@
 
             <div class="top-half">
                 <div class="top-bar">
-                    <div class="notification">
-                        <img src="<?=ASSETS?>/images/bell.png" alt="Notification Bell" class="bell-icon">
+                    <div class="notification">   
                     </div>
                 </div>
                 <div class="stats">
@@ -37,7 +36,7 @@
                     <div class="stat-item">
                         <img src="<?=ASSETS?>/images/box-mark.png" alt="Total Donations Icon" class="stat-icon">
                         <div>
-                            <span class="stat-title">Sent Requests</span>
+                            <span class="stat-title">Pending Requests</span>
                             <span class="stat-value"><?= isset($AllReqCount) ? htmlspecialchars($AllReqCount) : 0 ?></span>
                         </div>
                     </div>
@@ -56,7 +55,7 @@
                     </div>
                     <div class="barChart-dropdown">
                         <label class="barChart-status-label2">Bar Chart</label>
-                        <select>
+                        <select id="timeRangeSelect">
                             <option>This Week</option>
                             <option>Last Month</option>
                             <option>This Year</option>
@@ -64,23 +63,11 @@
                     </div>
 
                     <div class="barChart-status-chart">
-                        <div class="chart">
-                            <div class="bar" style="--value: 70%;"></div>
-                            <div class="bar" style="--value: 50%;"></div>
-                            <div class="bar" style="--value: 30%;"></div>
-                            <div class="bar" style="--value: 100%;"></div>
-                            <div class="bar" style="--value: 60%;"></div>
-                            <div class="bar" style="--value: 80%;"></div>
-                            <div class="bar" style="--value: 50%;"></div>
+                        <div class="chart" id="barChartContainer">
+                            <!-- JS will populate bars here -->
                         </div>
-                        <div class="day-block">
-                            <div class="day">Mon</div>
-                            <div class="day">Tue</div>
-                            <div class="day">Wed</div>
-                            <div class="day">Thu</div>
-                            <div class="day">Fri</div>
-                            <div class="day">Sat</div>
-                            <div class="day">Sun</div>
+                        <div class="day-block" id="barLabels">
+                            <!-- JS will populate labels here -->
                         </div>
                     </div>
                 </div>
@@ -92,56 +79,32 @@
                     <div class="barChart-dropdown">
                     <div></div>
                     <select>
-                        <option>By 1 week</option>
-                        <option>By 2 weeks</option>
-                        <option>By 1 month</option>
+                        <option>All Time</option>
+                        <option>Last Month</option>
+                        <option>Last Year</option>
                     </select>
                     </div>
                 </div>            
                 <div class="buisness-summaries">
-                    <div class="buisness-row">
-                        <div class="buisness-item">
-                            <div>
-                                <img src="<?=ASSETS?>/images/keels.png"/>
+                    <?php if (!empty($topBusinesses)): ?>
+                        <?php foreach (array_chunk($topBusinesses, 2) as $row): ?>
+                            <div class="buisness-row">
+                                <?php foreach ($row as $business): ?>
+                                    <div class="buisness-item">
+                                        <div>
+                                            <img src="<?= $business['image'] ?>" alt="<?= $business['name'] ?>" />
+                                        </div>
+                                        <div class="buisness-summaries-item">
+                                            <label class="buisness-summaries-label1"><?= htmlspecialchars($business['name']) ?></label>
+                                            <label class="buisness-summaries-label2"><?= htmlspecialchars($business['total_donations']) ?> Donations</label>
+                                        </div>
+                                    </div>
+                                <?php endforeach; ?>
                             </div>
-                            <div class="buisness-summaries-item">
-                                <label class="buisness-summaries-label1">Keels</label>
-                                <label class="buisness-summaries-label2">52 donations</label>
-                            </div>
-                        </div>
-                        <div class="buisness-item">
-                            <div>
-                                <img src="<?=ASSETS?>/images/Glomark.png"/>
-                            </div>
-                            <div class="buisness-summaries-item">
-                                <label class="buisness-summaries-label1">Glomark</label>
-                                <label class="buisness-summaries-label2">32 donations</label>
-                            </div>
-                        </div>
-                        <div class="buisness-item">
-                            <div>
-                                <img src="<?=ASSETS?>/images/Laughs.png"/>
-                            </div>
-                            <div class="buisness-summaries-item">
-                                <label class="buisness-summaries-label1">Laughs Super</label>
-                                <label class="buisness-summaries-label2">12 Donations</label>
-                            </div>
-                        </div>
-                    </div>
-                    <div class="buisness-row">
-                        <div class="buisness-item">
-                            <div>
-                                <img src="<?=ASSETS?>/images/ElephantHouse.png"/>
-                            </div>
-                            <div class="buisness-summaries-item">
-                                <label class="buisness-summaries-label1">Elephant House</label>
-                                <label class="buisness-summaries-label2">5 Donations</label>
-                            </div>
-                        </div>    
-                    </div>
-                </div>
-                <div class="next">
-                    <img src="<?=ASSETS?>/images/down.png"/>
+                        <?php endforeach; ?>
+                    <?php else: ?>
+                        <p>No donation data available.</p>
+                    <?php endif; ?>
                 </div>
             </div>
 
@@ -150,60 +113,48 @@
                     <label>Recent Donation Requests</label>   
                 </div>
                 <div class="table-container">
-                    <table class="admin-barChart-table">
-                        <thead>
-                            <tr>
-                                <th>Date</th>
-                                <th>Shop</th>
-                                <th>buisness</th>
-                                <th>Response</th>
-                            </tr>
-                        </thead>
-                        <tbody>
-                            <tr>
-                                <td>14.02.2024</td>
-                                <td>Mallika Bakers</td>
-                                <td>12 Full Bread</td>
-                                <td><button class="completed">Responded</button></td>
-                            </tr>
-                            <tr>
-                                <td>20.02.2024</td>
-                                <td>Sampath Food City</td>
-                                <td>15 Cans Of Tuna</td>
-                                <td><button class="take-action">Not Responded</button></td>
-                            </tr>
-                            <tr>
-                                <td>07.02.2024</td>
-                                <td>Wasana Bakers</td>
-                                <td>15 Fish Buns</td>
-                                <td><button class="completed">Responded</button></td>
-                            </tr>
-                            <tr>
-                                <td>27.02.2024</td>
-                                <td>Simlo</td>
-                                <td>Rice packets</td>
-                                <td><button class="take-action">Not Responded</button></td>
-                            </tr>
-                        </tbody>
-                    </table>
-                </div>                                     
-                    <div class="next">
-                        <img src="<?=ASSETS?>/images/down.png"/>
-                    </div>
+    <table class="admin-barChart-table">
+        <thead>
+            <tr>
+                <th>Date</th>
+                <th>Business</th>
+                <th>Title</th>
+                <th>Response</th>
+            </tr>
+        </thead>
+        <tbody>
+            <?php foreach($recentRequests as $req): ?>
+                <tr>
+                    <td><?= date('d.m.Y', strtotime($req['date'])) ?></td>
+                    <td><?= htmlspecialchars($req['business_name'] ?? 'Unknown') ?></td>
+                    <td><?= htmlspecialchars($req['title']) ?></td>
+                    <td>
+                        <?php if($req['status'] === 'accepted'): ?>
+                            <button class="completed">Responded</button>
+                        <?php else: ?>
+                            <button class="take-action">Not Responded</button>
+                        <?php endif; ?>
+                    </td>
+                </tr>
+            <?php endforeach; ?>
+        </tbody>
+    </table>
+</div>
+                        
             </div>
         </div>
     </div>
 
-    <!-- <?php
-    // echo "<pre>";
-    // if (isset($rows)) {
-    //     print_r($rows);
-    // } else {
-    //     echo "No data available";
-    // }
-?> -->
-
     <?php echo $this->view('includes/footer')?>
+    <script>
+    const weekData = <?= json_encode($weekData) ?>;
+    const monthData = <?= json_encode($monthData) ?>;
+    const yearData = <?= json_encode($yearData) ?>;
+    console.log("Week Data:", weekData);
+    </script>
+
+
+    <script src="<?=ASSETS?>/js/charityDashboard.js"></script>
     
 </body>
 </html>

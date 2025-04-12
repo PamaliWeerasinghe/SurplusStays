@@ -3,19 +3,172 @@
 class Charity extends Controller
 {
     function index()
-    {
-        if(!Auth::logged_in())
-        {
-            $this->redirect('login');
-        }
-
-        $event = new Event();
-        $org_id = Auth::getID();
-        $rowCount = $event->countRows($org_id);
-        $this->view('charity_dashboard', [
-            'rowCount' => $rowCount,
-        ]);
+{
+    if (!Auth::logged_in()) {
+        $this->redirect('login');
     }
+
+    $event = new Event();
+    $donation = new Donation();
+    $donation_b = new BusinessDonation();
+    $businesses = new Business();
+
+    $org_id = Auth::getID();
+
+    $EventCount = $event->countRows($org_id);
+    $AllReqCount = $donation->countRows($org_id, 0) + $donation_b->countRows($org_id, 'pending');
+    $AccReqCount = $donation->countRows($org_id, 2) + $donation_b->countRows($org_id, 'accepted');
+
+    // Date ranges
+    $today = date('Y-m-d');
+    $monday = date('Y-m-d', strtotime('monday this week'));
+    $firstDayLastMonth = date('Y-m-01', strtotime('first day of last month'));
+    $lastDayLastMonth = date('Y-m-t', strtotime('last day of last month'));
+    $firstDayThisYear = date('Y-01-01');
+    $firstDayThisMonth = date('Y-m-01');
+    $lastDayThisMonth = date('Y-m-t');
+
+    // Fetch accepted donations
+    $weekRaw = array_merge(
+        $donation->getAcceptedDonationsByDate($org_id, $monday, $today),
+        $donation_b->getAcceptedDonationsByDate($org_id, $monday, $today)
+    );
+
+    // Fetch accepted donations for this month
+    $monthRaw = array_merge(
+        $donation->getAcceptedDonationsByDate($org_id, $firstDayThisMonth, $lastDayThisMonth),
+        $donation_b->getAcceptedDonationsByDate($org_id, $firstDayThisMonth, $lastDayThisMonth)
+    );
+
+    $yearRaw = array_merge(
+        $donation->getAcceptedDonationsByDate($org_id, $firstDayThisYear, $today),
+        $donation_b->getAcceptedDonationsByDate($org_id, $firstDayThisYear, $today)
+    );
+
+    // Helpers
+    function getDailyCounts($data, $startDate, $days = 7) {
+        $counts = array_fill(0, $days, 0);
+        $map = [];
+        foreach ($data as $item) {
+            $map[$item->date] = $item->count;
+        }
+        for ($i = 0; $i < $days; $i++) {
+            $date = date('Y-m-d', strtotime("$startDate +$i days"));
+            $counts[$i] = isset($map[$date]) ? (int)$map[$date] : 0;
+        }
+        return $counts;
+    }
+
+    function getMonthlyCounts($data) {
+        $counts = array_fill(0, 12, 0);
+        foreach ($data as $item) {
+            $monthIndex = (int)date('n', strtotime($item->date)) - 1;
+            $counts[$monthIndex] += (int)$item->count;
+        }
+        return $counts;
+    }
+    function getDailyCountsByDay($data, $startDate) {
+        $daysInMonth = date('t', strtotime($startDate));
+        $counts = array_fill(0, 31, 0); // Always 31 elements
+    
+        foreach ($data as $item) {
+            $day = (int)date('j', strtotime($item->date)); // Day of month (1-31)
+            $counts[$day - 1] += (int)$item->count;
+        }
+    
+        return $counts;
+    }
+
+    // Process data
+    $weekData = getDailyCounts($weekRaw, $monday);
+    $monthData = getDailyCountsByDay($monthRaw, $firstDayThisMonth);
+    $yearData = getMonthlyCounts($yearRaw);
+
+    
+
+    $topBusinesses = $this->getTopDonatingBusinesses();
+    $recentRequests = $this->getRecentReqeuests();
+
+
+    $this->view('charity_dashboard', [
+        'EventCount' => $EventCount,
+        'AllReqCount' => $AllReqCount,
+        'AccReqCount' => $AccReqCount,
+        'weekData' => $weekData,     // 7 days (Mon-Sun)
+        'monthData' => $monthData,   // original monthly data
+        'yearData' => $yearData,      // 12 months of year
+        'topBusinesses' => $topBusinesses,
+        'recentRequests' => $recentRequests
+    ]);
+}
+
+function getTopDonatingBusinesses()
+{
+    $db = new Database();
+
+    $query = "
+        SELECT business_id, SUM(donation_count) AS total_donations
+        FROM (
+            SELECT business_id, COUNT(*) AS donation_count
+            FROM donations
+            WHERE status = 2 AND organization_id = :org_id
+            GROUP BY business_id
+
+            UNION ALL
+
+            SELECT business_id, COUNT(*) AS donation_count
+            FROM business_donations
+            WHERE status = 'accepted' AND organization_id = :org_id
+            GROUP BY business_id
+        ) AS combined
+        GROUP BY business_id
+        ORDER BY total_donations DESC
+        LIMIT 6
+    ";
+
+    $org_id = Auth::getID();
+    $topBusinesses = $db->query($query, ['org_id' => $org_id], 'assoc');
+
+    foreach ($topBusinesses as &$b) {
+        $result = $db->query("SELECT name, picture FROM business WHERE id = :id", ['id' => $b['business_id']], 'assoc');
+        if ($result && isset($result[0])) {
+            $b['name'] = $result[0]['name'];
+            $b['image'] = ASSETS . '/businessimages/' . $result[0]['picture'];
+        } else {
+            $b['name'] = 'Unknown';
+            $b['image'] = ASSETS . '/images/default.png'; // fallback image
+        }
+    }
+
+    return $topBusinesses;
+    }
+
+    function getRecentReqeuests()
+{
+    $db = new Database();
+    $org_id = Auth::getID();
+
+    $recentRequests = $db->query(
+        "SELECT * FROM business_donations 
+         WHERE organization_id = :org_id 
+         ORDER BY date DESC 
+         LIMIT 5",
+        ['org_id' => $org_id],
+        'assoc'
+    );
+
+    foreach ($recentRequests as &$req) {
+        $result = $db->query("SELECT name FROM business WHERE id = :id", ['id' => $req['business_id']], 'assoc');
+        if ($result && isset($result[0])) {
+            $req['business_name'] = $result[0]['name'];
+        } else {
+            $req['business_name'] = 'Unknown';
+        }
+    }
+
+    return $recentRequests;
+}
+
 
     function manage_events()
     {
@@ -46,19 +199,41 @@ class Charity extends Controller
         if (!Auth::logged_in()) {
             $this->redirect('login');
         }
-        $requests = new Donation();
-        $rows = $requests->where('organization_id', Auth::getID());;
 
+        $requests = new Donation();
+        $requests_r = new BusinessDonation();
         $shop = new Business();
+        $org_id = Auth::getID();
+
+        $rows = $requests->where('organization_id', Auth::getID());
+        $rows_r = $requests_r->where('organization_id', Auth::getID());
         $shopRows = $shop->findAll();
-        $this->view('charityDonations',['rows' => $rows, 'shopRows' => $shopRows]);
+
+        $PenReqCount = $requests->countRows($org_id,0);
+        $AccReqCount = $requests->countRows($org_id,2);
+        $RejReqCount = $requests->countRows($org_id,1);
+
+        $PenReqCount_r = $requests_r->countRows($org_id,'pending');
+        $AccReqCount_r = $requests_r->countRows($org_id,'accepted');
+        $RejReqCount_r = $requests_r->countRows($org_id,'rejected');
+
+        $this->view('charityDonations',[
+            'rows' => $rows, 
+            'rows_r' => $rows_r,
+            'shopRows' => $shopRows,
+            'AllReqCount' => $PenReqCount + $AccReqCount + $RejReqCount,
+            'PenReqCount' => $PenReqCount,
+            'AccReqCount' => $AccReqCount,
+            'RejReqCount' => $RejReqCount,
+            'AllReqCount_r' => $PenReqCount_r + $AccReqCount_r + $RejReqCount_r,
+            'PenReqCount_r' => $PenReqCount_r,
+            'AccReqCount_r' => $AccReqCount_r,
+            'RejReqCount_r' => $RejReqCount_r
+        ]);
     }
 
     function browse_shops()
     {
-<<<<<<< Updated upstream
-        $this->view('charityBrowseShops');
-=======
         if (!Auth::logged_in()) {
             $this->redirect('login');
         }
@@ -77,7 +252,6 @@ class Charity extends Controller
         $orgs = new Organization();
         $rows = $orgs->findAll();
         $this->view('charityBrowseOrganizations',['rows' => $rows]);
->>>>>>> Stashed changes
     }
 
     function reports()
@@ -111,56 +285,8 @@ class Charity extends Controller
             'row' => $row,
             'eventRows' => $eventRows
         ]);
-    }
-
-    function callOpenAI($input) 
-    {
-        $apiKey = "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"; // Replace with your OpenAI API key
-        $url = "https://api.openai.com/v1/chat/completions";
-
-        $data = [
-            "model" => "gpt-3.5-turbo",
-            "messages" => [
-                ["role" => "system", "content" => "You are an expert in food names in english and sinhala spelled in english who only returns the corrected word if the name seems off It's crucial that you only respond with a single word only."],
-                ["role" => "user", "content" => "Correct and validate the following food name inputted in english or sinhala languages using English spelling: \"$input\". Return the corrected name only 
-                example - 1.Input:Mlu Paan The output you should give:Malu Paan,example - 2.Input:Brd The output you should give:Bread."]
-            ],
-            "max_tokens" => 100,
-            "temperature" => 0.7
-        ];
-
-        $options = [
-            "http" => [
-                "header"  => "Content-Type: application/json\r\n" .
-                            "Authorization: Bearer " . $apiKey . "\r\n",
-                "method"  => "POST",
-                "content" => json_encode($data)
-            ]
-        ];
-
-        $context = stream_context_create($options);
-        $response = @file_get_contents($url, false, $context);
-
-        if ($response === false) {
-            $error = error_get_last();
-            $httpCode = isset($http_response_header) && isset($http_response_header[0]) ? (int)explode(' ', $http_response_header[0])[1] : null;
-
-            // Check for 429 Too Many Requests
-            if ($httpCode === 429) {
-                // Retry after a delay, for example, 10 seconds
-                sleep(10);
-                return callOpenAI($input);  // Retry the request
-            }
-
-            throw new Exception("Error communicating with OpenAI API: " . $error['message']);
-        }
-
-        $result = json_decode($response, true);
-        return trim($result['choices'][0]['message']['content']);
-    }
-
-
-
+    }   
+    
     function createEvent()
     {
         if (!Auth::logged_in()) {
@@ -262,6 +388,27 @@ class Charity extends Controller
             $this->redirect('charity/manage_events'); // Redirect back to the manage events page
         }
     }
+
+    function acceptDonationReq($id)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $event = new BusinessDonation();
+            $data = ['status' => 'accepted'];
+
+            if ($event->update($id, $data)) {
+                $_SESSION['message'] = 'Request Accepted';
+            } else {
+                $_SESSION['message'] = 'Failed to accept request';
+            }
+
+            $this->redirect('charity/manage_events');
+        }
+    }
+
 
     function editEvent($id = null)
     {

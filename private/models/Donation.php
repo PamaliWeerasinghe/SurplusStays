@@ -28,4 +28,22 @@ class Donation extends Model
         // Return the scalar count value or 0 if the result is empty
         return isset($result[0]) ? (int) $result[0]->count : 0;
     }
+
+    public function getAcceptedDonationsByDate($org_id, $startDate, $endDate) {
+        $query = "SELECT DATE(date) as date, COUNT(*) as count 
+                  FROM $this->table 
+                  WHERE organization_id = :org_id AND status = 2 
+                  AND DATE(date) BETWEEN :start AND :end
+                  GROUP BY DATE(date)";
+        
+        $result = $this->query($query, [
+            ':org_id' => $org_id,
+            ':start' => $startDate,
+            ':end' => $endDate,
+        ]);
+    
+        return is_array($result) ? $result : [];
+    }
+    
+    
 }

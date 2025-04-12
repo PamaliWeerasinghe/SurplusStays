@@ -175,50 +175,86 @@ body, html {
     margin-bottom: 20px;
 }
 
-.admin-order-table {
+.admin-order-table,
+.admin-order-table2 {
     width: 100%;
     border-collapse: collapse;
     font-family: Arial, sans-serif;
 }
 
-.admin-order-table thead{
+.admin-order-table thead,
+.admin-order-table2 thead {
     display: table;
     width: 100%;
     table-layout: fixed;
 }
-.admin-order-table tbody {
+
+.admin-order-table tbody,
+.admin-order-table2 tbody {
     display: block;
     max-height: 250px; /* Adjust based on row height */
     overflow-y: auto;
 }
 
-
-.admin-order-table thead tr {
+.admin-order-table thead tr,
+.admin-order-table2 thead tr {
     background-color: #F0F8FF;
     text-align: left;
 }
 
-.admin-order-table th, .admin-order-table td {
+.admin-order-table th,
+.admin-order-table td,
+.admin-order-table2 th,
+.admin-order-table2 td {
     padding: 15px;
     font-size: 18px;
     color: #333;
 }
 
-.admin-order-table th {
+.admin-order-table th,
+.admin-order-table2 th {
     font-weight: 500;
     font-size: 14px;
 }
 
-.admin-order-table tbody tr {
+.admin-order-table tbody tr,
+.admin-order-table2 tbody tr {
     display: table;
     width: 100%;
     table-layout: fixed;
     border-bottom: 1px solid #E0E0E0;
 }
 
-.admin-order-table tbody tr:last-child {
+.admin-order-table tbody tr:last-child,
+.admin-order-table2 tbody tr:last-child {
     border-bottom: none;
 }
+
+.admin-order-table .date,
+.admin-order-table2 .date {
+    font-size: 14px;
+    color: #666;
+}
+
+.admin-order-table .status,
+.admin-order-table2 .status {
+    padding: 8px 20px;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    text-align: center;
+    cursor: pointer;
+}
+
+.admin-order-table .action,
+.admin-order-table2 .action {
+    display: flex;
+    gap: 10px;
+}
+
+
 
 .event-name {
     display: flex;
@@ -230,22 +266,6 @@ body, html {
     height: 40px;
     border-radius: 50%;
     margin-right: 10px;
-}
-
-.admin-order-table .date {
-    font-size: 14px;
-    color: #666;
-}
-
-.admin-order-table .status {
-    padding: 8px 20px;
-    border-radius: 20px;
-    border: none;
-    font-size: 14px;
-    font-weight: bold;
-    color: #fff;
-    text-align: center;
-    cursor: pointer;
 }
 
 .status.ongoing {
@@ -279,11 +299,6 @@ body, html {
 
 .status.closed:hover{
     background-color:#ff666623 ;
-}
-
-.admin-order-table .action {
-    display: flex;
-    gap: 10px;
 }
 
 .action-btn {
