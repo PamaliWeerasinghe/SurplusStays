@@ -3,7 +3,7 @@
   <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>Verify Your Login</title>
+    <title>Check Customer Complaint</title>
     <style>
       body {
         font-family: Arial, sans-serif;
@@ -74,22 +74,21 @@
   <body>
     <div class="container">
       <div class="header">
-        <h1>Verify Your Login To The Dashboard</h1>
-        <p>Join Surplusstays and Start Connecting with the surplus items!</p>
+        <h1>Review Customer Complaint</h1>
+        <!-- <p>!</p> -->
       </div>
       <div class="content">
         <p>Dear Admininstrative Officer,</p>
         <p>
-           To start performing your tasks, verify your email first either by using
-           the button or the link.
+            A new complaint has been submitted by the complaint ID - #{{complaint_id}} on {{date}}
         </p>
         <p>
           <a
-            href="{{verification_link}}"
+            href="{{review_link}}"
             class="button"
             style="color: white !important; text-decoration: none"
           >
-            Verify My Email
+            Review Complaint
           </a>
         </p>
         <p>
@@ -97,12 +96,9 @@
           browser:
         </p>
         <p class="link-container">
-          <a href="{{verification_link}}">{{verification_link}}</a>
+          <a href="{{review_link}}">{{review_link}}</a>
         </p>
-        <p>
-          This verification link is valid for <strong>1 hour</strong>. If you
-          didn’t try to log in, please ignore this email.
-        </p>
+       
       </div>
       <div class="footer">
         <p>&copy; {{year}} Surplusstays. All rights reserved.</p>

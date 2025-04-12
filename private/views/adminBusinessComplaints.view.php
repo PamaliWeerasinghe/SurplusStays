@@ -23,45 +23,21 @@
                             <img src="<?=ASSETS?>/images/search.png" class="bell2" />
                         </div>
 
-                        <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
+                       
                     </div>
                     
 
                 </div>
                 <div class="Business-complaints-order-status">
                     <div class="order">
-                        <label>Complaints</label>
+                        <!-- <label>Complaints</label> -->
                         <select>
-                            <option>All Time</option>
+                            <option>Status</option>
                         </select>
                     </div>
 
-                    <div class="Business-complaints-order-nav">
-                        <div class="Business-complaints-view-slots">
-                            <div class="slot1">
-                                <label>Order Complaints</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Take Actions</label>
-                            </div>
-                          
-                        </div>
-                    </div>
-                    <div class="Business-complaints-order-nav">
-                        <div class="Business-complaints-view-slots">
-                            <div class="slot1">
-                                <label>All</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Pending</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Reserved</label>
-
-                            </div>
-                           
-                        </div>
-                    </div>
+                  
+                  
                     <table class="order-table">
                         <thead>
                             <tr>

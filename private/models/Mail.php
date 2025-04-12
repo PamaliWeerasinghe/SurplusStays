@@ -78,6 +78,24 @@ class Mail
         return self::sendMail($toEmail,'',$subject,$template);
 
     }
+    //send the link to the customer complaint
+    public static function sendCustomerComplaint($complaint_id,$date,$toEmail){
+        //load the template
+        $template=file_get_contents(TEMPLATEROOT.'/sendCustomerComplaintToAdmin.html');
+        //create the link
+        $link=ADMIN.'/viewComplaint?id='.$complaint_id;
+        //replace placeholders
+        $template=str_replace('{{review_link}}',$link,$template);
+        // $template=str_replace('{{customer_name}}',$cus_name,$template);
+        $template=str_replace('{{date}}',$date,$template);
+        $template=str_replace('{{complaint_id}}',$complaint_id,$template);
+        $template=str_replace('{{year}}',date('Y'),$template);
+        $subject="Customer Complaints";
+
+        return self::sendMail($toEmail,'',$subject,$template);
+
+
+    }
 }
 
 

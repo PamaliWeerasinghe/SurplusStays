@@ -63,7 +63,8 @@ class Admin extends Controller
         }
     }
     //Admin Deletes a customer
-    function DeleteCustomer($id){
+    function DeleteCustomer($id)
+    {
         $customer=new AdminModel();
         $customer->delete($id,'organization');
         $data=$customer->findAll('organization');
@@ -79,8 +80,9 @@ class Admin extends Controller
         $this->view('AdminManageCharityOrganizations',['rows'=>$data]);
 
     }
-    //Adminv views a customer
-    function viewCustomer($id){
+    //Admin views a customer
+    function viewCustomer($id)
+    {
         {
         
             $customer = new AdminModel();
@@ -253,18 +255,22 @@ class Admin extends Controller
                        
                     }else{
                         // send notification for the admin
-                        $subject="Customer Complaints";
-                        $body="New complaint received from the customer with ID ".$arr['customer_id'];
-                        if(!Mail::sendMail($_SESSION['USER_EMAIL'],'Pamali Weerasinghe',$subject,$body)){
+                        $currentDateTime = date('Y-m-d H:i:s');
+                        // $email=$_SESSION['USER'];
+                        // $complaints=new AdminComplaints();
+                        $complaint_id=$admin->id;
+                        if(!Mail::sendCustomerComplaint($complaint_id,$currentDateTime,'pamaliweerasinghe@gmail.com')){
                             error_log("Could't send the email");
                         }
                            
                                                
                     }
+                    
                     $this->view('customerMakeComplaint',[
                         "orders"=>$orders,
                         "orderDetails"=>$orderDetails,
                         "errors"=>$errors
+                        
                     ]);
               
             }
@@ -275,7 +281,8 @@ class Admin extends Controller
             $orderDetails=$admin->getAllOrders(1);
             $this->view('customerMakeComplaint',[
                 "orders"=>$orders,
-                "orderDetails"=>$orderDetails
+                "orderDetails"=>$orderDetails,
+                "email"=>$_SESSION['USER_EMAIL']
             ]);
         }
        
@@ -540,6 +547,7 @@ class Admin extends Controller
                 "products_pager"=>$products_pager,
                 "days"=>$days,
                 "total"=>$total
+                
 
            ]);
         } else {
@@ -612,6 +620,23 @@ class Admin extends Controller
             "complaint_details"=>$complaint_details[0],
             "complaint_imgs"=>$complaint_images
         ]);
+    }
+    //view a respective complaint through the link
+    function viewComplaint(){
+        $complaint_id = $_GET['id'] ?? null; 
+    
+        if (!$complaint_id) {
+            die("Customer ID is missing!");
+        }
+
+        $admin=new AdminComplaints();
+        $complaint_details=$admin->complaintDetails($complaint_id);
+        $complaint_images=$admin->getComplaintImages($complaint_id);
+        $this->view('AdminSeeComplainPage',[
+            "complaint_details"=>$complaint_details[0],
+            "complaint_imgs"=>$complaint_images
+        ]);
+
     }
     //Manage all the customers
     function ManageCustomers()

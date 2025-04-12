@@ -1,5 +1,6 @@
 <?php 
 class AdminRegister extends AdminModel{
+    
     public function insertAdmin($user,$admin){
         try {
             $this->db->beginTransaction();
@@ -23,5 +24,6 @@ class AdminRegister extends AdminModel{
             //throw $th;
         }
     }
+    
 }
 ?>

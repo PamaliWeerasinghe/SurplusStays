@@ -1,6 +1,8 @@
 <?php
 class AdminComplaints extends AdminModel
 {
+    //to keep the last inserted id
+    public $id=null;
     //insert the complaint
     public function insertComplaint($complaint, $imgs,$columns,$values)
     {
@@ -15,12 +17,12 @@ class AdminComplaints extends AdminModel
                     return false;
                 }
                 //Get the last id
-                $id = $this->db->lastInsertId();
+                $this->id = $this->db->lastInsertId();
 
                 //Insert complaint images
                 for ($i = 0; $i < count($imgs); $i++) {
                     $complaint_img = array();
-                    $complaint_img['complaints_id'] = $id;
+                    $complaint_img['complaints_id'] = $this->id;
                     $complaint_img['path'] = $imgs[$i];
                     if ($this->insert($complaint_img, 'complaint_imgs')) {
                         $this->db->rollback();

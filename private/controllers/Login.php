@@ -112,7 +112,7 @@ class Login extends Controller{
                         $admin_details=$admin_details[0];
                         $id=$admin_details->user_id1;
                     }
-                    $user_details=$admin->where(['user_id1'],[$id],'user');
+                    $user_details=$admin->where(['id'],[$id],'user');
                     if(isset($user_details[0]->id)){
                         $user_details=$user_details[0];
                        
