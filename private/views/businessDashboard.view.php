@@ -15,65 +15,57 @@
         <div class="sub-div-1">
             <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
-
-                <!-- Summary section -->
                 <div class="summary">
+
                     <div class="mini-boxes">
                         <div class="mini-box">
-                            <div class="mini-box-1">
+                            <div class="mini-box-inner-1">
                                 <img src="<?= ASSETS ?>/images/donate.png" />
                             </div>
-                            <div class="mini-box-2">
-                                <label class="summaries-2-label1">Donations</label>
-                                <label class="summaries-2-label2"><?= $requestcount ?></label>
+                            <div class="mini-box-inner-2">
+                                <label>Donations</label>
+                                <label><?= $requestcount ?></label>
                             </div>
                         </div>
                         <div class="mini-box">
-                            <div class="mini-box-1">
+                            <div class="mini-box-inner-1">
                                 <img src="<?= ASSETS ?>/images/manifesto.png" />
                             </div>
-                            <div class="mini-box-2">
-                                <label class="summaries-2-label1">Orders</label>
-                                <label class="summaries-2-label2"><?= $ordercount ?></label>
+                            <div class="mini-box-inner-2">
+                                <label>Orders</label>
+                                <label><?= $ordercount ?></label>
                             </div>
                         </div>
                         <div class="mini-box">
-                            <div class="mini-box-1">
+                            <div class="mini-box-inner-1">
                                 <img src="<?= ASSETS ?>/images/box.png" />
                             </div>
-                            <div class="mini-box-2">
-                                <label class="summaries-2-label1">Products</label>
-                                <label class="summaries-2-label2"><?= $productcount ?></label>
+                            <div class="mini-box-inner-2">
+                                <label>Products</label>
+                                <label><?= $productcount ?></label>
                             </div>
                         </div>
                         <div class="mini-box">
-                            <div class="mini-box-1">
+                            <div class="mini-box-inner-1">
                                 <img src="<?= ASSETS ?>/images/ratinglike.png" />
                             </div>
-                            <div class="mini-box-2">
-                                <label class="summaries-2-label1">Rating</label>
-                                <label class="summaries-2-label2">4.7/5.0</label>
+                            <div class="mini-box-inner-2">
+                                <label>Rating</label>
+                                <label>4.7/5.0</label>
                             </div>
                         </div>
                     </div>
+
                 </div>
 
-                <!-- Order status chart -->
-                <div class="admin-order-status">
+                <!-- Order status bar chart -->
+                <div class="order-status">
                     <div class="order">
-                        <label>Order Status</label>
+                        <label>Order Status For this week</label>
                     </div>
-                    
+
                     <div class="order-status-chart">
-                        <div class="chart">
-                            <div class="bar" style="--value: 70%;"></div>
-                            <div class="bar" style="--value: 50%;"></div>
-                            <div class="bar" style="--value: 30%;"></div>
-                            <div class="bar" style="--value: 100%;"></div>
-                            <div class="bar" style="--value: 60%;"></div>
-                            <div class="bar" style="--value: 80%;"></div>
-                            <div class="bar" style="--value: 50%;"></div>
-                        </div>
+                        <div class="chart" id="orderChart"></div>
                         <div class="day-block">
                             <div class="day">Mon</div>
                             <div class="day">Tue</div>
@@ -99,7 +91,7 @@
                                 $productPictures = explode(',', $row->pictures);
                                 $productImage = isset($productPictures[0]) ? $productPictures[0] : 'product_placeholder.png';
                                 ?>
-                                <div class="product-item" style="display: none;" onclick="window.location.href='<?= ROOT ?>/business/viewProduct/<?= $row->id ?>'">
+                                <div class="product-item" onclick="window.location.href='<?= ROOT ?>/business/viewProduct/<?= $row->id ?>'">
                                     <div>
                                         <img src="<?= ROOT ?><?= htmlspecialchars($productImage) ?>" alt="product-image">
                                     </div>
@@ -115,8 +107,8 @@
                     </div>
 
                     <div class="pagination">
-                        <img src="<?= ASSETS ?>/images/back.png" id="prevBtn" style="cursor: pointer;" />
-                        <img src="<?= ASSETS ?>/images/next.png" id="nextBtn" style="cursor: pointer;" />
+                        <img src="<?= ASSETS ?>/images/back.png" id="productPrevBtn" style="cursor: pointer;" />
+                        <img src="<?= ASSETS ?>/images/next.png" id="productNextBtn" style="cursor: pointer;" />
                     </div>
                 </div>
 
@@ -157,13 +149,10 @@
                         </tbody>
                     </table>
 
-
                     <div class="pagination">
                         <img src="<?= ASSETS ?>/images/back.png" id="orderPrevBtn" style="cursor: pointer;" />
                         <img src="<?= ASSETS ?>/images/next.png" id="orderNextBtn" style="cursor: pointer;" />
                     </div>
-
-
                 </div>
 
             </div>
@@ -172,71 +161,108 @@
     </div>
 
     <script>
-        // Product Pagination
-        const itemsPerPage = 4;
-        let currentPage = 0;
 
-        const products = document.querySelectorAll(".product-item");
-        const prevBtn = document.getElementById("prevBtn");
-        const nextBtn = document.getElementById("nextBtn");
+        //pagination for top selling products section
 
-        function showProducts() {
-            const start = currentPage * itemsPerPage;
-            const end = start + itemsPerPage;
-            products.forEach((item, index) => {
-                item.style.display = (index >= start && index < end) ? "flex" : "none";
+        const rowsPerPage = 4;
+        let currentPage = 1;
+
+        const rows = Array.from(document.querySelectorAll('.product-item'));
+        const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+        function showPage(page) {
+            rows.forEach((row, index) => {
+                row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) ? '' : 'none';
             });
         }
 
-        prevBtn?.addEventListener("click", () => {
-            if (currentPage > 0) {
-                currentPage--;
-                showProducts();
-            }
-        });
+        // Initial display
+        showPage(currentPage);
 
-        nextBtn?.addEventListener("click", () => {
-            if ((currentPage + 1) * itemsPerPage < products.length) {
+        // Event listeners
+        document.getElementById('productNextBtn').addEventListener('click', () => {
+            if (currentPage < totalPages) {
                 currentPage++;
-                showProducts();
+                showPage(currentPage);
             }
         });
 
-        showProducts();
+        document.getElementById('productPrevBtn').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
 
-        // Orders Pagination
+        //pagination for recent orders section
+
         const orderItemsPerPage = 4;
-        let orderCurrentPage = 0;
+        let orderCurrentPage = 1; 
 
-        const orderRows = document.querySelectorAll(".order-table tbody tr");
+        const orderRows = Array.from(document.querySelectorAll(".order-table tbody tr"));
         const orderPrevBtn = document.getElementById("orderPrevBtn");
         const orderNextBtn = document.getElementById("orderNextBtn");
 
-        function showOrders() {
-            const start = orderCurrentPage * orderItemsPerPage;
-            const end = start + orderItemsPerPage;
+        const orderTotalPages = Math.ceil(orderRows.length / orderItemsPerPage);
+
+        function showOrders(page) {
             orderRows.forEach((row, index) => {
-                row.style.display = (index >= start && index < end) ? "table-row" : "none";
+                row.style.display = (index >= (page - 1) * orderItemsPerPage && index < page * orderItemsPerPage) ? "table-row" : "none";
             });
         }
 
+        // Initial display
+        showOrders(orderCurrentPage);
+
+        // Event listeners
         orderPrevBtn?.addEventListener("click", () => {
-            if (orderCurrentPage > 0) {
+            if (orderCurrentPage > 1) {
                 orderCurrentPage--;
-                showOrders();
+                showOrders(orderCurrentPage);
             }
         });
 
         orderNextBtn?.addEventListener("click", () => {
-            if ((orderCurrentPage + 1) * orderItemsPerPage < orderRows.length) {
+            if (orderCurrentPage < orderTotalPages) {
                 orderCurrentPage++;
-                showOrders();
+                showOrders(orderCurrentPage);
             }
         });
+    
+        //JS for bar chart
 
-        showOrders();
+        // Get weekly data from PHP
+        const weeklyData = <?= json_encode($weeklyStats) ?>;
+
+        // Define the week days and prepare a map with default zero counts
+        const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
+        const orderData = {};
+
+        daysOfWeek.forEach(day => {
+            orderData[day] = 0; // default value
+        });
+
+        // Fill orderData with actual values from backend
+        weeklyData.forEach(item => {
+            orderData[item.day] = item.order_count;
+        });
+
+        // Get chart container
+        const chart = document.getElementById("orderChart");
+        chart.innerHTML = ""; // Clear existing bars
+
+        // Create bars for each day
+        daysOfWeek.forEach(day => {
+            const bar = document.createElement("div");
+            bar.className = "bar";
+
+            const orders = orderData[day]; // how many orders that day
+            const barHeight = Math.min(orders * 20, 100); // scale height, max 100%
+
+            bar.style.setProperty("--value", `${barHeight}%`);
+            chart.appendChild(bar);
+        });
     </script>
 
 </body>
-
 </html>

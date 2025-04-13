@@ -10,6 +10,11 @@ class Products extends Model
         if (empty($DATA['product-name'])) {
             $this->errors['product'] = "Product name is required";
         }
+
+        if($this->where('name',$DATA['product-name'])) {
+            $this->errors['name'] = "Product name already in use ";
+        }
+
         $categories = ['Fast foods', 'Snack', 'Drinks', 'Other'];
         if (empty($DATA['category']) || !in_array($DATA['category'], $categories)) {
             $this->errors['category'] = "Category cannot be empty";

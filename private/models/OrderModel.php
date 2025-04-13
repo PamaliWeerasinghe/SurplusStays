@@ -87,4 +87,22 @@ class OrderModel extends Model
         $result = $this->query($query, ['business_id' => $business_id]);
         return $result[0]->count ?? 0;
     }
+
+    public function getWeeklyOrderStats($business_id)
+    {
+        $query = "
+        SELECT 
+            DAYNAME(o.dateTime) AS day,
+            COUNT(DISTINCT o.id) AS order_count
+        FROM `order` o
+        JOIN order_items oi ON o.id = oi.order_id
+        JOIN products p ON oi.products_id = p.id
+        WHERE p.business_id = :business_id
+            AND YEARWEEK(o.dateTime, 1) = YEARWEEK(CURDATE(), 1)
+        GROUP BY DAYOFWEEK(o.dateTime)
+        ORDER BY FIELD(DAYNAME(o.dateTime), 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
+    ";
+
+        return $this->query($query, ['business_id' => $business_id]);
+    }
 }

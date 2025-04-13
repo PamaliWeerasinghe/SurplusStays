@@ -42,7 +42,7 @@
                 <div class="order-status">
                     <div class="order">
                         <label>Orders</label>
-                        <div class="searchdiv">
+                        <div>
                             <input type="text" id="orderSearch" class="search" placeholder="Search by Order ID..." onkeyup="filterOrders()" />
                         </div>
                     </div>
@@ -85,34 +85,34 @@
                         </tbody>
                     </table>
                 </div>
-
-                <!-- JavaScript to Handle Filtering -->
-                <script>
-                    function filterOrders() {
-                        let input = document.getElementById("orderSearch").value.toUpperCase();
-                        let rows = document.querySelectorAll(".order-row");
-
-                        rows.forEach(row => {
-                            let orderId = row.querySelector(".order-id").textContent.toUpperCase();
-                            row.style.display = orderId.includes(input) ? "" : "none";
-                        });
-                    }
-
-                    function filterByStatus(status) {
-                        let rows = document.querySelectorAll(".order-row");
-
-                        rows.forEach(row => {
-                            let rowStatus = row.getAttribute("data-status");
-                            row.style.display = (status === "all" || rowStatus === status) ? "" : "none";
-                        });
-                    }
-                </script>
                 </table>
             </div>
         </div>
         <?php echo $this->view('includes/footer') ?>
     </div>
-    
+
+    <!-- JavaScript to Handle Filtering -->
+    <script>
+        function filterOrders() {
+            let input = document.getElementById("orderSearch").value.toUpperCase();
+            let rows = document.querySelectorAll(".order-row");
+
+            rows.forEach(row => {
+                let orderId = row.querySelector(".order-id").textContent.toUpperCase();
+                row.style.display = orderId.includes(input) ? "" : "none";
+            });
+        }
+
+        function filterByStatus(status) {
+            let rows = document.querySelectorAll(".order-row");
+
+            rows.forEach(row => {
+                let rowStatus = row.getAttribute("data-status");
+                row.style.display = (status === "all" || rowStatus === status) ? "" : "none";
+            });
+        }
+    </script>
+
 </body>
 
 </html>

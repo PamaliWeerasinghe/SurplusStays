@@ -65,32 +65,33 @@ body {
     justify-content: center;
     padding: 0.5%;
 }
-.mini-box-1{
+.mini-box-inner-1{
     display: flex;
     justify-content: center;
     align-items: center;
     
 }
 
-.mini-box-1 img{
+.mini-box-inner-1 img{
   height: 50px;
   width: 50px;
 }
 
-.mini-box-2{
+.mini-box-inner-2{
     display: flex;
     flex-direction: column;
     justify-content: center;
     align-items: center;
     padding-left: 4%;
 }
-.mini-box-2 label{
+.mini-box-inner-2 label{
     font-weight: bold;
 }
 
 
+/*Order status bar chart*/
 
-.admin-order-status{
+.order-status{
   width: 86%;
   /*height: 50vh;*/ 
   background-color: #F0F8FF;
@@ -99,74 +100,57 @@ body {
   padding: 2% 1%;
   
 }
-.order-dropdown{
-    display: flex;
-    flex-direction: row;
-    justify-content: space-between;
-}
-.order-dropdown select{
-    border: none;
-    background-color: #F0F8FF;
-}
-.order-status-label2{
-    font-size:small;
-}
-
 
 .chart {
-    /* display: grid; */
-    grid-template-columns: repeat(7, 1fr);
-    column-gap: 20px;
-    justify-items: center;
-    align-items: end;
-    background-color: #f3faff;
-    padding: 20px;
-    border-radius: 10px;
-    height: 30vh;
-    display: flex;
-    
-    justify-content:center;
-  }
+  grid-template-columns: repeat(7, 1fr);
+  column-gap: 20px;
+  justify-items: center;
+  align-items: end;
+  background-color: #f3faff;
+  padding: 20px;
+  border-radius: 10px;
+  height: 30vh;
+  display: flex;
+  justify-content:center;
+}
   
-  .bar {
-    width: 70px;
-    max-height: 2000px;
-    height: 0;
-    background-color: #ffa07a;
-    border-radius: 10px;
-    animation: grow 1s ease-out forwards;
-    animation-delay: 0.3s;
-    --value: 100%;
+.bar {
+  width: 70px;
+  max-height: 2000px;
+  height: 0;
+  background-color: #ffa07a;
+  border-radius: 10px;
+  animation: grow 1s ease-out forwards;
+  animation-delay: 0.3s;
+  --value: 100%;
+}
+  
 
-  }
-  
-  .bar:nth-child(3) {
-    background-color: #FD5D34; /* Different color for the highest bar */
-  }
-  
-  .day {
-    text-align: center;
-    margin-top: 10px;
-    color: #7e8a91;
-    font-size: 14px;
-  }
-  
-  @keyframes grow {
-    from {
-      height: 0;
-    }
-    to {
-      height: var(--value);
-    }
-  }  
-.day-block{
-    display: flex;
-    column-gap: 6.5%;
-    justify-content:center;
-    margin-top: 10px;
+.day{
+  text-align: center;
+  margin-top: 10px;
+  color: #7e8a91;
+  font-size: 14px;
 }
 
-/*product status box*/
+.day-block{
+  display: flex;
+  column-gap: 6.5%;
+  justify-content:center;
+  margin-top: 10px;
+}
+
+@keyframes grow {
+  from {
+    height: 0;
+  }
+  to {
+     height: var(--value);
+  }
+}  
+
+
+/*Top Sales Products*/
 
 .product-status{
     width: 86%; 
@@ -216,20 +200,6 @@ color:#1B4332;
 font-weight: bolder;
 }
 
-/* pagination */
-
-.pagination{
-    display: flex;
-    justify-content: flex-end;
-    align-items: center; 
-}
-
-.pagination img{
-  height: 30px;
-  width: 30px;
-  margin: 0px 10px;
-}
-
 /*recent orders box*/
 
 .recent-orders{
@@ -242,55 +212,53 @@ font-weight: bolder;
    
 }
   
-  .order-table {
+.order-table {
     width: 90%;
     border-collapse: collapse;
     margin: 0 auto 2% auto;
-  }
+}
   
-  .order-table thead tr {
-    /* background-color: #f8f8f8; */
+.order-table thead tr {
     text-align: center;
     
-  }
+}
   
-  .order-table th, .order-table td {
-    padding: 12px 20px;
-    font-size: medium;
-    color: #333;
-  }
+.order-table th, .order-table td {
+  padding: 12px 20px;
+  font-size: medium;
+  color: #333;
+}
   
-  .order-table th {
-    color: #7e8a91;
-    font-weight: 600;
-  }
+.order-table th {
+  color: #7e8a91;
+  font-weight: 600;
+}
   
-  .order-table tbody tr {
-    border-bottom: 1px solid #e0e0e0;
-    background-color: white;
-    text-align: center;
-  }
+.order-table tbody tr {
+  border-bottom: 1px solid #e0e0e0;
+  background-color: white;
+  text-align: center;
+}
 
-  .order-table tbody tr:hover {
-    background-color:#b6efc4; 
-    cursor: pointer; 
-    transition: background-color 0.3s ease; 
+.order-table tbody tr:hover {
+  background-color:#b6efc4; 
+  cursor: pointer; 
+  transition: background-color 0.3s ease; 
 }
 
   
-  .order-table tbody tr:last-child {
-    margin-top: 4%;
-  }
+.order-table tbody tr:last-child {
+  margin-top: 4%;
+}
   
-  .order-table td {
-    vertical-align: middle;
+.order-table td {
+  vertical-align: middle;
+}
 
-  }
-  .order-table td label {
-    font-size:xx-small;
-    color: grey;
-    
-  }
+.order-table td label {
+  font-size:xx-small;
+  color: grey;
+}
 
 .not-collected {
     background-color: #e74c3c;
@@ -304,3 +272,18 @@ font-weight: bolder;
     background-color: #2ecc71;
 }
   
+/* pagination */
+
+.pagination{
+  display: flex;
+  justify-content: flex-end;
+  align-items: center; 
+}
+
+.pagination img{
+  width: 30px;
+  height: 30px;
+  margin: 0px 10px;
+}
+
+

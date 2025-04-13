@@ -13,20 +13,23 @@ class Business extends Controller
         $ordermodel = new OrderModel();
         $requestmodel = new RequestModel();
         $business_id = Auth::getId();
+
         $productcount = $product->countProducts($business_id);
         $ordercount = $ordermodel->countOrders($business_id);
         $requestcount = $requestmodel->countRequests($business_id);
 
         $products = $product->gettopsalesproducts($business_id);//filter the top selling products
         $orders = $ordermodel->getOrdersByBusiness($business_id);
+        $weeklyStats = $ordermodel->getWeeklyOrderStats($business_id);
 
-        $this->view('businessWelcomePage', [
+
+        $this->view('businessDashboard', [
             'productcount' => $productcount,
             'ordercount' => $ordercount,
             'requestcount' => $requestcount,
             'orders'=>$orders,
-            'rows' => $products
-
+            'rows' => $products,
+            'weeklyStats' => $weeklyStats
         ]);
     }
 
