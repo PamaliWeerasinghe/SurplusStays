@@ -20,14 +20,14 @@ SELECT `complaints`.`id` AS `complaint_id`,
             `expiration_dateTime` AS `product_expirationTime`,
             `discountPrice`,
             `products`.`name` AS product
-         FROM `complaints` 
-        INNER JOIN `order_items` ON `complaints`.`order_items_id`=`order_items`.`id` 
-        INNER JOIN `products` ON `products`.`id`=`order_items`.`products_id`
-        INNER JOIN `order` ON `order_items`.`order_id`=`order`.`id`
-        INNER JOIN `complaint_status` ON `complaints`.`complaint_status_id`=`complaint_status`.`id`
-        INNER JOIN `business` ON `business`.`id`=`complaints`.`business_id`
-        INNER JOIN `customer` ON `customer`.`id`=`complaints`.`customer_id`
-        INNER JOIN `user`  ON `user`.`id`=`customer`.`user_id` 
+FROM `complaints` 
+INNER JOIN `order_items` ON `complaints`.`order_items_id`=`order_items`.`id` 
+INNER JOIN `products` ON `products`.`id`=`order_items`.`products_id`
+INNER JOIN `order` ON `order_items`.`order_id`=`order`.`id`
+INNER JOIN `complaint_status` ON `complaints`.`complaint_status_id`=`complaint_status`.`id`
+INNER JOIN `business` ON `business`.`id`=`complaints`.`business_id`
+INNER JOIN `customer` ON `customer`.`id`=`complaints`.`customer_id`
+INNER JOIN `user`  ON `user`.`id`=`customer`.`user_id` 
 
 CREATE VIEW trackExpiry AS 
 SELECT products.id AS product_id,products.expiration_dateTime AS best_before,products.name AS product_name,notify_status.status AS notify_status,
@@ -91,7 +91,8 @@ username,
 email,
 `password`,
 profile_pic,
-reg_date
+reg_date,
+`user`.`status_id` AS status_id
 FROM business
 INNER JOIN user ON user.id=business.user_id
 WHERE user.`role`='business' 
@@ -127,7 +128,27 @@ username,
 email,
 `password`,
 profile_pic,
-reg_date
+reg_date,
+`customer`.`user_id` AS user_id,
+`user`.`status_id` AS status_id
 FROM customer
 INNER JOIN user ON user.id=customer.user_id
 WHERE user.`role`='customer'
+
+CREATE VIEW charity_details AS
+SELECT `organization`.`name` AS org_name,
+`organization`.id AS org_id,
+`organization`.`phoneNo` AS org_contact,
+`organization`.`username` AS username,
+`organization`.`city` AS city,
+`organization`.`charity_description` AS org_description,
+`user`.`id` AS user_id,
+`user`.`email` AS user_email,
+`user`.`profile_pic` AS profile_pic,
+`user`.`reg_date` AS reg_date,
+`user`.`status_id` AS status_id
+FROM `organization` 
+INNER JOIN `user` 
+ON `organization`.`user_id`=`user`.`id`
+
+

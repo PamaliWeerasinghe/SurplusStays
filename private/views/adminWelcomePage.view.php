@@ -62,11 +62,11 @@
                 </div>
                 <div class="admin-order-status" >
                     <div class="order" style="justify-content: center;">
-                        <label>Order Status</label>
-                        >
+                        <label>Surplus food Secured Within this Week</label>
+                        
                     </div>
                     <div class="order-dropdown" style="justify-content: center;">
-                        <label class="order-status-label2">Surplus food Secured</label>
+                        <label class="order-status-label2"><?=$total?></label>
                        
                        
                     </div>
@@ -75,18 +75,11 @@
                             <?php 
                                 foreach($days as $day) {
                                     // Calculate the percentage value for each day
-                                    $percentage = ($day / $total) * 100;
+                                    $total !=0 ? $percentage = ($day / $total) * 100 : $percentage = 0;
+                                    
                                     echo "<div class='bar' style='--value: {$percentage}%;'></div>";
                                 }
                             ?>
-                            <!-- <div class="bar" style="--value: 23%;"></div>
-                            <div class="bar" style="--value: 50%;"></div>
-                            <div class="bar" style="--value: 30%;"></div>
-                            <div class="bar" style="--value: 100%;"></div>
-                            <div class="bar" style="--value: 60%;"></div>
-                            <div class="bar" style="--value: 80%;"></div>
-                            <div class="bar" style="--value: 50%;"></div> -->
-
                         </div>
                         <div class="day-block">
                             <div class="day">Mon</div>
