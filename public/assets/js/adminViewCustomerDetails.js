@@ -1,8 +1,8 @@
 document.addEventListener("DOMContentLoaded", () => {
     document.getElementById("delete_customer").onclick = function () {
         closeCustomer();
-        customer_id=document.getElementById("hidden_id").value;
-        deletePopup(customer_id);
+        user_id=document.getElementById("hidden_id").value;
+        deletePopup(user_id);
     };
 });
 function deletePopup(rowId){
@@ -17,7 +17,7 @@ function deletePopup(rowId){
 
         //dynamically set the form action
         const form=document.querySelector('#popup form');
-        form.action=`http://localhost:8080/surplusstays/public/Admin/DeleteCustomer/${rowId}`;
+        form.action=`http://localhost/surplusstays/public/Admin/DeleteCustomer/${rowId}`;
         
     
 }
@@ -51,7 +51,7 @@ function viewCustomer(id){
             document.getElementById("edit_customer").onclick=function(){
                 window.location.href=`http://localhost/SurplusStays/public/admin/viewCustomer/${data.customer[0].cus_id}`
             }
-            document.getElementById("hidden_id").value=data.customer[0].cus_id;
+            document.getElementById("hidden_id").value=data.customer[0].user_id;
             
             //selects the table body
             let tbody=document.querySelector(".order-table tbody");

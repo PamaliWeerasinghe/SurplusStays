@@ -73,7 +73,7 @@
                         </select>
                     </div>
 
-                    <div class="order-nav">
+                    <!-- <div class="order-nav">
                         <div class="view-slots">
                             <div class="slot1">
                                 <label>All</label>
@@ -92,7 +92,7 @@
                                 <label>Wastage</label>
                             </div>
                         </div>
-                    </div>
+                    </div> -->
                     <table class="order-table" >
                         <thead>
                             <tr>
@@ -110,7 +110,7 @@
                                 <!-- No products available -->
                                 </tbody>
                                      </table>
-                                <label>No recently expiriing items</label>
+                                <label>No recently expiring items</label>
                                 
 
                            <?php }else{?>

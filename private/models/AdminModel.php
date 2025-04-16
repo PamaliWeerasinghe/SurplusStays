@@ -2,7 +2,54 @@
 
 class AdminModel extends Admin_Model
 {
-     //validate Edit Charity
+    public function insertCharity($user_columns,$user_values,$charity_columns,$charity_values,$user,$charity)
+    {
+        try {
+            
+            if(empty($this->where(['email'],[$user_values[0]],'user')) ){
+                //begin the transaction
+                $this->db->beginTransaction();
+                
+                //insert the user
+                if($this->insert($user,'user')){
+                    
+                    $this->db->rollback();
+                    return false;
+                }
+                
+                //get the last id
+                $id=$this->db->lastInsertId();
+                
+                //Insert into organization table
+                $charity['user_id']=$id;
+                if($this->insert($charity,'organization')){
+                    $this->db->rollback();
+                    return false;
+                }
+                //commit the transaction
+                $this->db->commit();
+                return true;
+            }else{
+                return false;
+            }
+        } catch (Exception $e) {
+            return $e->getMessage();
+        }
+    }
+     //upload charity organization logo
+     public function uploadCharityOrgPic($logo)
+     {
+ 
+         $logoExt = explode('.', $logo);
+         $logoActualExt = strtolower(end($logoExt));
+         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
+         $fileDestination =$_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages/' . $logoNameNew;
+         $dbFileDestination = $logoNameNew;
+         move_uploaded_file($_FILES['logo']['tmp_name'], $fileDestination);
+ 
+         return $dbFileDestination;
+     }
+     //validate Edit Customer
      public function validateEditCustomer($DATA)
      {
          $this->errors = array();
@@ -122,7 +169,8 @@ class AdminModel extends Admin_Model
         return false;
     }
     //Validate Admin Register details
-    public function validateAdminRegister($DATA){
+    public function validateAdminRegister($DATA)
+    {
         $this->errors = array();
       
 

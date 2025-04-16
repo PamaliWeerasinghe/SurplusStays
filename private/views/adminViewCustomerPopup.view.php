@@ -26,11 +26,11 @@
                 <input type="hidden" id="hidden_id"/>
             </div>
            
-            <div class="view-customer-location">
+            <!-- <div class="view-customer-location">
                         <iframe src="https://www.google.com/maps/embed?pb=YourMapURL"
                         width="100%" height="150" style="border:0;" allowfullscreen="" loading="lazy">
                     </iframe>
-                        </div>
+                        </div> -->
             <div class="reply-box">
                 <div class="name-img" >
                   

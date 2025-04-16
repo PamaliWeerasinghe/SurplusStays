@@ -1,6 +1,44 @@
 <?php
 class Admin extends Controller
 {
+    //Admin view charity organization details
+    function viewCharity($id){
+        {
+        
+            $charity = new AdminModel();
+            $errors=array();
+            $arr=array();
+            // print_r($_FILES);
+    
+            if (count($_POST) > 0) {
+                if ($charity->validateEditCharity($_POST)) {
+                    $arr = $charity->data;
+                    $charity->update($id,$arr,'organization');
+                    $data = $charity->where(['user_id'],[$id], 'charity_details');
+                    $data = $data[0];
+                    $this->view('AdminEditCharityOrg', [
+                        'rows' => $data,    
+                    ]);
+                } else {
+                    $errors = $charity->errors;
+                    $data = $charity->where(['user_id'], [$id], 'charity_details');
+                    $data = $data[0];
+                    $this->view('AdminEditCharityOrg', [
+                        'rows' => $data,
+                        'errors' => $errors
+                    ]);
+                }
+            } else {
+    
+                $data = $charity->where(['org_id'],[ $id], 'charity_details');
+                
+                $data = $data[0];
+                $this->view('AdminEditCharityOrg', [
+                    'rows' => $data
+                ]);
+            }
+        }   
+    }
     //Admin view business details
     function viewBusiness($id){
         {
@@ -66,20 +104,25 @@ class Admin extends Controller
     function DeleteCustomer($id)
     {
         $customer=new AdminModel();
-        $customer->delete($id,'organization');
-        $data=$customer->findAll('organization');
-        $countd = new AdminCharityDetails();
-        foreach ($data as $row) {
-            $count = $countd->getDonorCount($row->id);
-            $row->donors = $count;
-        }
-        foreach ($data as $row) {
-            $count = $countd->getComplaintsCount($row->id);
-            $row->donations = $count;
-        }
-        $this->view('AdminManageCharityOrganizations',['rows'=>$data]);
+        $data["status_id"]=3;
+        $customer->update($id,$data,'user');
+       
+        $this->ManageCustomers();
 
     }
+     // $data=$customer->findAll('customer_details');
+        // $countd = new AdminCharityDetails();
+        // foreach ($data as $row) {
+        //     $count = $countd->getDonorCount($row->id);
+        //     $row->donors = $count;
+        // }
+        // foreach ($data as $row) {
+        //     $count = $countd->getComplaintsCount($row->id);
+        //     $row->donations = $count;
+        // }
+        // $this->view('AdminManageCharityOrganizations',['rows'=>$data]);
+    
+    
     //Admin views a customer
     function viewCustomer($id)
     {
@@ -137,8 +180,8 @@ class Admin extends Controller
     function customerDetails($id){
         if(Auth::logged_in()){
             $admin=new AdminModel();
-            $customer=$admin->where(['cus_id'],[$id],'customer_details');
-            $customer_complaints=$admin->where(['customer_id'],[$id],'complaintdetails');
+            $customer=$admin->where(['user_id'],[$id],'customer_details');
+            $customer_complaints=$admin->where(['user_id'],[$id],'complaintdetails');
             $data["customer"]=$customer;
             $data["customer_complaints"]=$customer_complaints;
             //get the number of orders
@@ -156,6 +199,15 @@ class Admin extends Controller
             $this->redirect('register');
         }
     }
+    //view charity details
+    function charityDetails($id){
+        if(Auth::logged_in()){
+            $admin=new AdminModel();
+            $org=$admin->where(['user_id'],[$id],'charity_details');
+            echo json_encode($org);
+        }
+    }
+
     // customer make a complaint
     function makeComplaints()
     {
@@ -461,10 +513,10 @@ class Admin extends Controller
 
            $complaints_pager=Pager::getInstance('complaints',$noOfPages_complaints,$complaint_limit);
            $complaints_offset=$complaints_pager->offset;
-           $complaints=$admin->select('complaintdetails','complaint_id',$complaint_limit,$complaints_offset);
+           $complaints=$admin->selectRecentComplaints('complaintdetails','complaint_id',$complaint_limit,$complaints_offset);
            
            
-           $product_limit=1;
+           $product_limit=2;
            //count the no of products in the table products
            $productsCountData=$admin->count('products');
            //calculate the no of pages
@@ -591,7 +643,7 @@ class Admin extends Controller
     {
         $admin=new AdminModel();
         
-        $complaint_limit=1;
+        $complaint_limit=4;
         //count the no of complaints in the non_resolved_complaints view
         $complaintsCountData=$admin->count('non_resolved_complaints');
         //calculate the no of pages
@@ -600,7 +652,7 @@ class Admin extends Controller
         //Pagination for complaints
         $complaints_pager=Pager::getInstance('non_resolved_complaints',$noOfPages_complaints,$complaint_limit);
         $complaints_offset=$complaints_pager->offset;
-        $complaints=$admin->select('non_resolved_complaints','complaint_dateTime',$complaint_limit,$complaints_offset);
+        $complaints=$admin->selectNotAttended('non_resolved_complaints','complaint_dateTime',$complaint_limit,$complaints_offset);
 
         // $user=new AdminComplaints();
         // $complaints=$user->getAllComplaints();
@@ -690,6 +742,7 @@ class Admin extends Controller
                     $user['role']='customer';
                     $user['profile_pic']=$customer->uploadCustomerPic($_FILES['profile_picture']['name']);
                     $user['reg_date']=date('Y-m-d H:i:s');
+                    $user['status_id']=1;
 
                     $add_customer['fname']=$_POST['fname'];
                     $add_customer['lname']=$_POST['lname'];
@@ -738,7 +791,7 @@ class Admin extends Controller
         $admin=new AdminModel();
         $business_limit=3;
         //count the no of businesses in the business_details view
-        $businessCountData=$admin->count('business_details');
+        $businessCountData=$admin->countWithWhere('business_details',['status_id'],[1]);
         //calculate the no of pages
         $noOfPages_business= ceil($businessCountData/$business_limit);
         
@@ -759,18 +812,32 @@ class Admin extends Controller
         if (!Auth::logged_in()) {
             $this->redirect('register');
         } else {
-            $user = new AdminModel();
-            $data = $user->findAll('organization');
-            $countd = new AdminCharityDetails();
-            foreach ($data as $row) {
-                $count = $countd->getDonorCount($row->id);
-                $row->donors = $count;
-            }
-            foreach ($data as $row) {
-                $count = $countd->getComplaintsCount($row->id);
-                $row->donations = $count;
-            }
-            $this->view('AdminManageCharityOrganizations', ['rows' => $data]);
+            $org = new AdminModel();
+            $org_limit=2;
+            //count the no of organizations in the organization table
+            $orgCountData=$org->count('charity_details');
+            //calculate the no of pages
+            $noOfPages_org= ceil($orgCountData/$org_limit);
+
+            //pagination for organizations
+            $org_pager=Pager::getInstance('charity_details',$noOfPages_org,$org_limit);
+            $org_offset=$org_pager->offset;
+            $organization=$org->select('charity_details','org_id',$org_limit,$org_offset);
+
+            // $data = $org->findAll('charity_details');
+            // $countd = new AdminCharityDetails();
+            // foreach ($data as $row) {
+            //     $count = $countd->getDonorCount($row->org_id);
+            //     $row->donors = $count;
+            // }
+            // foreach ($data as $row) {
+            //     $count = $countd->getComplaintsCount($row->org_id);
+            //     $row->donations = $count;
+            // }
+            $this->view('AdminManageCharityOrganizations', [
+                "org"=>$organization,
+                "org_pager"=>$org_pager
+            ]);
         }
     }
     //Add new Charity organization
@@ -780,40 +847,43 @@ class Admin extends Controller
         if (count($_POST) > 0) {
             $charity = new AdminModel();
             if ($charity->validateCharity($_POST)) {
+                print_r($_POST);
+                //Get charity details
+                $charity_arr['name'] = $_POST['name'];
+                $charity_arr['city'] = $_POST['city'];
+                $charity_arr['phoneNo'] = $_POST['phone'];
+                $charity_arr['charity_description'] = $_POST['description'];
+                $charity_arr['username'] = $_POST['username'];
+                
+                
+                //Details of the user 
+                $user['email'] = $_POST['email'];
+                $user['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $user['profile_pic'] = $charity->uploadCharityOrgPic($_FILES['logo']['name']);
+                $user['role']='charity';
+                $user['reg_date']=date('Y-m-d H:i:s');
+                $user['status_id']=1;
 
-                //insert charity org
-                $arr['name'] = $_POST['name'];
-                $arr['city'] = $_POST['city'];
-                $arr['phoneNo'] = $_POST['phone'];
-                $arr['charity_description'] = $_POST['description'];
-                $arr['username'] = $_POST['username'];
-                $arr['user_id']='5';
+                //Prepare the user details to be inserted into the user table
+                $user_columns=['email','password','role','profile_pic','reg_date'];
+                $user_values=[$user['email'],$user['password'],$user['role'],$user['profile_pic'],$user['reg_date']];
                 
+                //Prepare the charity details to be inserted into the organization table
+                $charity_columns=['name','phoneNo','username','city','charity_description'];
+                $charity_values=[$charity_arr['name'],$charity_arr['phoneNo'],$charity_arr['username'],$charity_arr['city'],$charity_arr['charity_description']];
                 
-                $user_arr['email'] = $_POST['email'];
-                $user_arr['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                $user_arr['profile_pic'] = $charity->uploadLogo($_FILES['logo']['name']);
-                $user_arr['role']='charity';
-                $user_arr['reg_date']=date('Y-m-d H:i:s');
-                
-                $insertcharity=new Admin_Model();
-                $insertcharity->insert($user_arr,'user');
-                $insertcharity->insert($arr, 'organization');
-                $data = $charity->findAll('organization');
-
-                //include donors and complaints
-                $countd = new AdminCharityDetails();
-                foreach ($data as $row) {
-                    $count = $countd->getDonorCount($row->id);
-                    $row->donors = $count;
+                if($charity->insertCharity(
+                    $user_columns,$user_values,$charity_columns,
+                    $charity_values,$user,$charity_arr
+                )){
+                    $errors["charity_insertion"]="Charity already exists";
+                            $this->view('AddNewCharityOrg',[
+                                "errors"=>$errors
+                            ]);
+                }else{
+                    $this->redirect('/Admin/ManageCharityOrg');
                 }
-                foreach ($data as $row) {
-                    $count = $countd->getComplaintsCount($row->id);
-                    $row->donations = $count;
-                }
-
-                //redirect to manage charity org 
-                $this->view('AdminManageCharityOrganizations', ['rows' => $data]);
+             
             } else {
 
                 $errors = $charity->errors;

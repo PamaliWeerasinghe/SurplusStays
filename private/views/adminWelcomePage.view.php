@@ -206,15 +206,15 @@
                                 <?php endforeach ?>
                             </tbody>
                         </table>
-
+                        <?php $products_pager->display() ?>
                     </div>
 
-                    <?php $products_pager->display() ?>
+                    
 
 
                 </div>
 
-                <div class="complaints-status">
+                <div class="complaints-status" style="margin-top: 10%;">
                     <div>
                         <label>Recent Complaints Recieved</label>
 
@@ -237,7 +237,7 @@
                                         <td><?= $complaint->complaint_date ?> &nbsp; &nbsp;<?=$complaint->complaint_id?></td>
                                         <td><?= $complaint->fname ?>&nbsp;<?= $complaint->lname ?> </td>
                                         <td><?= $complaint->product ?></td>
-                                        <td><button class="completed"><?= $complaint->complaint_status ?></button></td>
+                                        <td><button class="completed" style="border-radius: 10px;"><?= $complaint->complaint_status ?></button></td>
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>

@@ -47,10 +47,10 @@ class Admin_Model
      public function admin_bar($from_date,$to_date){
           
           $query="SELECT COUNT(`order_items`.`products_id`) AS product_count,`order`.`dateTime` AS date_time FROM `order_items`
-   INNER JOIN `order`
-   ON `order`.`id`=`order_items`.`order_id`
-   WHERE `order`.`dateTime` BETWEEN :from_date AND :to_date
-   GROUP BY `order`.`dateTime` ";
+                  INNER JOIN `order`
+                  ON `order`.`id`=`order_items`.`order_id`
+                  WHERE `order`.`dateTime` BETWEEN :from_date AND :to_date
+                  GROUP BY `order`.`dateTime` ";
 
           $data=[
                'from_date'=>$from_date,
@@ -63,8 +63,24 @@ class Admin_Model
      {
           $this->table=$table;
           $this->column=$column;
-          $query="select * from $this->table order by $this->column desc limit $limit offset $offset";
+          $query="select * from $this->table where status_id='1' order by $this->column desc limit $limit offset $offset";
           return $this->db->query($query);
+     }
+     //get the not attended complaints
+     public function selectNotAttended($table,$column,$limit,$offset)
+     {
+          $this->table=$table;
+          $this->column=$column;
+          $query="select * from $this->table where status_id='2' order by $this->column limit $limit offset $offset";
+          return $this->db->query($query);
+     }
+     //get the recent complaints
+     public function selectRecentComplaints($table,$column,$limit,$offset)
+     {
+         $this->table=$table;
+         $this->column=$column;
+         $query="select * from $this->table order by $this->column desc limit $limit offset $offset";
+         return $this->db->query($query);
      }
      //get the count of items in a column
      public function count($table){

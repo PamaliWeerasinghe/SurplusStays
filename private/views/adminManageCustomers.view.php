@@ -90,7 +90,7 @@
                         <tbody>
                         <!-- onclick="viewCustomer(<?=$customer->cus_id?>)" -->
                         <?php foreach( $customers as $customer):?>
-                            <tr id="customer_row<?=$customer->cus_id?>" onclick="viewCustomer(<?=$customer->cus_id?>)">
+                            <tr id="customer_row<?=$customer->user_id?>" onclick="viewCustomer(<?=$customer->user_id?>)">
                                 <td><img src="<?=CUSTOMER.'/'.$customer->profile_pic?>" class="customer-profile-pic"/></td>
                                 <td>#<?=$customer->cus_id?></td>
                                 <td><?=$customer->phoneNo?></td>

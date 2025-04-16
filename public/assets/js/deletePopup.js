@@ -10,7 +10,7 @@
 
         //dynamically set the form action
         const form=document.querySelector('#popup form');
-        form.action=`http://localhost:8080/surplusstays/public/AdminDeleteCharity/${rowId}`;
+        form.action=`http://localhost/surplusstays/public/AdminDeleteCharity/${rowId}`;
         
     }
     function closePopup(){

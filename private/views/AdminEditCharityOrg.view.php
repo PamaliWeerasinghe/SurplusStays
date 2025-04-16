@@ -21,8 +21,8 @@
         <form method="post" class="right" enctype="multipart/form-data">
             <div class="details">
                 <div class="steps">
+                <div class="step-number"><h3>ORGANIZATION DETAILS</h3></div>
                     
-                    <h3><b>ORGANIZATION DETAILS</b></h3>
                 </div>
                 <?php if (!empty($errors)): ?>
                     <div class="error alert">
@@ -35,37 +35,23 @@
                 <?php endif; ?>
 
                 <h4>ORGANIZATION NAME :</h4>
-                <input placeholder="<?=$rows->name?>" value='<?=get_var('name')?>' type="text" name="name" class="input" >
+                <input placeholder="<?=$rows->org_name?>" value='<?=get_var('org_name')?>' type="text" name="org_name" class="input" >
                 
                 <h4>ORGANIZATION LOGO :</h4>
-                <!-- <input placeholder="ADD ORGANIZATION OF THE LOGO" value="<?=get_var('logo')?>" type="file" name="logo" class="input" > -->
-                <!-- <div class="img-container">
-                <div id="profile-pic-preview" class="preview-container">
-                    <p class="preview-placeholder">No image selected</p>
-                    
-                </div>
-                   
-                    <input type="file" id="profilePic" accept="image/*"/>
-                
-                
-                </div> -->
-                <div class="upload-container">
-                        <div class="logo-icon-preview">
-                        <img class="pic" src="<?=ASSETS?>/charityImages/<?=$rows->picture?>" alt="Profile Picture" id="profile-pic-preview">
-                        <input type="file" id="profilePic" name="file" />
-                        </div>
-                       
-                        
-                </div>
-
+                <div class="upload-wrapper">
+                        <label for="upload-1">
+                            <img src="<?=ASSETS?>/charityImages/<?=$rows->profile_pic?>" alt="Upload Image" class="upload-icon" id="profilePreview">
+                        </label>
+                        <input type="file" id="upload-1" name="profile_picture" style="display: none;" accept="image/*">
+                    </div>
                 <h4>ORGANIZATION CITY :</h4>
                 <input placeholder="<?=$rows->city?>" value='<?=get_var('city')?>' type="text" name="city" class="input">
                 <h4>ORGANIZATION EMAIL:</h4>
-                <input placeholder="<?=$rows->email?>" value='<?=get_var('email')?>' type="text" name="email" class="input"> 
+                <input placeholder="<?=$rows->user_email?>" value='<?=get_var('email')?>' type="text" name="email" class="input"> 
                 <h4>PHONE NUMBER :</h4>
-                <input placeholder="<?=$rows->phoneNo?>" value='<?=get_var('phone')?>' type="text" name="phone" class="input" >
+                <input placeholder="<?=$rows->org_contact?>" value='<?=get_var('phone')?>' type="text" name="phone" class="input" >
                 <h4>ORGANIZATION DESCRIPTION :</h4>
-                <input placeholder="<?=$rows->charity_description?>" value='<?=get_var('description')?>' type="text" name="description" class="input"> 
+                <input placeholder="<?=$rows->org_description?>" value='<?=get_var('description')?>' type="text" name="description" class="input"> 
                 <h4>USERNAME :</h4>
                 <input placeholder="<?=$rows->username?>" value='<?=get_var('username')?>' type="username" name="username" class="input" >
                 <h4>PASSWORD :</h4>

@@ -49,7 +49,8 @@ class Mail
     }
 
     //send admin the dashboard link to continue
-    public static function sendAdminDashboard($toEmail,$token){
+    public static function sendAdminDashboard($toEmail,$token)
+    {
         //load the teamplate
         $template=file_get_contents(TEMPLATEROOT.'/sendAdminToDashboard.html');
         //create link
@@ -64,7 +65,8 @@ class Mail
         return self::sendMail($toEmail,'',$subject,$template);
     }
     //send the login page link to the regiatered user
-    public static function sendLoginToRegistered($toEmail,$token){
+    public static function sendLoginToRegistered($toEmail,$token)
+    {
         //load the template
         $template=file_get_contents(TEMPLATEROOT.'/sendLoginToRegistered.html');
         //create link
@@ -79,7 +81,8 @@ class Mail
 
     }
     //send the link to the customer complaint
-    public static function sendCustomerComplaint($complaint_id,$date,$toEmail){
+    public static function sendCustomerComplaint($complaint_id,$date,$toEmail)
+    {
         //load the template
         $template=file_get_contents(TEMPLATEROOT.'/sendCustomerComplaintToAdmin.html');
         //create the link

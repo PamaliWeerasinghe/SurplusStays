@@ -20,7 +20,7 @@ class AdminCharityDetails extends Admin_Model
 
         $result = $this->db->query($query, $params);
 
-        return $result[0]->donors;
+        return $result!=false ? $result[0]->donors: 0;
     }
     public function getComplaintsCount($id)
     {
@@ -33,6 +33,6 @@ class AdminCharityDetails extends Admin_Model
         $params = ["id" => $id];
         $result = $this->db->query($query, $params);
 
-        return $result[0]->donations;
+        return $result!=false ? $result[0]->donations : 0;
     }
 }

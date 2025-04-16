@@ -39,7 +39,7 @@ order BY products.expiration_dateTime DESC
 
 CREATE VIEW about_to_expire_products AS
 SELECT products.id AS product_id, products.expiration_dateTime AS bestBefore, products.`name`AS product_name,notify_status.`status` AS notify_status, 
-products.price_per_unit AS price, business.`name` AS business_name from products
+products.price_per_unit AS price, business.`name` AS business_name, products.status_id AS status_id from products
 INNER JOIN status
 ON status.id=products.status_id
 INNER JOIN notify_status
@@ -47,6 +47,7 @@ ON notify_status.id=products.notify_status_id
 INNER JOIN business
 ON business.id=products.business_id
 WHERE status.`status`!='Inactive'
+order BY products.expiration_dateTime 
 
 CREATE VIEW non_resolved_complaints AS
 SELECT complaints.id AS complaint_id,
@@ -58,7 +59,8 @@ customer_id,
 order_items_id,
 adminReply,
 complaint_dateTime,
-complaint_status.name as status
+complaint_status.name as status,
+complaints.complaint_status_id AS status_id
 FROM complaints 
 INNER JOIN complaint_status
 ON complaints.complaint_status_id=complaint_status.id
