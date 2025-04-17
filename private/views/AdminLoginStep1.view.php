@@ -1,6 +1,6 @@
 <?php require APPROOT.'/views/includes/htmlHeader.view.php'?>
     <link rel="stylesheet" href="<?=ROOT?>/assets/styles/register.css">
-
+    <link rel="stylesheet" href="<?= STYLES ?>/errorAlertPopup.css">
 </head>
 <body>
     
@@ -29,16 +29,24 @@
                             <?php endforeach; ?>
                         </ul>
                     </div>
-                <?php elseif (!empty($successfull)):?>
-                <div class="success alert">
-                        <ul>
-                            <?php foreach ($successfull as $notify): ?>
-                                <li><?= $notify ?></li>
-                            <?php endforeach; ?>
-                        </ul>
+                <?php endif; ?>   
+                <?php if (!empty($successfull)):?>
+                    <div class="successfull-alert-popup">
+                                <div class="alert-header2">
+                                <span>
+                                    <?= $successfull ?>
+                                    </span>
+                                    <span class="close-btn" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+                                    <!-- <span class="alert-title">Successfull</span> -->
+
+                                   
+                                        
+                                         
+                                </div>
+                           
                     </div>
-                
                 <?php endif; ?>
+                
                 <form method="post">
                 
                 <h4>EMAIL ADDRESS :</h4>
@@ -58,3 +66,14 @@
 
 <?php echo $this->view('includes/footer')?>
 <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>
+<script>
+            // Auto-hide after 5 seconds
+            document.addEventListener('DOMContentLoaded', function() {
+                const alert = document.querySelector('.error alert');
+                if (alert) {
+                    setTimeout(() => {
+                        alert.style.display = 'none';
+                    }, 5000);
+                }
+            });
+        </script>

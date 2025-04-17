@@ -15,7 +15,7 @@
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary">
-                    <div class="complain-error-div">
+                    <!-- <div class="complain-error-div"> -->
                         <?php if (!empty($errors)) : ?>
                             <div class="error-alert-popup">
                                 <div class="alert-header1">
@@ -28,10 +28,11 @@
                                         <?php endforeach; ?>
                                     </ul>
                                 </div>
-                            <?php endif; ?>
+                           
                             </div>
+                        <?php endif; ?>
 
-                    </div>
+                    <!-- </div> -->
 
 
 

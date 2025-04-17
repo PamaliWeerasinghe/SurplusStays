@@ -35,13 +35,12 @@ class Login extends Controller{
 
                         Mail::sendAdminDashboard($_POST['email'],$token);
                         
-                        // TODO: view email sent 
-                        die('Email sent');
-                        // $successfull["email"]="Email Sent. Check Yor Email";
-                        // $this->view('AdminLoginStep1',[
-                        //     "successfull"=>$successfull
-                        // ]);
+                        $_SESSION['alert_message']="Check your email";
+                        $_SESSION['alert_type']="success";
+                        $this->redirect('login/checkEmail');
+
                         self::verifyEmail();
+
                         break;
                     case 'customer':
                         $customer=new AdminUser();
@@ -63,8 +62,9 @@ class Login extends Controller{
                         break;
                     case 'charity':
                         $charity= new AdminUser();
-                        $charity_details=$charity->where('user_id',$user_details->id,'organization');
-                        Auth::authenticate($charity_details,$user_details);
+                        $charity_details=$charity->where(['user_id'],[$user_details->id],'organization');
+                        print_r($charity_details);
+                        Auth::authenticate($charity_details[0],$user_details);
                         $this->view('charity_dashboard',[
                             'charityDetails'=>$charity,
                             'commonDetails'=>$user
@@ -96,7 +96,8 @@ class Login extends Controller{
         
     }
 
-    public function verifyEmail(){
+    public function verifyEmail()
+    {
         $token = $_GET['token'];
         //get token details from database
         $admin =new AdminModel();
@@ -133,6 +134,13 @@ class Login extends Controller{
        
 
     
+    }
+
+    public function checkEmail(){
+        
+        $this->view('AdminLoginStep1',[
+            'successfull'=>$_SESSION['alert_message'],
+        ]);
     }
    
 
