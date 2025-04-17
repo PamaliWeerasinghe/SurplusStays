@@ -2,7 +2,7 @@
 
 class Organization extends Model
 {
-    protected $table = "organization";
+    public $table = "organization";
 
     public function validate($DATA)
     {
@@ -19,9 +19,9 @@ class Organization extends Model
             $this->errors['email'] = "A valid email is required";
         }
         //check if email exists
-        if($this->where('email',$DATA['email'])) {
-            $this->errors['email'] = "Email is already in use";
-        }
+        // if($this->where('email',$DATA['email'])) {
+        //     $this->errors['email'] = "Email is already in use";
+        // }
         if(empty($DATA['phone']) || !is_numeric($DATA['phone'])) {
             $this->errors['phone'] = "A valid phone number is required";
         }

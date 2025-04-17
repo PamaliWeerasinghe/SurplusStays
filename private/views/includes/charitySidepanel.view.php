@@ -7,7 +7,7 @@ $current_url = $_SERVER['REQUEST_URI'];
 
 <div class="side-nav">
     <div class="profile-section">
-        <img src="<?=ASSETS?>/charityImages/<?=basename(Auth::getPicture())?>" alt="Profile Image" class="profile-image">
+        <img src="<?=ASSETS?>/charityImages/<?=basename(Auth::getUserPicture())?>" alt="Profile Image" class="profile-image">
         <h2>Hi <?=Auth::getusername()?></h2>
     </div>
     <ul class="nav-links">

@@ -15,7 +15,7 @@ define('ASSETS', 'http://localhost:8080/SurplusStays/public/assets');
 define('SIDEPANELBUSINESS', '/SurplusStays/public/business');
 
 //DATABASE
-define('DBNAME','surplusstays');
+define('DBNAME','surplusstays_latest');
 define('DBHOST','localhost');
 define('DBUSER','root');
 define('DBPASS','');

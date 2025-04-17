@@ -13,11 +13,11 @@
         <ul class="nav-links-right">
             <li><a href="#">Contact Us</a></li>
             <?php if (Auth::getcharity_description() != "Unknown" && !empty(Auth::getcharity_description())):?>
-                <li><a href="<?=ROOT?>/charity"><img class="profile-img" src="<?=ASSETS?>/charityImages/<?=basename(Auth::getPicture())?>" alt="profile icon"></a></li>
+                <li><a href="<?=ROOT?>/charity"><img class="profile-img" src="<?=ASSETS?>/charityImages/<?=basename(Auth::getUserPicture())?>" alt="profile icon"></a></li>
             <?php elseif (Auth::getlname() != "Unknown" && !empty(Auth::getlname())):?>
-                <li><a href="<?=ROOT?>/customer"><img class="profile-img" src="<?=ASSETS?>/customerImages/<?=basename(Auth::getPicture())?>" alt="profile icon"></a></li>
+                <li><a href="<?=ROOT?>/customer"><img class="profile-img" src="<?=ASSETS?>/customerImages/<?=basename(Auth::getUserPicture())?>" alt="profile icon"></a></li>
             <?php elseif (Auth::getbusiness_type() != "Unknown" && !empty(Auth::getbusiness_type())):?>
-                <li><a href="<?=ROOT?>/customer"><img class="profile-img" src="<?=ASSETS?>/businessImages/<?=basename(Auth::getPicture())?>" alt="profile icon"></a></li>
+                <li><a href="<?=ROOT?>/customer"><img class="profile-img" src="<?=ASSETS?>/businessImages/<?=basename(Auth::getUserPicture())?>" alt="profile icon"></a></li>
             <?php else:?>
                 <li><a href="#"><img src="<?=ASSETS?>/images/sample_profile_pic.png" alt="profile icon"></a></li>
                 

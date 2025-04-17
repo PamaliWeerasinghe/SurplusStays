@@ -76,4 +76,26 @@ class Auth
             return $_SESSION['USER']->id;
         }
     }
+    
+    public static function getUserPicture()
+    {
+        if(session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        if(isset($_SESSION['USER']->user_id)) {
+            $db = Database::getInstance();
+            $id = $_SESSION['USER']->user_id;
+
+            $query = "SELECT profile_pic FROM user WHERE id = :id LIMIT 1";
+            $result = $db->query($query, ['id' => $id],'assoc');
+
+            if($result && isset($result[0]['profile_pic'])) {
+                return $result[0]['profile_pic'];
+            }
+        }
+
+        return 'default.jpg'; // fallback image
+    }
+
 }

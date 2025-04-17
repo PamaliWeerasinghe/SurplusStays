@@ -71,24 +71,22 @@
                                         <div class="card">
                                             <div class="card-image">
                                                 <img src="<?=ASSETS?>/charityImages/<?= htmlspecialchars($row->picture) ?>" alt="Project Image">
-                                                <span class="expired-badge">EXPIRED</span>
                                             </div>
                                             <div class="card-content">
                                                 <h3 class="title"><?= htmlspecialchars($row->name) ?></h3>
                                                 <p class="location">
-                                                    <span class="icon">📍</span><?= htmlspecialchars($row->city) ?>
-                                                    <span class="category">Local Education</span>
+                                                    <span class="icon">📍</span><?= htmlspecialchars($row->city) ?>                                                   
+                                                    <?php if (!empty($weekCounts[$row->id]) && $weekCounts[$row->id] >= 1): ?>
+                                                    <span class="category">Active</span>
+                                                <?php endif; ?>
                                                 </p>
                                                 <p class="description"><?= htmlspecialchars($row->charity_description) ?></p>
                                                 <div class="progress-section">
-                                                    <div class="progress-circle">
-                                                        <span>0%</span>
-                                                    </div>
                                                     <div class="funding">
-                                                        <p><strong>Raised:</strong> <span class="raised">LKR 214.40</span></p>
-                                                        <p><strong>Goal:</strong> <span class="goal">LKR 1,448,000</span></p>
+                                                        <p><strong>Phone:</strong> <span class="raised"><?= htmlspecialchars($row->phoneNo) ?></span></p>
+                                                        <p><strong>Email:</strong> <span class="goal"><?= htmlspecialchars($row->email) ?></span></p>
                                                     </div>
-                                                    <button class="view-btn" onclick="window.location.href='<?= ROOT ?>/charity/viewOrganization/<?= $row->id ?>'">View</button>
+                                                    <button class="view-btn" onclick="window.location.href='<?= ROOT ?>/charity/viewOrganization/<?= $row->id ?>'">View More</button>
                                                 </div>
                                             </div>
                                         </div>
