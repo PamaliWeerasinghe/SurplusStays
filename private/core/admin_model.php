@@ -19,7 +19,15 @@ class Admin_Model
           $this->db=Database::getInstance();
 
      }
-   
+     public function searchCustomer($table,$input){
+          $this->table=$table;
+          $query="SELECT * FROM `$this->table` WHERE `fname` LIKE :search OR `lname` LIKE :search OR `reg_date` LIKE :search OR `email` LIKE :search OR `phoneNo` LIKE :search OR `cus_id` LIKE :search ORDER BY `cus_id` DESC";
+          $data=[
+               'search'=>'%'.$input.'%'
+          ];
+          return $this->db->query($query,$data);
+
+     }
      public function where($columns,$values,$table)
      {
           $this->table=$table;

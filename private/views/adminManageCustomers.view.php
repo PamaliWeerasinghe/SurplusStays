@@ -14,15 +14,7 @@
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary">
-                    <div class="notifications-type2">
-                        <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." />
-                            <img src="<?= ASSETS ?>/images/search.png" class="bell2" />
-                        </div>
-
-                        <!-- <img src="<?= ASSETS ?>/images/Bell.png" class="bell" /> -->
-                    </div>
-                    <div class="summary-blocks">
+                <div class="summary-blocks">
                         <div class="summaries">
                             <div class="summaries-1">
                                 <label>Total Customers</label>
@@ -64,6 +56,54 @@
 
                         </div>
                     </div>
+                    <div class="notifications-type2">
+                       
+                        <!-- <div class="searchdiv">
+                            <input type="text" class="search" placeholder="Search..." id="search" />
+                            <img src="<?= ASSETS ?>/images/search.png" class="bell2" />
+                        </div> -->
+                        <!-- <div class="search-container">
+                            <div class="searchdiv">
+                                <div class="search-wrapper">
+                                <input type="text" class="search" placeholder="Search customers..." id="search" />
+                                <button class="search-btn">
+                                    <img src="<?= ASSETS ?>/images/search.png" class="search-icon" viewBox="0 0 24 24"/>
+                                    
+                                </button>
+                                </div>
+                                <div class="notification-icon">
+                                <select>
+                                    <option value="all">Select</option>
+                                    <option value="active">First Name</option>
+                                    <option value="inactive">Last Name</option>
+                                    <option value="banned">Phone No</option>
+                                    <option value="banned">Email</option>
+                                    <option value="banned">Username</option>
+                                </select> -->
+                                <?php
+        $columns = [
+            "Title" => "Title",
+            "Location" => "Location",
+            "jobs_create_at" => "Date Posted",
+            "Views" => "Views",
+            "Applicants" => "Applicants",
+            "Actions" => "Actions"
+        ];
+        ?>
+<?php
+    $seacher = TableSearcher::getInstance();
+    echo $seacher->renderSearchBar($columns);
+?>
+                                <!-- </div>
+                            </div>
+                        </div> -->
+                       
+                       
+
+                        <!-- <img src="<?= ASSETS ?>/images/Bell.png" class="bell" /> -->
+                    </div>
+
+                    
 
 
                 </div>

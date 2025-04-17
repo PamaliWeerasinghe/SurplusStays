@@ -54,11 +54,11 @@
                 <input placeholder="<?=$rows->org_description?>" value='<?=get_var('description')?>' type="text" name="description" class="input"> 
                 <h4>USERNAME :</h4>
                 <input placeholder="<?=$rows->username?>" value='<?=get_var('username')?>' type="username" name="username" class="input" >
-                <h4>PASSWORD :</h4>
+                <!-- <h4>PASSWORD :</h4>
                 <input placeholder="ENTER NEW PASSWORD" value="<?=get_var('password')?>" type="text" name="password" class="input">
                 <h4>CONFIRM PASSWORD  :</h4>
                 <input placeholder="RE-ENTER NEW PASSWORD" value="<?=get_var('confirm_password')?>" type="text" name="confirm_password" class="input">   
-                                  
+                                   -->
             </div>
             <button class="register-button" type="submit">UPDATE</button>
 </form>

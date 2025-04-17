@@ -4,7 +4,37 @@ document.addEventListener("DOMContentLoaded", () => {
         user_id=document.getElementById("hidden_id").value;
         deletePopup(user_id);
     };
+    // document.getElementById("search").onkeyup=function(){
+    //     input=document.getElementById("search").value.toLowerCase();
+    //     //fetch the customer details
+    //     fetch(`http://localhost/surplusstays/public/admin/searchCustomer/${input}`)
+    //     .then(response=>{
+    //         if(!response.ok){
+    //             throw new Error(`HTTP error! Status: ${response.status}`);
+    //         }
+    //         return response.json(); // Convert response to JSON
+
+    //     })
+    //     .then(customers=>{
+    //         console.log("Fetched Data:", customers); // Debugging: Check JSON structure
+    //         //selects the table body
+    //         let tbody=document.querySelector(".order-table tbody");
+    //         //clear the rows
+    //         tbody.innerHTML="";
+    //         let row=document.createElement("tr");
+    //         row.innerHTML=`
+    //             <td>#profile_pic</td>
+    //             <td>#${customers.cus_id}</td>
+    //             <td>${customers.phoneNo}</td>
+    //             <td>${customers.reg_date}</td>
+    //         `;
+            
+
+    //     })
+    // }
+
 });
+
 function deletePopup(rowId){
     let popup=document.getElementById("popup");
     let popupContainer=document.getElementById("popup-container");
@@ -152,3 +182,5 @@ function closeCustomer(){
 function editCustomer(){
     alert("edit")
 }
+
+

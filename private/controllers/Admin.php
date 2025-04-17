@@ -1,6 +1,15 @@
 <?php
 class Admin extends Controller
 {
+    //search customer through the search bar
+    function searchCustomer($input){
+        $admin=new AdminModel();
+        $customers=$admin->searchCustomer('customer_details',$input);
+        $jsonData = json_encode($customers);
+        echo $jsonData;
+        
+
+    }
     //Admin view charity organization details
     function viewCharity($id){
         {
@@ -8,16 +17,15 @@ class Admin extends Controller
             $charity = new AdminModel();
             $errors=array();
             $arr=array();
-            // print_r($_FILES);
     
             if (count($_POST) > 0) {
                 if ($charity->validateEditCharity($_POST)) {
                     $arr = $charity->data;
-                    $charity->update($id,$arr,'organization');
-                    $data = $charity->where(['user_id'],[$id], 'charity_details');
-                    $data = $data[0];
+                    $charity->update($id,$arr,'charity_details');
+                    $data = $charity->where(['org_id'],[$id], 'charity_details');
+                    // $data = $data[0];
                     $this->view('AdminEditCharityOrg', [
-                        'rows' => $data,    
+                        'rows' => $data[0],    
                     ]);
                 } else {
                     $errors = $charity->errors;
@@ -49,6 +57,7 @@ class Admin extends Controller
             // print_r($_FILES);
     
             if (count($_POST) > 0) {
+
                 if ($customer->validateEditCustomer($_POST)) {
                     $arr = $customer->data;
                     $customer->update($id,$arr,'customer');
@@ -81,8 +90,8 @@ class Admin extends Controller
     function businessDetails($id){
         if(Auth::logged_in()){
             $admin=new AdminModel();
-            $business=$admin->where(['bus_id'],[$id],'business_details');
-            $business_complaints=$admin->where(['businessID'],[$id],'complaintdetails');
+            $business=$admin->where(['user_id'],[$id],'business_details');
+            $business_complaints=$admin->where(['user_id'],[$id],'complaintdetails');
             $data["business"]=$business;
             $data["business_complaints"]=$business_complaints;
             //get the number of orders

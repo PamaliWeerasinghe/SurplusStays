@@ -94,6 +94,7 @@ email,
 `password`,
 profile_pic,
 reg_date,
+`user`.id AS user_id,
 `user`.`status_id` AS status_id
 FROM business
 INNER JOIN user ON user.id=business.user_id

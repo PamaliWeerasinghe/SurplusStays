@@ -16,6 +16,7 @@ function viewBusiness(id){
 
         // Check if 'customer' exists and is an array
         if (data.business && Array.isArray(data.business) && data.business.length > 0) {
+            document.getElementById("businessImg").src=`http://localhost/SurplusStays/public/assets/businessImages/${data.business[0].profile_pic}`;
             document.getElementById("name").innerHTML = data.business[0].business_name;
             document.getElementById("email").innerHTML = data.business[0].email;
             document.getElementById("phoneNo").innerHTML = data.business[0].phoneNo;
