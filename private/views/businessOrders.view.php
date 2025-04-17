@@ -31,24 +31,20 @@
                         </div>
                         <div class="order-card completed" onclick="filterByStatus('completed')">
                             <h3>Completed</h3>
-
                         </div>
-
                     </div>
-
                 </div>
 
-
-                <div class="order-status">
-                    <div class="order">
+                <div class="main-box">
+                    <div class="header">
                         <label>Orders</label>
                         <div>
-                            <input type="text" id="orderSearch" class="search" placeholder="Search by Order ID..." onkeyup="filterOrders()" />
+                            <input class="search" type="text" id="orderSearch"  placeholder="Search by Order ID..." onkeyup="filterOrders()" />
                         </div>
                     </div>
 
                     <!-- Orders Table -->
-                    <table class="order-table">
+                    <table class="main-table">
                         <thead>
                             <tr>
                                 <th>OrderID</th>
@@ -59,7 +55,7 @@
                                 <th>Price</th>
                             </tr>
                         </thead>
-                        <tbody id="orderTableBody">
+                        <tbody>
                             <?php if (!empty($orders)) : ?>
                                 <?php foreach ($orders as $order) : ?>
                                     <tr class="order-row"
@@ -74,18 +70,22 @@
                                                 <?= htmlspecialchars($order->status) ?>
                                             </span>
                                         </td>
-                                        <td style="text-align: center;">Rs. <?= htmlspecialchars($order->total) ?> <br /><label>View Full Details</label></td>
+                                        <td>Rs. <?= htmlspecialchars($order->total) ?> <br />View Full Details</td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>
                                 <tr>
-                                    <td colspan="6" style="text-align: center;">No Orders Found</td>
+                                    <td colspan="6" >No Orders Found</td>
                                 </tr>
                             <?php endif; ?>
                         </tbody>
                     </table>
+                    <div class="pagination">
+                        <img src="<?= ASSETS ?>/images/back.png" id="PrevBtn" />
+                        <img src="<?= ASSETS ?>/images/next.png" id="NextBtn" />
+                    </div>
                 </div>
-                </table>
+
             </div>
         </div>
         <?php echo $this->view('includes/footer') ?>
@@ -93,6 +93,40 @@
 
     <!-- JavaScript to Handle Filtering -->
     <script>
+        /* pagination */
+
+        const rowsPerPage = 10;
+        let currentPage = 1;
+
+        const rows = Array.from(document.querySelectorAll('.order-row'));
+        const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+        function showPage(page) {
+            rows.forEach((row, index) => {
+                row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) ? '' : 'none';
+            });
+        }
+
+        // Initial display
+        showPage(currentPage);
+
+        // Event listeners
+        document.getElementById('NextBtn').addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        });
+
+        document.getElementById('PrevBtn').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
+
+        /* search orders by ID */
+
         function filterOrders() {
             let input = document.getElementById("orderSearch").value.toUpperCase();
             let rows = document.querySelectorAll(".order-row");
@@ -102,6 +136,8 @@
                 row.style.display = orderId.includes(input) ? "" : "none";
             });
         }
+
+        /* filter status by status */
 
         function filterByStatus(status) {
             let rows = document.querySelectorAll(".order-row");
@@ -114,5 +150,4 @@
     </script>
 
 </body>
-
 </html>

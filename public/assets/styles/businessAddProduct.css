@@ -42,7 +42,7 @@ body {
     padding: 3%;
 }
 
-.inner-main {
+.main-box {
     width: 88%;
     background-color: #F0F8FF;
     margin-top: -14%;
@@ -61,6 +61,8 @@ body {
 .header h2 {
     font-size: 18px;
 }
+
+/* input feilds */
 
 .input-group {
     margin-bottom: 15px;
@@ -139,9 +141,9 @@ button {
 button:hover {
     opacity: 0.9;
 }
-.small{
-    font-weight: 300px;
-}
+
+/*error handling */
+
 .error.alert {
     background-color: #f8d7da;
     color: #721c24;
@@ -157,6 +159,3 @@ button:hover {
     list-style-type: none;
 }
 
-.error.alert li {
-    margin-bottom: 5px;
-}

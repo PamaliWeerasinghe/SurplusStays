@@ -31,11 +31,11 @@ class OrderModel extends Model
                 o.dateTime, 
                 o.total, 
                 c.fname AS customer_name, 
-                 
                 c.phoneNo AS customer_phone, 
                 p.name AS product_name, 
                 oi.qty, 
                 p.price_per_unit, 
+                p.discount_price,
                 IFNULL(o.order_status, 'Ongoing') AS status
               FROM `order` o
               JOIN customer c ON o.customer_id = c.id

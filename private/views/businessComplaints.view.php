@@ -30,20 +30,18 @@
 
                         </div>
                     </div>
-
                 </div>
 
-
-                <div class="order-status">
-                    <div class="order">
+                <div class="main-box">
+                    <div class="header">
                         <label>Complaints</label>
-                        <div class="searchdiv">
-                            <input type="text" id="orderSearch" class="search" placeholder="Search by Complaint ID..." onkeyup="filterOrders()" />
+                        <div>
+                            <input class="search" type="text" id="complaintSearch" placeholder="Search by Request ID..." onkeyup="filtercomplaints()" />
                         </div>
                     </div>
 
-                    <!-- Complaints Table -->
-                    <table class="order-table">
+                    <!-- Complaint Table -->
+                    <table class="main-table">
                         <thead>
                             <tr>
                                 <th>ComplaintID</th>
@@ -53,13 +51,13 @@
                                 <th></th>
                             </tr>
                         </thead>
-                        <tbody id="orderTableBody">
+                        <tbody>
                             <?php if (!empty($complaints)) : ?>
                                 <?php foreach ($complaints as $complaint) : ?>
-                                    <tr class="order-row"
+                                    <tr class="complaint-row"
                                         data-status="<?= htmlspecialchars($complaint->status) ?>"
                                         onclick="window.location.href='<?= ROOT ?>/business/viewComplaint/<?= $complaint->id ?>'">
-                                        <td class="order-id">#<?= htmlspecialchars($complaint->id) ?></td>
+                                        <td class="complaint-id">#<?= htmlspecialchars($complaint->id) ?></td>
                                         <td><?= htmlspecialchars($complaint->dateTime) ?></td>
                                         <td><?= htmlspecialchars($complaint->Customer) ?></td>
                                         <td>
@@ -67,7 +65,7 @@
                                                 <?= htmlspecialchars($complaint->status) ?>
                                             </span>
                                         </td>
-                                        <td style="text-align: center;"><label>View Full Details</label></td>
+                                        <td><label>View Full Details</label></td>
                                     </tr>
 
                                 <?php endforeach; ?>
@@ -78,36 +76,74 @@
                             <?php endif; ?>
                         </tbody>
                     </table>
+                    <div class="pagination">
+                        <img src="<?= ASSETS ?>/images/back.png" id="PrevBtn" />
+                        <img src="<?= ASSETS ?>/images/next.png" id="NextBtn" />
+                    </div>
                 </div>
 
-                <!-- JavaScript to Handle Filtering -->
-                <script>
-                    function filterOrders() {
-                        let input = document.getElementById("orderSearch").value.toUpperCase();
-                        let rows = document.querySelectorAll(".order-row");
-
-                        rows.forEach(row => {
-                            let complaintId = row.querySelector(".order-id").textContent.toUpperCase();
-                            row.style.display = complaintId.includes(input) ? "" : "none";
-                        });
-                    }
-
-                    function filterByStatus(status) {
-                        let rows = document.querySelectorAll(".order-row");
-                        let formattedStatus = status.toLowerCase(); // Convert selected status to lowercase
-
-                        rows.forEach(row => {
-                            let rowStatus = row.getAttribute("data-status").toLowerCase(); // Get row status in lowercase
-                            row.style.display = (formattedStatus === "all" || rowStatus === formattedStatus) ? "" : "none";
-                        });
-                    }
-                </script>
-                </table>
             </div>
         </div>
         <?php echo $this->view('includes/footer') ?>
     </div>
 
+    <!-- JavaScript to Handle Filtering -->
+    <script>
+        /* pagination */
+
+        const rowsPerPage = 10;
+        let currentPage = 1;
+
+        const rows = Array.from(document.querySelectorAll('.complaint-row'));
+        const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+        function showPage(page) {
+            rows.forEach((row, index) => {
+                row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) ? '' : 'none';
+            });
+        }
+
+        // Initial display
+        showPage(currentPage);
+
+        // Event listeners
+        document.getElementById('NextBtn').addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        });
+
+        document.getElementById('PrevBtn').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
+
+        /* search complaints by ID */
+
+        function filtercomplaints() {
+            let input = document.getElementById("complaintSearch").value.toUpperCase();
+            let rows = document.querySelectorAll(".complaint-row");
+
+            rows.forEach(row => {
+                let requestId = row.querySelector(".complaint-id").textContent.toUpperCase();
+                row.style.display = requestId.includes(input) ? "" : "none";
+            });
+        }
+
+        /* filter status by status */
+
+        function filterByStatus(status) {
+            let rows = document.querySelectorAll(".complaint-row");
+
+            rows.forEach(row => {
+                let rowStatus = row.getAttribute("data-status");
+                row.style.display = (status === "all" || rowStatus === status) ? "" : "none";
+            });
+        }
+    </script>
 </body>
 
 </html>

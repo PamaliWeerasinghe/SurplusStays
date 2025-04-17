@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Colombo');
 class Business extends Controller
 {
 
@@ -18,7 +19,7 @@ class Business extends Controller
         $ordercount = $ordermodel->countOrders($business_id);
         $requestcount = $requestmodel->countRequests($business_id);
 
-        $products = $product->gettopsalesproducts($business_id);//filter the top selling products
+        $products = $product->gettopsalesproducts($business_id); //filter the top selling products
         $orders = $ordermodel->getOrdersByBusiness($business_id);
         $weeklyStats = $ordermodel->getWeeklyOrderStats($business_id);
 
@@ -27,7 +28,7 @@ class Business extends Controller
             'productcount' => $productcount,
             'ordercount' => $ordercount,
             'requestcount' => $requestcount,
-            'orders'=>$orders,
+            'orders' => $orders,
             'rows' => $products,
             'weeklyStats' => $weeklyStats
         ]);
@@ -42,12 +43,13 @@ class Business extends Controller
         $product = new Products();
         $business_id = Auth::getID();
 
-        // Delete expired products
-        $currentDateTime = date('Y-m-d H:i:s');
+        $currentDateTime = new DateTime();
         $allProducts = $product->where('business_id', $business_id);
+
         if (!empty($allProducts)) {
             foreach ($allProducts as $row) {
-                if ($currentDateTime > $row->expiration_date_time) {
+                $productExpiration = new DateTime($row->expiration_date_time);
+                if ($currentDateTime > $productExpiration) {
                     $product->delete($row->id);
                 }
             }
@@ -75,6 +77,7 @@ class Business extends Controller
         if (!Auth::logged_in()) {
             $this->redirect('login');
         }
+
         $errors = [];
         $uploadedPictures = []; // Initialize uploaded pictures array
 
@@ -113,8 +116,6 @@ class Business extends Controller
             // Check if at least one image was uploaded
             if (!empty($uploadedPictures)) {
                 $_POST['pictures'] = implode(',', $uploadedPictures); // Store paths as a comma-separated string
-            } else {
-                $errors[] = "At least one product picture is required.";
             }
 
             if (empty($errors) && $product->validate($_POST)) {
@@ -124,8 +125,9 @@ class Business extends Controller
                 $arr['description'] = $_POST['description'];
                 $arr['qty'] = $_POST['quantity'];
                 $arr['price_per_unit'] = $_POST['price-per-unit'];
-                $arr['expiration_date_time'] = $_POST['expiration'];
-                $arr['discount_price'] = $_POST['discount'];
+                $arr['expiration_date_time'] = $_POST['expiration'] . ':00';
+                $discount = !empty($_POST['discount']) ? $_POST['discount'] : 0;
+                $arr['discount_price'] = $_POST['price-per-unit'] * (100 - $discount) / 100;
                 $arr['pictures'] = $_POST['pictures'];
                 $arr['notify_status_id'] = 2;
                 $arr['status_id'] = 1;
@@ -150,7 +152,7 @@ class Business extends Controller
         }
 
         $errors = []; // Ensure this is declared before use.
-        $product = new Products();
+        $product = new ProductsEdit();
 
         $row = $product->where('id', $id);
         $currentPictures = explode(',', $row[0]->pictures);
@@ -216,7 +218,8 @@ class Business extends Controller
                 $arr['qty'] = $_POST['quantity'];
                 $arr['price_per_unit'] = $_POST['price-per-unit'];
                 $arr['expiration_date_time'] = $_POST['expiration'];
-                $arr['discount_price'] = $_POST['discount'];
+                $discount = !empty($_POST['discount']) ? $_POST['discount'] : 0;
+                $arr['discount_price'] = $_POST['price-per-unit'] * (100 - $discount) / 100;
                 $arr['pictures'] = $_POST['pictures'];
 
                 $product->update($id, $arr);

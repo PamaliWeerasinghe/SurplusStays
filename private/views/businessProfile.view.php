@@ -9,7 +9,7 @@
     <link rel="stylesheet" href="<?= STYLES ?>/businessProfile.css">
 
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoo4pzFf80sXYMtcQUux4CWSCY9nDbvig&libraries=places&callback=initMap" async defer></script>
-    
+
     <script>
         let map, marker;
 
@@ -46,7 +46,7 @@
             <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
                 <div class="summary">
-                    
+
                 </div>
 
                 <div class="main-box">

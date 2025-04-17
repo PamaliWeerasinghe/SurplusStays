@@ -70,14 +70,14 @@
                                         <td><?= $row->expiration_date_time ?></td>
                                         <td>
                                             <div class="inline">
-                                                <div >
+                                                <div>
                                                     <a href="<?= ROOT ?>/business/editproduct/<?= $row->id ?>">
                                                         <button class="editbutton">Edit</button>
                                                     </a>
                                                 </div>
                                                 <div>
                                                     <form id="deleteForm<?= $row->id ?>" action="<?= ROOT ?>/business/deleteproduct/<?= $row->id ?>" method="post">
-                                                        <button class="deletebutton" type="button"  data-form-id="deleteForm<?= $row->id ?>">Delete</button>
+                                                        <button class="deletebutton" type="button" data-form-id="deleteForm<?= $row->id ?>">Delete</button>
                                                     </form>
                                                 </div>
                                             </div>
@@ -94,8 +94,8 @@
                         </tbody>
                     </table>
                     <div class="pagination">
-                        <img src="<?= ASSETS ?>/images/back.png" id="orderPrevBtn" />
-                        <img src="<?= ASSETS ?>/images/next.png" id="orderNextBtn" />
+                        <img src="<?= ASSETS ?>/images/back.png" id="PrevBtn" />
+                        <img src="<?= ASSETS ?>/images/next.png" id="NextBtn" />
                     </div>
                 </div>
             </div>
@@ -103,38 +103,35 @@
         <?php echo $this->view('includes/footer') ?>
     </div>
 
-    <!-- Modal for Delete Confirmation -->
-    <div id="deleteModal" class="modal">
-        <div class="modal-content">
-            <h3>Confirm Deletion</h3>
+    <!-- Simple Delete Confirmation Popup -->
+    <div id="deletePopup" class="popup">
+        <div class="popup-content">
             <p>Are you sure you want to delete this product?</p>
-            <div class="modal-buttons">
-                <button id="confirmDelete" class="modal-button confirm">Yes, Delete</button>
-                <button id="cancelDelete" class="modal-button cancel">Cancel</button>
+            <div class="button-container">
+                <button class="btn-ok" id="confirmDelete">Yes, Delete</button>
+                <button class="btn-cancel" id="cancelDelete">Cancel</button>
             </div>
         </div>
     </div>
 
     <script>
-
         /* deleteform popup */
-
         let deleteForm = null;
 
         document.querySelectorAll('.deletebutton').forEach(button => {
             button.addEventListener('click', event => {
-                event.preventDefault(); // Prevent form submission
-                deleteForm = document.getElementById(button.dataset.formId); // Store form reference
-                document.getElementById('deleteModal').style.display = 'block'; // Show modal
+                event.preventDefault();
+                deleteForm = document.getElementById(button.dataset.formId);
+                document.getElementById('deletePopup').style.display = 'block';
             });
         });
 
         document.getElementById('confirmDelete').addEventListener('click', () => {
-            if (deleteForm) deleteForm.submit(); // Submit the form
+            if (deleteForm) deleteForm.submit();
         });
 
         document.getElementById('cancelDelete').addEventListener('click', () => {
-            document.getElementById('deleteModal').style.display = 'none'; // Hide modal
+            document.getElementById('deletePopup').style.display = 'none';
         });
 
         /* stop the viewProduct page when clicking edit and delete */
@@ -144,10 +141,10 @@
                 event.stopPropagation();
             });
         });
-    
+
         /* pagination */
 
-        const rowsPerPage = 5;
+        const rowsPerPage = 10;
         let currentPage = 1;
 
         const rows = Array.from(document.querySelectorAll('.product-row'));
@@ -163,20 +160,20 @@
         showPage(currentPage);
 
         // Event listeners
-        document.getElementById('orderNextBtn').addEventListener('click', () => {
+        document.getElementById('NextBtn').addEventListener('click', () => {
             if (currentPage < totalPages) {
                 currentPage++;
                 showPage(currentPage);
             }
         });
 
-        document.getElementById('orderPrevBtn').addEventListener('click', () => {
+        document.getElementById('PrevBtn').addEventListener('click', () => {
             if (currentPage > 1) {
                 currentPage--;
                 showPage(currentPage);
             }
         });
-    
+
         /* search by name */
 
         function searchByName() {
@@ -191,5 +188,4 @@
     </script>
 
 </body>
-
 </html>

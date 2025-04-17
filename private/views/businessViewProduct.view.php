@@ -11,44 +11,45 @@
 
 <body>
     <?php echo $this->view('includes/businessNavbar') ?>
-
-    <?php
-    // Get the images from the pictures array
-    $businessPictures = explode(',', $row[0]->pictures);
-    ?>
-
     <div class="main-div">
         <div class="sub-div-1">
             <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
-
-
                 <div class="summary">
-                    <div class="notifications"><img src="<?= ROOT ?>/assets/images/bell.png" /></div>
                 </div>
 
-
-                <div class="inner-main">
+                <div class="main-box">
                     <div class="header">
                         <h2>Product Information</h2>
                     </div>
 
-                    <div class="section charity-details">
-
+                    <div class="product-details">
                         <?php if (($row)): ?>
-                            <div class="charity-overview">
-                                <div class="image-container">
-                                    <img class="logo-img" src="<?= ROOT ?><?= htmlspecialchars($businessPictures[0]) ?>" alt="Business Logo">
-                                </div>
-                                <div class="charity-text">
+
+                            <?php
+                            // Get the images from the pictures array
+                            $businessPictures = explode(',', $row[0]->pictures);
+                            ?>
+
+                            <div class="details-section">
+
+                                <img class="logo-img" src="<?= ROOT ?><?= htmlspecialchars($businessPictures[0]) ?>" alt="Business Logo">
+
+                                <div class="details-text">
                                     <h1><?= $row[0]->name ?></h1>
                                     <p><strong>Category :</strong> <?= $row[0]->category ?></p>
                                     <p><strong>Quantity :</strong> <?= $row[0]->qty ?></p>
                                     <p><strong>Unit Price :</strong> <?= $row[0]->price_per_unit ?></p>
-                                    <p><strong>Discount Price :</strong> <?= $row[0]->discount_price ?></p>
+                                    <p><strong>Price after applied discount percentage :</strong> <?= $row[0]->discount_price ?></p>
+                                    <p>
+                                        <strong>expiration date and time :</strong>
+                                        <span class="red-text"><?= $row[0]->expiration_date_time ?></span>
+                                    </p>
+
+                                    <p><strong>Description:</strong><?= $row[0]->description ?></p>
                                 </div>
                             </div>
-                            <div class="images-container">
+                            <div class="images-section">
                                 <?php if (!empty($businessPictures[1])): ?>
                                     <img src="<?= ROOT ?><?= htmlspecialchars($businessPictures[1]) ?>" alt="Upload Image" class="upload-icon" id="profilePreview-1">
                                 <?php else: ?>
@@ -61,18 +62,11 @@
                                 <?php endif; ?>
 
                             </div>
-                            <div class="bottom" >
-                                <p>
-                                    <strong>expiration date and time :</strong>
-                                    <span class="red-text"><?= $row[0]->expiration_date_time ?></span>
-                                </p>
 
-                                <p><strong>Description:</strong><?= $row[0]->description ?></p>
-
-                                <button onclick="window.location.href='<?= ROOT ?>/business/editproduct/<?= $row[0]->id ?>'">Edit Product</button>
-                            </div>
+                            <button onclick="window.location.href='<?= ROOT ?>/business/editproduct/<?= $row[0]->id ?>'">Edit Product</button>
+                            
                         <?php else: ?>
-                            <h3>That product was not found</h3>
+                            <h3>The product was not found</h3>
                         <?php endif; ?>
                     </div>
                 </div>
@@ -80,7 +74,8 @@
         </div>
         <?php echo $this->view('includes/footer') ?>
     </div>
-    
+
+
 </body>
 
 </html>
