@@ -641,6 +641,12 @@ class Admin extends Controller
     {
         $admin = new AdminModel();
 
+        //sort and search
+        $search = $_GET['search'] ?? '';
+        $searchBy = $_GET['searchBy'] ?? '';
+        $sort = $_GET['sort'] ?? 'complaint_id';
+        $order = $_GET['order'] ?? 'ASC';
+
         $complaint_limit = 4;
         //count the no of complaints in the non_resolved_complaints view
         $complaintsCountData = $admin->count('non_resolved_complaints');
@@ -650,11 +656,9 @@ class Admin extends Controller
         //Pagination for complaints
         $complaints_pager = Pager::getInstance('non_resolved_complaints', $noOfPages_complaints, $complaint_limit);
         $complaints_offset = $complaints_pager->offset;
-        $complaints = $admin->selectNotAttended('non_resolved_complaints', 'complaint_dateTime', $complaint_limit, $complaints_offset);
+        $complaints = $admin->selectNotAttended('non_resolved_complaints', $complaint_limit, $complaints_offset, $search, $searchBy, $sort, $order);
 
-        // $user=new AdminComplaints();
-        // $complaints=$user->getAllComplaints();
-        //AdminSeeComplainPage is the page to be directed after clicking on AdminBusinessComplaints
+      
         $this->view('AdminBusinessComplaints', [
             "complaints" => $complaints,
             "complaints_pager" => $complaints_pager
@@ -929,10 +933,13 @@ class Admin extends Controller
     {
         $this->view('home');
     }
+
+    
     //Default page
     function index()
     {
 
         
     }
+   
 }

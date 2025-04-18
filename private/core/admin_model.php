@@ -83,11 +83,26 @@ class Admin_Model
      }
      
      //get the not attended complaints
-     public function selectNotAttended($table,$column,$limit,$offset)
+     public function selectNotAttended($table,$limit,$offset,$search = '', $searchBy = '', $sort = '', $order = 'ASC')
      {
           $this->table=$table;
-          $this->column=$column;
-          $query="select * from $this->table where status_id='2' order by $this->column limit $limit offset $offset";
+          // intialize the condition string
+          $condition = "status_id='1' OR status_id='2'";
+          // check if the search is not empty
+          if (!empty($search)) {
+               // check if the search by is not empty
+               $condition = " `$searchBy` LIKE '%$search%'";
+          }
+
+          $sortOption = "";
+          // check if the sort is not empty
+          if (!empty($sort)) {
+               // check if the order is not empty
+               $sortOption = " `$sort` $order";
+          }
+
+          $query="select * from $this->table where $condition order by $sortOption limit $limit offset $offset";
+
           return $this->db->query($query);
      }
      //get the recent complaints
@@ -97,6 +112,31 @@ class Admin_Model
          $this->column=$column;
          $query="select * from $this->table order by $this->column desc limit $limit offset $offset";
          return $this->db->query($query);
+     }
+     //count for search and sort
+     public function countForSortSearch($table,$columns,$values){
+          $this->table=$table;
+          
+          //Ensure that both columns and values are arrays of same length
+          if(!is_array($columns)|| !is_array($values)|| count($columns)!=count($values)){
+               throw new Exception("Column and values must be arrays of same length");
+          }
+
+          $conditions=[];
+          $queryParams=[];
+
+          foreach($columns as $index =>$column){
+               $paramName=":value$index";
+               $conditions[]="`$column`=$paramName"; // `column1`=value0
+               $queryParams[$paramName]=$values[$index]; //value0 = 'testing'
+          }
+
+          //Build the query with multiple conditions using AND
+          $whereClause =implode('OR',$conditions);
+          $query="SELECT count(*) as totalRows FROM `$this->table` WHERE $whereClause";
+          $results=$this->db->query($query, $queryParams);
+          return isset($results[0]->totalRows) ? $results[0]->totalRows : 0;
+
      }
      //get the count of items in a column
      public function count($table){

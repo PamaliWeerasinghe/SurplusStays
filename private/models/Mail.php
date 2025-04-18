@@ -64,6 +64,23 @@ class Mail
 
         return self::sendMail($toEmail,'',$subject,$template);
     }
+    //send the forgot password reset link to the user
+    public static function sendEmailVerification($toEmail,$token){
+        //load the template
+        $template=file_get_contents(TEMPLATEROOT.'/sendEmailVerificationForgotPassword.html');
+        //create the link
+        $link= LOGIN.'/verifyForgotEmail?token='.$token;
+
+        //replace placeholders
+        $template=str_replace('{{verification_link}}',$link,$template);
+        $template=str_replace('{{year}}',date('Y'),$template);
+
+        $subject="Forgot Password";
+
+        return self::sendMail($toEmail,'',$subject,$template);
+
+
+    }
     //send the login page link to the regiatered user
     public static function sendLoginToRegistered($toEmail,$token)
     {

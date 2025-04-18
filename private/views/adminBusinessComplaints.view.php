@@ -8,6 +8,7 @@
     <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
     <link rel="stylesheet" href="<?=STYLES?>/adminBusinessComplaints.css" />
     <link rel="stylesheet" href="<?=STYLES?>/admin.css">
+    <link rel="stylesheet" href="<?= STYLES ?>/searchBar.css">
 </head>
 
 <body>
@@ -18,12 +19,16 @@
             <div class="dashboard">
                 <div class="summary">
                     <div class="notifications-type2">
-                        <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." />
-                            <img src="<?=ASSETS?>/images/search.png" class="bell2" />
-                        </div>
-
-                       
+                    <?php
+                        $columns = [
+                            'DESCRIPTION' => 'Complaint Description',
+                            'complaint_dateTime' => 'Date Submitted',
+                            'complaint_id' => 'Complaint ID',
+                            'status' => 'Complaint Status'
+                        ];
+                        $seacher = TableSearcher::getInstance();
+                        echo $seacher->renderSearchBar($columns);
+                        ?>
                     </div>
                     
 
@@ -31,9 +36,18 @@
                 <div class="Business-complaints-order-status">
                     <div class="order">
                         <!-- <label>Complaints</label> -->
-                        <select>
-                            <option>Status</option>
-                        </select>
+                        <?php
+                    $columns = [
+                        'DESCRIPTION' => 'Complaint Description',
+                        'complaint_dateTime' => 'Date Submitted',
+                        'complaint_id' => 'Complaint ID',
+                        'status' => 'Complaint Status'
+                    ];
+
+                    $sorter = Sorter::getInstance();
+                    echo $sorter->renderSorter($columns);
+                    ?>
+
                     </div>
 
                   
