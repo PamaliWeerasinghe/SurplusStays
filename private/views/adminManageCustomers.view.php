@@ -58,11 +58,6 @@
                         </div>
                     </div>
                     <div class="notifications-type2">
-
-                       
-
-
-
                         
                         <?php
                         $columns = [

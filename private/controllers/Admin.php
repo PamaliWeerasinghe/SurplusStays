@@ -491,6 +491,12 @@ class Admin extends Controller
         if (Auth::logged_in()) {
 
             $admin = new AdminModel();
+            //sort and search
+            $search = $_GET['search'] ?? '';
+            $searchBy = $_GET['searchBy'] ?? '';
+            $sort = $_GET['sort'] ?? 'id';
+            $order = $_GET['order'] ?? 'DESC';
+
             $complaint_limit = 3;
             //count the no of complaints in the table complaints
             $complaintCountData = $admin->count('complaintDetails');
@@ -506,14 +512,14 @@ class Admin extends Controller
 
             $product_limit = 2;
             //count the no of products in the table products
-            $productsCountData = $admin->count('products');
+            $productsCountData = $admin->countWithWhere('products', ['status_id'], [1]);;
             //calculate the no of pages
             $noOfPages_products = ceil($productsCountData / $product_limit);
 
             //Pagination for products
             $products_pager = Pager::getInstance('products', $noOfPages_products, $product_limit);
             $products_offset = $products_pager->offset;
-            $products = $admin->select('products', 'expiration_dateTime', $product_limit, $products_offset);
+            $products = $admin->select('products', $product_limit, $products_offset, $search, $searchBy, $sort, $order);
 
             //bar chart
             $now = new DateTime();
@@ -607,6 +613,12 @@ class Admin extends Controller
             $data['notify_status_id'] = 1;
             $admin->update($_POST['product_id'], $data, 'products');
         }
+        //sort and search
+        $search = $_GET['search'] ?? '';
+        $searchBy = $_GET['searchBy'] ?? '';
+        $sort = $_GET['sort'] ?? 'product_id';
+        $order = $_GET['order'] ?? 'ASC';
+
         $product_limit = 3;
         //count the no of products in the table products
         $productsCountData = $admin->count('about_to_expire_products');
@@ -616,7 +628,7 @@ class Admin extends Controller
         //Pagination for products
         $products_pager = Pager::getInstance('about_to_expire_products', $noOfPages_products, $product_limit);
         $products_offset = $products_pager->offset;
-        $products = $admin->select('about_to_expire_products', 'bestBefore', $product_limit, $products_offset);
+        $products = $admin->select('about_to_expire_products', $product_limit, $products_offset, $search, $searchBy, $sort, $order);
 
         $this->view('adminTrackExpiryPage', [
             "rows" => $products,
@@ -921,7 +933,6 @@ class Admin extends Controller
     function index()
     {
 
-        // $this->view('home_section1');
-        $this->view('popup');
+        
     }
 }
