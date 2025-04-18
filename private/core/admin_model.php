@@ -19,15 +19,7 @@ class Admin_Model
           $this->db=Database::getInstance();
 
      }
-     public function searchCustomer($table,$input){
-          $this->table=$table;
-          $query="SELECT * FROM `$this->table` WHERE `fname` LIKE :search OR `lname` LIKE :search OR `reg_date` LIKE :search OR `email` LIKE :search OR `phoneNo` LIKE :search OR `cus_id` LIKE :search ORDER BY `cus_id` DESC";
-          $data=[
-               'search'=>'%'.$input.'%'
-          ];
-          return $this->db->query($query,$data);
-
-     }
+     
      public function where($columns,$values,$table)
      {
           $this->table=$table;
@@ -67,13 +59,29 @@ class Admin_Model
           
           return $this->db->query($query,$data);
      }
-     public function select($table,$column,$limit,$offset)
+     public function select($table,$limit,$offset,$search = '', $searchBy = '', $sort = '', $order = 'ASC')
      {
           $this->table=$table;
-          $this->column=$column;
-          $query="select * from $this->table where status_id='1' order by $this->column desc limit $limit offset $offset";
+          // intialize the condition string
+          $condition = "status_id='1'";
+          // check if the search is not empty
+          if (!empty($search)) {
+               // check if the search by is not empty
+               $condition = " `$searchBy` LIKE '%$search%'";
+          }
+
+          $sortOption = "";
+          // check if the sort is not empty
+          if (!empty($sort)) {
+               // check if the order is not empty
+               $sortOption = " `$sort` $order";
+          }
+
+          $query="select * from $this->table where $condition order by $sortOption limit $limit offset $offset";
+
           return $this->db->query($query);
      }
+     
      //get the not attended complaints
      public function selectNotAttended($table,$column,$limit,$offset)
      {

@@ -154,4 +154,18 @@ FROM `organization`
 INNER JOIN `user` 
 ON `organization`.`user_id`=`user`.`id`
 
+CREATE VIEW saved_from_wastage_report AS 
+SELECT  
+products.`name` AS product_name,
+sum(order_items.qty) AS qty_saved,
+products.price_per_unit AS original_price,
+products.discountPrice AS discounted_price,
+products.qty AS left_overs,
+products.status_id AS status_id
+FROM order_items
+INNER JOIN products
+ON order_items.products_id = products.id
+GROUP BY order_items.products_id 
+
+
 

@@ -17,7 +17,7 @@ class Pager{
         $page_num=max(1,$page_num);
        
         $this->end=$noOfPages;
-        $this->page_num=$page_num;
+        $this->page_num=$page_num-1;
         $this->offset=($page_num-1)*$limit;
         
         $current_link= ROOT."/".str_replace("url=","",$_SERVER['QUERY_STRING']);

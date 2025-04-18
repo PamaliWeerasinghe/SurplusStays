@@ -53,7 +53,7 @@ class Login extends Controller{
                         break;
                     case 'business':
                         $business= new AdminUser();
-                        $business_details=$business->where('user_id',$user_details->id,'business');
+                        $business_details=$business->where(['user_id'],[$user_details->id],'business');
                         Auth::authenticate($business_details,$user_details);
                         $this->view('businessWelcomePage',[
                             'businessDetails'=>$business,
