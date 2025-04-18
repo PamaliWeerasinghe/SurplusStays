@@ -413,14 +413,14 @@ class AdminModel extends Admin_Model
                 
             }
         }
-        $logo = $_FILES['file']['name'];
+        $logo = $_FILES['profile_picture']['name'];
         
         $logoExt = explode('.', $logo);
         $logoActualExt = strtolower(end($logoExt));
         $allowed = array('jpg', 'jpeg', 'png');
 
         if (in_array($logoActualExt, $allowed)) {
-            if ($_FILES['file']['error'] != 0) {
+            if ($_FILES['profile_picture']['error'] != 0) {
                 $this->errors['logo'] = "There was an error uploading your file!";
             } else if (!in_array($logoActualExt, $allowed)) {
                 $this->errors['logo'] = "You cannot upload files of this type!";

@@ -42,6 +42,12 @@ class Login extends Controller{
                         //     "successfull"=>$successfull
                         // ]);
                         self::verifyEmail();
+                        $_SESSION['alert_message']="Check your email";
+                        $_SESSION['alert_type']="success";
+                        $this->redirect('login/checkEmail');
+
+                        self::verifyEmail();
+
                         break;
                     case 'customer':
                         $customer=new AdminUser();
@@ -97,7 +103,8 @@ class Login extends Controller{
         
     }
 
-    public function verifyEmail(){
+    public function verifyEmail()
+    {
         $token = $_GET['token'];
         //get token details from database
         $admin =new AdminModel();
@@ -134,6 +141,13 @@ class Login extends Controller{
        
 
     
+    }
+
+    public function checkEmail(){
+        
+        $this->view('AdminLoginStep1',[
+            'successfull'=>$_SESSION['alert_message'],
+        ]);
     }
    
 

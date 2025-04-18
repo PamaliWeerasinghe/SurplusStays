@@ -1,0 +1,17 @@
+.EditCustomerPopup-container {
+    width: 60%;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: none;
+
+}
+.open-EditCustomerPopup-container {
+    width: 60%;
+    height: 60vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    display: block;
+}

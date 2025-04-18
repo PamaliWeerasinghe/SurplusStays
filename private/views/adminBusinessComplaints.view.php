@@ -23,127 +23,56 @@
                             <img src="<?=ASSETS?>/images/search.png" class="bell2" />
                         </div>
 
-                        <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
+                       
                     </div>
                     
 
                 </div>
                 <div class="Business-complaints-order-status">
                     <div class="order">
-                        <label>Complaints</label>
+                        <!-- <label>Complaints</label> -->
                         <select>
-                            <option>All Time</option>
+                            <option>Status</option>
                         </select>
                     </div>
 
-                    <div class="Business-complaints-order-nav">
-                        <div class="Business-complaints-view-slots">
-                            <div class="slot1">
-                                <label>Order Complaints</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Take Actions</label>
-                            </div>
-                          
-                        </div>
-                    </div>
-                    <div class="Business-complaints-order-nav">
-                        <div class="Business-complaints-view-slots">
-                            <div class="slot1">
-                                <label>All</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Pending</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Reserved</label>
-
-                            </div>
-                           
-                        </div>
-                    </div>
+                  
+                  
                     <table class="order-table">
                         <thead>
                             <tr>
                                 <th>Complaint ID</th>
+                                <th>Complaint Description</th>
                                 <th>Date Submitted</th>
                                 <th style="text-align: center;">Status</th>
                                 
                             </tr>
                         </thead>
                         <tbody>
+                            <?php foreach($complaints as $complaint):?>
                             <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="take-action">In Progress</button></td>
+                
+                                <td># <?= $complaint->complaint_id ?></td>
+                                <td><?=$complaint->DESCRIPTION?></td>
+                                <td><?=$complaint->complaint_dateTime?></td>
+                                <?php if($complaint->status=='Not Attended'){?>
+                                    <td style="text-align: center;"><button class="take-action">Attend</button></td>
+                                <?php }else{?>
+                                    <td style="text-align: center;"><button class="completed">Resolved</button></td>
+                                <?php }?>
                                 <td style="text-align: center;">
+                                    
                                     <button 
                                     class="see-complain" 
                                     style="color:grey;background-color:transparent;border-style:solid;border-color:grey"
-                                    onclick="window.location.href='<?=ROOT?>/Admin/ViewComplain'"
+                                    onclick="window.location.href='<?=ROOT?>/Admin/ViewComplain/<?=$complaint->complaint_id?>'"
                                     >
                                     See Complain
                                     </button>
                                 </td>
                                 
                             </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="take-action">In Progress</button></td>
-                                <td style="text-align: center;">
-                                    <button 
-                                    class="see-complain" 
-                                    style="color:grey;background-color:transparent;border-style:solid;border-color:grey">
-                                    See Complain
-                                    </button>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;">
-                                    <button 
-                                    class="see-complain" 
-                                    style="color:grey;background-color:transparent;border-style:solid;border-color:grey">
-                                    See Complain
-                                    </button>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="take-action">In Progress</button></td>
-                                <td style="text-align: center;">
-                                    <button 
-                                    class="see-complain" 
-                                    style="color:grey;background-color:transparent;border-style:solid;border-color:grey">
-                                    See Complain
-                                    </button>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;">
-                                    <button 
-                                    class="see-complain" 
-                                    style="color:grey;background-color:transparent;border-style:solid;border-color:grey">
-                                    See Complain
-                                    </button>
-                                </td>
-                                
-                            </tr>
+                            <?php endforeach; ?>   
                            
                             
                             
@@ -151,8 +80,8 @@
                     </table>
                     <div class="arrow-div">
                         <div class="arrows">
-                            <img src="<?=ASSETS?>/images/Arrow right-circle.png"/>
-                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png"/>
+                           
+                            <?php $complaints_pager->display()?>
                             
                         </div>
                     </div>

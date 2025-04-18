@@ -189,15 +189,13 @@ class Register extends Controller
                 $businessData = [
                     'name' => $_POST['name'],
                     'email' => $_POST['email'],
-                    'phoneNo' => $_POST['phone'],//phone_no
+                    'phone_no' => $_POST['phone'],
                     'username' => $_POST['username'],
                     'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
-                    //'businessType_id' => $_POST['type'], changed to type
-                    'type' => $_POST['type'], //business_type
+                    'business_type' => $_POST['type'],
                     'picture' => $_POST['picture'],
-                    'latitude' => $_POST['latitude'],
-                    'longitude' => $_POST['longitude'],
-                    //'status_id' => 1,
+                    'address' => $_POST['address'],
+                    'status_id' => 1,
                 ];
 
                 $business->insert($businessData);

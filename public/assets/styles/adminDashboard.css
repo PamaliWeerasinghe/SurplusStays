@@ -32,7 +32,7 @@
     width: 240px;
     height: 39px;
     background-color: #ffffff;
-    border-radius: 68px;
+    border-radius: 10px;
     margin-top: 10%;
     cursor: pointer;
 }
@@ -46,7 +46,7 @@
     width: 240px;
     height: 39px;
     background-color: #FD5D34;
-    border-radius: 68px;
+    border-radius: 10px;
     margin-top: 10%;
     cursor: pointer;
 }

@@ -11,14 +11,7 @@
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary">
-                    <div class="notifications-type2">
-                        <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." />
-                            <img src="<?=ASSETS?>/images/search.png" class="bell2" />
-                        </div>
-
-                        <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
-                    </div>
+                   
                     
 
                 </div>
@@ -33,8 +26,8 @@
     <thead>
       <tr>
         <th>Product Name</th>
-        <th>Category</th>
-        <th>Quantity</th>
+       
+        <th>Quantity Saved</th>
         <th>Unit Price</th>
         <th>Final Discounted Price</th>
         <th>Left Overs</th>
@@ -42,37 +35,13 @@
     </thead>
     <tbody>
       <tr>
-        <td>Fresh Apple</td>
-        <td>Fruits</td>
+        <td>Fresh Apple</td>   
         <td>10</td>
         <td>Rs. 2.50</td>
         <td>Rs. 25.00</td>
         <td>2</td>
       </tr>
-      <tr>
-        <td>Fresh Apple</td>
-        <td>Fruits</td>
-        <td>10</td>
-        <td>Rs. 2.50</td>
-        <td>Rs. 25.00</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td>Fresh Apple</td>
-        <td>Fruits</td>
-        <td>10</td>
-        <td>Rs. 2.50</td>
-        <td>Rs. 25.00</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td>Fresh Apple</td>
-        <td>Fruits</td>
-        <td>10</td>
-        <td>Rs. 2.50</td>
-        <td>Rs. 25.00</td>
-        <td>2</td>
-      </tr>
+    
     </tbody>
   </table>
   <div class="get-report-btn">

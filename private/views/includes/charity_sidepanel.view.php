@@ -8,7 +8,7 @@ $current_url = $_SERVER['REQUEST_URI'];
 <div class="side-nav">
     <div class="profile-section">
         <img src="<?=ASSETS?>/images/sample_profile_pic.png" alt="Profile Image" class="profile-image">
-        <h2>Hi Chathura!</h2>
+        <h2>Hi<?=  (Auth::logged_in()) ?$_SESSION['USER']['name']:''?>!</h2>
     </div>
     <ul class="nav-links">
         <li class="nav-item <?= strpos($current_url, '/charity/index') == true ? 'active' : '' ?>">

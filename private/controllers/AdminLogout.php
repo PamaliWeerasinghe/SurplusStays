@@ -4,7 +4,7 @@ class AdminLogout extends Controller
 {
     function index()
     {
-        AdminAuth::logout();        
+        Auth::logout();        
         $this->view('home');
     }
 

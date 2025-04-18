@@ -1,4 +1,5 @@
 <?php require APPROOT.'/views/includes/htmlHeader.view.php'?>
+<?php require APPROOT . '/views/adminViewBusinessPopup.view.php'?>
     <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
     <link rel="stylesheet" href="<?=STYLES?>/adminManageActors.css" />
     <link rel="stylesheet" href="<?=STYLES?>/admin.css">
@@ -32,246 +33,43 @@
 
                 </div>
                 <div class="Business-complaints-order-status">
-                    <div class="order">
-                        <label>Suppliers</label>
-                        <div>
-                        <select>
-                            <option>Supplier</option>
-                        </select>
-                        <select>
-                            <option>Location</option>
-                        </select>
-                        <select>
-                            <option>Complaints</option>
-                        </select>
-                        </div>
-                        
-                    </div>
-                    <div class="business-row">
-                            <div class="business-wrap">
-                            <div class="business">
-                            <img src="<?=ASSETS?>/images/keells.png" />
-                            </div>
-                            <div class="business-details">
-                                <label style="font-weight: bold;font-size:larger">Keells</label>
-                                <div>
-                                <label>Ratings : </label>
-                                <img src="<?=ASSETS?>/images/star-rating.png" />
-                                <div class="business-location">
-                                <img src="<?=ASSETS?>/images/location.png" />
-                                <label>Kaduwela</label>
-                                </div>
-                                </div>
-                                
-                            </div>
-                            <div class="business-summary">
-                                <label>Wastage Reduced in : Rs. 48000</label>
-                                <label>No. of Complaints Recieved : 20</label>
-                            </div>
-                            <div class="business-buttons">
-                                <button>
-                                <span class="material-symbols-outlined action-btn view">
-                                            account_box
-                                        </span>
-                                </button>
-                                <button>
-                                <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
-                                            person_remove
-                                        </span>
-                                </button>
-                            </div>
+                <table class="order-table">
+                        <thead>
                             
-                            </div>
-                            <div class="business-joined">
-                                <label>Joined On : 22 / 06 / 2023</label>
-                            </div>
-                           
-                            
-                    </div>
-                    <div class="business-row">
-                            <div class="business-wrap">
-                            <div class="business">
-                            <img src="<?=ASSETS?>/images/elephanthouse.png" />
-                            </div>
-                            <div class="business-details">
-                                <label style="font-weight: bold;font-size:larger">Elephant House</label>
-                                <div>
-                                <label>Ratings : </label>
-                                <img src="<?=ASSETS?>/images/star-rating.png" />
-                                <div class="business-location">
-                                <img src="<?=ASSETS?>/images/location.png" />
-                                <label>Kaduwela</label>
-                                </div>
-                                </div>
-                                
-                            </div>
-                            <div class="business-summary">
-                                <label>Wastage Reduced in : Rs. 48000</label>
-                                <label>No. of Complaints Recieved : 20</label>
-                            </div>
-                            <div class="business-buttons">
-                            <button>
-                                <span class="material-symbols-outlined action-btn view">
-                                            account_box
-                                        </span>
-                                </button>
-                                <button>
-                                <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
-                                            person_remove
-                                        </span>
-                                </button>
-                            </div>
-                            
-                            </div>
-                            <div class="business-joined">
-                                <label>Joined On : 22 / 06 / 2023</label>
-                            </div>
-                           
-                            
-                    </div>
-                    <div class="business-row">
-                            <div class="business-wrap">
-                            <div class="business">
-                            <img src="<?=ASSETS?>/images/laughs.png" />
-                            </div>
-                            <div class="business-details">
-                                <label style="font-weight: bold;font-size:larger">Laugfs</label>
-                                <div>
-                                <label>Ratings : </label>
-                                <img src="<?=ASSETS?>/images/star-rating.png" />
-                                <div class="business-location">
-                                <img src="<?=ASSETS?>/images/location.png" />
-                                <label>Kaduwela</label>
-                                </div>
-                                </div>
-                                
-                            </div>
-                            <div class="business-summary">
-                                <label>Wastage Reduced in : Rs. 48000</label>
-                                <label>No. of Complaints Recieved : 20</label>
-                            </div>
-                            <div class="business-buttons">
-                            <button>
-                                <span class="material-symbols-outlined action-btn view">
-                                            account_box
-                                        </span>
-                                </button>
-                                <button>
-                                <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
-                                            person_remove
-                                        </span>
-                                </button>
-                            </div>
-                            
-                            </div>
-                            <div class="business-joined">
-                                <label>Joined On : 22 / 06 / 2023</label>
-                            </div>
-                           
-                            
-                    </div>
-                    <div class="business-row">
-                            <div class="business-wrap">
-                            <div class="business">
-                            <img src="<?=ASSETS?>/images/cinamon.png" />
-                            </div>
-                            <div class="business-details">
-                                <label style="font-weight: bold;font-size:larger">Cinamon </label>
-                                <div>
-                                <label>Ratings : </label>
-                                <img src="<?=ASSETS?>/images/star-rating.png" />
-                                <div class="business-location">
-                                <img src="<?=ASSETS?>/images/location.png" />
-                                <label>Kaduwela</label>
-                                </div>
-                                </div>
-                                
-                            </div>
-                            <div class="business-summary">
-                                <label>Wastage Reduced in : Rs. 48000</label>
-                                <label>No. of Complaints Recieved : 20</label>
-                            </div>
-                            <div class="business-buttons">
-                            <button>
-                                <span class="material-symbols-outlined action-btn view">
-                                            account_box
-                                        </span>
-                                </button>
-                                <button>
-                                <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
-                                            person_remove
-                                        </span>
-                                </button>
-                            </div>
-                            
-                            </div>
-                            <div class="business-joined">
-                                <label>Joined On : 22 / 06 / 2023</label>
-                            </div>
-                           
-                            
-                    </div>
-                    <div class="business-row">
-                            <div class="business-wrap">
-                            <div class="business">
-                            <img src="<?=ASSETS?>/images/glomark.png" />
-                            </div>
-                            <div class="business-details">
-                                <label style="font-weight: bold;font-size:larger">Glomark</label>
-                                <div>
-                                <label>Ratings : </label>
-                                <img src="<?=ASSETS?>/images/star-rating.png" />
-                                <div class="business-location">
-                                <img src="<?=ASSETS?>/images/location.png" />
-                                <label>Kaduwela</label>
-                                </div>
-                                </div>
-                                
-                            </div>
-                            <div class="business-summary">
-                                <label>Wastage Reduced in : Rs. 48000</label>
-                                <label>No. of Complaints Recieved : 20</label>
-                            </div>
-                            <div class="business-buttons">
-                            <button>
-                                <span class="material-symbols-outlined action-btn view">
-                                            account_box
-                                        </span>
-                                </button>
-                                <button>
-                                <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
-                                            person_remove
-                                        </span>
-                                </button>
-                            </div>
-                            
-                            </div>
-                            <div class="business-joined">
-                                <label>Joined On : 22 / 06 / 2023</label>
-                            </div>
-                           
-                            
-                    </div>
+                            <tr>
+                                <th>Profile</th>
+                                <th>ID</th>
+                                <th>Phone No</th>
+                                <th>Registered Date</th>
 
-                        <div class="arrow-div">
-                        <div class="arrows">
-                            <img src="<?=ASSETS?>/images/Arrow right-circle.png"/>
-                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png"/>
-                            
-                        </div>
+                            </tr>
+                        </thead>
+                        <tbody>
+                        <?php foreach( $business as $business):?>
+                            <tr  onclick="viewBusiness(<?=$business->user_id?>)">
+                                <td><img src="<?=CUSTOMER.'/'.$business->profile_pic?>" class="customer-profile-pic"/></td>
+                                <td>#<?=$business->bus_id?></td>
+                                <td><?=$business->phoneNo?></td>
+                                <td><?=$business->reg_date?></td>
+                                <td>
+                               
+                                    <span class="material-symbols-outlined" style="z-index: 1;">
+                                        edit_square
+                                    </span>
+                                    <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
+                                        person_remove
+                                    </span>
+                                </td>
+                            </tr>
+                        <?php endforeach;?>
+                        </tbody>
+                    </table>
+                    <?php $business_pager->display() ?>
                     </div>
-
-                    </div>
-                    
-                    
-                    
-                    
-
                 </div>
-
 
             </div>
             <?php echo $this->view('includes/footer')?>
         </div>
-
+        <script src="<?=ROOT?>/assets/js/adminViewBusinessDetails.js"></script>
         <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>

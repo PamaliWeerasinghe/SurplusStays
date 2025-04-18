@@ -376,7 +376,6 @@ function getTopDonatingBusinesses()
         if (!Auth::logged_in()) {
             $this->redirect('login');
         }
-
         $errors = [];
         if (count($_POST) > 0) {
             $event = new Event();
@@ -446,12 +445,10 @@ function getTopDonatingBusinesses()
                 $errors = array_merge($errors, $event->errors);
             }
         }
-
         $this->view('charityCreateEvent', [
             'errors' => $errors,
         ]);
     }
-
     
     function deleteEvent($id)
     {
