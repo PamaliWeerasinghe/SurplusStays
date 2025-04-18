@@ -810,6 +810,12 @@ class Admin extends Controller
             $this->redirect('register');
         } else {
             $org = new AdminModel();
+
+            //search bar
+            $search = $_GET['search'] ?? '';
+            $searchBy = $_GET['searchBy'] ?? '';
+            $sort = $_GET['sort'] ?? 'org_id';
+            $order = $_GET['order'] ?? 'ASC';
             $org_limit = 2;
             //count the no of organizations in the organization table
             $orgCountData = $org->count('charity_details');
@@ -819,18 +825,8 @@ class Admin extends Controller
             //pagination for organizations
             $org_pager = Pager::getInstance('charity_details', $noOfPages_org, $org_limit);
             $org_offset = $org_pager->offset;
-            $organization = $org->select('charity_details', 'org_id', $org_limit, $org_offset);
+            $organization = $org->select('charity_details', $org_limit, $org_offset, $search, $searchBy, $sort, $order);
 
-            // $data = $org->findAll('charity_details');
-            // $countd = new AdminCharityDetails();
-            // foreach ($data as $row) {
-            //     $count = $countd->getDonorCount($row->org_id);
-            //     $row->donors = $count;
-            // }
-            // foreach ($data as $row) {
-            //     $count = $countd->getComplaintsCount($row->org_id);
-            //     $row->donations = $count;
-            // }
             $this->view('AdminManageCharityOrganizations', [
                 "org" => $organization,
                 "org_pager" => $org_pager
