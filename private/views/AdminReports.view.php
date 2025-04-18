@@ -26,8 +26,8 @@
     <thead>
       <tr>
         <th>Product Name</th>
-        <th>Category</th>
-        <th>Quantity</th>
+       
+        <th>Quantity Saved</th>
         <th>Unit Price</th>
         <th>Final Discounted Price</th>
         <th>Left Overs</th>
@@ -35,37 +35,13 @@
     </thead>
     <tbody>
       <tr>
-        <td>Fresh Apple</td>
-        <td>Fruits</td>
+        <td>Fresh Apple</td>   
         <td>10</td>
         <td>Rs. 2.50</td>
         <td>Rs. 25.00</td>
         <td>2</td>
       </tr>
-      <tr>
-        <td>Fresh Apple</td>
-        <td>Fruits</td>
-        <td>10</td>
-        <td>Rs. 2.50</td>
-        <td>Rs. 25.00</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td>Fresh Apple</td>
-        <td>Fruits</td>
-        <td>10</td>
-        <td>Rs. 2.50</td>
-        <td>Rs. 25.00</td>
-        <td>2</td>
-      </tr>
-      <tr>
-        <td>Fresh Apple</td>
-        <td>Fruits</td>
-        <td>10</td>
-        <td>Rs. 2.50</td>
-        <td>Rs. 25.00</td>
-        <td>2</td>
-      </tr>
+    
     </tbody>
   </table>
   <div class="get-report-btn">
