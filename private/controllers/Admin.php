@@ -773,23 +773,35 @@ class Admin extends Controller
     //Admin Manage Business
     function ManageBusinesses()
     {
-        $admin = new AdminModel();
-        $business_limit = 3;
-        //count the no of businesses in the business_details view
-        $businessCountData = $admin->countWithWhere('business_details', ['status_id'], [1]);
-        //calculate the no of pages
-        $noOfPages_business = ceil($businessCountData / $business_limit);
+        if(Auth::logged_in()){
+            $admin = new AdminModel();
+            
+            //search bar 
+            $search = $_GET['search'] ?? '';
+            $searchBy = $_GET['searchBy'] ?? '';
+            $sort = $_GET['sort'] ?? 'bus_id';
+            $order = $_GET['order'] ?? 'ASC';
 
-        //Pagination for businesses
-        $business_pager = Pager::getInstance('business_details', $noOfPages_business, $business_limit);
-        $business_offset = $business_pager->offset;
-        $business = $admin->select('business_details', 'bus_id', $business_limit, $business_offset);
-
-
-        $this->view('AdminManageBusinesses', [
-            "business" => $business,
-            "business_pager" => $business_pager
-        ]);
+            $business_limit = 3;
+            //count the no of businesses in the business_details view
+            $businessCountData = $admin->countWithWhere('business_details', ['status_id'], [1]);
+            //calculate the no of pages
+            $noOfPages_business = ceil($businessCountData / $business_limit);
+    
+            //Pagination for businesses
+            $business_pager = Pager::getInstance('business_details', $noOfPages_business, $business_limit);
+            $business_offset = $business_pager->offset;
+            $business = $admin->select('business_details', $business_limit, $business_offset, $search, $searchBy, $sort, $order);
+    
+            // print_r($business);
+            $this->view('AdminManageBusinesses', [
+                "business" => $business,
+                "business_pager" => $business_pager
+            ]);
+        }else{
+            $this->redirect('login');
+        }
+       
     }
     //Managing charity organizations
     function ManageCharityOrg()

@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="<?=STYLES?>/adminManageActors.css" />
     <link rel="stylesheet" href="<?=STYLES?>/admin.css">
     <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"   />
+    <link rel="stylesheet" href="<?= STYLES ?>/searchBar.css">
 </head>
 
 <body>
@@ -13,13 +14,18 @@
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary">
-                    <div class="notifications-type2">
-                        <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." />
-                            <img src="<?=ASSETS?>/images/search.png" class="bell2" />
-                        </div>
-
-                        <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
+                    <div class="notifications-type2">     
+                    <?php
+                        $columns = [
+                            'business_name' => 'Business Name',
+                            'phoneNo' => 'Phone No',
+                            'email' => 'Email',
+                            'username' => 'Username',
+                            'reg_date' => 'Registered Date'
+                        ];
+                        $seacher = TableSearcher::getInstance();
+                        echo $seacher->renderSearchBar($columns);
+                        ?>
                     </div>
                     <div class="add-buyer">
                             <div>
@@ -32,23 +38,36 @@
                     
 
                 </div>
+                
                 <div class="Business-complaints-order-status">
+                <?php
+                    $columns = [
+                        'business_name' => 'Business Name',
+                        'phoneNo' => 'Phone No',
+                        'email' => 'Email',
+                        'username' => 'Username',
+                        'reg_date' => 'Registered Date'
+                    ];
+
+                    $sorter = Sorter::getInstance();
+                    echo $sorter->renderSorter($columns);
+                    ?>
                 <table class="order-table">
                         <thead>
                             
                             <tr>
                                 <th>Profile</th>
-                                <th>ID</th>
+                                <th>Business Name</th>
                                 <th>Phone No</th>
                                 <th>Registered Date</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                        <?php foreach( $business as $business):?>
+                        <?php foreach($business as $business):?>
                             <tr  onclick="viewBusiness(<?=$business->user_id?>)">
                                 <td><img src="<?=CUSTOMER.'/'.$business->profile_pic?>" class="customer-profile-pic"/></td>
-                                <td>#<?=$business->bus_id?></td>
+                                <td><?=$business->business_name?></td>
                                 <td><?=$business->phoneNo?></td>
                                 <td><?=$business->reg_date?></td>
                                 <td>

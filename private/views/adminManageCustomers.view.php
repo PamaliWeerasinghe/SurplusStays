@@ -59,36 +59,11 @@
                     </div>
                     <div class="notifications-type2">
 
-                        <!-- <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." id="search" />
-                            <img src="<?= ASSETS ?>/images/search.png" class="bell2" />
-                        </div>  -->
-                        <!-- <div class="search-container">
-                            <div class="searchdiv">
-                                <div class="search-wrapper">
-                                <input type="text" class="search" placeholder="Search customers..." id="search" />
-                                <button class="search-btn">
-                                    <img src="<?= ASSETS ?>/images/search.png" class="search-icon" viewBox="0 0 24 24"/>
-                                    
-                                </button>
-                                </div>
-                                <div class="notification-icon">
-                                <select>
-                                    <option value="all">Select</option>
-                                    <option value="active">First Name</option>
-                                    <option value="inactive">Last Name</option>
-                                    <option value="banned">Phone No</option>
-                                    <option value="banned">Email</option>
-                                    <option value="banned">Username</option>
-                                </select>
-      
-                                </div>
-                            </div>
-                        </div>  -->
+                       
 
 
 
-                        <!-- <img src="<?= ASSETS ?>/images/Bell.png" class="bell" /> -->
+                        
                         <?php
                         $columns = [
                             'fname' => 'First Name',
