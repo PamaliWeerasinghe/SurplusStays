@@ -142,7 +142,8 @@
                                             data-id="<?= $row->id ?>"
                                             data-message="<?= htmlspecialchars($row->message) ?>"
                                             data-food-items="<?= htmlspecialchars($row->food_items) ?>"
-                                            data-reply-message="<?= htmlspecialchars($row->reply_message ?? '') ?>"
+                                            data-reply-message="<?= htmlspecialchars($row->feedback ?? '') ?>"
+                                           
                                         >
                                             <td class="date"><?= htmlspecialchars($row->date) ?></td>
                                             <td>
@@ -179,7 +180,7 @@
 
     <!-- Modal HTML structure -->
 <div id="requestModal" class="modal-overlay">
-    <form class="modal-container" method="POST" action="<?=ROOT?>/charity/sendDonationRequest/<?= $id ?>">
+    <form class="modal-container" method="POST" action="<?=ROOT?>/charity/replyDonationRequest/<?= $id ?>">
         <div class="modal-header">
         <h3 class="modal-title">Request Details</h3>
         <button type="button" class="modal-close">&times;</button>
@@ -267,6 +268,7 @@ document.addEventListener('DOMContentLoaded', function() {
   // Add click event to each View More button
   viewMoreButtons.forEach(button => {
     button.addEventListener('click', function() {
+      // finding the nearest ancestor <tr> (table row) element from the current element.
       const row = this.closest('tr');
       const date = row.querySelector('.date').textContent;
       const businessName = row.cells[1].textContent.trim();
@@ -283,10 +285,11 @@ document.addEventListener('DOMContentLoaded', function() {
       const foodItems = rowData.foodItems || "None specified."; // You'll need to populate this
       const replyMessage = rowData.replyMessage || ""; // You'll need to populate this
       const donationId = row.dataset.id;
+      //console.log("Reply message:",rowData);
 
       // Fill modal with data
       document.getElementById('donation-id').value = donationId;
-      document.querySelector('.modal-container').action = `<?=ROOT?>/charity/sendDonationRequest/${donationId}`;
+      document.querySelector('.modal-container').action = `<?=ROOT?>/charity/replyDonationRequest/${donationId}`;
       document.getElementById('modal-date').textContent = date;
       document.getElementById('modal-business').textContent = businessName;
       document.getElementById('modal-title').textContent = title;

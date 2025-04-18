@@ -685,33 +685,44 @@ function getTopDonatingBusinesses()
             'errors' => $errors,
         ]);
     }
-    
-}
 
-function sendDonationRequest($id = null)
+    function replyDonationRequest($id = null)
 {
     if (!Auth::logged_in()) {
         $this->redirect('login');
     }
 
-    $errors = [];
+     // Debug to see what's coming in
+    //  echo "ID: " . $id . "<br>";
+    //  echo "<pre>";
+    //  print_r($_POST);
+    //  echo "</pre>";
+    //  die(); // This will stop execution and show you the data
+
     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $request = new BusinessDonation();
-
-        if ($request->validate($_POST)) {
-            $arr = [];
-            $arr['feedback'] = $_POST['reply-message'];
-            $arr['status'] = $_POST['status'] ?? 'pending';
-
-            $request->update($id, $arr, 'business_donations');
-            $this->redirect('charity/donations');
-        } else {
-            $errors = $request->errors;
-        }
+        
+        // Get the donation ID from the form
+        $donationId = $_POST['donation_id'] ?? $id;
+        
+        // Create the data array for update
+        $arr = [];
+        $arr['feedback'] = $_POST['reply-message']; // Note the hyphen
+        $arr['status'] = $_POST['status']; // This is coming from the hidden input
+        
+        // Update the database
+        $result = $request->update($donationId, $arr, 'business_donations');
+        
+        // Redirect back to donations page
+        $this->redirect('charity/donations');
+        return; // Make sure to return after redirect
     }
 
-    $this->view('charityDonations', [
-        'errors' => $errors,
-    ]);
+    // If we get here, something went wrong
+    $this->redirect('charity/donations');
 }
+    
+}
+
+
 
