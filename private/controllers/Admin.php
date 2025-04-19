@@ -48,39 +48,80 @@ class Admin extends Controller
         }
     }
     //Admin view business details
-    function viewBusiness($id)
+    function viewBusiness($user_id,$business_id)
     { {
 
-            $customer = new AdminModel();
+            $business = new AdminModel();
             $errors = array();
             $arr = array();
-            // print_r($_FILES);
+            // print_r($arr);
 
             if (count($_POST) > 0) {
 
-                if ($customer->validateEditCustomer($_POST)) {
-                    $arr = $customer->data;
-                    $customer->update($id, $arr, 'customer');
-                    $data = $customer->where(['cus_id'], [$id], 'customer_details');
+                if ($business->validateEditBusiness($_POST)) {
+                    $arr = $business->data;
+                    $business_details=array();
+                    $user=array();
+
+                    if(isset($arr['name'])){
+                        $business_details['name'] = $arr['name'];
+                    }
+                    if(isset($arr['profile_pic'])){
+                        $user['profile_pic'] = $arr['profile_pic'];
+                    }
+                    if(isset($arr['latitude'])){
+                        $business_details['latitude'] = $arr['latitude'];
+                    }
+                    if(isset($arr['longitude'])){
+                        $business_details['longitude'] = $arr['longitude'];
+                    }
+                    if(isset($arr['email'])){
+                        $user['email'] = $arr['email'];
+                    }
+                    if(isset($arr['phone'])){
+                        $business_details['phone'] = $arr['phone'];
+                    }
+                    if(isset($arr['username'])){
+                        $business_details['username'] = $arr['username'];
+                    }
+                    // print_r($user);
+                    print_r($business_details);
+                    if(!empty($user) && !empty($business_details)){
+                        $business->update($user_id, $user, 'user');
+                        $business->update($business_id, $business_details, 'business');
+                    }else if (!empty($user)){
+                        $business->update($user_id, $user, 'user');
+                    }else if (!empty($business_details)){
+                        $business->update($business_id, $business_details, 'business');
+                    }else{
+                       
+                        $data = $business->where(['bus_id'], [$business_id], 'business_details');
+                        $data = $data[0];
+                        $this->view('AdminEditBusiness', [
+                            'rows' => $data,
+                        ]);
+                    }
+                
+                    $data = $business->where(['bus_id'], [$business_id], 'business_details');
                     $data = $data[0];
-                    $this->view('AdminEditCustomer', [
+                    $this->view('AdminEditBusiness', [
                         'rows' => $data,
                     ]);
                 } else {
-                    $errors = $customer->errors;
-                    $data = $customer->where(['cus_id'], [$id], 'customer_details');
+                    $errors = $business->errors;
+                    $data = $business->where(['bus_id'], [$business_id], 'business_details');
                     $data = $data[0];
-                    $this->view('AdminEditCustomer', [
+                    $this->view('AdminEditBusiness', [
                         'rows' => $data,
                         'errors' => $errors
                     ]);
                 }
             } else {
 
-                $data = $customer->where(['cus_id'], [$id], 'customer_details');
-
+                $data = $business->where(['bus_id'], [$business_id], 'business_details');
+                // print_r($data);
                 $data = $data[0];
-                $this->view('AdminEditCustomer', [
+                $this->view('AdminEditBusiness', [
                     'rows' => $data
                 ]);
             }

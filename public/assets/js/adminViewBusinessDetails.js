@@ -1,5 +1,5 @@
 function viewBusiness(user_id,business_id){
-    // alert("hello")
+    // alert(business_id);
     let rcpopup = document.getElementById("rcpopup");
     let rcpopupContainer = document.getElementById("rcpopup-container");
   
@@ -22,9 +22,9 @@ function viewBusiness(user_id,business_id){
             document.getElementById("phoneNo").innerHTML = data.business[0].phoneNo;
             document.getElementById("orders").innerHTML = data.no_of_orders;
             document.getElementById("edit_business").onclick=function(){
-                window.location.href=`http://localhost/SurplusStays/public/admin/viewBusiness/${data.business[0].bus_id}`
+                window.location.href=`http://localhost/SurplusStays/public/admin/viewBusiness/${user_id}/${business_id}}`
             }
-            document.getElementById("hidden_id").value=data.business[0].bus_id;
+            document.getElementById("hidden_id").value=business_id;
             
             //selects the table body
             let tbody=document.querySelector(".order-table tbody");
