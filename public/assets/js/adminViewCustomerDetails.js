@@ -4,35 +4,6 @@ document.addEventListener("DOMContentLoaded", () => {
         user_id=document.getElementById("hidden_id").value;
         deletePopup(user_id);
     };
-    // document.getElementById("search").onkeyup=function(){
-    //     input=document.getElementById("search").value.toLowerCase();
-    //     //fetch the customer details
-    //     fetch(`http://localhost/surplusstays/public/admin/searchCustomer/${input}`)
-    //     .then(response=>{
-    //         if(!response.ok){
-    //             throw new Error(`HTTP error! Status: ${response.status}`);
-    //         }
-    //         return response.json(); // Convert response to JSON
-
-    //     })
-    //     .then(customers=>{
-    //         console.log("Fetched Data:", customers); // Debugging: Check JSON structure
-    //         //selects the table body
-    //         let tbody=document.querySelector(".order-table tbody");
-    //         //clear the rows
-    //         tbody.innerHTML="";
-    //         let row=document.createElement("tr");
-    //         row.innerHTML=`
-    //             <td>#profile_pic</td>
-    //             <td>#${customers.cus_id}</td>
-    //             <td>${customers.phoneNo}</td>
-    //             <td>${customers.reg_date}</td>
-    //         `;
-            
-
-    //     })
-    // }
-
 });
 
 function deletePopup(rowId){
@@ -88,26 +59,26 @@ function viewCustomer(id){
             // //clear the rows
             tbody.innerHTML="";
             complaints=data.customer_complaints;
+            
             // console.log(complaints);
             let row = document.createElement("tr");
             if (data.customer_complaints && Array.isArray(data.customer_complaints) && data.customer_complaints.length > 0) {
             data.customer_complaints.forEach((complaints,index) => {
                 
-                
+                        let row = document.createElement("tr");
                         row.innerHTML=`
                         <td>#${index+1}</td>
-                        <td>${complaints.complaintDescription}</td>
+                        <td>${complaints.customer_email}</td>
                         <td>${complaints.complaint_date}</td>
-                        <td>${complaints.complant_status==='Not Attended'?
-                            ' <td style="text-align: center;"><button class="completed">Attend</button></td>'
-                            :
-                            ' <td style="text-align: center;"><button class="take-action">Attend</button></td>'
-                        }</td>
-                        <td>
+                        <td style="text-align: center;">${complaints.complaint_status==='Not Attended'?' <button class="take-action" style="font-size:10px">Take Action</button>':
+                            ' <button class="completed" style="font-size:10px">Resolved</button>'
+                        }
+                        </td>
+                        <td style="text-align: center;">
                         ' <button 
                                 class="see-complain" 
-                                style="color:grey;background-color:transparent;border-style:solid;border-color:grey"
-                                onclick="window.location.href='<?=ROOT?>/Admin/ViewComplain/'"
+                                style="color:grey;background-color:transparent;border-style:solid;border-color:grey;font-size:10px"
+                                onclick="window.location.href='http://localhost/SurplusStays/public/Admin/ViewComplain/${complaints.complaint_id}'"
                         >
                                 See Complain
                         </button>'
@@ -123,12 +94,16 @@ function viewCustomer(id){
             //check recent images
             let container1=document.getElementById('profile-section-1');
             let container2=document.getElementById('profile-section-2'); 
+            container1.style.backgroundImage='none';
+            container2.style.backgroundImage='none';
+            container1.innerHTML="";              
+            container2.innerHTML="";
+            
             if(data.images && Array.isArray(data.images) && data.images.length>0){
                 path='http://localhost/SurplusStays/public/assets/images/'
                
                 data.images.forEach((images,index)=>{
-                    container1.innerHTML="";              
-                    container2.innerHTML="";
+                    
                     let container=document.getElementById(`profile-section-${index+1}`);
 
                     // const img=document.createElement("img");
@@ -138,6 +113,8 @@ function viewCustomer(id){
                     }else{
                         src=path+images.pictures;
                         container.style.backgroundRepeat='no-repeat'
+                        container.style.backgroundPosition='center'
+                        container.style.backgroundSize='contain'
                         container.style.backgroundImage=`url('${src}')`
                         // container.appendChild(img);
                     }

@@ -19,7 +19,8 @@ SELECT `complaints`.`id` AS `complaint_id`,
             `customer`.`phoneNo` AS `customer_phone`,
             `expiration_dateTime` AS `product_expirationTime`,
             `discountPrice`,
-            `products`.`name` AS product
+            `products`.`name` AS product,
+            `user`.`id` AS user_id
 FROM `complaints` 
 INNER JOIN `order_items` ON `complaints`.`order_items_id`=`order_items`.`id` 
 INNER JOIN `products` ON `products`.`id`=`order_items`.`products_id`
