@@ -179,7 +179,7 @@
 }
 .view-customer-img img{
     height: 10vh;
-    border-radius: 100%;
+    border-radius: 10px;
 }
 .view-customer-row1{
     display: flex;

@@ -86,20 +86,20 @@ class Admin extends Controller
             }
         }
     }
-    //view business details - manage customers popup
-    function businessDetails($id)
+    //view business details - manage business popup
+    function businessDetails($user_id,$business_id)
     {
         if (Auth::logged_in()) {
             $admin = new AdminModel();
-            $business = $admin->where(['user_id'], [$id], 'business_details');
-            $business_complaints = $admin->where(['user_id'], [$id], 'complaintdetails');
+            $business = $admin->where(['user_id'], [$user_id], 'business_details');
+            $business_complaints = $admin->where(['businessID'], [$business_id], 'complaintdetails');
             $data["business"] = $business;
             $data["business_complaints"] = $business_complaints;
             //get the number of orders
-            $orders = $admin->countWithWhere('order_and_the_business', ['business_id'], [$id]);
+            $orders = $admin->countWithWhere('order_and_the_business', ['business_id'], [$business_id]);
             $data["no_of_orders"] = $orders;
             //get the images of recently added products
-            $items = $admin->whereWithLimit('products', ['bus_id'], [$id], 2);
+            $items = $admin->whereWithLimit('products', ['business_id'], [$business_id], 2);
             $data["images"] = $items;
             // print_r(json_encode($data["customer_complaints"]));
             error_log("data: " . print_r($data, true));

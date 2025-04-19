@@ -65,8 +65,8 @@
                         </thead>
                         <tbody>
                         <?php foreach($business as $business):?>
-                            <tr  onclick="viewBusiness(<?=$business->user_id?>)">
-                                <td><img src="<?=CUSTOMER.'/'.$business->profile_pic?>" class="customer-profile-pic"/></td>
+                            <tr  onclick="viewBusiness(<?=$business->user_id?>,<?=$business->bus_id?>)">
+                                <td><img src="<?=BUSINESS.'/'.$business->profile_pic?>" class="customer-profile-pic"/></td>
                                 <td><?=$business->business_name?></td>
                                 <td><?=$business->phoneNo?></td>
                                 <td><?=$business->reg_date?></td>
