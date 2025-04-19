@@ -40,10 +40,10 @@
                                     <p><strong>Category :</strong> <?= $row[0]->category ?></p>
                                     <p><strong>Quantity :</strong> <?= $row[0]->qty ?></p>
                                     <p><strong>Unit Price :</strong> <?= $row[0]->price_per_unit ?></p>
-                                    <p><strong>Price after applied discount percentage :</strong> <?= $row[0]->discount_price ?></p>
+                                    <p><strong>Price after applied discount percentage :</strong> <?= $row[0]->discountPrice ?></p>
                                     <p>
                                         <strong>expiration date and time :</strong>
-                                        <span class="red-text"><?= $row[0]->expiration_date_time ?></span>
+                                        <span class="red-text"><?= $row[0]->expiration_dateTime ?></span>
                                     </p>
 
                                     <p><strong>Description:</strong><?= $row[0]->description ?></p>

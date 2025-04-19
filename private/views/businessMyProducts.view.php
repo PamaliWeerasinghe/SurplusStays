@@ -55,6 +55,7 @@
                             <?php if ($rows): ?>
                                 <?php foreach ($rows as $row): ?>
                                     <?php
+                                    if($row->status_id==1):
                                     $productPictures = explode(',', $row->pictures); // Get images
                                     $productImage = isset($productPictures[0]) ? $productPictures[0] : 'product_placeholder.png';
                                     ?>
@@ -67,7 +68,7 @@
                                         </td>
                                         <td><?= $row->qty ?></td>
                                         <td>Rs <?= $row->price_per_unit ?></td>
-                                        <td><?= $row->expiration_date_time ?></td>
+                                        <td><?= $row->expiration_dateTime ?></td>
                                         <td>
                                             <div class="inline">
                                                 <div>
@@ -83,6 +84,7 @@
                                             </div>
                                         </td>
                                     </tr>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>

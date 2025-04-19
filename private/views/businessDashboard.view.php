@@ -87,19 +87,22 @@
                     <div class="product-row" id="productRow">
                         <?php if ($rows): ?>
                             <?php foreach ($rows as $row): ?>
-                                <?php
-                                $productPictures = explode(',', $row->pictures);
-                                $productImage = isset($productPictures[0]) ? $productPictures[0] : 'product_placeholder.png';
-                                ?>
-                                <div class="product-item" onclick="window.location.href='<?= ROOT ?>/business/viewProduct/<?= $row->id ?>'">
-                                    <div>
-                                        <img src="<?= ROOT ?><?= htmlspecialchars($productImage) ?>" alt="product-image">
+                                <?php if ($row->status_id === 1): ?>
+                                    <?php
+                                    $productPictures = explode(',', $row->pictures);
+                                    $productImage = isset($productPictures[0]) ? $productPictures[0] : 'product_placeholder.png';
+                                    ?>
+                                    <div class="product-item" onclick="window.location.href='<?= ROOT ?>/business/viewProduct/<?= $row->id ?>'">
+                                        <div>
+                                            <img src="<?= ROOT ?><?= htmlspecialchars($productImage) ?>" alt="product-image">
+                                        </div>
+                                        <div class="product-item-colomn">
+                                            <label class="product-item-1"><?= mb_strimwidth($row->name, 0, 15, '...') ?></label>
+                                            <label class="product-item-2">Rs <?= $row->price_per_unit ?></label>
+                                        </div>
                                     </div>
-                                    <div class="product-item-colomn">
-                                        <label class="product-item-1"><?= mb_strimwidth($row->name, 0, 15, '...') ?></label>
-                                        <label class="product-item-2">Rs <?= $row->price_per_unit ?></label>
-                                    </div>
-                                </div>
+
+                                <?php endif; ?>
                             <?php endforeach; ?>
                         <?php else: ?>
                             <h4>No products found</h4>
@@ -123,8 +126,8 @@
                             <tr>
                                 <th>Date</th>
                                 <th>Customer</th>
-                                <th>Product</th>
-                                <th>Action</th>
+                                <th>Status</th>
+                                <th>Total Price</th>
                             </tr>
                         </thead>
                         <tbody>
@@ -133,12 +136,12 @@
                                     <tr onclick="window.location.href='<?= ROOT ?>/business/viewOrder/<?= $order->id ?>'">
                                         <td><?= htmlspecialchars($order->dateTime) ?></td>
                                         <td><?= htmlspecialchars($order->Customer) ?></td>
-                                        <td><?= htmlspecialchars($order->Products) ?></td>
                                         <td>
                                             <span class="order-status <?= strtolower(str_replace(' ', '-', $order->status)) ?>">
                                                 <?= htmlspecialchars($order->status) ?>
                                             </span>
                                         </td>
+                                        <td>Rs <?=htmlspecialchars($order->total)?></td>
                                     </tr>
                                 <?php endforeach; ?>
                             <?php else : ?>
@@ -161,7 +164,6 @@
     </div>
 
     <script>
-
         //pagination for top selling products section
 
         const rowsPerPage = 4;
@@ -197,7 +199,7 @@
         //pagination for recent orders section
 
         const orderItemsPerPage = 4;
-        let orderCurrentPage = 1; 
+        let orderCurrentPage = 1;
 
         const orderRows = Array.from(document.querySelectorAll(".order-table tbody tr"));
         const orderPrevBtn = document.getElementById("orderPrevBtn");
@@ -228,7 +230,7 @@
                 showOrders(orderCurrentPage);
             }
         });
-    
+
         //JS for bar chart
 
         // Get weekly data from PHP
@@ -265,4 +267,5 @@
     </script>
 
 </body>
+
 </html>

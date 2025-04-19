@@ -1,8 +1,8 @@
 <?php
 
-class Donation extends Model
+class BusinessDonation extends Model
 {
-    public $table = "donations";
+    public $table = "business_donations";
 
     protected $db;
 
@@ -27,7 +27,7 @@ class Donation extends Model
         return empty($this->errors);
     }
 
-    public function countRows($org_id, $status) {
+     public function countRows($org_id, $status) {
         $query = "SELECT COUNT(*) as count FROM " . $this->table . " WHERE organization_id = :org_id AND status = :status";
         $params = [':org_id' => $org_id, ':status' => $status];
         $result = $this->db->query($query, $params);
@@ -39,7 +39,7 @@ class Donation extends Model
     public function getAcceptedDonationsByDate($org_id, $startDate, $endDate) {
         $query = "SELECT DATE(date) as date, COUNT(*) as count 
                   FROM $this->table 
-                  WHERE organization_id = :org_id AND status = 2 
+                  WHERE organization_id = :org_id AND status = 'accepted' 
                   AND DATE(date) BETWEEN :start AND :end
                   GROUP BY DATE(date)";
         
@@ -56,7 +56,7 @@ class Donation extends Model
         $query = "SELECT COUNT(*) as count 
                   FROM $this->table 
                   WHERE organization_id = :org_id 
-                  AND status = 2 
+                  AND status = 'accepted' 
                   AND DATE(date) BETWEEN :start AND :end";
         
         $result = $this->db->query($query, [
@@ -68,6 +68,7 @@ class Donation extends Model
         return is_array($result) && isset($result[0]->count) ? (int)$result[0]->count : 0;
 
     }
+    
     
     
 }

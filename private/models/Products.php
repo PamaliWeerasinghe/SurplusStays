@@ -1,7 +1,13 @@
 <?php
 class Products extends Model
 {
-    protected $table = "products";
+    protected $db;
+    public function __construct()
+    {
+        $this->db=Database::getInstance();
+    }
+
+    public $table = "products";
     public function validate($DATA)
     {
         // Reset errors
@@ -11,7 +17,7 @@ class Products extends Model
             $this->errors['product'] = "Product name is required";
         }
 
-        if($this->where('name',$DATA['product-name'])) {
+        if($this->where('name',$DATA['product-name'],'products')) {
             $this->errors['name'] = "Product name already in use ";
         }
 
@@ -59,7 +65,7 @@ class Products extends Model
     public function countProducts($business_id)
     {
         $query = "SELECT COUNT(*) as count FROM $this->table WHERE business_id = :business_id";
-        $result = $this->query($query, ['business_id' => $business_id]);
+        $result = $this->db->query($query, ['business_id' => $business_id]);
         return $result[0]->count ?? 0;
     }
 
@@ -77,19 +83,19 @@ class Products extends Model
         }
 
         $query = "SELECT * FROM $this->table WHERE business_id = :business_id $orderBy";
-        return $this->query($query, ['business_id' => $business_id]);
+        return $this->db->query($query, ['business_id' => $business_id]);
     }
 
 
     public function gettopsalesproducts($business_id)
     {
-        $query = "SELECT p.id,p.name, p.price_per_unit, p.pictures, COUNT(*) AS count 
+        $query = "SELECT p.id,p.name, p.price_per_unit, p.pictures, p.status_id ,COUNT(*) AS count 
                 FROM order_items oi
                 JOIN products p ON p.id = oi.products_id
                 WHERE p.business_id = :business_id
                 GROUP BY oi.products_id
                 ORDER BY count DESC";
 
-        return $this->query($query, ['business_id' => $business_id]);
+        return $this->db->query($query, ['business_id' => $business_id]);
     }
 }

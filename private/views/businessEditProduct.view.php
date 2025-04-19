@@ -75,7 +75,7 @@
 
                         <div class="input-group">
                             <label for="expiration">Expiration Date And Time :</label>
-                            <input type="datetime-local" value="<?= get_var('expiration', $row[0]->expiration_date_time) ?>" name="expiration">
+                            <input type="datetime-local" value="<?= get_var('expiration', $row[0]->expiration_dateTime) ?>" name="expiration">
                         </div>
 
                         <div class="input-group upload-group">
@@ -118,7 +118,7 @@
                         </div>
 
                         <?php
-                            $percentage = (($row[0]->price_per_unit - $row[0]->discount_price) / $row[0]->price_per_unit) * 100;
+                            $percentage = (($row[0]->price_per_unit - $row[0]->discountPrice) / $row[0]->price_per_unit) * 100;
                         ?>
 
                         <div class="input-group">
@@ -130,7 +130,7 @@
                             <a href="<?= ROOT ?>/business/myproducts">
                                 <button type="button" class="btn-cancel">Cancel</button>
                             </a>
-                            <button type="submit" class="btn-create">Add Product</button>
+                            <button type="submit" class="btn-create">Update Product</button>
                         </div>
                     </form>
                 </div>

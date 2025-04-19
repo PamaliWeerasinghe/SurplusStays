@@ -2,7 +2,13 @@
 
 class OrderModel extends Model
 {
-    protected $table = "order";
+    protected $db;
+    public function __construct()
+    {
+        $this->db=Database::getInstance();
+    }
+
+    public $table = "order";
 
     public function getOrdersByBusiness($business_id)
     {
@@ -21,7 +27,7 @@ class OrderModel extends Model
                   GROUP BY o.id
                   ORDER BY o.dateTime DESC";
 
-        return $this->query($query, ['business_id' => $business_id]);
+        return $this->db->query($query, ['business_id' => $business_id]);
     }
 
     public function getOrderDetails($order_id)
@@ -35,7 +41,7 @@ class OrderModel extends Model
                 p.name AS product_name, 
                 oi.qty, 
                 p.price_per_unit, 
-                p.discount_price,
+                p.discountPrice,
                 IFNULL(o.order_status, 'Ongoing') AS status
               FROM `order` o
               JOIN customer c ON o.customer_id = c.id
@@ -43,7 +49,7 @@ class OrderModel extends Model
               JOIN products p ON oi.products_id = p.id
               WHERE o.id = :order_id";
 
-        return $this->query($query, ['order_id' => $order_id]);
+        return $this->db->query($query, ['order_id' => $order_id]);
     }
 
     public function updateOrderStatus($order_id, $status)
@@ -51,7 +57,7 @@ class OrderModel extends Model
         $query = "UPDATE `order` 
               SET order_status = :status 
               WHERE id = :order_id";
-        $this->query($query, ['order_id' => $order_id, 'status' => $status]);
+        $this->db->query($query, ['order_id' => $order_id, 'status' => $status]);
 
         // Deduct quantities only if status is "Completed"
         if ($status === 'Completed') {
@@ -65,14 +71,14 @@ class OrderModel extends Model
         $query = "SELECT products_id, qty 
               FROM order_items 
               WHERE order_id = :order_id";
-        $orderItems = $this->query($query, ['order_id' => $order_id]);
+        $orderItems = $this->db->query($query, ['order_id' => $order_id]);
 
         // Deduct the quantities from the products table
         foreach ($orderItems as $item) {
             $updateQuery = "UPDATE products 
                         SET qty = GREATEST(qty - :qty, 0) 
                         WHERE id = :product_id";
-            $this->query($updateQuery, ['qty' => $item->qty, 'product_id' => $item->products_id]);
+            $this->db->query($updateQuery, ['qty' => $item->qty, 'product_id' => $item->products_id]);
         }
     }
 
@@ -84,7 +90,7 @@ class OrderModel extends Model
               JOIN products p ON oi.products_id = p.id
               WHERE p.business_id = :business_id";
 
-        $result = $this->query($query, ['business_id' => $business_id]);
+        $result = $this->db->query($query, ['business_id' => $business_id]);
         return $result[0]->count ?? 0;
     }
 
@@ -103,6 +109,6 @@ class OrderModel extends Model
         ORDER BY FIELD(DAYNAME(o.dateTime), 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
     ";
 
-        return $this->query($query, ['business_id' => $business_id]);
+        return $this->db->query($query, ['business_id' => $business_id]);
     }
 }

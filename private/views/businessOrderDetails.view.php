@@ -57,8 +57,8 @@
                                             <td><?= htmlspecialchars($item->product_name) ?></td>
                                             <td><?= htmlspecialchars($item->qty) ?></td>
                                             <td>Rs. <?= htmlspecialchars($item->price_per_unit) ?></td>
-                                            <td>Rs. <?= htmlspecialchars($item->discount_price) ?></td>
-                                            <td>Rs. <?= htmlspecialchars($item->discount_price) * htmlspecialchars($item->qty) ?></td>
+                                            <td>Rs. <?= htmlspecialchars($item->discountPrice) ?></td>
+                                            <td>Rs. <?= htmlspecialchars($item->discountPrice) * htmlspecialchars($item->qty) ?></td>
                                         </tr>
                                     <?php endforeach; ?>
                                 </table>

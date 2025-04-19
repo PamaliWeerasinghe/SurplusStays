@@ -44,13 +44,14 @@ class Business extends Controller
         $business_id = Auth::getID();
 
         $currentDateTime = new DateTime();
-        $allProducts = $product->where('business_id', $business_id);
+        $allProducts = $product->where('business_id', $business_id, 'products');
 
         if (!empty($allProducts)) {
             foreach ($allProducts as $row) {
-                $productExpiration = new DateTime($row->expiration_date_time);
+                $productExpiration = new DateTime($row->expiration_dateTime);
                 if ($currentDateTime > $productExpiration) {
-                    $product->delete($row->id);
+                    $arr['status_id']=2;
+                    $product->update($row->id, $arr,'products');
                 }
             }
         }
@@ -66,7 +67,7 @@ class Business extends Controller
     function viewProduct($id = null)
     {
         $product = new Products();
-        $row = $product->where('id', $id);
+        $row = $product->where('id', $id, 'products');
         $this->view('businessViewProduct', [
             'row' => $row,
         ]);
@@ -119,19 +120,23 @@ class Business extends Controller
             }
 
             if (empty($errors) && $product->validate($_POST)) {
-                $arr['business_id'] = Auth::getUserId();
-                $arr['name'] = $_POST['product-name'];
-                $arr['category'] = $_POST['category'];
-                $arr['description'] = $_POST['description'];
-                $arr['qty'] = $_POST['quantity'];
-                $arr['price_per_unit'] = $_POST['price-per-unit'];
-                $arr['expiration_date_time'] = $_POST['expiration'] . ':00';
                 $discount = !empty($_POST['discount']) ? $_POST['discount'] : 0;
-                $arr['discount_price'] = $_POST['price-per-unit'] * (100 - $discount) / 100;
-                $arr['pictures'] = $_POST['pictures'];
-                $arr['notify_status_id'] = 2;
-                $arr['status_id'] = 1;
-                $product->insert($arr);
+
+                $productData = [
+                    'business_id' => Auth::getUserId(),
+                    'name' => $_POST['product-name'],
+                    'category' => $_POST['category'],
+                    'description' => $_POST['description'],
+                    'qty' => $_POST['quantity'],
+                    'price_per_unit' => $_POST['price-per-unit'],
+                    'discountPrice' => $_POST['price-per-unit'] * (100 - $discount) / 100,
+                    'expiration_dateTime' => $_POST['expiration'] . ':00',
+                    'pictures' => $_POST['pictures'],
+                    'notify_status_id' => 2,
+                    'status_id' => 1,
+                ];
+
+                $product->insert($productData);
                 $this->redirect('business/myproducts');
             } else {
                 $errors = array_merge($errors, $product->errors);
@@ -154,7 +159,7 @@ class Business extends Controller
         $errors = []; // Ensure this is declared before use.
         $product = new ProductsEdit();
 
-        $row = $product->where('id', $id);
+        $row = $product->where('id', $id, 'products');
         $currentPictures = explode(',', $row[0]->pictures);
         $uploadedPictures = [];
 
@@ -209,20 +214,22 @@ class Business extends Controller
         $errors = array();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($_POST) > 0) {
-            // Process the form
             if ($product->validate($_POST)) {
-                $arr['business_id'] = Auth::getUserId();
-                $arr['name'] = $_POST['product-name'];
-                $arr['category'] = $_POST['category'];
-                $arr['description'] = $_POST['description'];
-                $arr['qty'] = $_POST['quantity'];
-                $arr['price_per_unit'] = $_POST['price-per-unit'];
-                $arr['expiration_date_time'] = $_POST['expiration'];
                 $discount = !empty($_POST['discount']) ? $_POST['discount'] : 0;
-                $arr['discount_price'] = $_POST['price-per-unit'] * (100 - $discount) / 100;
-                $arr['pictures'] = $_POST['pictures'];
 
-                $product->update($id, $arr);
+                $productData = [
+                    'business_id' => Auth::getUserId(),
+                    'name' => $_POST['product-name'],
+                    'category' => $_POST['category'],
+                    'description' => $_POST['description'],
+                    'qty' => $_POST['quantity'],
+                    'price_per_unit' => $_POST['price-per-unit'],
+                    'discountPrice' => $_POST['price-per-unit'] * (100 - $discount) / 100,
+                    'expiration_dateTime' => $_POST['expiration'],
+                    'pictures' => $_POST['pictures'],
+                ];
+
+                $product->update($id, $productData, 'products');
                 $this->redirect('business/myproducts');
             } else {
                 $errors = $product->errors;
@@ -230,7 +237,7 @@ class Business extends Controller
         }
 
         // Fetch existing product details for display
-        $row = $product->where('id', $id);
+        $row = $product->where('id', $id, 'products');
 
         $this->view('businessEditProduct', [
             'row' => $row,
@@ -246,14 +253,9 @@ class Business extends Controller
                 $this->redirect('login');
             }
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $product = new Products(); // Ensure you have an Product model
-                if ($product->delete($id)) {
-                    // Optionally, set a success message
-                    $_SESSION['message'] = 'Product deleted successfully';
-                } else {
-                    // Optionally, set an error message
-                    $_SESSION['message'] = 'Failed to delete product';
-                }
+                $product = new Products();
+                $arr['status_id'] = 2;
+                $product->update($id, $arr, 'products');
                 $this->redirect('business/myproducts'); // Redirect back to the myproducts page
             }
         }
@@ -284,7 +286,7 @@ class Business extends Controller
         $orderDetails = $orderModel->getOrderDetails($id);
 
         if (!$orderDetails) {
-            $this->redirect('orders'); // Redirect if order is not found
+            $this->redirect('business/orders'); // Redirect if order is not found
         }
 
         $this->view('businessOrderDetails', ['order' => $orderDetails]);
@@ -309,6 +311,52 @@ class Business extends Controller
         }
     }
 
+    function browse_charities()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $donation = new Donation();
+        $donation_b = new BusinessDonation();
+
+        $orgs = new Organization();
+        $users = new User();
+
+        $rows = $orgs->findAll('organization');
+        $rows_p = $users->findAll('user');
+
+        // Build map of user_id to picture
+        $userPictures = [];
+        $userEmails = [];
+        foreach ($rows_p as $user) {
+            $userPictures[$user->id] = $user->profile_pic;
+            $userEmails[$user->id] = $user->email;
+        }
+
+        // Add picture to each business row
+        foreach ($rows as &$row) {
+            $row->picture = $userPictures[$row->user_id] ?? '';
+            $row->email = $userEmails[$row->user_id] ?? '';
+        }
+
+        $today = date('Y-m-d 23:59:59');
+        $sevenDaysAgo = date('Y-m-d 00:00:00', strtotime('-6 days'));
+
+        // Calculate week count for each organization
+        $weekCounts = [];
+        foreach ($rows as $org) {
+            $orgId = $org->id; // assuming 'id' is the primary key field
+            $count = $donation->getAcceptedDonationsCountByDate($orgId, $sevenDaysAgo, $today) +
+                $donation_b->getAcceptedDonationsCountByDate($orgId, $sevenDaysAgo, $today);
+            $weekCounts[$orgId] = $count;
+        }
+
+        $this->view('businessBrowseOrganizations', [
+            'rows' => $rows,
+            'weekCounts' => $weekCounts
+        ]);
+    }
 
     function requests()
     {
@@ -334,7 +382,7 @@ class Business extends Controller
         $requestDetails = $requestModel->getRequestDetails($id);
 
         if (!$requestDetails) {
-            $this->redirect('requests'); // Redirect if request is not found
+            $this->redirect('business/requests'); // Redirect if request is not found
         }
 
         $this->view('businessRequestDetails', ['request' => $requestDetails]);
@@ -415,7 +463,7 @@ class Business extends Controller
         $userTable = new User();
 
         $businessId = Auth::getUserId(); // Get current user id
-        $row = $businessModel->where('id', $businessId);
+        $row = $businessModel->where('id', $businessId, 'business');
 
         if ($row) {
             $row = $row[0]; // Get the first (and only) record
@@ -466,12 +514,12 @@ class Business extends Controller
                     'longitude' => $_POST['longitude'],
                 ];
 
-                $businessModel->update($businessId, $businessData);
+                $businessModel->update($businessId, $businessData, 'business');
 
                 $userData = [
                     'email' => $_POST['email'],
                 ];
-                $userTable->update($businessId, $userData);
+                $userTable->update($businessId, $userData, 'user');
 
                 $this->redirect('login');
             } else {

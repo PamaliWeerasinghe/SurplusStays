@@ -2,7 +2,7 @@
 
 class Organization extends Model
 {
-    protected $table = "organization";
+    public $table = "organization";
 
     public function validate($DATA)
     {

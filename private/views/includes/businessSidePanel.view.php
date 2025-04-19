@@ -1,6 +1,6 @@
 <aside class="sidePanel">
     <div class="greeting">
-        <img src="<?= ASSETS ?>/businessImages/<?= basename(Auth::getPicture()) ?>" alt="Profile Image" class="profile-image">
+        <img src="<?= ASSETS ?>/businessImages/<?= basename(Auth::getUserPicture()) ?>" alt="Profile Image" class="profile-image">
         <label>Hi <span class="admin"> <?= Auth::getusername() ?></span></label>
     </div>
     <div class="buttons">
@@ -12,6 +12,9 @@
         </div>
         <div class="btn-nonSelected" data-path="/SurplusStays/public/business/orders">
             <label>Orders</label>
+        </div>
+        <div class="btn-nonSelected" data-path="/SurplusStays/public/business/browse_charities">
+            <label>Browse Charities</label>
         </div>
         <div class="btn-nonSelected" data-path="/SurplusStays/public/business/requests">
             <label>Requests</label>

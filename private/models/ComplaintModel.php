@@ -2,7 +2,13 @@
 
 class ComplaintModel extends Model
 {
-    protected $table = "complaints";
+    public $table = "complaints";
+
+    protected $db;
+    public function __construct()
+    {
+        $this->db=Database::getInstance();
+    }
 
     public function getComplainsByBusiness($business_id)
     {
@@ -18,7 +24,7 @@ class ComplaintModel extends Model
                   GROUP BY m.id
                   ORDER BY m.dateTime DESC";
 
-        return $this->query($query, ['business_id' => $business_id]);
+        return $this->db->query($query, ['business_id' => $business_id]);
     }
 
     public function getComplaintDetails($complaint_id)
@@ -35,12 +41,12 @@ class ComplaintModel extends Model
               LEFT JOIN complaint_status cs ON m.complaint_status_id = cs.id 
               WHERE m.id = :complaint_id";
 
-        return $this->query($query, ['complaint_id' => $complaint_id]);
+        return $this->db->query($query, ['complaint_id' => $complaint_id]);
     }
 
     public function addResponse($complaint_id, $response)
     {
         $query = "UPDATE complaints SET feedback = :response WHERE id = :complaint_id";
-        $this->query($query, ['response' => $response, 'complaint_id' => $complaint_id]);
+        $this->db->query($query, ['response' => $response, 'complaint_id' => $complaint_id]);
     }
 }

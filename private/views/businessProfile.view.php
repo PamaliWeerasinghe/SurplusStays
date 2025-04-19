@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
     <link rel="stylesheet" href="<?= STYLES ?>/businessProfile.css">
 
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoo4pzFf80sXYMtcQUux4CWSCY9nDbvig&libraries=places&callback=initMap" async defer></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOjGDz3PRLABXKf8sf5d___lX-RuWo3L4&libraries=places&callback=initMap" async defer></script>
 
     <script>
         let map, marker;
@@ -58,12 +58,12 @@
                         <h3>Business Details</h3>
                         <div class="items-row">
                             <div class="image-container">
-                                <img class="img" src="<?= ASSETS ?>/businessImages/<?= basename(Auth::getPicture()) ?>" alt="Business Logo">
+                                <img class="img" src="<?= ASSETS ?>/businessImages/<?= basename(Auth::getUserPicture()) ?>" alt="Business Logo">
                             </div>
                             <div class="text">
                                 <h4><?= Auth::getName() ?> ⭐ 4.9/5.0</h4>
                                 <p><strong>Business type : </strong> <?= Auth::gettype() ?></p>
-                                <p><strong>Phone Number:</strong> <?= Auth::getphone_No() ?></p>
+                                <p><strong>Phone Number:</strong> <?= Auth::getphoneNo() ?></p>
                                 <p><strong>Email Address:</strong> <?= Auth::getemail() ?></p>
                             </div>
                         </div>

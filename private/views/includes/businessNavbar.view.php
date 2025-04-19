@@ -12,7 +12,7 @@
         </div>
         <ul class="nav-links-right">
             <li><a href="#">Contact Us</a></li>
-            <li><a href="#"><img class="profile-img" src="<?=ASSETS?>/businessImages/<?=basename(Auth::getPicture())?>" alt="profile icon"></a></li>
+            <li><a href="#"><img class="profile-img" src="<?=ASSETS?>/businessImages/<?=basename(Auth::getUserPicture())?>" alt="profile icon"></a></li>
             <li><a href="#"><img src="<?=ASSETS?>/icons/heart-icon.png" alt="heart icon"></a></li>
             <li><a href='<?=ROOT?>/logout'>Logout</a></li>
         </ul>

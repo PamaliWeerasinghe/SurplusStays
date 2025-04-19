@@ -2,11 +2,11 @@
 
 class BusinessModel extends Model
 {
-    protected $table = "business";
+    public $table = "business";
 
-    protected $beforeInsert=[
-        'hash_password'
-    ];
+    // protected $beforeInsert=[
+    //     'hash_password'
+    // ];
 
     public function validate($DATA)
     {
@@ -25,15 +25,11 @@ class BusinessModel extends Model
         }
 
         //check if email exists
-        if($this->where('email',$DATA['email'])) {
-            $this->errors['email'] = "Email is already in use";
-        }
+        // if($this->where('email',$DATA['email'],'business')) {
+        //     $this->errors['email'] = "Email is already in use";
+        // }
         if(empty($DATA['phone']) || !is_numeric($DATA['phone'])) {
             $this->errors['phone'] = "A valid phone number is required";
-        }
-
-        if (empty($DATA['picture'])) {
-            $this->errors['picture'] = "Profile picture is required";
         }
         
         if(empty($DATA['username'])) {
@@ -49,8 +45,8 @@ class BusinessModel extends Model
         return empty($this->errors);
     }
 
-    public function hash_password($data){
-        $data['password']=password_hash($data['password'],PASSWORD_DEFAULT);
-        return $data;
-    }
+//     public function hash_password($data){
+//         $data['password']=password_hash($data['password'],PASSWORD_DEFAULT);
+//         return $data;
+//     }
 }

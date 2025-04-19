@@ -51,13 +51,13 @@
                         </div>
 
                         <div class="section-buttons">
-                            <?php if ($request[0]->status === 'Pending') : ?>
+                            <?php if ($request[0]->status == 'pending') : ?>
                                 <form method="POST" action="<?= ROOT ?>/business/updateRequestStatus" id="request-form">
                                     <input type="hidden" name="request_id" value="<?= htmlspecialchars($request[0]->id) ?>">
                                     <input type="hidden" name="status" id="statusInput" >
                                     <div class="button-container">
-                                        <button type="button" name="status" value="Accepted" class="btn-green" onclick="showPopupAndSubmit('Accepted')">ACCEPT REQUEST</button>
-                                        <button type="button" name="status" value="Rejected" class="btn-red"onclick="showPopupAndSubmit('Rejected')">CANCEL REQUEST</button>
+                                        <button type="button" name="status" value="accepted" class="btn-green" onclick="showPopupAndSubmit('Accepted')">ACCEPT REQUEST</button>
+                                        <button type="button" name="status" value="rejected" class="btn-red"onclick="showPopupAndSubmit('Rejected')">CANCEL REQUEST</button>
                                     </div>
                                 </form>
                             <?php else : ?>
