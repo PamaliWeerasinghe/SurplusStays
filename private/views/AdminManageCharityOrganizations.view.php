@@ -114,7 +114,7 @@
                                 <td><?=$row->reg_date?></td>
                                 <td>
                                
-                                    <span class="material-symbols-outlined" style="z-index: 1;" onclick="viewCharity(<?=$row->user_id?>)">
+                                    <span class="material-symbols-outlined" style="z-index: 1;" onclick="viewCharity(<?=$row->user_id?>,<?=$row->org_id?>)">
                                         edit_square
                                     </span>
                                     <span class="material-symbols-outlined action-btn deactivate" style="color: red;" onclick="openPopup(<?=$row->user_id?>)" value="<?=$row->user_id?>">

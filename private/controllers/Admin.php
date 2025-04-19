@@ -1,17 +1,9 @@
 <?php
 class Admin extends Controller
 {
-    //search customer through the search bar
-    // function searchCustomer($input){
-    //     $admin=new AdminModel();
-    //     // $customers=$admin->searchCustomer('customer_details',$input);
-    //     $jsonData = json_encode($customers);
-    //     echo $jsonData;
-
-
-    // }
+    
     //Admin view charity organization details
-    function viewCharity($id)
+    function viewCharity($user_id,$charity_id)
     { {
 
             $charity = new AdminModel();
@@ -21,15 +13,53 @@ class Admin extends Controller
             if (count($_POST) > 0) {
                 if ($charity->validateEditCharity($_POST)) {
                     $arr = $charity->data;
-                    $charity->update($id, $arr, 'charity_details');
-                    $data = $charity->where(['org_id'], [$id], 'charity_details');
+                    // print_r($arr);
+                    $org_arr=array();
+                    $user_arr=array();
+
+                    if(isset($arr['name'])){
+                        $org_arr['name'] = $arr['name'];
+                    }
+                    if(isset($arr['profile_pic'])){
+                        $user_arr['profile_pic'] = $arr['profile_pic'];
+
+                    }
+                    if(isset($arr['city'])){
+                        $org_arr['city'] = $arr['city'];
+                    }
+                    if(isset($arr['email'])){
+                        $user_arr['email'] = $arr['email'];
+                    }
+                    if(isset($arr['phoneNo'])){
+                        $org_arr['phoneNo'] = $arr['phoneNo'];
+                    }
+                    if(isset($arr['charity_description'])){
+                        $org_arr['charity_description'] = $arr['charity_description'];
+                    }
+                    if(!empty($user_arr) && !empty($org_arr)){
+                        $charity->update($user_id, $user_arr, 'user');
+                        $charity->update($charity_id, $org_arr, 'organization');
+                    }else if (!empty($user_arr)){
+                        $charity->update($user_id, $user_arr, 'user');
+                    }else if (!empty($org_arr)){
+                        $charity->update($charity_id, $org_arr, 'organization');
+                    }else{
+                       
+                        $data = $charity->where(['org_id'], [$charity_id], 'charity_details');
+                        $data = $data[0];
+                        $this->view('AdminEditCharityOrg', [
+                            'rows' => $data,
+                        ]);
+                    }
+                    // $charity->update($id, $arr, 'charity_details');
+                    $data = $charity->where(['org_id'], [$charity_id], 'charity_details');
                     // $data = $data[0];
                     $this->view('AdminEditCharityOrg', [
                         'rows' => $data[0],
                     ]);
                 } else {
                     $errors = $charity->errors;
-                    $data = $charity->where(['user_id'], [$id], 'charity_details');
+                    $data = $charity->where(['user_id'], [$user_id], 'charity_details');
                     $data = $data[0];
                     $this->view('AdminEditCharityOrg', [
                         'rows' => $data,
@@ -38,7 +68,7 @@ class Admin extends Controller
                 }
             } else {
 
-                $data = $charity->where(['org_id'], [$id], 'charity_details');
+                $data = $charity->where(['org_id'], [$charity_id], 'charity_details');
 
                 $data = $data[0];
                 $this->view('AdminEditCharityOrg', [
@@ -85,7 +115,7 @@ class Admin extends Controller
                         $business_details['username'] = $arr['username'];
                     }
                     // print_r($user);
-                    print_r($business_details);
+                    // print_r($business_details);
                     if(!empty($user) && !empty($business_details)){
                         $business->update($user_id, $user, 'user');
                         $business->update($business_id, $business_details, 'business');

@@ -47,7 +47,7 @@
                 <h4>ORGANIZATION CITY :</h4>
                 <input placeholder="<?=$rows->city?>" value='<?=get_var('city')?>' type="text" name="city" class="input">
                 <h4>ORGANIZATION EMAIL:</h4>
-                <input placeholder="<?=$rows->user_email?>" value='<?=get_var('email')?>' type="text" name="email" class="input"> 
+                <input placeholder="<?=$rows->user_email?>" value='<?=get_var('email')?>' type="text" name="email" class="input" disabled> 
                 <h4>PHONE NUMBER :</h4>
                 <input placeholder="<?=$rows->org_contact?>" value='<?=get_var('phone')?>' type="text" name="phone" class="input" >
                 <h4>ORGANIZATION DESCRIPTION :</h4>
@@ -66,24 +66,17 @@
 
 <?php echo $this->view('includes/footer')?>
 
+<!-- JavaScript to Show Preview -->
 <script>
-    document.getElementById('profilePic').addEventListener('change', function(e) {
-    const file = e.target.files[0];
-    
+document.getElementById('upload-1').addEventListener('change', function(event) {
+    const file = event.target.files[0];
     if (file) {
         const reader = new FileReader();
         reader.onload = function(e) {
-            const img = document.createElement('img');
-            img.src = e.target.result;
-            img.alt = 'Profile Preview';
-            img.style.width = '100px';
-            img.style.height = '100px';
-            // document.getElementById('profile-pic-preview').innerHTML = img;
-            document.getElementById('profile-pic-preview').src=img.src;
-            
-        }
+            document.getElementById('profilePreview').src = e.target.result;
+        };
         reader.readAsDataURL(file);
-    }
+    }
 });
 </script>
 

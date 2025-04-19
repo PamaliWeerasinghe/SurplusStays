@@ -378,7 +378,7 @@ class AdminModel extends Admin_Model
         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
         $fileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages/' . $logoNameNew;
         $dbFileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages/' . $logoNameNew;
-        move_uploaded_file($_FILES['file']['tmp_name'], $fileDestination);
+        move_uploaded_file($_FILES['profile_picture']['tmp_name'], $fileDestination);
 
         return $logoNameNew;
     }
@@ -439,7 +439,7 @@ class AdminModel extends Admin_Model
                 $this->errors['logo'] = "You cannot upload files of this type!";
             } else {
                 $editCharity = new AdminModel();
-                $this->data['picture'] = $editCharity->updateLogo($logo);
+                $this->data['profile_pic'] = $editCharity->updateLogo($logo);
             }
         }
 
@@ -475,14 +475,7 @@ class AdminModel extends Admin_Model
             $this->data['username'] = $DATA['username'];
         }
 
-        if (!empty($DATA['password']) || !empty($DATA['confirm_password'])) {
-            if ($DATA['password'] != $DATA['confirm_password']) {
-                $this->errors['password'] = "Passwords does not match";
-            } else {
-                $this->data['password'] = $DATA['password'];
-                
-            }
-        }
+        
 
         if (count($this->errors) == 0) {
             return true;
