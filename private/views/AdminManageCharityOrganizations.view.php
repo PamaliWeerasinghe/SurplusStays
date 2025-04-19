@@ -157,3 +157,4 @@
   
     <script src="<?=ROOT?>/assets/js/deletePopup.js"></script>
     <script src="<?=ROOT?>/assets/js/adminManageCharity.js"></script>
+    <script src="<?= ROOT ?>/assets/js/PagerAndSorter.js"></script>

@@ -105,7 +105,7 @@
 
             </div>
         </div>
-
+        <script src="<?= ROOT ?>/assets/js/PagerAndSorter.js"></script>
 </body>
 
 </html>

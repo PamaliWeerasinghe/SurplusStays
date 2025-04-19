@@ -38,21 +38,22 @@ class Sorter {
 
     public function renderSorter($columns) {
         $html = '<div class="order"><div>';
-        $html .= '<select class="filter" onchange="window.location.href=this.value">';
+        // Add onchange handler that saves scroll position
+        $html .= '<select class="filter" onchange="saveScrollAndSort(this)">';
         $html .= '<option value="">Sort By</option>';
-
+    
         foreach ($columns as $key => $label) {
             // ASC Option
             $ascUrl = $this->baseUrl . (str_contains($this->baseUrl, '?') ? '&' : '?') . "sort=$key&order=ASC";
             $selectedAsc = ($this->currentSort === $key && $this->currentOrder === "ASC") ? "selected" : "";
             $html .= "<option value='$ascUrl' $selectedAsc>$label ASC</option>";
-
+    
             // DESC Option
             $descUrl = $this->baseUrl . (str_contains($this->baseUrl, '?') ? '&' : '?') . "sort=$key&order=DESC";
             $selectedDesc = ($this->currentSort === $key && $this->currentOrder === "DESC") ? "selected" : "";
             $html .= "<option value='$descUrl' $selectedDesc>$label DESC</option>";
         }
-
+    
         $html .= '</select></div></div>';
         return $html;
     }

@@ -173,4 +173,5 @@
         <?php echo $this->view('includes/footer')?>
         <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>
         <script src="<?= ROOT ?>/assets/js/adminCountdown.js"></script>
+        <script src="<?= ROOT ?>/assets/js/PagerAndSorter.js"></script>
         <!-- <script src="<?=ROOT?>/assets/js/TrackExpiryPopup.js"></script> -->

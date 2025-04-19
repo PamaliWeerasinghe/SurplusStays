@@ -139,5 +139,5 @@
         <?php echo $this->view('includes/footer') ?>
     </div>
     <script src="<?= ROOT ?>/assets/js/adminViewCustomerDetails.js"></script>
-
+    <script src="<?= ROOT ?>/assets/js/PagerAndSorter.js"></script>
     <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>

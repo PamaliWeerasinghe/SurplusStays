@@ -277,7 +277,11 @@
         </div>
         <?php echo $this->view('includes/footer') ?>
     </div>
+
+
     <script src="<?= ROOT ?>/assets/js/adminCountdown.js"></script>
+    <script src="<?= ROOT ?>/assets/js/PagerAndSorter.js"></script>
+    
 </body>
 
 </html>
