@@ -1,7 +1,13 @@
 <?php
 class Products extends Model
 {
-    protected $table = "products";
+    protected $db;
+    public function __construct()
+    {
+        $this->db=Database::getInstance();
+    }
+
+    public $table = "products";
     public function validate($DATA)
     {
         // Reset errors
@@ -10,8 +16,12 @@ class Products extends Model
         if (empty($DATA['product-name'])) {
             $this->errors['product'] = "Product name is required";
         }
-        $categories = ['Fast foods', 'Snack', 'Drinks', 'Other'];
-        if (empty($DATA['category']) || !in_array($DATA['category'], $categories)) {
+
+        if($this->where('name',$DATA['product-name'],'products')) {
+            $this->errors['name'] = "Product name already in use ";
+        }
+
+        if (empty($DATA['category'])) {
             $this->errors['category'] = "Category cannot be empty";
         }
 
@@ -27,7 +37,7 @@ class Products extends Model
         }
 
         if (empty($DATA['pictures'])) {
-            $this->errors['pictures'] = "At least one event picture is required.";
+            $this->errors['pictures'] = "At least one product picture is required.";
         }
 
         if (empty($DATA['expiration'])) {
@@ -50,28 +60,42 @@ class Products extends Model
         return empty($this->errors);
     }
 
-    public function countRows($pro_id)
+
+
+    public function countProducts($business_id)
     {
-        $query = "SELECT COUNT(*) as count FROM " . $this->table . " WHERE business_id = :pro_id";
-        $params = [':pro_id' => $pro_id];
-        $result = $this->query($query, $params); // Pass parameters for prepared statement
-        return $result[0]->count ?? 0; // Ensure query() returns array or object
+        $query = "SELECT COUNT(*) as count FROM $this->table WHERE business_id = :business_id";
+        $result = $this->db->query($query, ['business_id' => $business_id]);
+        return $result[0]->count ?? 0;
     }
+
 
     public function getFilteredProducts($business_id, $filter = null)
     {
-        $query = "SELECT * FROM " . $this->table . " WHERE business_id = :business_id";
+        $orderBy = "ORDER BY id DESC"; //default -newly added item first
 
-        // Add filtering criteria
-        if ($filter === 'expiration_date') {
-            $query .= " ORDER BY expiration_date_time ASC";
-        } elseif ($filter === 'quantity') {
-            $query .= " ORDER BY qty DESC";
-        } elseif ($filter === 'price') {
-            $query .= " ORDER BY price_per_unit ASC";
+        if ($filter === 'Price') {
+            $orderBy = "ORDER BY price_per_unit ASC";
+        } else if ($filter === 'Quantity') {
+            $orderBy = "ORDER BY qty ASC";
+        } else if ($filter === 'Expiration') {
+            $orderBy = "ORDER BY expiration_date_time ASC";
         }
 
-        $params = [':business_id' => $business_id];
-        return $this->query($query, $params);
+        $query = "SELECT * FROM $this->table WHERE business_id = :business_id $orderBy";
+        return $this->db->query($query, ['business_id' => $business_id]);
+    }
+
+
+    public function gettopsalesproducts($business_id)
+    {
+        $query = "SELECT p.id,p.name, p.price_per_unit, p.pictures, p.status_id ,COUNT(*) AS count 
+                FROM order_items oi
+                JOIN products p ON p.id = oi.products_id
+                WHERE p.business_id = :business_id
+                GROUP BY oi.products_id
+                ORDER BY count DESC";
+
+        return $this->db->query($query, ['business_id' => $business_id]);
     }
 }

@@ -2,7 +2,7 @@
 
 class Customer extends Model
 {
-    protected $table = "customer";
+    public $table = "customer";
 
     public function validate($DATA)
     {
@@ -19,7 +19,7 @@ class Customer extends Model
             $this->errors['email'] = "A valid email is required";
         }
         //check if email exists
-        if($this->where('email',$DATA['email'])) {
+        if($this->where('email',$DATA['email'],'customer')) {
             $this->errors['email'] = "Email is already in use";
         }
         if(empty($DATA['phone']) || !is_numeric($DATA['phone'])) {

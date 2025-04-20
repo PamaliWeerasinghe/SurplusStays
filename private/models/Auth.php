@@ -100,5 +100,4 @@ class Auth
 
         return 'default.jpg'; // fallback image
     }
-
 }

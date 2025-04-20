@@ -10,42 +10,38 @@
 </head>
 
 <body>
-    <!-- Navbar -->
     <?php echo $this->view('includes/businessNavbar') ?>
-
     <div class="main-div">
         <div class="sub-div-1">
-            <!-- Side Panel -->
             <?php echo $this->view('includes/businessSidePanel') ?>
-
             <div class="dashboard">
                 <div class="summary">
-                    <div class="notifications-type2">
-                        <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." />
-                            <img src="<?= ASSETS ?>/images/search.png" class="bell2" />
-                        </div>
-                        <img src="<?= ASSETS ?>/images/Bell.png" class="bell" />
-                    </div>
-                    <div class="add-buyer">
-                        <button class="add-complain-btn" onclick="window.location.href='<?= ROOT ?>/business/addproduct'">+ Add Product</button>
+                    <div class="add-product">
+                        <button class="add-product-button" onclick="window.location.href='<?= ROOT ?>/business/addproduct'">+ Add Product</button>
                     </div>
                 </div>
 
-                <div class="Business-complaints-order-status">
-                    <div class="order">
+                <div class="main-box">
+                    <div class="header">
                         <label>Products</label>
-                        <form method="GET" action="<?= ROOT ?>/business/myproducts">
-                            <select name="filter" onchange="this.form.submit()">
-                                <option value="">Filter the products</option>
-                                <option value="expiration_date" <?= isset($_GET['filter']) && $_GET['filter'] == 'expiration_date' ? 'selected' : '' ?>>By Expiration Date</option>
-                                <option value="quantity" <?= isset($_GET['filter']) && $_GET['filter'] == 'quantity' ? 'selected' : '' ?>>By Quantity</option>
-                                <option value="price" <?= isset($_GET['filter']) && $_GET['filter'] == 'price' ? 'selected' : '' ?>>By Price</option>
-                            </select>
-                        </form>
+
+                        <div class="search-and-filter">
+                            <div>
+                                <input type="text" id="productSearch" class="search" placeholder="Search by Product Name..." onkeyup="searchByName()" />
+                            </div>
+
+                            <form method="GET" action="<?= ROOT ?>/business/myproducts">
+                                <select name="filter" onchange="this.form.submit()">
+                                    <option value="">Filter the products</option>
+                                    <option value="Expiration" <?= ($_GET['filter'] ?? '') === 'Expiration' ? 'selected' : '' ?>>By Expiration Date</option>
+                                    <option value="Quantity" <?= ($_GET['filter'] ?? '') === 'Quantity' ? 'selected' : '' ?>>By Quantity</option>
+                                    <option value="Price" <?= ($_GET['filter'] ?? '') === 'Price' ? 'selected' : '' ?>>By Price</option>
+                                </select>
+                            </form>
+                        </div>
                     </div>
 
-                    <table class="order-table">
+                    <table class="main-table">
                         <thead>
                             <tr>
                                 <th>Product</th>
@@ -59,32 +55,36 @@
                             <?php if ($rows): ?>
                                 <?php foreach ($rows as $row): ?>
                                     <?php
+                                    if($row->status_id==1):
                                     $productPictures = explode(',', $row->pictures); // Get images
                                     $productImage = isset($productPictures[0]) ? $productPictures[0] : 'product_placeholder.png';
                                     ?>
-                                    <tr onclick="window.location.href='<?= ROOT ?>/business/viewProduct/<?= $row->id ?>'">
+                                    <tr class="product-row" onclick="window.location.href='<?= ROOT ?>/business/viewProduct/<?= $row->id ?>'">
                                         <td>
-                                            <div class="event-name">
-                                                <img src="<?= ROOT ?><?= htmlspecialchars($productImage) ?>" alt="product" class="event-img">
-                                                <h3><?= mb_strimwidth($row->name, 0, 20, '...') ?></h3>
+                                            <div class="product-wrap">
+                                                <img src="<?= ROOT ?><?= htmlspecialchars($productImage) ?>" alt="product">
+                                                <h3 class="product-name"><?= mb_strimwidth($row->name, 0, 15, '...') ?></h3>
                                             </div>
                                         </td>
                                         <td><?= $row->qty ?></td>
-                                        <td><?= $row->price_per_unit ?></td>
-                                        <td><?= $row->expiration_date_time ?></td>
+                                        <td>Rs <?= $row->price_per_unit ?></td>
+                                        <td><?= $row->expiration_dateTime ?></td>
                                         <td>
-                                            <div style="display: inline-block; margin-right: 10px;">
-                                                <a href="<?= ROOT ?>/business/editproduct/<?= $row->id ?>">
-                                                    <button class="completed">Edit</button>
-                                                </a>
-                                            </div>
-                                            <div style="display: inline-block;">
-                                                <form id="deleteForm<?= $row->id ?>" action="<?= ROOT ?>/business/deleteproduct/<?= $row->id ?>" method="post">
-                                                    <button type="button" class="take-action" data-form-id="deleteForm<?= $row->id ?>">Delete</button>
-                                                </form>
+                                            <div class="inline">
+                                                <div>
+                                                    <a href="<?= ROOT ?>/business/editproduct/<?= $row->id ?>">
+                                                        <button class="editbutton">Edit</button>
+                                                    </a>
+                                                </div>
+                                                <div>
+                                                    <form id="deleteForm<?= $row->id ?>" action="<?= ROOT ?>/business/deleteproduct/<?= $row->id ?>" method="post">
+                                                        <button class="deletebutton" type="button" data-form-id="deleteForm<?= $row->id ?>">Delete</button>
+                                                    </form>
+                                                </div>
                                             </div>
                                         </td>
                                     </tr>
+                                    <?php endif; ?>
                                 <?php endforeach; ?>
                             <?php else: ?>
                                 <tr>
@@ -95,52 +95,99 @@
                             <?php endif; ?>
                         </tbody>
                     </table>
+                    <div class="pagination">
+                        <img src="<?= ASSETS ?>/images/back.png" id="PrevBtn" />
+                        <img src="<?= ASSETS ?>/images/next.png" id="NextBtn" />
+                    </div>
                 </div>
             </div>
         </div>
-
-        <!-- Footer -->
         <?php echo $this->view('includes/footer') ?>
     </div>
 
-    <!-- Modal for Delete Confirmation -->
-    <div id="deleteModal" class="modal">
-        <div class="modal-content">
-            <h3>Confirm Deletion</h3>
+    <!-- Simple Delete Confirmation Popup -->
+    <div id="deletePopup" class="popup">
+        <div class="popup-content">
             <p>Are you sure you want to delete this product?</p>
-            <div class="modal-buttons">
-                <button id="confirmDelete" class="modal-button confirm">Yes, Delete</button>
-                <button id="cancelDelete" class="modal-button cancel">Cancel</button>
+            <div class="button-container">
+                <button class="btn-ok" id="confirmDelete">Yes, Delete</button>
+                <button class="btn-cancel" id="cancelDelete">Cancel</button>
             </div>
         </div>
     </div>
 
     <script>
+        /* deleteform popup */
         let deleteForm = null;
 
-        document.querySelectorAll('.take-action').forEach(button => {
+        document.querySelectorAll('.deletebutton').forEach(button => {
             button.addEventListener('click', event => {
-                event.preventDefault(); // Prevent form submission
-                deleteForm = document.getElementById(button.dataset.formId); // Store form reference
-                document.getElementById('deleteModal').style.display = 'block'; // Show modal
+                event.preventDefault();
+                deleteForm = document.getElementById(button.dataset.formId);
+                document.getElementById('deletePopup').style.display = 'block';
             });
         });
 
         document.getElementById('confirmDelete').addEventListener('click', () => {
-            if (deleteForm) deleteForm.submit(); // Submit the form
+            if (deleteForm) deleteForm.submit();
         });
 
         document.getElementById('cancelDelete').addEventListener('click', () => {
-            document.getElementById('deleteModal').style.display = 'none'; // Hide modal
+            document.getElementById('deletePopup').style.display = 'none';
         });
 
-        //stop the viewProduct page when clicking edit and delete
-        document.querySelectorAll('.completed, .take-action').forEach(button => {
+        /* stop the viewProduct page when clicking edit and delete */
+
+        document.querySelectorAll('.editbutton, .deletebutton').forEach(button => {
             button.addEventListener('click', event => {
                 event.stopPropagation();
             });
         });
-    </script>
-</body>
 
+        /* pagination */
+
+        const rowsPerPage = 10;
+        let currentPage = 1;
+
+        const rows = Array.from(document.querySelectorAll('.product-row'));
+        const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+        function showPage(page) {
+            rows.forEach((row, index) => {
+                row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) ? '' : 'none';
+            });
+        }
+
+        // Initial display
+        showPage(currentPage);
+
+        // Event listeners
+        document.getElementById('NextBtn').addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        });
+
+        document.getElementById('PrevBtn').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
+
+        /* search by name */
+
+        function searchByName() {
+            let input = document.getElementById("productSearch").value.toUpperCase();
+            let rows = document.querySelectorAll(".product-row");
+
+            rows.forEach(row => {
+                let productName = row.querySelector(".product-name").textContent.toUpperCase();
+                row.style.display = productName.includes(input) ? "" : "none";
+            });
+        }
+    </script>
+
+</body>
 </html>

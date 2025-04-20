@@ -542,6 +542,7 @@ function getTopDonatingBusinesses()
             'errors' => $errors,
         ]);
     }
+
     
     function deleteEvent($id)
     {

@@ -15,12 +15,10 @@
         <div class="sub-div-1">
             <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
-
                 <div class="summary">
-                    <div class="notifications"><img src="<?= ASSETS ?>/images/Bell.png" /></div>
                 </div>
 
-                <div class="inner-main">
+                <div class="main-box">
                     <div class="header">
                         <h2>Add New Product</h2>
                     </div>
@@ -46,10 +44,16 @@
                             <label for="category">Category :</label>
                             <select name="category">
                                 <option value="" disabled <?= get_var('category') === '' ? 'selected' : '' ?>>Select Category</option>
-                                <option value="Fast foods" <?= get_var('category') === 'Fast foods' ? 'selected' : '' ?>>Fast foods</option>
-                                <option value="Snack" <?= get_var('category') === 'Snack' ? 'selected' : '' ?>>Snack</option>
-                                <option value="Drinks" <?= get_var('category') === 'Drinks' ? 'selected' : '' ?>>Drinks</option>
+                                <option value="Diary" <?= get_var('category') === 'Diary' ? 'selected' : '' ?>>Diary</option>
+                                <option value="Bakery" <?= get_var('category') === 'Bakery' ? 'selected' : '' ?>>Bakery</option>
+                                <option value="Desserts" <?= get_var('category') === 'Desserts' ? 'selected' : '' ?>>Desserts </option>
+                                <option value="Frozen foods" <?= get_var('category') === 'Frozen foods' ? 'selected' : '' ?>>Frozen foods</option>
+                                <option value="Beverages" <?= get_var('category') === 'Beverages' ? 'selected' : '' ?>>Beverages</option>
+                                <option value="Snacks" <?= get_var('category') === 'Snacks' ? 'selected' : '' ?>>Snacks</option>
+                                <option value="Prepared Foods" <?= get_var('category') === 'Prepared Foods' ? 'selected' : '' ?>>Prepared Foods</option>
+                                <option value="Fruits & Vegetables" <?= get_var('category') === 'Fruits & Vegetables' ? 'selected' : '' ?>>Fruits & Vegetables</option>
                                 <option value="Other" <?= get_var('category') === 'Other' ? 'selected' : '' ?>>Other</option>
+                                
                             </select>
                         </div>
 
@@ -79,21 +83,21 @@
                                 <!-- First Image Upload -->
                                 <label for="upload-1">
                                     <img src="<?= isset($uploadedPictures[0]) ? ROOT . $uploadedPictures[0] : ASSETS . '/icons/uploadArea.png' ?>"
-                                         alt="Upload Image" class="upload-icon" id="profilePreview-1">
+                                        alt="Upload Image" class="upload-icon" id="profilePreview-1">
                                 </label>
                                 <input type="file" id="upload-1" name="upload-1" style="display: none;">
 
                                 <!-- Second Image Upload -->
                                 <label for="upload-2">
                                     <img src="<?= isset($uploadedPictures[1]) ? ROOT . $uploadedPictures[1] : ASSETS . '/icons/uploadArea.png' ?>"
-                                         alt="Upload Image" class="upload-icon" id="profilePreview-2">
+                                        alt="Upload Image" class="upload-icon" id="profilePreview-2">
                                 </label>
                                 <input type="file" id="upload-2" name="upload-2" style="display: none;">
 
                                 <!-- Third Image Upload -->
                                 <label for="upload-3">
                                     <img src="<?= isset($uploadedPictures[2]) ? ROOT . $uploadedPictures[2] : ASSETS . '/icons/uploadArea.png' ?>"
-                                         alt="Upload Image" class="upload-icon" id="profilePreview-3">
+                                        alt="Upload Image" class="upload-icon" id="profilePreview-3">
                                 </label>
                                 <input type="file" id="upload-3" name="upload-3" style="display: none;">
                             </div>
@@ -104,8 +108,8 @@
                         <?php endforeach; ?>
 
                         <div class="input-group">
-                            <label>Add Discount Price : <span>(Optional)</span></label>
-                            <input type="number" value="<?= get_var('discount') ?>" placeholder="Eg: Rs 12.50" min="0" step="0.01" name="discount">
+                            <label>Add Discount Percentage :<small>(Optional)<small></label>
+                            <input type="number" value="<?= get_var('discount') ?>" placeholder="Enter discount percentage (20 for 20%)" min="0" step="0.01" max="100" name="discount">
                         </div>
 
                         <div class="button-group">
@@ -124,11 +128,11 @@
         <!-- JavaScript to Show Preview -->
         <script>
             // First Image Preview
-            document.getElementById('upload-1').addEventListener('change', function (event) {
+            document.getElementById('upload-1').addEventListener('change', function(event) {
                 const file = event.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = function (e) {
+                    reader.onload = function(e) {
                         document.getElementById('profilePreview-1').src = e.target.result;
                     };
                     reader.readAsDataURL(file);
@@ -136,11 +140,11 @@
             });
 
             // Second Image Preview
-            document.getElementById('upload-2').addEventListener('change', function (event) {
+            document.getElementById('upload-2').addEventListener('change', function(event) {
                 const file = event.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = function (e) {
+                    reader.onload = function(e) {
                         document.getElementById('profilePreview-2').src = e.target.result;
                     };
                     reader.readAsDataURL(file);
@@ -148,16 +152,35 @@
             });
 
             // Third Image Preview
-            document.getElementById('upload-3').addEventListener('change', function (event) {
+            document.getElementById('upload-3').addEventListener('change', function(event) {
                 const file = event.target.files[0];
                 if (file) {
                     const reader = new FileReader();
-                    reader.onload = function (e) {
+                    reader.onload = function(e) {
                         document.getElementById('profilePreview-3').src = e.target.result;
                     };
                     reader.readAsDataURL(file);
                 }
             });
+
+        /* handle image uploaders when  clear-all button is clicked */ 
+
+        // Handle "Clear All" manually for custom elements
+        document.querySelector('form').addEventListener('reset', function () {
+        // Reset image previews to default upload icons
+        document.getElementById('profilePreview-1').src = "<?= ASSETS ?>/icons/uploadArea.png";
+        document.getElementById('profilePreview-2').src = "<?= ASSETS ?>/icons/uploadArea.png";
+        document.getElementById('profilePreview-3').src = "<?= ASSETS ?>/icons/uploadArea.png";
+
+        // Clear file input fields
+        document.getElementById('upload-1').value = "";
+        document.getElementById('upload-2').value = "";
+        document.getElementById('upload-3').value = "";
+
+        });
+
         </script>
+
 </body>
+
 </html>

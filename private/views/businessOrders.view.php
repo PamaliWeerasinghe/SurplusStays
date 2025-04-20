@@ -7,7 +7,6 @@
     <title><?php echo SITENAME ?></title>
     <link rel="stylesheet" href="<?= STYLES ?>/businessorders.css" />
     <link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
-    <link rel="stylesheet" href="<?= STYLES ?>/business.css">
 </head>
 
 <body>
@@ -17,84 +16,35 @@
             <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
                 <div class="summary">
-                    <div class="notifications-type2">
-                        <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." />
-                            <img src="<?= ASSETS ?>/images/search.png" class="bell2" />
+                    <!-- Order Status Cards -->
+                    <div class="order-status-cards">
+                        <div class="order-card all" onclick="filterByStatus('all')">
+                            <h3>All</h3>
                         </div>
-
-                        <img src="<?= ASSETS ?>/images/Bell.png" class="bell" />
-                    </div>
-                    <div class="summary-blocks">
-                        <div class="summaries">
-                            <div class="summaries-1">
-                                <label>Total Revenue</label>
-                            </div>
-                            <div class="summaries-2">
-                                <label>Rs. 50000</label>
-                            </div>
-
+                        <div class="order-card not-collected" onclick="filterByStatus('not-collected')">
+                            <h3>Not Collected</h3>
 
                         </div>
-                        <div class="summaries">
-                            <div class="summaries-1">
-                                <label>Total Customers</label>
-                            </div>
-                            <div class="summaries-2">
-                                <label>320</label>
-                            </div>
-
+                        <div class="order-card ongoing" onclick="filterByStatus('ongoing')">
+                            <h3>Ongoing</h3>
 
                         </div>
-                        <div class="summaries">
-                            <div class="summaries-1">
-                                <label>Total Orders</label>
-                            </div>
-                            <div class="summaries-2">
-                                <label>444</label>
-                            </div>
-
-
-                        </div>
-                        <div class="summaries">
-                            <div class="summaries-1">
-                                <label>Total Transactions</label>
-                            </div>
-                            <div class="summaries-2">
-                                <label>Rs. 14000</label>
-                            </div>
-
-
+                        <div class="order-card completed" onclick="filterByStatus('completed')">
+                            <h3>Completed</h3>
                         </div>
                     </div>
-
                 </div>
-                <div class="order-status">
-                    <div class="order">
+
+                <div class="main-box">
+                    <div class="header">
                         <label>Orders</label>
-                        <select>
-                            <option>All Time</option>
-                        </select>
-                    </div>
-
-                    <div class="order-nav">
-                        <div class="view-slots">
-                            <div class="slot1">
-                                <label>All</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Ongoing</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Completed</label>
-
-                            </div>
-                            <div class="slot2">
-                                <label>Cancelled</label>
-                            </div>
+                        <div>
+                            <input class="search" type="text" id="orderSearch"  placeholder="Search by Order ID..." onkeyup="filterOrders()" />
                         </div>
                     </div>
-                    <table class="order-table">
+
+                    <!-- Orders Table -->
+                    <table class="main-table">
                         <thead>
                             <tr>
                                 <th>OrderID</th>
@@ -106,128 +56,98 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Sunil Gamachcchi</td>
-                                <td>Full Bread</td>
-                                <td><button class="take-action">Not Collected</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Chamindu Sanjana</td>
-                                <td>Popcorn</td>
-                                <td><button class="take-action">Not Collected</button></td>
-                                <td style="text-align: center;">Rs.55 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Desahit Gallge</td>
-                                <td>Corn</td>
-                                <td><button class="take-action">Not Collected</button></td>
-                                <td style="text-align: center;">Rs.75<br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Suriya Kumar</td>
-                                <td>Rice</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Wanindu Hasarnga</td>
-                                <td>Pasta</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Suriya Kumar</td>
-                                <td>Rice</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Wanindu Hasarnga</td>
-                                <td>Pasta</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Suriya Kumar</td>
-                                <td>Rice</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Wanindu Hasarnga</td>
-                                <td>Pasta</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Suriya Kumar</td>
-                                <td>Rice</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Wanindu Hasarnga</td>
-                                <td>Pasta</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Suriya Kumar</td>
-                                <td>Rice</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 42 <br /><label>View Full Details</label></td>
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024 </td>
-                                <td>Wanindu Hasarnga</td>
-                                <td>Pasta</td>
-                                <td><button class="completed">Completed</button></td>
-                                <td style="text-align: center;">Rs. 64.50 <br /><label>View Full Details</label></td>
-                            </tr>
-
-
+                            <?php if (!empty($orders)) : ?>
+                                <?php foreach ($orders as $order) : ?>
+                                    <tr class="order-row"
+                                        data-status="<?= strtolower(str_replace(' ', '-', $order->status)) ?>"
+                                        onclick="window.location.href='<?= ROOT ?>/business/viewOrder/<?= $order->id ?>'">
+                                        <td class="order-id">#<?= htmlspecialchars($order->id) ?></td>
+                                        <td><?= htmlspecialchars($order->dateTime) ?></td>
+                                        <td><?= htmlspecialchars($order->Customer) ?></td>
+                                        <td><?= htmlspecialchars($order->Products) ?></td>
+                                        <td>
+                                            <span class="order-status <?= strtolower(str_replace(' ', '-', $order->status)) ?>">
+                                                <?= htmlspecialchars($order->status) ?>
+                                            </span>
+                                        </td>
+                                        <td>Rs. <?= htmlspecialchars($order->total) ?> <br />View Full Details</td>
+                                    </tr>
+                                <?php endforeach; ?>
+                            <?php else : ?>
+                                <tr>
+                                    <td colspan="6" >No Orders Found</td>
+                                </tr>
+                            <?php endif; ?>
                         </tbody>
                     </table>
-                    <div class="arrow-div">
-                        <div class="arrows">
-                            <img src="<?= ASSETS ?>/images/Arrow right-circle.png" />
-                            <img src="<?= ASSETS ?>/images/Arrow right-circle-bold.png" />
-
-                        </div>
+                    <div class="pagination">
+                        <img src="<?= ASSETS ?>/images/back.png" id="PrevBtn" />
+                        <img src="<?= ASSETS ?>/images/next.png" id="NextBtn" />
                     </div>
-
                 </div>
-
 
             </div>
         </div>
         <?php echo $this->view('includes/footer') ?>
-</body>
+    </div>
 
+    <!-- JavaScript to Handle Filtering -->
+    <script>
+        /* pagination */
+
+        const rowsPerPage = 10;
+        let currentPage = 1;
+
+        const rows = Array.from(document.querySelectorAll('.order-row'));
+        const totalPages = Math.ceil(rows.length / rowsPerPage);
+
+        function showPage(page) {
+            rows.forEach((row, index) => {
+                row.style.display = (index >= (page - 1) * rowsPerPage && index < page * rowsPerPage) ? '' : 'none';
+            });
+        }
+
+        // Initial display
+        showPage(currentPage);
+
+        // Event listeners
+        document.getElementById('NextBtn').addEventListener('click', () => {
+            if (currentPage < totalPages) {
+                currentPage++;
+                showPage(currentPage);
+            }
+        });
+
+        document.getElementById('PrevBtn').addEventListener('click', () => {
+            if (currentPage > 1) {
+                currentPage--;
+                showPage(currentPage);
+            }
+        });
+
+        /* search orders by ID */
+
+        function filterOrders() {
+            let input = document.getElementById("orderSearch").value.toUpperCase();
+            let rows = document.querySelectorAll(".order-row");
+
+            rows.forEach(row => {
+                let orderId = row.querySelector(".order-id").textContent.toUpperCase();
+                row.style.display = orderId.includes(input) ? "" : "none";
+            });
+        }
+
+        /* filter status by status */
+
+        function filterByStatus(status) {
+            let rows = document.querySelectorAll(".order-row");
+
+            rows.forEach(row => {
+                let rowStatus = row.getAttribute("data-status");
+                row.style.display = (status === "all" || rowStatus === status) ? "" : "none";
+            });
+        }
+    </script>
+
+</body>
 </html>

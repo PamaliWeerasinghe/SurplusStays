@@ -2,7 +2,12 @@
 
 class Complaint extends Model
 {
-    protected $table = "complaints";
+    protected $db;
+    public function __construct()
+    {
+        $this->db=Database::getInstance();
+    }
+    public $table = "complaints";
 
     public function validate($DATA)
     {
@@ -35,7 +40,7 @@ class Complaint extends Model
     public function countRows($org_id) {
         $query = "SELECT COUNT(*) as count FROM " . $this->table . " WHERE customer_id = :cust_id";
         $params = [':cust_id' => $org_id];
-        $result = $this->query($query, $params); // Pass parameters for prepared statement
+        $result = $this->db->query($query, $params); // Pass parameters for prepared statement
         return $result[0]->count ?? 0; // Ensure query() returns array or object
     }
     

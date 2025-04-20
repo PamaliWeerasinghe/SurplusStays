@@ -3,7 +3,7 @@
 define('APPROOT', dirname(dirname(__FILE__)));
 
 //URL ROOT
-define('URLROOT', 'http://localhost:8080/SurplusStays');
+define('URLROOT', 'http://localhost/SurplusStays');
 
 //WEBSITE
 define('SITENAME', 'surplusStays');
