@@ -1,5 +1,6 @@
 <?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
 <?php require APPROOT . '/views/adminReplyToCustomer.view.php' ?>
+<?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>  
 <link rel="stylesheet" href="<?= STYLES ?>/adminSidePanel.css" />
 <link rel="stylesheet" href="<?= STYLES ?>/admin.css">
 <link rel="stylesheet" href="<?= STYLES ?>/adminSeeComplains.css">
@@ -10,15 +11,17 @@
 <body>
     <?php echo $this->view('includes/navbar') ?>
    
-    <div class="main-div">
-        <div class="sub-div-1">
+    <div class="main-div" >
+        <div class="sub-div-1" >
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary">
+                    
+                </div>
                     <!-- <div class="complain-error-div"> -->
                         <?php if (!empty($errors)) : ?>
                             <div class="error-alert-popup">
-                                <div class="alert-header1">
+                                <div class="alert-multialertheader">
                                     <span class="close-btn" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
                                     <span class="alert-title">Error</span>
 
@@ -31,7 +34,22 @@
                            
                             </div>
                         <?php endif; ?>
+                        <?php if (!empty($successfull)):?>
+                    <div class="successfull-alert-popup">
+                                <div class="alert-header2">
+                                <span>
+                                    <?= $successfull ?>
+                                    </span>
+                                    <span class="close-btn" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+                                    <!-- <span class="alert-title">Successfull</span> -->
 
+                                   
+                                        
+                                         
+                                </div>
+                           
+                    </div>
+                <?php endif; ?>
                     <!-- </div> -->
 
 
@@ -54,7 +72,7 @@
                                 <div class="main-img-details">
 
                                     <div class="see-product-details">
-                                        <h2>Shop Name : </h2><label id="shopName"></label>
+                                        <h2>Purchased From : </h2><label id="shopName"></label>
                                         <input type="hidden" id="shopID" name="shopID" />
                                         <div style="width: 100%;">
                                             <h2>Select Item</h2>
@@ -75,43 +93,40 @@
                                 </div>
                                 <div class="sub-img">
 
-                                    <div class="img-container">
-                                        <div class="upload-wrapper">
-                                            <label for="upload-1">
-                                                <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
-                                            </label>
-                                            <input type="file" id="upload-1" name="complaintImg1" style="display: none;" accept="image/*" value='<?= get_file('complaintImg1') ?>'>
-                                        </div>
-                                        <div class="upload-wrapper">
-                                            <label for="upload-2">
-                                                <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-2">
-                                            </label>
-                                            <input type="file" id="upload-2" name="complaintImg2" style="display: none;" accept="image/*" value='<?= get_file('complaintImg2') ?>'>
-                                        </div>
-                                        <div class="upload-wrapper">
-                                            <label for="upload-2">
-                                                <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-3">
-                                            </label>
-                                            <input type="file" id="upload-3" name="complaintImg3" style="display: none;" accept="image/*" value='<?= get_file('complaintImg3') ?>'>
-                                        </div>
-                                        <div class="upload-wrapper">
-                                            <label for="upload-2">
-                                                <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-4">
-                                            </label>
-                                            <input type="file" id="upload-4" name="complaintImg4" style="display: none;" accept="image/*" value='<?= get_file('complaintImg4') ?>'>
-                                        </div>
-                                        <div class="upload-wrapper">
-                                            <label for="upload-2">
-                                                <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-5">
-                                            </label>
-                                            <input type="file" id="upload-5" name="complaintImg5" style="display: none;" accept="image/*" value='<?= get_file('complaintImg5') ?>'>
-                                        </div>
+                                <div class="img-container">
+  <div class="upload-wrapper">
+    <label for="upload-1">
+      <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
+    </label>
+    <input type="file" id="upload-1" name="complaintImg1" style="display: none;" accept="image/*">
+  </div>
+  <div class="upload-wrapper">
+    <label for="upload-2">
+      <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-2">
+    </label>
+    <input type="file" id="upload-2" name="complaintImg2" style="display: none;" accept="image/*">
+  </div>
+  <div class="upload-wrapper">
+    <label for="upload-3">
+      <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-3">
+    </label>
+    <input type="file" id="upload-3" name="complaintImg3" style="display: none;" accept="image/*">
+  </div>
+  <div class="upload-wrapper">
+    <label for="upload-4">
+      <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-4">
+    </label>
+    <input type="file" id="upload-4" name="complaintImg4" style="display: none;" accept="image/*">
+  </div>
+  <div class="upload-wrapper">
+    <label for="upload-5">
+      <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-5">
+    </label>
+    <input type="file" id="upload-5" name="complaintImg5" style="display: none;" accept="image/*">
+  </div>
+</div>
 
-
-
-                                    </div>
-
-                                    <!-- <img src="<?= ASSETS ?><?= $complaint_imgs[2]->path ?>" id="complaintImg<?= $complaint_imgs[2]->id ?>"/> -->
+                                
                                 </div>
                                 <div class="business-response-area-btn">
                                     <button class="complain-btn1" type="submit">Complain</button>
@@ -120,11 +135,13 @@
                         </form>
 
                     </div>
-                </div>
+                    
             </div>
         </div>
-        <?php echo $this->view('includes/footer') ?>
-        <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
+        
+
+    </div>   
+    <?php echo $this->view('includes/footer') ?>  
         <script>
             // Auto-hide after 5 seconds
             document.addEventListener('DOMContentLoaded', function() {

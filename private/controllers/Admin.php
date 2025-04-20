@@ -411,14 +411,17 @@ class Admin extends Controller
                     $complaint_id = $admin->id;
                     if (!Mail::sendCustomerComplaint($complaint_id, $currentDateTime, 'pamaliweerasinghe@gmail.com')) {
                         error_log("Could't send the email");
+                        $_SESSION['alert_message']="Check your email";
+                        $_SESSION['alert_type']="success";
+                        $this->redirect('admin/makeComplaints');
                     }
                 }
 
                 $this->view('customerMakeComplaint', [
                     "orders" => $orders,
                     "orderDetails" => $orderDetails,
-                    "errors" => $errors
-
+                    "errors" => $errors,
+                    'successfull'=>$_SESSION['alert_message'],
                 ]);
             }
         } else {
@@ -1032,7 +1035,7 @@ class Admin extends Controller
     //Default page
     function index()
     {
-
+        $this->view('new_customerMakeComplaint');
         
     }
    
