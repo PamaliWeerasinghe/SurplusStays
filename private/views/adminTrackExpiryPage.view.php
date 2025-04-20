@@ -133,6 +133,7 @@
                                         <form method="post">
                                             <td><button class="take-action" type="submit">Notify</button></td>
                                             <input type="hidden" value="<?=$row->product_id?>" name="product_id"/>
+                                            <input type="hidden" value="<?=$row->email?>" name="email"/>
                                         </form>
                                        
                                         <?php

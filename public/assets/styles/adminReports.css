@@ -1,0 +1,58 @@
+.white-bar-report{
+    width: 98%;
+    height: 35vh;
+    /* margin-top: 4%; */
+    background-color: white;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: row;
+    margin-top: 2%;
+    margin-bottom: 2%;
+    margin-left: 1%;
+    box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+}
+.white-bar-report:hover{
+    transform: scale(1.01);
+  box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
+  cursor: pointer;
+}
+.report-img{
+    display: flex;
+    flex: 2;
+    justify-content: center;
+    align-items: center;
+}
+.report-img img{
+    width: 60%;
+    height: 80%;
+    border-radius: 10px;
+}
+.report-description{
+    display: flex;
+    flex:3;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+}
+.report-description-text{
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    text-align: center;
+    padding: 2%;
+    flex-direction: column;
+}
+.view-report-btn{
+    width: 50%;
+    height: 5vh;
+    color: white;
+    background-color: #005250;
+    border-radius: 10px;
+    border-color: #005250;
+}
+.view-report-btn:hover{
+    background-color: #055947;
+    cursor: pointer;
+    transition: background-color 0.3s ease, transform 0.2s ease;
+}

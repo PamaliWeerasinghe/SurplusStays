@@ -1,0 +1,177 @@
+<?php
+// Your PHP code above this (if needed)
+?>
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Business Report</title>
+    <style>
+        /* Main Report Styling */
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            line-height: 1.6;
+            color: #333;
+            background-color: #f9f9f9;
+            padding: 20px;
+        }
+        
+        .report-container {
+            max-width: 900px;
+            margin: 0 auto;
+            background: white;
+            padding: 30px;
+            box-shadow: 0 0 20px rgba(0,0,0,0.1);
+            border-radius: 5px;
+        }
+        
+        .report-header {
+            text-align: center;
+            margin-bottom: 30px;
+            padding-bottom: 20px;
+            border-bottom: 1px solid #eee;
+        }
+        
+        .report-title {
+            color: #2c3e50;
+            margin: 0;
+            font-size: 28px;
+        }
+        
+        .report-subtitle {
+            color: #7f8c8d;
+            font-weight: normal;
+            margin-top: 5px;
+        }
+        
+        /* Table Styling */
+        .report-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin: 25px 0;
+        }
+        
+        .report-table th {
+            background-color: #3498db;
+            color: white;
+            text-align: left;
+            padding: 12px;
+        }
+        
+        .report-table td {
+            padding: 10px 12px;
+            border-bottom: 1px solid #ddd;
+        }
+        
+        .report-table tr:nth-child(even) {
+            background-color: #f2f2f2;
+        }
+        
+        .report-table tr:hover {
+            background-color: #e3f2fd;
+        }
+        
+        /* Summary Section */
+        .report-summary {
+            background-color: #f8f9fa;
+            padding: 20px;
+            border-radius: 5px;
+            margin-top: 30px;
+        }
+        
+        .summary-item {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+        }
+        
+        .summary-label {
+            font-weight: bold;
+            color: #2c3e50;
+        }
+        
+        .summary-value {
+            color: #e74c3c;
+            font-weight: bold;
+        }
+        
+        /* Footer */
+        .report-footer {
+            margin-top: 30px;
+            text-align: center;
+            color: #7f8c8d;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+    <div class="report-container">
+        <div class="report-header">
+            <h1 class="report-title">Monthly Sales Report</h1>
+            <p class="report-subtitle">Generated on June 2023</p>
+        </div>
+        
+        <table class="report-table">
+            <thead>
+                <tr>
+                    <th>Product</th>
+                    <th>Units Sold</th>
+                    <th>Revenue</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>Product A</td>
+                    <td>125</td>
+                    <td>$1,250</td>
+                </tr>
+                <tr>
+                    <td>Product B</td>
+                    <td>89</td>
+                    <td>$890</td>
+                </tr>
+                <tr>
+                    <td>Product C</td>
+                    <td>342</td>
+                    <td>$3,420</td>
+                </tr>
+                <tr>
+                    <td>Product D</td>
+                    <td>56</td>
+                    <td>$560</td>
+                </tr>
+                <tr>
+                    <td>Product E</td>
+                    <td>201</td>
+                    <td>$2,010</td>
+                </tr>
+            </tbody>
+        </table>
+        
+        <div class="report-summary">
+            <div class="summary-item">
+                <span class="summary-label">Total Units Sold:</span>
+                <span class="summary-value">813</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Total Revenue:</span>
+                <span class="summary-value">$8,130</span>
+            </div>
+            <div class="summary-item">
+                <span class="summary-label">Average per Product:</span>
+                <span class="summary-value">$1,626</span>
+            </div>
+        </div>
+        
+        <div class="report-footer">
+            <p>Confidential - For internal use only</p>
+        </div>
+    </div>
+</body>
+</html>
+
+<?php
+// Your PHP code below this (if needed)
+?>

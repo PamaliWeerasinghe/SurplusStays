@@ -187,6 +187,18 @@ products.status_id AS status_id,
 business.`name` AS bus_name
 FROM products
 INNER JOIN business
-WHERE products.status_id!='Inactive'
+ON products.business_id=business.id
+WHERE products.status_id!='Inactive' ;
+
+CREATE VIEW customer_order_report AS 
+SELECT
+order.customer_id AS cus_id,
+concat(customer.fname,' ', customer.lname) AS cus_name,
+COUNT(`order`.`id`) AS no_of_orders
+FROM `order`
+INNER JOIN customer
+ON customer.id=`order`.customer_id
+GROUP BY cus_id;
+
 
 

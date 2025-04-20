@@ -1054,8 +1054,29 @@ class Admin extends Controller
         $data=$admin->findAll('saved_from_wastage_report');
        
 
-        $this->view('AdminReport1', [
+        $this->view('adminReport1', [
             "products" => $data
         ]);
     }
+    function report2()
+    {
+        $admin=new AdminModel();
+        $data=$admin->where(['notify_status_id'],[1],'product_details');
+       
+
+        $this->view('AdminReport2', [
+            "products" => $data
+        ]);
+    }
+    function report3()
+    {
+        $admin=new AdminModel();
+        $data=$admin->findAll('customer_order_report');
+       
+
+        $this->view('AdminReport3', [
+            "customers" => $data
+        ]);
+    }
+    
 }
