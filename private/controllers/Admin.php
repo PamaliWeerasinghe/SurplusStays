@@ -188,21 +188,10 @@ class Admin extends Controller
 
         $this->ManageCustomers();
     }
-    // $data=$customer->findAll('customer_details');
-    // $countd = new AdminCharityDetails();
-    // foreach ($data as $row) {
-    //     $count = $countd->getDonorCount($row->id);
-    //     $row->donors = $count;
-    // }
-    // foreach ($data as $row) {
-    //     $count = $countd->getComplaintsCount($row->id);
-    //     $row->donations = $count;
-    // }
-    // $this->view('AdminManageCharityOrganizations',['rows'=>$data]);
-
+   
 
     //Admin views a customer
-    function viewCustomer($id)
+    function viewCustomer($user_id,$cus_id)
     { {
 
             $customer = new AdminModel();
@@ -213,15 +202,49 @@ class Admin extends Controller
             if (count($_POST) > 0) {
                 if ($customer->validateEditCustomer($_POST)) {
                     $arr = $customer->data;
-                    $customer->update($id, $arr, 'customer');
-                    $data = $customer->where(['cus_id'], [$id], 'customer_details');
+                    $cus_details=array();
+                    $user=array();
+
+                    if(isset($arr['fname'])){
+                        $cus_details['fname']=$arr['fname'];
+                    }
+                    if(isset($arr['lname'])){
+                        $cus_details['lname']=$arr['lname'];
+                    }
+                    if(isset($arr['phoneNo'])){
+                        $cus_details['phoneNo']=$arr['phoneNo'];
+                    }
+                    if(isset($arr['username'])){
+                        $cus_details['username']=$arr['username'];
+                    }
+                    if(isset($arr['profile_pic'])){
+                        $user['profile_pic']=$arr['profile_pic'];
+                    }
+                    if(!empty($user) && !empty($cus_details)){
+                        $customer->update($user_id, $user, 'user');
+                        $customer->update($cus_id, $cus_details, 'customer');
+                    }else if (!empty($user)){
+                        $customer->update($user_id, $user, 'user');
+                    }else if (!empty($business_details)){
+                        $customer->update($cus_id, $business_details, 'customer');
+                    }else{
+                       
+                        $data = $customer->where(['cus_id'], [$cus_id], 'customer_details');
+                        $data = $data[0];
+                        $this->view('AdminEditCustomer', [
+                            'rows' => $data,
+                        ]);
+                    }
+
+                    // $customer->update($id, $arr, 'customer');
+                    $data = $customer->where(['cus_id'], [$cus_id], 'customer_details');
                     $data = $data[0];
                     $this->view('AdminEditCustomer', [
                         'rows' => $data,
                     ]);
                 } else {
                     $errors = $customer->errors;
-                    $data = $customer->where(['cus_id'], [$id], 'customer_details');
+                    $data = $customer->where(['cus_id'], [$cus_id], 'customer_details');
                     $data = $data[0];
                     $this->view('AdminEditCustomer', [
                         'rows' => $data,
@@ -230,7 +253,7 @@ class Admin extends Controller
                 }
             } else {
 
-                $data = $customer->where(['cus_id'], [$id], 'customer_details');
+                $data = $customer->where(['cus_id'], [$cus_id], 'customer_details');
 
                 $data = $data[0];
                 $this->view('AdminEditCustomer', [
@@ -254,19 +277,19 @@ class Admin extends Controller
         }
     }
     //view customer details - manage customers popup
-    function customerDetails($id)
+    function customerDetails($user_id,$cus_id)
     {
         if (Auth::logged_in()) {
             $admin = new AdminModel();
-            $customer = $admin->where(['user_id'], [$id], 'customer_details');
-            $customer_complaints = $admin->where(['user_id'], [$id], 'complaintdetails');
+            $customer = $admin->where(['user_id'], [$user_id], 'customer_details');
+            $customer_complaints = $admin->where(['user_id'], [$user_id], 'complaintdetails');
             $data["customer"] = $customer;
             $data["customer_complaints"] = $customer_complaints;
             //get the number of orders
-            $orders = $admin->countWithWhere('order', ['customer_id'], [$id]);
+            $orders = $admin->countWithWhere('order', ['customer_id'], [$cus_id]);
             $data["no_of_orders"] = $orders;
             //get the images of recently purchased items
-            $items = $admin->whereWithLimit('products_in_items', ['cus_id'], [$id], 2);
+            $items = $admin->whereWithLimit('products_in_items', ['cus_id'], [$cus_id], 2);
             $data["images"] = $items;
             // print_r(json_encode($data["customer_complaints"]));
             error_log("data: " . print_r($data, true));

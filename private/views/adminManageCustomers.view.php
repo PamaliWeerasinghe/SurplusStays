@@ -112,9 +112,9 @@
                             </tr>
                         </thead>
                         <tbody>
-                            <!-- onclick="viewCustomer(<?= $customer->cus_id ?>)" -->
+                            
                             <?php foreach ($customers as $customer): ?>
-                                <tr id="customer_row<?= $customer->user_id ?>" onclick="viewCustomer(<?= $customer->user_id ?>)">
+                                <tr id="customer_row<?= $customer->user_id ?>" onclick="viewCustomer(<?= $customer->user_id ?>,<?=$customer->cus_id?>)">
                                     <td><img src="<?= CUSTOMER . '/' . $customer->profile_pic ?>" class="customer-profile-pic" /></td>
                                     <td><?= $customer->fname ?> <?= $customer->lname ?></td>
                                     <td><?= $customer->phoneNo ?></td>

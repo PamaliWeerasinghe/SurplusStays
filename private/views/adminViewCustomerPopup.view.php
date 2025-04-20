@@ -37,7 +37,7 @@
                     <div class="profile-img-popup">
                         <div class="view-customer-row1">
                             <div class="view-customer-img">
-                                <img src="<?=ASSETS?>/images/woman-user (1).png"/>
+                                <img src="" id="customerImg"/>
                             </div>
                             <div class="view-customer-details">
                                 <h3>PERSONAL INFORMATION</h3>

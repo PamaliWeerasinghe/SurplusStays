@@ -26,13 +26,13 @@ function closedeletePopup(){
     popup.classList.remove("open-popup");
     popupContainer.className="popup-container";
 }
-function viewCustomer(id){
+function viewCustomer(user_id,cus_id){
   
     let rcpopup = document.getElementById("rcpopup");
     let rcpopupContainer = document.getElementById("rcpopup-container");
   
     //fetch the customer details
-    fetch(`http://localhost/SurplusStays/public/admin/customerDetails/${id}`)
+    fetch(`http://localhost/SurplusStays/public/admin/customerDetails/${user_id}/${cus_id}`)
     .then(response => {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -44,13 +44,14 @@ function viewCustomer(id){
 
         // Check if 'customer' exists and is an array
         if (data.customer && Array.isArray(data.customer) && data.customer.length > 0) {
+            document.getElementById("customerImg").src=`http://localhost/SurplusStays/public/assets/customerImages/${data.customer[0].profile_pic}`;
             document.getElementById("fname").innerHTML = data.customer[0].fname;
             document.getElementById("lname").innerHTML = data.customer[0].lname;
             document.getElementById("email").innerHTML = data.customer[0].email;
             document.getElementById("phoneNo").innerHTML = data.customer[0].phoneNo;
             document.getElementById("orders").innerHTML = data.no_of_orders;
             document.getElementById("edit_customer").onclick=function(){
-                window.location.href=`http://localhost/SurplusStays/public/admin/viewCustomer/${data.customer[0].cus_id}`
+                window.location.href=`http://localhost/SurplusStays/public/admin/viewCustomer/${user_id}/${cus_id}`
             }
             document.getElementById("hidden_id").value=data.customer[0].user_id;
             

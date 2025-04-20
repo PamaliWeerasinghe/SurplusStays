@@ -108,17 +108,10 @@ class AdminModel extends Admin_Model
                  $this->errors['profile_pic'] = "You cannot upload files of this type!";
              } else {
                  $editCustomer = new AdminModel();
-                 $this->data['profile_pic'] = $editCustomer->updateLogo($logo);
+                 $this->data['profile_pic'] = $editCustomer->updateCustomerPic($logo);
              }
          }
-         if (!empty($DATA['password']) || !empty($DATA['confirm_password'])) {
-             if ($DATA['password'] != $DATA['confirm_password']) {
-                 $this->errors['password'] = "Passwords does not match";
-             } else {
-                 $this->data['password'] = $DATA['password'];
-                 
-             }
-         }
+         
  
          if (count($this->errors) == 0) {
              return true;
@@ -404,7 +397,7 @@ class AdminModel extends Admin_Model
         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
         $fileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/customerImages/' . $logoNameNew;
         $dbFileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/customerImages/' . $logoNameNew;
-        move_uploaded_file($_FILES['file']['tmp_name'], $fileDestination);
+        move_uploaded_file($_FILES['profile_picture']['tmp_name'], $fileDestination);
 
         return $logoNameNew;
     }
