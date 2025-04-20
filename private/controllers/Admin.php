@@ -709,6 +709,12 @@ class Admin extends Controller
 
             $data['notify_status_id'] = 1;
             $admin->update($_POST['product_id'], $data, 'products');
+
+            $data=$admin->where(['product_id'],[$_POST['product_id']], 'product_details');
+            $data=$data[0];
+
+            Mail::sendProductExpiryNotification($_POST['product_id'], $_POST['email'],$data);
+
         }
         //sort and search
         $search = $_GET['search'] ?? '';
@@ -1035,8 +1041,21 @@ class Admin extends Controller
     //Default page
     function index()
     {
-        $this->view('new_customerMakeComplaint');
+        $this->view('adminReport1');
         
     }
-   
+    function report()
+    {
+        $this->view('AdminReports');
+    }
+    function report1()
+    {
+        $admin=new AdminModel();
+        $data=$admin->findAll('saved_from_wastage_report');
+       
+
+        $this->view('AdminReport1', [
+            "products" => $data
+        ]);
+    }
 }
