@@ -62,7 +62,7 @@
                                 margin:0;
                                 font-family: Poppins, sans-serif; 
                                 text-align: center; 
-                                width: 300px; 
+                                width: 220px; 
                                 border: 1px solid #ddd; 
                                 border-radius: 10px; 
                                 overflow: hidden; 
@@ -90,15 +90,7 @@
                                             />
                                             <span style="font-size: 12px; color: #666;">3.5KM</span>
                                         </div>
-                                        <button style="
-                                            background-color: #000; 
-                                            color: #fff; 
-                                            font-size: 14px; 
-                                            border: none; 
-                                            border-radius: 20px; 
-                                            padding: 8px 20px; 
-                                            cursor: pointer;
-                                        ">
+                                        <button class="visit-button" onclick="window.location.href='<?= ROOT ?>/charity/viewShop/${shop.id}'">
                                             VISIT STORE →
                                         </button>
                                 </div>

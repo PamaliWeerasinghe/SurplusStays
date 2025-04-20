@@ -16,6 +16,38 @@
                 zoom: 8,
             });
 
+            const input = document.getElementById("pac-input");
+            const searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            map.addListener("bounds_changed", () => {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            searchBox.addListener("places_changed", () => {
+                const places = searchBox.getPlaces();
+
+                if (places.length === 0) return;
+
+                if (marker) marker.setMap(null);
+
+                const place = places[0];
+                if (!place.geometry || !place.geometry.location) return;
+
+                marker = new google.maps.Marker({
+                    map,
+                    position: place.geometry.location,
+                });
+
+                const lat = place.geometry.location.lat();
+                const lng = place.geometry.location.lng();
+                document.getElementById("latitude").value = lat;
+                document.getElementById("longitude").value = lng;
+
+                map.setCenter(place.geometry.location);
+                map.setZoom(15);
+            });
+
             google.maps.event.addListener(map, 'click', function(event) {
                 const lat = event.latLng.lat();
                 const lng = event.latLng.lng();
@@ -30,6 +62,7 @@
             });
         }
     </script>
+
 </head>
 
 <body onload="initMap()">
@@ -77,6 +110,9 @@
                 <!-- <input placeholder="ENTER YOUR BUSINESS ADDRESS" value="?= get_var('address') ?>" type="text" name="address" class="input"> -->
                 <input type="hidden" id="latitude" name="latitude" placeholder="Latitude" readonly required><br>
                 <input type="hidden" id="longitude" name="longitude" placeholder="Longitude" readonly required><br>
+                <input id="pac-input" class="input" type="text" placeholder="Search for your business location"
+                style="margin-top:60px;margin-left:-60px;padding:8px;width:220px;z-index:5;position:absolute;top:10px;left:50%;transform:translateX(-50%);border:1px solid #ccc;border-radius:4px;">
+
                 <div id="map" style="height: 400px; width: 100%;"></div><br>
 
                 <h4>USERNAME :</h4>

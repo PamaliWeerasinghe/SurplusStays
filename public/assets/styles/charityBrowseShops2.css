@@ -13,6 +13,28 @@ body, html {
     margin: 0;
 }
 
+.visit-button {
+    background-color: #005250;
+    color: white;
+    font-size: 0.875rem;
+    font-weight: 500;
+    border: none;
+    border-radius: 30px;
+    padding: 10px 24px;
+    cursor: pointer;
+    transition: var(--transition);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    letter-spacing: 0.5px;
+    width: 100%;
+  }
+  
+  .visit-button:hover {
+    background-color: #008885;
+    transform: translateY(-2px);
+  }
+
 .top-nav {
     background-color: #005250;
     color: white;

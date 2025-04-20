@@ -14,7 +14,7 @@
     <?php echo $this->view('includes/businessNavbar')?>
 
     <div class="container">
-        <?php echo $this->view('includes/businessSidePanel')?>
+        <?php echo $this->view('includes/businessSidePanel') ?>
         <div class="container-right">
             <div class="top-nav">
                 <div class="top-bar">

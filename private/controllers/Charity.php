@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Colombo');
 
 class Charity extends Controller
 {
@@ -11,7 +12,7 @@ class Charity extends Controller
     $event = new Event();
     $donation = new Donation();
     $donation_b = new BusinessDonation();
-    $businesses = new Business();
+    $businesses = new BusinessModel();
 
     $org_id = Auth::getID();
 
@@ -204,7 +205,7 @@ function getTopDonatingBusinesses()
 
         $requests = new Donation();
         $requests_r = new BusinessDonation();
-        $shop = new Business();
+        $shop = new BusinessModel();
         $org_id = Auth::getID();
 
         $rows = $requests->where('organization_id', Auth::getID(),'donations' );
@@ -240,7 +241,7 @@ function getTopDonatingBusinesses()
             $this->redirect('login');
         }
 
-        $shops = new Business();
+        $shops = new BusinessModel();
         $users = new User();
 
         $rows = $shops->findAll('business');

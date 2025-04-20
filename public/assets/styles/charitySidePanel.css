@@ -156,41 +156,6 @@ body {
     background: rgba(0, 97, 95, 0.05);
 }
 
-.theme-toggle {
-    position: absolute;
-    bottom: 20px;
-    left: 50%;
-    transform: translateX(-50%);
-    display: flex;
-    background: white;
-    border-radius: 20px;
-    padding: 5px;
-    box-shadow: 0 2px 5px rgba(0,0,0,0.1);
-}
-
-.theme-icon {
-    width: 25px;
-    height: 25px;
-    cursor: pointer;
-    margin: 0 5px;
-    border-radius: 50%;
-    transition: all 0.3s ease;
-}
-
-.light-mode {
-    background-color: #f5f9ff;
-    border: 2px solid transparent;
-}
-
-.dark-mode {
-    background-color: #333;
-    border: 2px solid transparent;
-}
-
-.theme-icon.active {
-    border-color: #00615F;
-    transform: scale(1.1);
-}
 
 @media (max-width: 768px) {
     .side-nav {
