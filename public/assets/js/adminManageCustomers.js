@@ -1,22 +1,18 @@
-document.getElementById('upload-1').addEventListener('change', function(event) {
-  const file = event.target.files[0];
-  if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-          document.getElementById('profilePreview-1').src = e.target.result;
-      };
-      reader.readAsDataURL(file);
-  }
-});
 
-document.getElementById('upload-2').addEventListener('change', function(event) {
-  const file = event.target.files[0];
-  if (file) {
-      const reader = new FileReader();
-      reader.onload = function(e) {
-          document.getElementById('profilePreview-2').src = e.target.result;
-      };
-      reader.readAsDataURL(file);
+document.addEventListener("DOMContentLoaded", function() {
+  for (let i = 1; i <= 5; i++) {
+    document.getElementById(`upload-${i}`).addEventListener('change', function(event) {
+      const file = event.target.files[0];
+      if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+          // Assign to the preview linked to THIS upload button only
+          const preview = document.getElementById(`profilePreview-${i}`);
+          preview.src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+      }
+    });
   }
 });
 

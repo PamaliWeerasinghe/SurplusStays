@@ -1,9 +1,10 @@
 <?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
-<?php require APPROOT . '/views/adminViewCustomerPopup.view.php'?>
+<?php require APPROOT . '/views/adminViewCustomerPopup.view.php' ?>
 
 <link rel="stylesheet" href="<?= STYLES ?>/adminSidePanel.css" />
 <link rel="stylesheet" href="<?= STYLES ?>/adminManageActors.css" />
 <link rel="stylesheet" href="<?= STYLES ?>/admin.css">
+<link rel="stylesheet" href="<?= STYLES ?>/searchBar.css">
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
@@ -14,13 +15,13 @@
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary">
-                <div class="summary-blocks">
+                    <div class="summary-blocks">
                         <div class="summaries">
                             <div class="summaries-1">
                                 <label>Total Customers</label>
                             </div>
                             <div class="summaries-2">
-                                <label><?=$customer_count?></label>
+                                <label><?= $customer_count ?></label>
                             </div>
 
 
@@ -30,7 +31,7 @@
                                 <label>Total Orders</label>
                             </div>
                             <div class="summaries-2">
-                                <label><?=$order_count?></label>
+                                <label><?= $order_count ?></label>
                             </div>
 
 
@@ -40,7 +41,7 @@
                                 <label>Total Complaints</label>
                             </div>
                             <div class="summaries-2">
-                                <label><?=$complaint_count?></label>
+                                <label><?= $complaint_count ?></label>
                             </div>
 
 
@@ -50,65 +51,34 @@
                                 <label>Total Revenue</label>
                             </div>
                             <div class="summaries-2">
-                                <label>Rs. <?=$total_price?></label>
+                                <label>Rs. <?= $total_price ?></label>
                             </div>
 
 
                         </div>
                     </div>
                     <div class="notifications-type2">
-                       
-                        <!-- <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." id="search" />
-                            <img src="<?= ASSETS ?>/images/search.png" class="bell2" />
-                        </div> -->
-                        <!-- <div class="search-container">
-                            <div class="searchdiv">
-                                <div class="search-wrapper">
-                                <input type="text" class="search" placeholder="Search customers..." id="search" />
-                                <button class="search-btn">
-                                    <img src="<?= ASSETS ?>/images/search.png" class="search-icon" viewBox="0 0 24 24"/>
-                                    
-                                </button>
-                                </div>
-                                <div class="notification-icon">
-                                <select>
-                                    <option value="all">Select</option>
-                                    <option value="active">First Name</option>
-                                    <option value="inactive">Last Name</option>
-                                    <option value="banned">Phone No</option>
-                                    <option value="banned">Email</option>
-                                    <option value="banned">Username</option>
-                                </select> -->
-                                <?php
-        $columns = [
-            "Title" => "Title",
-            "Location" => "Location",
-            "jobs_create_at" => "Date Posted",
-            "Views" => "Views",
-            "Applicants" => "Applicants",
-            "Actions" => "Actions"
-        ];
-        ?>
-<?php
-    $seacher = TableSearcher::getInstance();
-    echo $seacher->renderSearchBar($columns);
-?>
-                                <!-- </div>
-                            </div>
-                        </div> -->
-                       
-                       
-
-                        <!-- <img src="<?= ASSETS ?>/images/Bell.png" class="bell" /> -->
+                        
+                        <?php
+                        $columns = [
+                            'fname' => 'First Name',
+                            'lname' => 'Last Name',
+                            'phoneNo' => 'Phone No',
+                            'email' => 'Email',
+                            'username' => 'Username',
+                            'reg_date' => 'Registered Date'
+                        ];
+                        $seacher = TableSearcher::getInstance();
+                        echo $seacher->renderSearchBar($columns);
+                        ?>
                     </div>
 
-                    
+
 
 
                 </div>
                 <div class="Business-complaints-order-status">
-                <div class="add-buyer" onclick="window.location.href='<?= ROOT ?>/Admin/addNewCustomer'">
+                    <div class="add-buyer" onclick="window.location.href='<?= ROOT ?>/Admin/addNewCustomer'">
                         <div>
                             <label>
                                 + Add Buyer
@@ -116,36 +86,50 @@
 
                         </div>
                     </div>
+                    <?php
+                    $columns = [
+                        'fname' => 'First Name',
+                        'lname' => 'Last Name',
+                        'phoneNo' => 'Phone No',
+                        'email' => 'Email',
+                        'username' => 'Username',
+                        'reg_date' => 'Registered Date'
+                    ];
+
+                    $sorter = Sorter::getInstance();
+                    echo $sorter->renderSorter($columns);
+                    ?>
+
                     <table class="order-table">
                         <thead>
-                            
+
                             <tr>
                                 <th>Profile</th>
-                                <th>ID</th>
+                                <th>Name</th>
                                 <th>Phone No</th>
                                 <th>Registered Date</th>
 
                             </tr>
                         </thead>
                         <tbody>
-                        <!-- onclick="viewCustomer(<?=$customer->cus_id?>)" -->
-                        <?php foreach( $customers as $customer):?>
-                            <tr id="customer_row<?=$customer->user_id?>" onclick="viewCustomer(<?=$customer->user_id?>)">
-                                <td><img src="<?=CUSTOMER.'/'.$customer->profile_pic?>" class="customer-profile-pic"/></td>
-                                <td>#<?=$customer->cus_id?></td>
-                                <td><?=$customer->phoneNo?></td>
-                                <td><?=$customer->reg_date?></td>
-                                <td>
-                               
-                                    <span class="material-symbols-outlined" style="z-index:999;" >
-                                        edit_square
-                                    </span>
-                                    <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
-                                        person_remove
-                                    </span>
-                                </td>
-                            </tr>
-                        <?php endforeach;?>
+                            
+                            <?php foreach ($customers as $customer): ?>
+                                <tr id="customer_row<?= $customer->user_id ?>" onclick="viewCustomer(<?= $customer->user_id ?>,<?=$customer->cus_id?>)">
+                                    <td><img src="<?= CUSTOMER . '/' . $customer->profile_pic ?>" class="customer-profile-pic" /></td>
+                                    <td><?= $customer->fname ?> <?= $customer->lname ?></td>
+                                    <td><?= $customer->phoneNo ?></td>
+                                    <td><?= $customer->reg_date ?></td>
+                                    <td>
+
+                                        <span class="material-symbols-outlined" style="z-index:999;">
+                                            edit_square
+                                        </span>
+                                        <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
+                                            person_remove
+                                        </span>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
                         </tbody>
                     </table>
                     <?php $customers_pager->display() ?>
@@ -154,7 +138,6 @@
         </div>
         <?php echo $this->view('includes/footer') ?>
     </div>
-    <script src="<?=ROOT?>/assets/js/adminViewCustomerDetails.js"></script>
-   
+    <script src="<?= ROOT ?>/assets/js/adminViewCustomerDetails.js"></script>
+    <script src="<?= ROOT ?>/assets/js/PagerAndSorter.js"></script>
     <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
-    

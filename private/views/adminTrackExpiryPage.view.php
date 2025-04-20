@@ -4,6 +4,7 @@
     <link rel="stylesheet" href="<?=STYLES?>/adminTrackExpiry.css" />
     <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
     <link rel="stylesheet" href="<?=STYLES?>/admin.css">
+    <link rel="stylesheet" href="<?= STYLES ?>/searchBar.css">
 </head>
 
 <body>
@@ -13,15 +14,7 @@
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary">
-                    <div class="notifications-type2">
-                        <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." id="searchInput" />
-                            <img src="<?=ASSETS?>/images/search.png" class="bell2" />
-                        </div>
-
-                        <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
-                    </div>
-                    <div class="summary-blocks">
+                <div class="summary-blocks">
                         <div class="summaries">
                             <div class="summaries-1">
                                 <label>Additional Surplus Saved</label>
@@ -63,36 +56,39 @@
 
                         </div>
                     </div>
+                    <div class="notifications-type2">
+                    <?php
+                        $columns = [
+                            'product_name' => 'Product Name',
+                            'notify_status' => 'Notify Status',
+                            'business_name' => 'Business Name',
+                            'bestBefore' => 'Expires In',
+                            'price' => 'Price'
+                        ];
+                        $seacher = TableSearcher::getInstance();
+                        echo $seacher->renderSearchBar($columns);
+                        ?>
+                    </div>
+                    
 
                 </div>
                 <div class="order-status">
                     <div class="order">
-                        <label>Order Status</label>
-                        <select>
-                            <option>All Time</option>
-                        </select>
+                        <label>Track Expiration</label>
+                        <?php
+                            $columns = [
+                                'product_name' => 'Product Name',
+                                'notify_status' => 'Notify Status',
+                                'business_name' => 'Business Name',
+                                'bestBefore' => 'Expires In',
+                                'price' => 'Price'
+                            ];
+
+                    $sorter = Sorter::getInstance();
+                    echo $sorter->renderSorter($columns);
+                    ?>
                     </div>
 
-                    <!-- <div class="order-nav">
-                        <div class="view-slots">
-                            <div class="slot1">
-                                <label>All</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Within a Month</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Within a Week</label>
-
-                            </div>
-                            <div class="slot2">
-                                <label>Took Actions</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Wastage</label>
-                            </div>
-                        </div>
-                    </div> -->
                     <table class="order-table" >
                         <thead>
                             <tr>
@@ -177,4 +173,5 @@
         <?php echo $this->view('includes/footer')?>
         <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>
         <script src="<?= ROOT ?>/assets/js/adminCountdown.js"></script>
+        <script src="<?= ROOT ?>/assets/js/PagerAndSorter.js"></script>
         <!-- <script src="<?=ROOT?>/assets/js/TrackExpiryPopup.js"></script> -->

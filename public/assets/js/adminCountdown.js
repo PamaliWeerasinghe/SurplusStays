@@ -12,10 +12,10 @@ function countDown(exp_date, index) {
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
 
-    document.getElementById("days" + index).innerHTML = days;
-    document.getElementById("hours" + index).innerHTML = hours;
-    document.getElementById("minutes" + index).innerHTML = minutes;
-    document.getElementById("seconds" + index).innerHTML = seconds;
+    document.getElementById("days" + index).innerHTML = days+"days";
+    document.getElementById("hours" + index).innerHTML = hours+"h";
+    document.getElementById("minutes" + index).innerHTML = minutes + "m";
+    document.getElementById("seconds" + index).innerHTML = seconds+"s";
     }
   }, 1000);
 }

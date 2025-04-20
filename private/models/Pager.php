@@ -17,12 +17,16 @@ class Pager{
         $page_num=max(1,$page_num);
        
         $this->end=$noOfPages;
-        $this->page_num=$page_num;
+        $this->page_num=$page_num-1;
         $this->offset=($page_num-1)*$limit;
         
         $current_link= ROOT."/".str_replace("url=","",$_SERVER['QUERY_STRING']);
         // unset($query_params[$key.'_page']);
         $current_link=!strstr($current_link,"{$key}_page=") ? $current_link."&{$key}_page=1":$current_link;
+        
+        // Add scroll preservation to all links
+    // $scroll_js = "onclick=\"localStorage.setItem('pagerScrollPos', window.scrollY);\"";
+        
         ($page_num-1 <=0 )?
         $first_link= preg_replace("/{$key}_page=[0-9]+/","{$key}_page=1",$current_link):
         $first_link= preg_replace("/{$key}_page=[0-9]+/","{$key}_page=".($page_num-1),$current_link);

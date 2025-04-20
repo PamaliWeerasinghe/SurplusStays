@@ -179,9 +179,18 @@
                     </div>
                     <div class="order-dropdown">
                             <div></div>
-                            <select>
-                                <option>By 2 weeks</option>
-                            </select>
+                            <?php
+                    $columns = [
+                        'name' => 'Product Name',
+                        'price_per_unit' => 'Price',
+                        'discountPrice' => 'Discounted Amount',
+                        'expiration_dateTime' => 'Expires In',
+                        
+                    ];
+
+                    $sorter = Sorter::getInstance();
+                    echo $sorter->renderSorter($columns);
+                    ?>
                         </div>
                     
                     <div class="table-container">
@@ -190,7 +199,8 @@
                                 <tr>
                                     <th>Date</th>
                                     <th>Product</th>
-                                    <th>Product</th>
+                                    <th>Price</th>
+                                    <th>Discounted Price</th>
                                     <th>Expires In</th>
                                 </tr>
                             </thead>
@@ -200,9 +210,21 @@
                                     <tr>
                                         <td><img src="<?= ASSETS ?>/images/<?=$product->pictures?>" /></td>
                                         <td> <?=$product->name?></td>
-                                        <!-- <td>Rs. <?=$product->price_per_unit?>-<?=$product->discountPrice?></td> -->
-                                        <td>02:30:10</td>
+                                        <td>Rs. <?=$product->price_per_unit?>
+                                        <td>Rs. <?= $product->discountPrice?></td></td>
+                                        <td>
+                                        <label id="days<?=$product->id?>">00 </label>
+                                    <label id="hours<?=$product->id?>">00</label>
+                                    <label id="minutes<?=$product->id?>">00</label>
+                                    <label id="seconds<?=$product->id?>">00</label>
+                                        </td>
                                     </tr>
+                                    <script>
+                                document.addEventListener("DOMContentLoaded",function(){
+                                    countDown('<?=$product->expiration_dateTime?>','<?=$product->id?>');
+                                });
+                                
+                            </script>
                                 <?php endforeach ?>
                             </tbody>
                         </table>
@@ -256,6 +278,10 @@
         <?php echo $this->view('includes/footer') ?>
     </div>
 
+
+    <script src="<?= ROOT ?>/assets/js/adminCountdown.js"></script>
+    <script src="<?= ROOT ?>/assets/js/PagerAndSorter.js"></script>
+    
 </body>
 
 </html>

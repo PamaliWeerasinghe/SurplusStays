@@ -9,6 +9,7 @@
     top: 0;
     left: 0;
     
+    
     background: rgba(0, 0, 0, 0.4); /* Semi-transparent background */
     backdrop-filter: blur(28px);
     -webkit-backdrop-filter: blur(28px); /* Safari support */
@@ -16,7 +17,7 @@
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
-    z-index: 999;
+    z-index: 9999;
 }
 
 /* Opened Popup Container */
@@ -178,7 +179,7 @@
 }
 .view-customer-img img{
     height: 10vh;
-    border-radius: 100%;
+    border-radius: 10px;
 }
 .view-customer-row1{
     display: flex;
@@ -213,8 +214,14 @@
     /* height: 8vh; */
     background-color: #f2efef;
     border-radius: 10px;
+    max-height: 300px; /* Adjust this value based on how many rows you want visible */
+    overflow-y: auto;
+    display: block;
 }
-
+.order-table{
+    width: 90%;
+    border-collapse: collapse;
+}
 .order-table button {
     padding: 10px 20px;
     border-radius: 10px;

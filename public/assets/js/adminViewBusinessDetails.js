@@ -1,10 +1,10 @@
-function viewBusiness(id){
-  
+function viewBusiness(user_id,business_id){
+    // alert(business_id);
     let rcpopup = document.getElementById("rcpopup");
     let rcpopupContainer = document.getElementById("rcpopup-container");
   
     //fetch the customer details
-    fetch(`http://localhost/SurplusStays/public/admin/businessDetails/${id}`)
+    fetch(`http://localhost/SurplusStays/public/admin/businessDetails/${user_id}/${business_id}`)
     .then(response => {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -22,9 +22,9 @@ function viewBusiness(id){
             document.getElementById("phoneNo").innerHTML = data.business[0].phoneNo;
             document.getElementById("orders").innerHTML = data.no_of_orders;
             document.getElementById("edit_business").onclick=function(){
-                window.location.href=`http://localhost/SurplusStays/public/admin/viewBusiness/${data.business[0].bus_id}`
+                window.location.href=`http://localhost/SurplusStays/public/admin/viewBusiness/${user_id}/${business_id}}`
             }
-            document.getElementById("hidden_id").value=data.business[0].bus_id;
+            document.getElementById("hidden_id").value=business_id;
             
             //selects the table body
             let tbody=document.querySelector(".order-table tbody");
@@ -32,25 +32,24 @@ function viewBusiness(id){
             tbody.innerHTML="";
             complaints=data.business_complaints;
             // console.log(complaints);
-            let row = document.createElement("tr");
+            
             if (data.business_complaints && Array.isArray(data.business_complaints) && data.business_complaints.length > 0) {
             data.business_complaints.forEach((complaints,index) => {
                 
-                
+                let row = document.createElement("tr");
                         row.innerHTML=`
                         <td>#${index+1}</td>
                         <td>${complaints.complaintDescription}</td>
                         <td>${complaints.complaint_date}</td>
-                        <td>${complaints.complant_status==='Not Attended'?
-                            ' <td style="text-align: center;"><button class="completed">Attend</button></td>'
-                            :
-                            ' <td style="text-align: center;"><button class="take-action">Attend</button></td>'
-                        }</td>
-                        <td>
+                        <td style="text-align: center;">${complaints.complaint_status==='Not Attended'?' <button class="take-action" style="font-size:10px">Take Action</button>':
+                            ' <button class="completed" style="font-size:10px">Resolved</button>'
+                        }
+                        </td>
+                        <td style="text-align: center;">
                         ' <button 
                                 class="see-complain" 
-                                style="color:grey;background-color:transparent;border-style:solid;border-color:grey"
-                                onclick="window.location.href='<?=ROOT?>/Admin/ViewComplain/'"
+                                style="color:grey;background-color:transparent;border-style:solid;border-color:grey;font-size:10px"
+                                onclick="window.location.href='http://localhost/SurplusStays/public/Admin/ViewComplain/${complaints.complaint_id}'"
                         >
                                 See Complain
                         </button>'
@@ -66,12 +65,16 @@ function viewBusiness(id){
             //check recent images
             let container1=document.getElementById('profile-section-1');
             let container2=document.getElementById('profile-section-2'); 
+            container1.style.backgroundImage='none';
+            container2.style.backgroundImage='none';
+            container1.innerHTML="";              
+            container2.innerHTML="";
+
             if(data.images && Array.isArray(data.images) && data.images.length>0){
                 path='http://localhost/SurplusStays/public/assets/images/'
                
                 data.images.forEach((images,index)=>{
-                    container1.innerHTML="";              
-                    container2.innerHTML="";
+                    
                     let container=document.getElementById(`profile-section-${index+1}`);
 
                     // const img=document.createElement("img");
@@ -81,6 +84,8 @@ function viewBusiness(id){
                     }else{
                         src=path+images.pictures;
                         container.style.backgroundRepeat='no-repeat'
+                        container.style.backgroundPosition='center'
+                        container.style.backgroundSize='contain'
                         container.style.backgroundImage=`url('${src}')`
                         // container.appendChild(img);
                     }

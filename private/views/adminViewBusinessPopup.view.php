@@ -58,34 +58,8 @@
                         </div>
                         <div class="view-customer-row5">
                         <table class="order-table">
-                        <thead>
-                           
-                        </thead>
+                        
                         <tbody>
-                            
-                            <!-- <tr> -->
-                
-                                <!-- <td># 01</td>
-                                <td>ddf dkcd cdbchdbfdsjdskc</td>
-                                <td>2025-01-12 4:10:02</td>
-                                
-                                    <td style="text-align: center;"><button class="take-action">Attend</button></td>
-                                <td style="text-align: center;">
-                                    
-                                    <button 
-                                    class="see-complain" 
-                                    style="color:grey;background-color:transparent;border-style:solid;border-color:grey"
-                                    onclick="window.location.href='<?=ROOT?>/Admin/ViewComplain/'"
-                                    >
-                                    See Complain
-                                    </button>
-                                </td> -->
-                                
-                            <!-- </tr> -->
-                              
-                           
-                            
-                            
                         </tbody>
                         </table>
                         </div>
@@ -110,7 +84,7 @@
         </div>
     </div>
 
-    <script src="<?= ROOT ?>/assets/js/adminViewCustomerDetails.js"></script>
+    <script src="<?= ROOT ?>/assets/js/adminViewBusinessDetails.js"></script>
     <script src="<?=ROOT?>/assets/js/deletePopup.js"></script>
 </body>
 

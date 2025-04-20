@@ -52,7 +52,7 @@
                         <input type="file" id="upload-1" name="profile_picture" style="display: none;" accept="image/*">
                     </div>
                   
-                <p>BY REGISTERING YOU AGREE TO OUR <a style="text-decoration: none;" href="url">TERMS AND CONDITIONS</a> AND <a style="text-decoration: none;" href="url">PRIVACY POLICY</a></p>                  
+                <!-- <p>BY REGISTERING YOU AGREE TO OUR <a style="text-decoration: none;" href="url">TERMS AND CONDITIONS</a> AND <a style="text-decoration: none;" href="url">PRIVACY POLICY</a></p>                   -->
             </div>
             <button class="register-button">UPDATE</button>
 </form>

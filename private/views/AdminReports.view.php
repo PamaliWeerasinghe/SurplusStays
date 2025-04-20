@@ -29,23 +29,30 @@
        
         <th>Quantity Saved</th>
         <th>Unit Price</th>
-        <th>Final Discounted Price</th>
+        <th>Discounted Price</th>
         <th>Left Overs</th>
       </tr>
     </thead>
-    <tbody>
-      <tr>
-        <td>Fresh Apple</td>   
-        <td>10</td>
-        <td>Rs. 2.50</td>
-        <td>Rs. 25.00</td>
-        <td>2</td>
+    <tbody id="pdf-content">
+      <!-- <?=print_r($products)?> -->
+      <?php foreach($products as $product):?>
+       <tr>
+        <td><?=$product->product_name?></td>   
+        <td><?=$product->qty_saved?></td>
+        <td>Rs. <?=$product->original_price?></td>
+        <td>Rs. <?=$product->discounted_price?></td>
+        <td><?=$product->left_overs?></td>
       </tr>
+      
+      <?php endforeach;?>
+     
     
     </tbody>
+    
   </table>
+  <?= $products_pager->display();?>
   <div class="get-report-btn">
-    <button>Get Report</button>
+    <button onclick="generatePDF()">Get Report</button>
   </div>
   <div class="reports-next">
                         <img src="<?=ASSETS?>/images/down.png"/>
@@ -117,7 +124,7 @@
                     <div class="white-bar">
                         <label>MOST INCLUDED CHARITY ORGANIZATIONS TO REDUCE WASTAGE</label>
                     </div>
-                    <table class="order-table">
+                    <!-- <table class="order-table">
     <thead>
       <tr>
         <th>Organization</th>
@@ -157,7 +164,8 @@
       
       
     </tbody>
-  </table>
+  </table> -->
+  
   <div class="get-report-btn">
     <button>Get Report</button>
   </div>

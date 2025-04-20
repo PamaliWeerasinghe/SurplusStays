@@ -108,17 +108,10 @@ class AdminModel extends Admin_Model
                  $this->errors['profile_pic'] = "You cannot upload files of this type!";
              } else {
                  $editCustomer = new AdminModel();
-                 $this->data['profile_pic'] = $editCustomer->updateLogo($logo);
+                 $this->data['profile_pic'] = $editCustomer->updateCustomerPic($logo);
              }
          }
-         if (!empty($DATA['password']) || !empty($DATA['confirm_password'])) {
-             if ($DATA['password'] != $DATA['confirm_password']) {
-                 $this->errors['password'] = "Passwords does not match";
-             } else {
-                 $this->data['password'] = $DATA['password'];
-                 
-             }
-         }
+         
  
          if (count($this->errors) == 0) {
              return true;
@@ -378,7 +371,20 @@ class AdminModel extends Admin_Model
         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
         $fileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages/' . $logoNameNew;
         $dbFileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages/' . $logoNameNew;
-        move_uploaded_file($_FILES['file']['tmp_name'], $fileDestination);
+        move_uploaded_file($_FILES['profile_picture']['tmp_name'], $fileDestination);
+
+        return $logoNameNew;
+    }
+    //update business logo
+    public function updateBusinessLogo($logo)
+    {
+
+        $logoExt = explode('.', $logo);
+        $logoActualExt = strtolower(end($logoExt));
+        $logoNameNew = uniqid('', true) . "." . $logoActualExt;
+        $fileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/businessImages/' . $logoNameNew;
+        $dbFileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/businessImages/' . $logoNameNew;
+        move_uploaded_file($_FILES['profile_picture']['tmp_name'], $fileDestination);
 
         return $logoNameNew;
     }
@@ -391,7 +397,7 @@ class AdminModel extends Admin_Model
         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
         $fileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/customerImages/' . $logoNameNew;
         $dbFileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/customerImages/' . $logoNameNew;
-        move_uploaded_file($_FILES['file']['tmp_name'], $fileDestination);
+        move_uploaded_file($_FILES['profile_picture']['tmp_name'], $fileDestination);
 
         return $logoNameNew;
     }
@@ -426,7 +432,7 @@ class AdminModel extends Admin_Model
                 $this->errors['logo'] = "You cannot upload files of this type!";
             } else {
                 $editCharity = new AdminModel();
-                $this->data['picture'] = $editCharity->updateLogo($logo);
+                $this->data['profile_pic'] = $editCharity->updateLogo($logo);
             }
         }
 
@@ -462,13 +468,73 @@ class AdminModel extends Admin_Model
             $this->data['username'] = $DATA['username'];
         }
 
-        if (!empty($DATA['password']) || !empty($DATA['confirm_password'])) {
-            if ($DATA['password'] != $DATA['confirm_password']) {
-                $this->errors['password'] = "Passwords does not match";
+        
+
+        if (count($this->errors) == 0) {
+            return true;
+        } else {
+            return false;
+        }
+    }
+    //validate Edit Business
+    public function validateEditBusiness($DATA)
+    {
+        $this->errors = array();
+        $this->data = array();
+
+        if (!empty($DATA['name'])) {
+        
+            if (!preg_match('/^[a-z A-Z &]+$/', $DATA['name'])) {
+                
+                $this->errors['name'] = "Only letters are allowed for the name";
             } else {
-                $this->data['password'] = $DATA['password'];
+            
+                $this->data['name'] = $DATA['name'];
                 
             }
+        }
+        $logo = $_FILES['profile_picture']['name'];
+        
+        $logoExt = explode('.', $logo);
+        $logoActualExt = strtolower(end($logoExt));
+        $allowed = array('jpg', 'jpeg', 'png');
+
+        if (in_array($logoActualExt, $allowed)) {
+            if ($_FILES['profile_picture']['error'] != 0) {
+                $this->errors['logo'] = "There was an error uploading your file!";
+            } else if (!in_array($logoActualExt, $allowed)) {
+                $this->errors['logo'] = "You cannot upload files of this type!";
+            } else {
+                $editBusiness = new AdminModel();
+                $this->data['profile_pic'] = $editBusiness->updateBusinessLogo($logo);
+            }
+        }
+
+        if(isset($DATA['latitude'])) {
+            $this->data['latitude'] = $DATA['latitude'];
+        }
+        if(isset($DATA['longitude'])) {
+            $this->data['longitude'] = $DATA['longitude'];
+        }
+
+        if (!empty($DATA['email'])) {
+            if (empty($DATA['email']) || !filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
+                $this->errors['email'] = "Email is not valid";
+            } else {
+                $this->data['email'] = $DATA['email'];
+            }
+        }
+
+        if (!empty($DATA['phone'])) {
+            if (!preg_match('/^(\+94|0)?((7|1)[0-9]{1})[0-9]{7}$/', $DATA['phone'])) {
+                $this->errors['phone'] = "Invalid phone number";
+            } else {
+                $this->data['phoneNo'] = $DATA['phone'];
+            }
+        }
+
+        if (!empty($DATA['username'])) {
+            $this->data['username'] = $DATA['username'];
         }
 
         if (count($this->errors) == 0) {

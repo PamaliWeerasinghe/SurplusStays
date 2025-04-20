@@ -3,7 +3,7 @@
 <link rel="stylesheet" href="<?= STYLES ?>/adminSidePanel.css" />
 <link rel="stylesheet" href="<?= STYLES ?>/adminManageActors.css" />
 <link rel="stylesheet" href="<?= STYLES ?>/admin.css">
-
+<link rel="stylesheet" href="<?= STYLES ?>/searchBar.css">
 
 <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"   />
 </head>
@@ -15,13 +15,18 @@
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary">
-                    <div class="notifications-type2">
-                        <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." />
-                            <img src="<?= ASSETS ?>/images/search.png" class="bell2" />
-                        </div>
-
-                        <img src="<?= ASSETS ?>/images/Bell.png" class="bell" />
+                    <div class="notifications-type2"> 
+                    <?php
+                        $columns = [
+                            'org_name' => 'Organization Name',
+                            'org_contact' => 'Contact No',
+                            'user_email' => 'Email',
+                            'username' => 'Username',
+                            'reg_date' => 'Registered Date'
+                        ];
+                        $seacher = TableSearcher::getInstance();
+                        echo $seacher->renderSearchBar($columns);
+                        ?>
                     </div>
                     <div class="add-buyer" onclick="window.location.href='<?= ROOT ?>/Admin/addNewCharityOrg'">
                         <div>
@@ -38,9 +43,18 @@
                     <div class="order">
                         <label>Charity Organizations</label>
                         <div>
-                            <select>
-                                <option>Location</option>
-                            </select>
+                        <?php
+                    $columns = [
+                      'org_name' => 'Organization Name',
+                            'org_contact' => 'Contact No',
+                            'user_email' => 'Email',
+                            'username' => 'Username',
+                            'reg_date' => 'Registered Date'
+                    ];
+
+                    $sorter = Sorter::getInstance();
+                    echo $sorter->renderSorter($columns);
+                    ?>
                             
                         </div>
 
@@ -100,7 +114,7 @@
                                 <td><?=$row->reg_date?></td>
                                 <td>
                                
-                                    <span class="material-symbols-outlined" style="z-index: 1;" onclick="viewCharity(<?=$row->user_id?>)">
+                                    <span class="material-symbols-outlined" style="z-index: 1;" onclick="viewCharity(<?=$row->user_id?>,<?=$row->org_id?>)">
                                         edit_square
                                     </span>
                                     <span class="material-symbols-outlined action-btn deactivate" style="color: red;" onclick="openPopup(<?=$row->user_id?>)" value="<?=$row->user_id?>">
@@ -143,3 +157,4 @@
   
     <script src="<?=ROOT?>/assets/js/deletePopup.js"></script>
     <script src="<?=ROOT?>/assets/js/adminManageCharity.js"></script>
+    <script src="<?= ROOT ?>/assets/js/PagerAndSorter.js"></script>
