@@ -93,9 +93,17 @@ class Register extends Controller
     function customer()
     {
         $errors = array();
-        if (count($_POST) > 0) {
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
             $customer = new Customer(); // Model for `customer` table
             $userTable = new User(); // Model for `user` table
+
+            //Check if the email is already in use
+            $email = $_POST['email'];
+            $existingUser = $userTable->where('email', $email, 'user');
+            if ($existingUser) {
+                $errors[] = "Email already exists.";
+            }
 
             // Handle file upload for profile picture
             if (isset($_FILES['profile_picture']) && $_FILES['profile_picture']['error'] == 0) {
@@ -119,40 +127,46 @@ class Register extends Controller
             }
 
             // Validate and process form data
-            if ($customer->validate($_POST)) {
-                // Save data to `customer` table
-                $customerData = [
-                    'fname' => $_POST['fname'],
-                    'lname' => $_POST['lname'],
-                    'email' => $_POST['email'],
-                    'phoneNo' => $_POST['phone'],
-                    'username' => $_POST['username'],
-                    'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
-                    'status_id' => 1,
-                    'picture' => $_POST['picture'],
-                ];
-
-                $customer->insert($customerData);
+            if (empty($errors) && $customer->validate($_POST)) {
 
                 // Save data to `user` table
                 $userData = [
                     'email' => $_POST['email'],
                     'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
                     'role' => 'customer',
+                    'profile_pic' => $_POST['picture'],
+                    'reg_date' => date('Y-m-d H:i:s'),
+                    'status_id' => 1 // active
                 ];
 
                 $userTable->insert($userData);
+                // Fetch the inserted user by email to get the ID
+                $insertedUser = $userTable->where('email', $_POST['email'], 'user');
 
-                $this->redirect('login');
+                if ($insertedUser && isset($insertedUser[0]->id)) {
+                    $user_id = $insertedUser[0]->id;
+                }
+
+                // Save data to `customer` table
+                if ($user_id) {
+                    $customerData = [
+                        'fname' => $_POST['fname'],
+                        'lname' => $_POST['lname'],
+                        'phoneNo' => $_POST['phone'],
+                        'username' => $_POST['username'],
+                        'user_id' => $user_id
+                    ];
+
+                    $customer->insert($customerData);
+                    $this->redirect('login');      
             } else {
+                $errors[] = "Failed to create user.";
+            }
+            } elseif (!$customer->validate($_POST)) {
                 $errors = $customer->errors;
             }
         }
-
-        // Render the customer registration view
-        $this->view('/customerRegistration', [
-            'errors' => $errors,
-        ]);
+        $this->view('customerRegistration', ['errors' => $errors]);
     }
 
     function business()

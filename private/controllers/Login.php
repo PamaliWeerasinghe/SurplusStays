@@ -44,12 +44,9 @@ class Login extends Controller{
                         break;
                     case 'customer':
                         $customer=new AdminUser();
-                        $customer_details=$customer->where('user_id',$user_details->id,'customer');
-                        Auth::authenticate($customer_details,$user_details);
-                        $this->view('CustomerDashboard',[
-                            'customerDetails'=>$customer,
-                            'commonDetails'=>$user
-                        ]);
+                        $customer_details=$customer->where(['user_id'],[$user_details->id],'customer');
+                        Auth::authenticate($customer_details[0],$user_details);
+                        $this->redirect('customer');
                         break;
                     case 'business':
                         $business= new AdminUser();
