@@ -85,8 +85,4 @@ class Model
           $query="select MAX(id) AS last_id from $this->table";
           return $this->db->query($query);
      }
-<<<<<<< HEAD
 }
-=======
-}
->>>>>>> origin/Admin_Backend

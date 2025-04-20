@@ -4,6 +4,15 @@ class Customer extends Controller{
         $this->view('CustomerDashboard');
     }
 
+    //customer registration
+    // function register()
+    // {
+    //     $errors = array();
+    //     $verify = new CustomerModel();
+
+    // }
+
+
     function manageComplaints()
     {
         if (!Auth::logged_in()) {
@@ -12,7 +21,9 @@ class Customer extends Controller{
 
         $event = new Complaint();
         $customer_id = Auth::getID();
-        $data = $event->where('customer_id', $customer_id);
+        // print_r($customer_id);
+        $customer_id=1;
+        $data = $event->where(['customer_id'], [$customer_id], "complaints");
 
         $this->view('custManageComplaints',['rows' => $data]);
         
@@ -214,6 +225,187 @@ class Customer extends Controller{
             'errors' => $errors,
         ]);
     }
+    
+
+
+
+    //other pages
+    function browseShops(){
+        $this->view('CustomerBrowseShops');
+    }
+    function cart(){
+        $errors = array();
+        $verify = new CustomerModel();
+        $cart_view = $verify->findAll("cart_view"); // Store results in $cart_view
+        $item_count = count($cart_view); // Now count the actual variable
+        
+        $this->view('CustomerCart', [
+            'errors' => $errors,
+            'cart_view' => $cart_view, // Pass the same variable to view
+            'item_count' => $item_count
+        ]);
+    }
+
+    // Add these methods to your Customer controller class
+
+function updateCartQuantity() {
+    if (!Auth::logged_in()) {
+        echo json_encode(['success' => false, 'message' => 'Not logged in']);
+        exit;
+    }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $cart_id = $_POST['cart_id'] ?? null;
+        $new_quantity = $_POST['quantity'] ?? null;
+
+        if ($cart_id && $new_quantity !== null) {
+            $cart = new Cart();
+            $result = $cart->updateQuantity($cart_id, $new_quantity);
+            
+            if ($result) {
+                echo json_encode(['success' => true]);
+                exit;
+            }
+        }
+    }
+
+    echo json_encode(['success' => false, 'message' => 'Invalid request']);
+    exit;
+}
+
+
+    // function addToCart($id){
+    //     if(!Auth::logged_in()){
+    //         $this->redirect('login');
+    //     }
+
+    //     $cart = new Cart();
+    //     // $cart -> insert();
+    // }
+
+
+    function addToCart($products_id) {
+        if(!Auth::logged_in()) {
+            echo json_encode(['success' => false, 'message' => 'Please login to add items to cart']);
+            exit;
+        }
+    
+        // Get data from POST request
+        $data = json_decode(file_get_contents('php://input'), true);
+        $customer_id = $data['customer_id'] ?? Auth::getID();
+        $quantity = $data['quantity'] ?? 1;
+    
+        $cart = new Cart();
+        $result = $cart->addToCart($customer_id, $products_id, $quantity);
+    
+        if($result) {
+            echo json_encode(['success' => true]);
+        } else {
+            echo json_encode(['success' => false, 'message' => 'Failed to add to cart']);
+        }
+        exit;
+    }
+
+ function removeFromCart($id) {
+    if (!Auth::logged_in()) {
+        $this->redirect('login');
+    }
+    
+    $cart = new Cart();
+    $cart->delete($id, 'cart');
+    $this->redirect('customer/cart');
+}
+
+// function removeFromCart() {
+//     if (!Auth::logged_in()) {
+//         echo json_encode(['success' => false, 'message' => 'Not logged in']);
+//         exit;
+//     }
+
+//     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+//         $cart_id = $_POST['cart_id'] ?? null;
+
+//         if ($cart_id) {
+//             $cart = new Cart();
+//             $result = $cart->delete($cart_id);
+            
+//             if ($result) {
+//                 echo json_encode(['success' => true]);
+//                 exit;
+//             }
+//         }
+//     }
+
+//     echo json_encode(['success' => false, 'message' => 'Invalid request']);
+//     exit;
+// }
+
+
+    // function removeFromCart(){
+
+    // }
+
+
+
+    function paymentHistory(){
+        $this->view('custPayment');
+    }
+
+    function orders(){
+        $this->view('custViewOrders');
+    }
+
+
+    // wishlist
+    function wishlist(){
+        $errors = array();
+        $verify = new CustomerModel();
+        $watchlist_view = $verify->findAll("watchlist_view");
+        $item_count = count($watchlist_view);
+        $this->view('custWishlist', [
+            'errors'=>$errors,
+            'watchlist_view' => $watchlist_view,
+            'item_count' => $item_count,
+            // 'customer_id'=>$_SESSION['USER']
+        ]);
+    }
+
+    function removeFromWatchlist($id) {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+        
+        $watchlist = new Watchlist();
+        $watchlist->delete($id, 'watchlist');
+        $this->redirect('customer/wishlist');
+    }
+
+    function profile(){
+        $this->view('custProfile');
+    }
+
+    function changePassword(){
+        $this->view('custChangePassword');
+    }
+
+    function insideShop(){
+        // $this->view('insideShop');
+        $errors=array();
+        $verify=new CustomerModel();
+        $customer=$verify->where('business_id',1, "products");
+        $business=$verify->where('id',1, "business");
+        $user=$verify->where('id',2, "user");
+        // $cart=$verify->insert();
+
+        // print_r($customer[0]->name);
+        $this->view('insideShop',[
+            'errors'=>$errors,
+            'products'=>$customer,
+            'business'=>$business,
+            'user'=>$user
+        ]);
+    }
+
 
  
 
