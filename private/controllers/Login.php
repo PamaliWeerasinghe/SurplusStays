@@ -35,20 +35,13 @@ class Login extends Controller{
 
                         Mail::sendAdminDashboard($_POST['email'],$token);
                         
-                        // TODO: view email sent 
-                        die('Email sent');
-                        // $successfull["email"]="Email Sent. Check Yor Email";
-                        // $this->view('AdminLoginStep1',[
-                        //     "successfull"=>$successfull
-                        // ]);
-                        self::verifyEmail();
                         $_SESSION['alert_message']="Check your email";
                         $_SESSION['alert_type']="success";
                         $this->redirect('login/checkEmail');
 
                         self::verifyEmail();
 
-                        break;
+                        break;
                     case 'customer':
                         $customer=new AdminUser();
                         $customer_details=$customer->where('user_id',$user_details->id,'customer');
@@ -72,10 +65,7 @@ class Login extends Controller{
                         $charity= new AdminUser();
                         $charity_details=$charity->where(['user_id'],[$user_details->id],'organization');
                         Auth::authenticate($charity_details[0],$user_details);
-                        $this->view('charity_dashboard',[
-                            'rowCount'=>$charity,
-                            'commonDetails'=>$user
-                        ]);
+                        $this->redirect('charity/index');
                         break;
                     default:
                         $this->view('AdminLoginStep1');

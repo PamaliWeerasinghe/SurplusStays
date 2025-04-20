@@ -149,7 +149,7 @@ a:hover {
 }
 
 button {
-    background-color: #1B4332;
+    background-color: #005250;
     width: 200px;
     color: white;
     padding: 10px;
@@ -162,5 +162,83 @@ button {
 }
 
 button:hover {
-    background-color: #28a745;
+    background-color: #07706e;
+}
+.notification-icon {
+    position: relative;
+    margin-left: 95%;
+    margin-top: 10px;
+    cursor: pointer;
+    font-size: 20px;
+    width: 40px;
+    height: 40px;
+    background: rgba(255, 255, 255, 0.2);
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: all 0.3s ease;
+}
+
+.rating {
+    display: flex;
+    align-items: center;
+}
+
+.stars {
+    color: #ffc107;
+    letter-spacing: 2px;
+    margin-right: 8px;
+}
+
+.score {
+    color: #666;
+    font-weight: 500;
+}
+
+.notification-icon:hover {
+    background: rgba(255, 255, 255, 0.3);
+}
+
+.notification-badge {
+    position: absolute;
+    top: -5px;
+    right: -5px;
+    background-color: #e05b4a;
+    color: white;
+    font-size: 12px;
+    width: 18px;
+    height: 18px;
+    border-radius: 50%;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+/* Responsive Adjustments */
+@media (max-width: 768px) {
+    .charity-overview {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .image-container {
+        margin-right: 0;
+        margin-bottom: 20px;
+    }
+    
+    .bank-info-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .charity-info-card {
+        margin: 0 20px;
+        margin-top: -40px;
+        width: calc(100% - 40px);
+    }
+    
+    .edit-profile-btn {
+        width: 100%;
+        justify-content: center;
+    }
 }

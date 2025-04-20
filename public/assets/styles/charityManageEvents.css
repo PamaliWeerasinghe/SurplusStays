@@ -53,6 +53,10 @@ body, html {
     width: 85%;
     height: 40px;
   }
+
+  .events-header h2{
+    color: black;
+  }
   
   h2 {
     margin: 0;

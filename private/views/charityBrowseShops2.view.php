@@ -135,9 +135,6 @@
         <div class="container-right">
             <div class="top-nav">
                 <div class="top-bar">
-                    <div class="notification">
-                        <img src="<?=ASSETS?>/images/bell.png" alt="Notification Bell" class="bell-icon">
-                    </div>
                 </div>
                 <div class="searchWelcome">
                 <h2>Search Our Shops</h2>

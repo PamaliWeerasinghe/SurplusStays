@@ -324,11 +324,118 @@ function getTopDonatingBusinesses()
         $user = new User();
         $currUser = $user->where('id', $user_id,'user' );
 
+        function getPostalCodeForDistrict($district)
+        {
+            $postalCodes = [
+                'Colombo' => '00100',
+                'Gampaha' => '11000',
+                'Kalutara' => '12000',
+                'Kandy' => '20000',
+                'Matale' => '21000',
+                'Nuwara Eliya' => '22200',
+                'Galle' => '80000',
+                'Matara' => '81000',
+                'Hambantota' => '82000',
+                'Jaffna' => '40000',
+                'Kilinochchi' => '44000',
+                'Mannar' => '41000',
+                'Vavuniya' => '43000',
+                'Mullaitivu' => '42000',
+                'Trincomalee' => '31000',
+                'Batticaloa' => '30000',
+                'Ampara' => '32000',
+                'Kurunegala' => '60000',
+                'Puttalam' => '61000',
+                'Anuradhapura' => '50000',
+                'Polonnaruwa' => '51000',
+                'Badulla' => '90000',
+                'Monaragala' => '91000',
+                'Ratnapura' => '70000',
+                'Kegalle' => '71000',
+            ];
+            return $postalCodes[$district] ?? 'N/A';
+        }
+
+        $postalCode = getPostalCodeForDistrict($currOrg[0]->city);
+
         $this->view('charityProfile',[
             'currOrg' => $currOrg,
             'currUser' => $currUser,
+            'postalCode' => $postalCode
         ]);
     }
+
+    function editProfile(){
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+    
+        $org = new Organization();
+        $org_id = Auth::getID();
+        $currOrg = $org->where('id', $org_id, 'organization');
+        $user_id = $currOrg[0]->user_id;
+    
+        $user = new User();
+        $currUser = $user->where('id', $user_id, 'user');
+    
+        $errors = [];
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+    
+            // Handle profile picture upload
+            $profile_pic_path = $currUser[0]->profile_pic; // fallback to current
+            if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === 0) {
+                $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/charityImages/";
+                $fileName = basename($_FILES['profile_pic']['name']);
+                $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+                $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+    
+                if (in_array(strtolower($fileType), $allowedTypes)) {
+                    $uniqueName = uniqid('img_', true) . '.' . $fileType;
+                    $filePath = $targetDir . $uniqueName;
+    
+                    if (move_uploaded_file($_FILES['profile_pic']['tmp_name'], $filePath)) {
+                        $profile_pic_path = $uniqueName;
+                    } else {
+                        $errors[] = "Failed to upload profile picture.";
+                    }
+                } else {
+                    $errors[] = "Invalid image format.";
+                }
+            }
+            
+    
+            // Validate and Update
+            if (empty($errors) && $org->validateEdit($_POST)) {
+                $orgData = [
+                    'name' => $_POST['name'],
+                    'phoneNo' => $_POST['phone'],
+                    'username' => $_POST['username'],
+                    'city' => $_POST['city'],
+                    'charity_description' => $_POST['description']
+                ];
+                
+    
+                $userData = [
+                    'profile_pic' => $profile_pic_path
+                ];
+                
+    
+                $org->update($org_id, $orgData, 'organization');
+                $user->update($user_id, $userData, 'user');
+    
+                $this->redirect('charity/profile');
+            }
+        }
+    
+        $this->view('charityEditProfile', [
+            'currOrg' => $currOrg,
+            'currUser' => $currUser,
+            'errors' => $errors,
+        ]);
+    }
+    
 
     function viewEvent($id = null)
     {
@@ -409,22 +516,8 @@ function getTopDonatingBusinesses()
                 $errors[] = "At least one event picture is required.";
             }
 
-            // Validate required-food input
             $requiredFood = $_POST['required-food'] ?? '';
-            // if (!empty($requiredFood)) {
-            //     try {
-            //         $correctedFood = $this->callOpenAI($requiredFood);
-            //         if($requiredFood != $correctedFood){
-            //             $errors[] = "Did you mean {$correctedFood}.";
-            //         }else{
-            //             $_POST['required-food'] = $requiredFood;
-            //         }
-            //     } catch (Exception $e) {
-            //         $errors[] = "Error validating food names: " . $e->getMessage();
-            //     }
-            // }
 
-            // Process the event if no errors
             if (empty($errors) && $event->validate($_POST)) {
                 $arr['organization_id'] = Auth::getId();
                 $arr['event'] = $_POST['event-name'];
