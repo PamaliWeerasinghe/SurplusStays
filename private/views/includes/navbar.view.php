@@ -4,7 +4,7 @@
             <li><a href="<?=ROOT?>">Home</a></li>
             <li><a href="#">About Us</a></li>
             <li class="dropdown">
-                <a href="#">Shop <li><a href="#"><img src="<?=ASSETS?>/icons/sortdown-icon.png" class="dropdown-icon" alt="cart icon"></a></li></a>
+                <a href="<?=ROOT?>/customer">Shop <li><a href="#"><img src="<?=ASSETS?>/icons/sortdown-icon.png" class="dropdown-icon" alt="cart icon"></a></li></a>
             </li>
         </ul>
         <div class="logo">
@@ -12,8 +12,18 @@
         </div>
         <ul class="nav-links-right">
             <li><a href="#">Contact Us</a></li>
-            <li><a href="#"><img src="<?=ASSETS?>/images/sample_profile_pic.png" alt="profile icon"></a></li>
+            <?php if (Auth::getcharity_description() != "Unknown" && !empty(Auth::getcharity_description())):?>
+                <li><a href="<?=ROOT?>/charity"><img class="profile-img" src="<?=ASSETS?>/charityImages/<?=basename(Auth::getPicture())?>" alt="profile icon"></a></li>
+            <?php elseif (Auth::getlname() != "Unknown" && !empty(Auth::getlname())):?>
+                <li><a href="<?=ROOT?>/customer"><img class="profile-img" src="<?=ASSETS?>/customerImages/<?=basename(Auth::getPicture())?>" alt="profile icon"></a></li>
+            <?php elseif (Auth::getbusiness_type() != "Unknown" && !empty(Auth::getbusiness_type())):?>
+                <li><a href="<?=ROOT?>/business"><img class="profile-img" src="<?=ASSETS?>/businessImages/<?=basename(Auth::getPicture())?>" alt="profile icon"></a></li>
+            <?php else:?>
+                <li><a href="#"><img src="<?=ASSETS?>/images/sample_profile_pic.png" alt="profile icon"></a></li>
+                
+            <?php endif;?>    
             <li><a href="#"><img src="<?=ASSETS?>/icons/heart-icon.png" alt="heart icon"></a></li>
-            <li><a href="#"><img src="<?=ASSETS?>/icons/cart-icon.png" alt="cart icon"></a></li>
+            <li><a href="<?=ROOT?>/logout">Logout</a></li>
         </ul>
+
     </nav>

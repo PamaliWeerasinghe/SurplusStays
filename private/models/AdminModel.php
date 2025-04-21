@@ -2,17 +2,52 @@
 
 class AdminModel extends Admin_Model
 {
-
-    public $table = 'organization';
-
     //Validate Admin login details
     public function validate($DATA)
     {
         $this->errors = array();
-        //validating the name
-        // if (!preg_match('/^[a-z A-Z]+$/', $DATA['fullName'])) {
-        //     $this->errors['name'] = "Only letters are allowed for the full name";
-        // }
+      
+
+        //validating the email
+        if (empty($DATA['email']) || !filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
+            $this->errors['email'] = "Email is not valid";
+        }
+        //validate the name
+        if (!preg_match('/^[a-z A-Z &]+$/', $DATA['fname'])) {
+            $this->errors['name'] = "Only letters are allowed for the name";
+        }
+        //validating the password
+        if (empty($DATA['password'])) {
+            $this->errors['password'] = "Password is empty";
+        }
+          //validate the image selection
+          $logo = $_FILES['profile_picture']['name'];
+          $logoExt = explode('.', $logo);
+          $logoActualExt = strtolower(end($logoExt));
+          $allowed = array('jpg', 'jpeg', 'png');
+          if (in_array($logoActualExt, $allowed)) {
+              if ($_FILES['profile_picture']['error'] != 0) {
+                  $this->errors['profile_picture'] = "There was an error uploading your profile picture!";
+              }
+          } else {
+              $this->errors['profile_picture'] = "You cannot add images of this type!";
+          }
+  
+          if (isset($DATA['profile_picture'])) {
+              $this->errors['profile_picture'] = "Select a profile photo";
+          }
+
+        //No errors
+        if (count($this->errors) == 0) {
+            return true;
+        }
+        //Contains errors
+        return false;
+    }
+    //Validate Admin Register details
+    public function validateAdminRegister($DATA){
+        $this->errors = array();
+      
 
         //validating the email
         if (empty($DATA['email']) || !filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
@@ -22,7 +57,30 @@ class AdminModel extends Admin_Model
         if (empty($DATA['password'])) {
             $this->errors['password'] = "Password is empty";
         }
+        //validating the name
+        if (!preg_match('/^[a-z A-Z &]+$/', $DATA['name'])) {
+            $this->errors['name'] = "Only letters are allowed for the name";
+        }
+        
+         if (!isset($_FILES['profile_pic'])) {
 
+             $this->errors['profile_pic'] = "Select a profile photo";
+         }else{
+             //validate the image selection
+            $logo = $_FILES['profile_pic']['name'];
+            $logoExt = explode('.', $logo);
+             $logoActualExt = strtolower(end($logoExt));
+             $allowed = array('jpg', 'jpeg', 'png');
+                if (in_array($logoActualExt, $allowed)) {
+                    if ($_FILES['profile_pic']['error'] != 0) {
+                        $this->errors['profile_pic'] = "There was an error uploading your profile picture!";
+                    }
+                } else {
+                    $this->errors['profile_pic'] = "You cannot add images of this type!";
+                }
+ 
+         }
+        
 
         //No errors
         if (count($this->errors) == 0) {
@@ -30,7 +88,73 @@ class AdminModel extends Admin_Model
         }
         //Contains errors
         return false;
+
     }
+    //validate customer before inserting
+    public function validateCustomer($DATA)
+    {
+        $this->errors=array();
+        //validate fname and lname
+        if (!preg_match('/^[a-z A-Z &]+$/', $DATA['fname'])) {
+            $this->errors['fname'] = "Only letters are allowed for the first name";
+        }
+        if (!preg_match('/^[a-z A-Z &]+$/', $DATA['lname'])) {
+            $this->errors['lname'] = "Only letters are allowed for the last name";
+        }
+         
+         //validate the email
+        if (empty($DATA['email']) || !filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
+            $this->errors['email'] = "Email is not valid";
+        }
+
+         //validate the mobile phone number
+         if (!preg_match('/^(\+94|0)?((7|1)[0-9]{1})[0-9]{7}$/', $DATA['phone'])) {
+            $this->errors['phone'] = "Invalid phone number";
+        }
+
+         //validate the username
+         if (empty($DATA['username'])) {
+            $this->errors['username'] = "Username should not be empty";
+        }
+
+         //validate the image selection
+         $logo = $_FILES['profile_picture']['name'];
+         $logoExt = explode('.', $logo);
+         $logoActualExt = strtolower(end($logoExt));
+         $allowed = array('jpg', 'jpeg', 'png');
+         if (in_array($logoActualExt, $allowed)) {
+             if ($_FILES['profile_picture']['error'] != 0) {
+                 $this->errors['profile_picture'] = "There was an error uploading your profile picture!";
+             }
+         } else {
+             $this->errors['profile_picture'] = "You cannot add images of this type!";
+         }
+ 
+         if (isset($DATA['profile_picture'])) {
+             $this->errors['profile_picture'] = "Select a profile photo";
+         }
+        
+        //validate passowrd and the confirm_password
+        if (empty($DATA['password'])) {
+            $this->errors['password'] = "Password cannot be empty";
+        } else if (empty($DATA['confirm_password'])) {
+            $this->errors['password'] = "Confirm Password cannot be empty";
+        } else {
+            if ($DATA['password'] != $DATA['confirm_password']) {
+                $this->errors['passwords'] = "Passwords do not match";
+            }
+        }
+
+
+        if (count($this->errors) == 0) {
+            return true;
+        } else {
+            return false;
+        }
+
+
+    }
+    //Validate charity org before inserting
     public function validateCharity($DATA)
     {
         $this->errors = array();
@@ -93,6 +217,7 @@ class AdminModel extends Admin_Model
             return false;
         }
     }
+   
     //upload a logo
     public function uploadLogo($logo)
     {
@@ -100,13 +225,25 @@ class AdminModel extends Admin_Model
         $logoExt = explode('.', $logo);
         $logoActualExt = strtolower(end($logoExt));
         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
-        $fileDestination = '../../SurplusStays/public/assets/uploads/' . $logoNameNew;
-        $dbFileDestination = '../../../SurplusStays/public/assets/uploads/' . $logoNameNew;
+        $fileDestination =$_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages/' . $logoNameNew;
+        $dbFileDestination = $logoNameNew;
         move_uploaded_file($_FILES['logo']['tmp_name'], $fileDestination);
 
         return $dbFileDestination;
     }
-
+     //upload admin profile picture
+     public function uploadProfilePic($logo)
+     {
+ 
+         $logoExt = explode('.', $logo);
+         $logoActualExt = strtolower(end($logoExt));
+         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
+         $fileDestination =$_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/adminImages/' . $logoNameNew;
+         $dbFileDestination = $logoNameNew;
+         move_uploaded_file($_FILES['profile_pic']['tmp_name'], $fileDestination);
+ 
+         return $dbFileDestination;
+     }
     //update a logo
     public function updateLogo($logo)
     {
@@ -114,14 +251,14 @@ class AdminModel extends Admin_Model
         $logoExt = explode('.', $logo);
         $logoActualExt = strtolower(end($logoExt));
         $logoNameNew = uniqid('', true) . "." . $logoActualExt;
-        $fileDestination = '../../SurplusStays/public/assets/uploads/' . $logoNameNew;
-        $dbFileDestination = '../../../SurplusStays/public/assets/uploads/' . $logoNameNew;
+        $fileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages/' . $logoNameNew;
+        $dbFileDestination = $_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages/' . $logoNameNew;
         move_uploaded_file($_FILES['file']['tmp_name'], $fileDestination);
 
-        return $dbFileDestination;
+        return $logoNameNew;
     }
 
-
+    //validate Edit Charity
     public function validateEditCharity($DATA)
     {
         $this->errors = array();

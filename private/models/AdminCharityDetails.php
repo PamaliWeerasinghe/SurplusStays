@@ -3,6 +3,11 @@
 
 class AdminCharityDetails extends Admin_Model
 {
+    protected $db;
+    public function __construct()
+    {
+        $this->db=Database::getInstance();
+    }
     public function getDonorCount($id)
     {
         $query = "select count(organization_id) as donors 
@@ -13,7 +18,7 @@ class AdminCharityDetails extends Admin_Model
 
         $params = ["id" => $id];
 
-        $result = $this->query($query, $params);
+        $result = $this->db->query($query, $params);
 
         return $result[0]->donors;
     }
@@ -26,7 +31,7 @@ class AdminCharityDetails extends Admin_Model
         where organization_id=:id";
 
         $params = ["id" => $id];
-        $result = $this->query($query, $params);
+        $result = $this->db->query($query, $params);
 
         return $result[0]->donations;
     }

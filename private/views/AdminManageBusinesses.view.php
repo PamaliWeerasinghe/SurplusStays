@@ -2,6 +2,7 @@
     <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
     <link rel="stylesheet" href="<?=STYLES?>/adminManageActors.css" />
     <link rel="stylesheet" href="<?=STYLES?>/admin.css">
+    <link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet"   />
 </head>
 
 <body>
@@ -68,8 +69,16 @@
                                 <label>No. of Complaints Recieved : 20</label>
                             </div>
                             <div class="business-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
+                                <button>
+                                <span class="material-symbols-outlined action-btn view">
+                                            account_box
+                                        </span>
+                                </button>
+                                <button>
+                                <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
+                                            person_remove
+                                        </span>
+                                </button>
                             </div>
                             
                             </div>
@@ -101,8 +110,16 @@
                                 <label>No. of Complaints Recieved : 20</label>
                             </div>
                             <div class="business-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
+                            <button>
+                                <span class="material-symbols-outlined action-btn view">
+                                            account_box
+                                        </span>
+                                </button>
+                                <button>
+                                <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
+                                            person_remove
+                                        </span>
+                                </button>
                             </div>
                             
                             </div>
@@ -134,8 +151,16 @@
                                 <label>No. of Complaints Recieved : 20</label>
                             </div>
                             <div class="business-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
+                            <button>
+                                <span class="material-symbols-outlined action-btn view">
+                                            account_box
+                                        </span>
+                                </button>
+                                <button>
+                                <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
+                                            person_remove
+                                        </span>
+                                </button>
                             </div>
                             
                             </div>
@@ -167,8 +192,16 @@
                                 <label>No. of Complaints Recieved : 20</label>
                             </div>
                             <div class="business-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
+                            <button>
+                                <span class="material-symbols-outlined action-btn view">
+                                            account_box
+                                        </span>
+                                </button>
+                                <button>
+                                <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
+                                            person_remove
+                                        </span>
+                                </button>
                             </div>
                             
                             </div>
@@ -200,8 +233,16 @@
                                 <label>No. of Complaints Recieved : 20</label>
                             </div>
                             <div class="business-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
+                            <button>
+                                <span class="material-symbols-outlined action-btn view">
+                                            account_box
+                                        </span>
+                                </button>
+                                <button>
+                                <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
+                                            person_remove
+                                        </span>
+                                </button>
                             </div>
                             
                             </div>

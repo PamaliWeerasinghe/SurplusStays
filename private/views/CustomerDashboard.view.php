@@ -14,7 +14,7 @@
     <!-- navbar -->
 
     <div class="main-div">
-    <?php echo $this->view('includes/navbar')?>
+    <?php echo $this->view('includes/charityNavbar')?>
         <div class="sub-div-1">
             <!-- included the admin side panel -->
             <?php require APPROOT."/views/includes/customerSidePanel.view.php"?>

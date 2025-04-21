@@ -1,0 +1,280 @@
+/*from business.css*/
+
+@import url('https://fonts.googleapis.com/css2?family=Poppins:wght@400;500;600;700&display=swap');
+
+* {
+    font-family: 'Poppins', sans-serif;
+    font-weight: 300;
+}
+
+body {
+    margin: 0;
+}
+
+.main-div {
+    width: 100%;
+    height: 100vh; 
+}
+
+.sub-div-1 {
+    display: flex;
+    flex-direction: row;
+}
+
+.dashboard {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    align-items: center;
+    flex: 4;
+    background-color: white;
+}
+
+/*dashboard start here*/
+
+.summary {
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 60vh;
+    background-color: #1B4332;
+}
+
+.notifications {
+    display: flex;
+    justify-content: flex-end;
+    padding: 2%;
+}
+
+.add-complain-btn {
+    width: 86%;
+    height: 8vh;
+    font-size: 1.2rem;
+    background-color: white;
+    color: #23483C;
+    padding: 15px 30px;
+    border: none;
+    border-radius: 8px;
+    font-weight: bold;
+    cursor: pointer;
+    box-shadow: 0px 2px 5px rgba(0, 0, 0, 0.2);
+}
+
+.add-complain-btn:hover {
+    background-color: #ffd7b4;
+    transition: background-color 0.3s ease;
+}
+
+.Business-complaints-order-status {
+    width: 82%;
+    background-color: #F0F8FF;
+    margin-top: -16%;
+    border-radius: 10px;
+    padding: 2%;
+    margin-bottom: 5%;
+    padding-bottom: 5%;
+}
+
+.add-buyer {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    margin-top: 3%;
+}
+
+.add-buyer div {
+    cursor: pointer;
+    width: 86%;
+    height: 8vh;
+    background-color: #fff;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 10px;
+}
+
+.add-buyer div label {
+    font-weight: bold;
+}
+
+.order-table button {
+    padding: 10px 20px;
+    border-radius: 20px;
+    border: none;
+    font-size: 14px;
+    font-weight: bold;
+    color: #fff;
+    cursor: pointer;
+}
+
+.order-table .completed {
+    background-color: #1B4332;
+}
+
+.order-table .take-action {
+    background-color: #FD5D34;
+}
+
+.arrow-div {
+    display: flex;
+    justify-content: flex-end;
+    margin-bottom: 4%;
+    padding: 1%;
+    cursor: pointer;
+}
+
+.notifications-type2 {
+    display: flex;
+    justify-content: space-between;
+    padding: 3%;
+}
+
+.search {
+    border-radius: 20px;
+    border-style: solid;
+    padding-left: 3%;
+    width: 15%;
+    height: 4vh;
+    border-top-left-radius: gray;
+    position: absolute;
+    background-color: transparent;
+}
+
+.searchdiv {
+    display: flex;
+    flex-direction: row;
+    margin-left: 5.5%;
+}
+
+.bell2 {
+    padding-left: 18px;
+    padding-top: 6px;
+    height: 3vh;
+}
+
+.order-status {
+    width: 86%;
+    background-color: #F0F8FF;
+    margin-top: -19%;
+    border-radius: 10px;
+    padding: 2%;
+    margin-bottom: 5%;
+}
+
+.order {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+}
+
+.order select {
+    border: none;
+    background-color: #F0F8FF;
+}
+
+.order-table {
+    width: 100%;
+    border-collapse: collapse;
+    margin-top: 5%;
+    margin-bottom: 4%;
+}
+
+.order-table thead tr {
+    text-align: left;
+}
+
+.order-table th, .order-table td {
+    padding: 12px 20px;
+    font-size: medium;
+    color: #333;
+}
+
+.order-table th {
+    color: #7e8a91;
+    font-weight: 600;
+}
+
+.order-table tbody tr {
+    border-bottom: 1px solid #e0e0e0;
+    background-color: white;
+}
+
+.order-table tbody tr:hover {
+    background-color: #ffd7b4; 
+    cursor: pointer; 
+    transition: background-color 0.3s ease; 
+}
+
+.order-table tbody tr:last-child {
+    margin-top: 4%;
+}
+
+.order-table td {
+    vertical-align: middle;
+}
+
+.event-name {
+    display: flex;
+    align-items: center;
+}
+
+.event-name h3 {
+    font-size: 16px;
+    margin-left: 20px;
+}
+
+.event-name img.event-img {
+    width: 40px;
+    height: 40px;
+    border-radius: 20%;
+}
+
+
+/* Styles for Popup of deletion  */
+.modal {
+    display: none;
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    background: rgba(0, 0, 0, 0.5);
+    z-index: 1000;
+}
+
+.modal-content {
+    background: white;
+    width: 300px;
+    margin: 15% auto;
+    padding: 20px;
+    text-align: center;
+    border-radius: 8px;
+    box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.2);
+}
+
+.modal-buttons {
+    margin-top: 20px;
+}
+
+.modal-button {
+    padding: 10px 20px;
+    border: none;
+    border-radius: 20px;
+    cursor: pointer;
+    font-size: 14px;
+}
+
+.modal-button.confirm {
+    background:#fc5d35;
+    color: white;
+}
+
+.modal-button.cancel {
+    background: #1a4331;
+    color: white;
+}
+
+.modal-button:hover {
+    opacity: 0.9;
+}
+

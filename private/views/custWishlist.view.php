@@ -1,6 +1,5 @@
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -9,117 +8,150 @@
     <link rel="stylesheet" href="<?=STYLES?>/customerDashboard.css">
     <link rel="stylesheet" href="<?=STYLES?>/customerSidePanel.css">
     <link rel="stylesheet" href="<?=STYLES?>/CustWishlist.css">
+    <style>
+        /* Add these styles to ensure popup works */
+        
+    </style>
 </head>
 
 <body>
     <!-- navbar -->
-
     <div class="main-div">
-    <?php echo $this->view('includes/navbar')?>
+        <?php echo $this->view('includes/navbar')?>
         <div class="sub-div-1">
-            <!-- included the admin side panel -->
             <?php require APPROOT."/views/includes/customerSidePanel.view.php"?>
             <div class="dashboard">
                 <div class="summary">
                     <div class="top-bar">
                         <div class="search-bar">
-                            <input type="text" placeholder="Search..." />
+                            <!-- Search bar content -->
                         </div>
                         <div class="notification">
-                            <img src="<?=ASSETS?>/images/Bell.png" alt="Notification Bell" class="bell-icon">
+                            <!-- Notification content -->
                         </div>
                     </div>
                 </div>
-
 
                 <div class="box">
                     <div class="box-header">
-                        Wishlist - 3 items
+                        Wishlist - <?= $item_count ?> <?= $item_count == 1 ? 'item' : 'items' ?>
                     </div>
 
-                    <div class="row" style="padding:50px;">
-                    <div class="column">
-                        <div class="cart-item">
-                                <img src="<?=ASSETS?>/images/bread.png" alt="Bread" class="item-image">
-                                <div class="item-details">
-                                    <h3 class="item-name">Bread - RS 200</h3>
-                                    <p class="item-expiry" style="font-size: small;">
-                                        Expire - <span class="expiry-date">2024.12.25</span> <span class="expiry-time">12.00AM</span>
-                                    </p>
-                                    <p class="item-stock">Items Left - 24</p>
-                                </div>
-                                <div class="item-actions">
-                                    <div class="quantity-control">
-                                        <button class="quantity-btn">-</button>
-                                        <span class="quantity">2</span>
-                                        <button class="quantity-btn">+</button>
-                                    </div>
-                                    <br/>
-                                    <button class="remove-btn" style="background-color: #0B3D3B; border-radius: 40px; color:white;">Add To Cart</button>
-                                    <button class="remove-btn" style="background-color: red; border-radius: 40px; color:white;">Remove</button>
-                                </div>
-                            </div>
-                    </div>
+                    <div class="wishlist-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Product Name</th>
+                                    <th>Unit Price</th>
+                                    <th>Stock Status</th>
+                                    <th>Action</th>
+                                    <th>Action</th>
+                                </tr>
+                            </thead>
 
-                    <div class="column">
-                        <div class="cart-item">
-                                <img src="<?=ASSETS?>/images/chips.png" alt="Bread" class="item-image">
-                                <div class="item-details">
-                                    <h3 class="item-name">Chips - RS 100</h3>
-                                    <p class="item-expiry" style="font-size: small;">
-                                        Expire - <span class="expiry-date">2024.12.25</span> <span class="expiry-time">12.00AM</span>
-                                    </p>
-                                    <p class="item-stock">Items Left - 24</p>
-                                </div>
-                                <div class="item-actions">
-                                    <div class="quantity-control">
-                                        <button class="quantity-btn">-</button>
-                                        <span class="quantity">2</span>
-                                        <button class="quantity-btn">+</button>
-                                    </div>
-                                    <br/>
-                                    <button class="remove-btn" style="background-color: #0B3D3B; border-radius: 40px; color:white;">Add To Cart</button>
-                                    <button class="remove-btn" style="background-color: red; border-radius: 40px; color:white;">Remove</button>
-                                </div>
-                            </div>
-                    </div>
+                            <tbody>
+                                <?php foreach ($watchlist_view as $item): ?>
+                                <tr id="card-item-<?= $item->id ?>">
+                                    <td>
+                                        <div class="product-card">
+                                            <div>
+                                                <img src="<?=ASSETS?>/images/<?= $item->pictures ?>">
+                                            </div>
+                                            <div class="product-info">
+                                                <p class="category"><?= $item->business_name ?></p>
+                                                <h3 class="product-title"><?= $item->product_name?></h3>
+                                                <div class="product-details">
+                                                    <p style="color: black;"><strong>Expiry:</strong><br/>
+                                                    <p style="color:red"><strong><?= $item->product_expiry ?></p>
+                                                </div>
+                                            </div>
+                                        </div>
+                                    </td>
 
-                    <div class="column">
-                        <div class="cart-item">
-                                <img src="<?=ASSETS?>/images/rice.png" alt="Bread" class="item-image">
-                                <div class="item-details">
-                                    <h3 class="item-name">Rice - RS 1800</h3>
-                                    <p class="item-expiry" style="font-size: small;">
-                                        Expire - <span class="expiry-date">2024.12.25</span> <span class="expiry-time">12.00AM</span>
-                                    </p>
-                                    <p class="item-stock">Items Left - 24</p>
-                                </div>
-                                <div class="item-actions">
-                                    <div class="quantity-control">
-                                        <button class="quantity-btn">-</button>
-                                        <span class="quantity">2</span>
-                                        <button class="quantity-btn">+</button>
-                                    </div>
-                                    <br/>
-                                    <button class="remove-btn" style="background-color: #0B3D3B; border-radius: 40px; color:white;">Add To Cart</button>
-                                    <button class="remove-btn" style="background-color: red; border-radius: 40px; color:white;">Remove</button>
-                                </div>
-                            </div>
+                                    <td>
+                                        Rs <?= number_format($item->product_price, 2) ?>
+                                    </td>
+                                        
+                                    <td>
+                                        <div class="product-status">
+                                            <?php if ($item->status_id == 1): ?>
+                                                <span class="in-stock">In Stock</span>
+                                            <?php elseif ($item->status_id == 2): ?>
+                                                <span class="out-of-stock">Out of Stock</span>
+                                            <?php else: ?>
+                                                <span class="unknown-status">Status Unknown</span>
+                                            <?php endif; ?>
+                                        </div>
+                                    </td>
+
+                                    <td>
+                                        <button class="add-to-cart-button" onclick="openAddToCartPopup(<?=$item->watchlist_id?>)">Add to Cart</button>
+                                    </td>
+
+                                    <td>
+                                        <img src="<?=ASSETS?>/images/delete.png" class="delete-btn" onclick="openDeletePopup(<?=$item->watchlist_id?>)">
+                                    </td>
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
                     </div>
                 </div>
-                </div>
-
-    
-                
-               
-
-
             </div>
-            
         </div>
         <?php echo $this->view('includes/footer')?>
     </div>
-    
-</body>
 
+    <!-- Delete Confirmation Popup -->
+    <div class="delete-popup-container" id="delete-popup-container">
+        <div class="delete-popup" id="delete-popup">
+            <h2>Are you sure?</h2>
+            <p>This product will be permanently deleted from your wishlist.</p>
+            <input type="hidden" id="popupRowID"/>
+            <form method="POST">
+                <div class="delete-popup-btn-div">
+                    <button type="submit" class="delete-popup-yes-button">Yes</button>
+                    <button type="button" class="delete-popup-close-button" onclick="hideDeletePopup()">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- popup for add to cart -->
+    <div class="cart-popup-container" id="cart-popup-container">
+    <div class="cart-popup" id="cart-popup">
+        <span class="popup-close-btn" onclick="hideCartPopup()">&times;</span>
+        <input type="hidden" id="popupRowID"/>
+        
+        <div class="popup-product-row">
+            <div class="popup-product-image">
+                <img src="<?=ASSETS?>/images/<?= $item->pictures ?>">
+            </div>
+            <div class="popup-product-info">
+                <p class="popup-category"><?= $item->business_name ?></p>
+                <h3 class="popup-product-title"><?= $item->product_name?></h3>
+                <div class="popup-product-details">
+                    <p class="popup-expiry-label">Expiry:</p>
+                    <p class="popup-expiry-date"><?= $item->product_expiry ?></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="popup-action-row">
+            <div class="popup-quantity-selector">
+                <button class="quantity-btn minus">-</button>
+                <input type="number" value="1" min="1" class="quantity-input" id="quantity-input">
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <div class="popup-action-buttons">
+                <!-- <button class="popup-confirm-btn">Add to Cart</button> -->
+                <button class="popup-confirm-btn" onclick="insertToCart($products_id)">Add to Cart</button>
+                <button type="button" class="popup-cancel-btn" onclick="hideCartPopup()">Cancel</button>
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="<?=ROOT?>/assets/js/customerWishlist.js"></script>
+</body>
 </html>

@@ -1,0 +1,82 @@
+CREATE VIEW complaintDetails As
+SELECT `complaints`.`id` AS `complaint_id`,
+            `order_items_id`,
+            `feedback`,
+            `order`.`id` AS `order_id`,
+            `complaint_status`.`name` AS `complaint_status`,
+            `complaints`.`business_id` AS `businessID`,
+            `complaints`.`complaint_dateTime` AS `complaint_date`,
+            `complaints`.`description` AS `complaintDescription`,
+            `business`.`name` AS `business_name`,
+            `business`.`phoneNo` AS `business_phone`,
+            `fname`,
+            `lname`,
+            `total`,
+            `order_items`.`qty` AS `itemQty`,
+            `paymentMethod`,
+            `user`.`email` AS `customer_email`,
+            `customer`.`phoneNo` AS `customer_phone`,
+            `expiration_dateTime` AS `product_expirationTime`,
+            `discountPrice`,
+            `products`.`name` AS product
+         FROM `complaints` 
+        INNER JOIN `order_items` ON `complaints`.`order_items_id`=`order_items`.`id` 
+        INNER JOIN `products` ON `products`.`id`=`order_items`.`products_id`
+        INNER JOIN `order` ON `order_items`.`order_id`=`order`.`id`
+        INNER JOIN `complaint_status` ON `complaints`.`complaint_status_id`=`complaint_status`.`id`
+        INNER JOIN `business` ON `business`.`id`=`complaints`.`business_id`
+        INNER JOIN `customer` ON `customer`.`id`=`complaints`.`customer_id`
+        INNER JOIN `user`  ON `user`.`id`=`customer`.`user_id`
+
+
+
+CREATE VIEW trackExpiry AS 
+SELECT products.id AS product_id,products.expiration_dateTime AS best_before,products.name AS product_name,notify_status.status AS notify_status,
+business.name AS business_name, products.price_per_unit
+FROM products
+INNER JOIN business ON products.business_id=business.id
+INNER JOIN notify_status ON notify_status.id=products.notify_status_id
+order BY products.expiration_dateTime DESC
+
+CREATE VIEW about_to_expire_products AS
+SELECT products.id AS product_id, products.expiration_dateTime AS bestBefore, products.`name`AS product_name,notify_status.`status` AS notify_status, 
+products.price_per_unit AS price, business.`name` AS business_name from products
+INNER JOIN status
+ON status.id=products.status_id
+INNER JOIN notify_status
+ON notify_status.id=products.notify_status_id
+INNER JOIN business
+ON business.id=products.business_id
+WHERE status.`status`!='Inactive'
+
+CREATE VIEW non_resolved_complaints AS
+SELECT complaints.id AS complaint_id,
+complaints.feedback AS feedback,
+business_id,
+DATETIME,
+DESCRIPTION,
+customer_id,
+order_items_id,
+adminReply,
+complaint_dateTime
+FROM complaints 
+INNER JOIN complaint_status
+ON complaints.complaint_status_id=complaint_status.id
+WHERE complaint_status.`name`='Not Attended'
+
+CREATE EVENT delete_expired_items
+ON SCHEDULE EVERY 1 MINUTE 
+DO
+UPDATE products SET `status_id`=3 WHERE expiration_dateTime <=NOW(); 
+
+CREATE VIEW admin_details AS
+SELECT admin.id AS admin_id,
+admin.`name` AS admin_name,
+token,
+email,
+`password`,
+profile_pic,
+reg_date
+FROM admin
+INNER JOIN user 
+ON user.id=admin.user_id1

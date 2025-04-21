@@ -2,15 +2,12 @@
 
 //every file created in the core must be added here
 
-//load configurations
 require "config.php";
-
-//load libraries
 require "functions.php";
 require "database.php";
 require "controller.php";
-// require "model.php";
 require "admin_model.php";
+require "model.php";
 require "app.php";
 
 spl_autoload_register(function($class_name){

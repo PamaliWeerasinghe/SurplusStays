@@ -1,48 +1,76 @@
 <?php
 
-class Admin_Model extends Database
+class Admin_Model 
 {
      public $table;
      public $errors = array();
      public $data=array();
+     public $column;
      
+     protected $db;
 
      public function __construct()
      {
           if (!property_exists($this, 'table')) {
                $this->table = strtolower($this::class);
           }
-     }
+          $this->db=Database::getInstance();
 
-     public function where($column,$value,$table)
+     }
+   
+     public function where($columns,$values,$table)
      {
           $this->table=$table;
-          //check whether the column exists before executing the query
-          $column = addslashes($column);
-          $query = "select * from $this->table where $column = :value";
-          return $this->query($query, [
-               // 'column' => $column,
-               'value' => $value
-          ]);
+
+          //Ensure that both columns and values are arrays of same length
+          if(!is_array($columns)|| !is_array($values)|| count($columns)!=count($values)){
+               throw new Exception("Column and values must be arrays of same length");
+          }
+
+          $conditions=[];
+          $queryParams=[];
+
+          foreach($columns as $index =>$column){
+               $paramName=":value$index";
+               $conditions[]="`$column`=$paramName"; // `column1`=value0
+               $queryParams[$paramName]=$values[$index]; //value0 = 'testing'
+          }
+
+          //Build the query with multiple conditions using AND
+          $whereClause =implode('AND',$conditions);
+          $query="SELECT * FROM `$this->table` WHERE $whereClause";
+          
+          return $this->db->query($query, $queryParams);
      }
-  
+     public function select($table,$column,$limit,$offset)
+     {
+          $this->table=$table;
+          $this->column=$column;
+          $query="select * from $this->table order by $this->column desc limit $limit offset $offset";
+          return $this->db->query($query);
+     }
+     public function count($table){
+          $this->table=$table;
+          $query="select count(*) as totalrows from $this->table";
+          return $this->db->query($query)[0]->totalrows;
+     }
      public function findAll($table)
      {    
           $this->table=$table;
           $query = "select * from $this->table";
-          return $this->query($query);
+          return $this->db->query($query);
      }
 
-     public function insert($data)
+     public function insert($data,$table)
      {    
-          // $this->table=$table;
+          $this->table=$table;
           $keys = array_keys($data);
           $columns = implode(',', $keys);
           $values = implode(',:', $keys);
-
+          
           $query = "insert into $this->table ($columns) values (:$values)";
-
-          return $this->query($query, $data);
+          
+          return $this->db->query($query, $data);
      }
 
      public function update($id,$data,$table)
@@ -62,7 +90,7 @@ class Admin_Model extends Database
 
           $query = "update $this->table set $str where id = :id";
 
-          return $this->query($query, $data);
+          return $this->db->query($query, $data);
      }
 
      
@@ -72,7 +100,7 @@ class Admin_Model extends Database
           $this->table=$table;
           $query = "delete from $this->table where id = :id";
           $data['id'] = $id;
-          return $this->query($query, $data);
+          return $this->db->query($query, $data);
      }
 
      //select the last inserted id 
@@ -80,6 +108,7 @@ class Admin_Model extends Database
      {
           $this->table=$table;
           $query="select MAX(id) AS last_id from $this->table";
-          return $this->query($query);
+          return $this->db->query($query);
      }
+   
 }
