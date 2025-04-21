@@ -1,17 +1,10 @@
-<!DOCTYPE html>
-<html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo SITENAME ?></title>
+<?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
+<?php require APPROOT . '/views/customerRemoveFromWishlist.view.php' ?>
     <link rel="stylesheet" href="<?=STYLES?>/customer.css">
     <link rel="stylesheet" href="<?=STYLES?>/customerDashboard.css">
     <link rel="stylesheet" href="<?=STYLES?>/customerSidePanel.css">
     <link rel="stylesheet" href="<?=STYLES?>/CustWishlist.css">
-    <style>
-        /* Add these styles to ensure popup works */
-        
-    </style>
+   
 </head>
 
 <body>
@@ -32,9 +25,9 @@
                     </div>
                 </div>
 
-                <div class="box">
+                <div class="box"style="margin-top: -28%;margin-bottom: 10%;">
                     <div class="box-header">
-                        Wishlist - <?= $item_count ?> <?= $item_count == 1 ? 'item' : 'items' ?>
+                        WISHLIST - <?= $item_count ?> <?= $item_count == 1 ? 'item' : 'items' ?>
                     </div>
 
                     <div class="wishlist-table">
@@ -44,39 +37,39 @@
                                     <th>Product Name</th>
                                     <th>Unit Price</th>
                                     <th>Stock Status</th>
-                                    <th>Action</th>
-                                    <th>Action</th>
+                                    <th></th>
+                                    <th></th>
                                 </tr>
                             </thead>
 
                             <tbody>
-                                <?php foreach ($watchlist_view as $item): ?>
+                                <?php foreach ($data as $item): ?>
                                 <tr id="card-item-<?= $item->id ?>">
                                     <td>
                                         <div class="product-card">
                                             <div>
-                                                <img src="<?=ASSETS?>/images/<?= $item->pictures ?>">
+                                                <img src="<?=ASSETS?>/images/<?= $item->product_img ?>">
                                             </div>
                                             <div class="product-info">
-                                                <p class="category"><?= $item->business_name ?></p>
+                                                <p class="category"><?= $item->bus_name ?></p>
                                                 <h3 class="product-title"><?= $item->product_name?></h3>
                                                 <div class="product-details">
                                                     <p style="color: black;"><strong>Expiry:</strong><br/>
-                                                    <p style="color:red"><strong><?= $item->product_expiry ?></p>
+                                                    <p style="color:red"><strong><?= $item->expires_in ?></p>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
 
                                     <td>
-                                        Rs <?= number_format($item->product_price, 2) ?>
+                                        Rs <?= number_format($item->original_price, 2) ?>
                                     </td>
                                         
                                     <td>
                                         <div class="product-status">
-                                            <?php if ($item->status_id == 1): ?>
+                                            <?php if ($item->qty_avail > 0): ?>
                                                 <span class="in-stock">In Stock</span>
-                                            <?php elseif ($item->status_id == 2): ?>
+                                            <?php elseif ($item->qty_avail == 0): ?>
                                                 <span class="out-of-stock">Out of Stock</span>
                                             <?php else: ?>
                                                 <span class="unknown-status">Status Unknown</span>
@@ -85,11 +78,11 @@
                                     </td>
 
                                     <td>
-                                        <button class="add-to-cart-button" onclick="openAddToCartPopup(<?=$item->watchlist_id?>)">Add to Cart</button>
+                                        <button class="add-to-cart-button" onclick="openAddToCartPopup(<?=$item->id?>)">Add to Cart</button>
                                     </td>
 
                                     <td>
-                                        <img src="<?=ASSETS?>/images/delete.png" class="delete-btn" onclick="openDeletePopup(<?=$item->watchlist_id?>)">
+                                        <img src="<?=ASSETS?>/images/delete.png" class="delete-btn" onclick="openDeletePopup(<?=$item->id?>)">
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -102,20 +95,7 @@
         <?php echo $this->view('includes/footer')?>
     </div>
 
-    <!-- Delete Confirmation Popup -->
-    <div class="delete-popup-container" id="delete-popup-container">
-        <div class="delete-popup" id="delete-popup">
-            <h2>Are you sure?</h2>
-            <p>This product will be permanently deleted from your wishlist.</p>
-            <input type="hidden" id="popupRowID"/>
-            <form method="POST">
-                <div class="delete-popup-btn-div">
-                    <button type="submit" class="delete-popup-yes-button">Yes</button>
-                    <button type="button" class="delete-popup-close-button" onclick="hideDeletePopup()">Cancel</button>
-                </div>
-            </form>
-        </div>
-    </div>
+   
 
     <!-- popup for add to cart -->
     <div class="cart-popup-container" id="cart-popup-container">
@@ -125,14 +105,14 @@
         
         <div class="popup-product-row">
             <div class="popup-product-image">
-                <img src="<?=ASSETS?>/images/<?= $item->pictures ?>">
+                <img src="<?=ASSETS?>/images/<?= $item->product_img ?>">
             </div>
             <div class="popup-product-info">
-                <p class="popup-category"><?= $item->business_name ?></p>
+                <p class="popup-category"><?= $item->bus_name ?></p>
                 <h3 class="popup-product-title"><?= $item->product_name?></h3>
                 <div class="popup-product-details">
                     <p class="popup-expiry-label">Expiry:</p>
-                    <p class="popup-expiry-date"><?= $item->product_expiry ?></p>
+                    <p class="popup-expiry-date"><?= $item->expires_in ?></p>
                 </div>
             </div>
         </div>
@@ -144,7 +124,7 @@
                 <button class="quantity-btn plus">+</button>
             </div>
             <div class="popup-action-buttons">
-                <!-- <button class="popup-confirm-btn">Add to Cart</button> -->
+                
                 <button class="popup-confirm-btn" onclick="insertToCart($products_id)">Add to Cart</button>
                 <button type="button" class="popup-cancel-btn" onclick="hideCartPopup()">Cancel</button>
             </div>

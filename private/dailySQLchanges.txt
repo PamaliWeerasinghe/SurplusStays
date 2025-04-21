@@ -200,5 +200,24 @@ INNER JOIN customer
 ON customer.id=`order`.customer_id
 GROUP BY cus_id;
 
+CREATE VIEW watchlist_details AS 
+SELECT watchlist.products_id AS product_id,
+watchlist.id AS id,
+watchlist.customer_id AS cus_id,
+watchlist.datetime AS product_added,
+business.`name` AS bus_name,
+products.qty AS qty_avail,
+products.expiration_dateTime AS expires_in,
+products.price_per_unit AS original_price,
+products.discountPrice AS discount,
+products.pictures AS product_img,
+products.`name` AS product_name,
+products.status_id AS product_status
+FROM watchlist
+INNER JOIN products ON products.id=watchlist.products_id
+INNER JOIN business ON business.id=products.business_id 
+INNER JOIN `status` ON products.status_id=`status`.id
+WHERE `status`.`status`!='Inactive'  
+
 
 

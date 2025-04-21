@@ -28,6 +28,16 @@ class Customer extends Controller{
         $this->view('custManageComplaints',['rows' => $data]);
         
     }
+    function RemoveFromWishlist($id){
+        $item=new AdminModel();
+        $status=$item->delete($id,'watchlist');
+        if(empty($status)){
+            $this->redirect('customer/wishlist');
+
+        }
+            
+        
+    }
 
     // function viewComplaint($id = null)
     // {
@@ -234,7 +244,7 @@ class Customer extends Controller{
         $this->view('CustomerBrowseShops');
     }
     function cart(){
-        $user_id=$_SESSION['USER'][0]->id;
+        
         $errors = array();
         $verify = new AdminModel();
         $cart_view = $verify->findAll("cart_view"); // Store results in $cart_view
@@ -358,18 +368,20 @@ function updateCartQuantity() {
 
 
     // wishlist
-    // function wishlist(){
-    //     $errors = array();
-    //     $verify = new CustomerModel();
-    //     $watchlist_view = $verify->findAll("watchlist_view");
-    //     $item_count = count($watchlist_view);
-    //     $this->view('custWishlist', [
-    //         'errors'=>$errors,
-    //         'watchlist_view' => $watchlist_view,
-    //         'item_count' => $item_count,
-    //         // 'customer_id'=>$_SESSION['USER']
-    //     ]);
-    // }
+    function wishlist(){
+        $errors = array();
+        $wishlist = new AdminModel();
+        $cus_id=$_SESSION['USER'][0]->id;
+        $watchlist = $wishlist->where(['cus_id'],[$cus_id],"watchlist_details");
+        
+        $this->view('custWishlist', [
+            'errors'=>$errors,
+            'data' => $watchlist,
+            'item_count' => 2,
+            // 'customer_id'=>$_SESSION['USER']
+        ]);
+        // $this->view('custWishList');
+    }
 
     function removeFromWatchlist($id) {
         if (!Auth::logged_in()) {
