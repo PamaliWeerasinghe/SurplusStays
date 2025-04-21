@@ -19,7 +19,7 @@
         <div class="btn-nonSelected" data-path="/surplusstays/public/customer/orders">
             <label>Orders</label>
         </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/manageComplaints">
+        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/complaints">
             <label>Complaints</label>
         </div>
         <div class="btn-nonSelected" data-path="/surplusstays/public/customer/paymentHistory">

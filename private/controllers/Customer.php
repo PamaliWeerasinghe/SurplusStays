@@ -41,14 +41,21 @@ class Customer extends Controller{
    
 
 
-    // function viewComplaint($id = null)
-    // {
-    //     $event = new Complaint();
-    //     $row = $event->where('id', $id);
-    //     $this->view('custViewComplaint', [
-    //         'row' => $row,
-    //     ]);
-    // }
+    function viewComplaint($id)
+    {
+        // print_r($id);
+        $complaint=new AdminModel();
+        $complaint_details=$complaint->where(['complaint_id'],[$id],'complaintdetails');
+        $complaint_details=$complaint_details[0];
+
+        $complaint_imgs=$complaint->where(['complaints_id'],[$id],'complaint_imgs');
+
+        $this->view('custViewComplaint',[
+            "complaint_details"=>$complaint_details,
+            "complaint_imgs"=>$complaint_imgs
+        ]);
+
+    }
 
     // function makeComplaint()
     // {
@@ -363,7 +370,28 @@ function updateCartQuantity() {
     function paymentHistory(){
         $this->view('custPayment');
     }
+    //view complaints made
+    function complaints(){
+        $complaints=new AdminModel();
+        $cus_id=$_SESSION['USER'][0]->id;
+        $complaints_details=$complaints->where(['customer_id'],[$cus_id],'complaintdetails');
+        $no_of_complaints=$complaints->countWithWhere('complaintdetails',['customer_id'],[$cus_id]);
+        foreach($complaints_details as $complaint){
+            $img=array();
+            $images=$complaints->where(['complaints_id'],[$complaint->complaint_id],'complaint_imgs');
+            foreach($images as $image){
+                array_push($img,$image->path);
+            }
+            $complaint->images=$img;
 
+           
+        }
+        // print_r($complaints_details);
+        $this->view('custViewMadeComplaints',[
+            "complaint_details"=>$complaints_details,
+            "complaint_count"=>$no_of_complaints
+        ]);
+    }
     // Get all the orders made by a customer
     function orders(){
         $orders=new AdminModel();
