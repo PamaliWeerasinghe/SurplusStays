@@ -838,6 +838,65 @@ class Admin extends Controller
             $this->view('adminLoginStep1');
         }
     }
+    //Add new business
+    function addNewBusiness(){
+        $errors=array();
+        // print_r($_FILES);
+        if(count($_POST)>0){
+            $business=new AdminBusiness();
+            if($business->validateBusiness($_POST)){
+            
+                $user['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $user['email'] = $_POST['email'];
+                $user['role'] = 'business';
+                $user['profile_pic'] = $business->uploadBusinessPic($_FILES['profile_picture']['name']);
+                $user['reg_date'] = date('Y-m-d H:i:s');
+                $user['status_id'] = 1;
+    
+                $add_business['name']=$_POST['name'];
+                $add_business['phoneNo']=$_POST['phone'];
+                $add_business['username']=$_POST['username'];
+                $add_business['latitude']=$_POST['latitude'];
+                $add_business['longitude']=$_POST['longitude'];
+    
+                $user_columns = ['email', 'password', 'role', 'profile_pic', 'reg_date'];
+                $user_values = [$user['email'], $user['password'], $user['role'], $user['profile_pic'], $user['reg_date']];
+    
+                $business_columns=['name','phoneNo','username','latitude','longitude'];
+                $business_values=[$add_business['name'],$add_business['phoneNo'],$add_business['username'],$add_business['latitude'],$add_business['longitude']];
+    
+                if(!($business->insertBusiness(
+                    $user_columns,
+                    $user_values,
+                    $business_columns,
+                    $business_values,
+                    $user,
+                    $add_business
+                ))){
+                    $errors["business_insertion"] = "Business already exists";
+                        $this->view('AdminAddNewBusiness', [
+                            "errors" => $errors
+                        ]);
+                }else {
+                    $this->redirect('/Admin/ManageBusinesses');
+                }
+            
+    
+            }else {
+                $errors = $business->errors;
+                $this->view('AdminAddNewBusiness', [
+                    "errors" => $errors
+                ]);
+            }
+            
+        }else{
+            $this->view('AdminAddNewBusiness');
+        }
+        
+
+    
+        
+    }
     //Add new customer
     function addNewCustomer()
     {
