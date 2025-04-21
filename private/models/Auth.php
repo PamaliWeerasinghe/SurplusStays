@@ -12,6 +12,7 @@ class Auth
         $_SESSION['USER_EMAIL']=$user->email;
         $_SESSION['USER_PIC']=$user->profile_pic;
         $_SESSION['USER_REG_DATE']=$user->reg_date;
+        $_SESSION['USER_ROLE']=$user->role;
 
     }
    //logout

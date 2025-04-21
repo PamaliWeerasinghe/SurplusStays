@@ -44,7 +44,7 @@ class Login extends Controller{
                         break;
                     case 'customer':
                         $customer=new AdminUser();
-                        $customer_details=$customer->where('user_id',$user_details->id,'customer');
+                        $customer_details=$customer->where(['user_id'],[$user_details->id],'customer');
                         Auth::authenticate($customer_details,$user_details);
                         $this->view('CustomerDashboard',[
                             'customerDetails'=>$customer,
