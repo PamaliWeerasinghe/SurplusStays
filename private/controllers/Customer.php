@@ -375,11 +375,12 @@ function updateCartQuantity() {
         $wishlist = new AdminModel();
         $cus_id=$_SESSION['USER'][0]->id;
         $watchlist = $wishlist->where(['cus_id'],[$cus_id],"watchlist_details");
+        $item_count=$wishlist->countWithWhere('watchlist_details',['cus_id'],[$cus_id]);
         
         $this->view('custWishlist', [
             'errors'=>$errors,
             'data' => $watchlist,
-            'item_count' => 2,
+            'item_count' => $item_count,
             // 'customer_id'=>$_SESSION['USER']
         ]);
         // $this->view('custWishList');
@@ -389,6 +390,38 @@ function updateCartQuantity() {
         $data=$item->where(['id'],[$id],'watchlist_details');
         $data=$data[0];
         echo json_encode($data);
+    }
+    function WishlistToCart($wishlist_id,$qty)
+    {
+        $wishlist=new AdminModel();
+        if($qty>0){
+            $wishlist_row=$wishlist->where(['id'],[$wishlist_id],'watchlist_details');
+            $wishlist_row=$wishlist_row[0];
+    
+            //Get the relevant details to add to the cart table
+            $products_id=$wishlist_row->product_id;
+            $cus_id=$wishlist_row->cus_id;
+    
+            //remove from wishlist
+            $wishlist->delete($wishlist_id, 'watchlist');
+    
+            //update the products table
+            $product=$wishlist->where(['id'],[$products_id],'products');
+            $product=$product[0];
+            $new_qty=$product->qty-$qty;
+            $product_data['qty']=$new_qty;
+            $wishlist->update($products_id,$product_data,'products');
+    
+            //insert into the cart
+            $data['products_id']=$products_id;
+            $data['customer_id']=$cus_id;
+            $data['qty']=$qty;
+            $wishlist->insert($data,'cart');
+    
+            
+        }
+        $this->redirect('Customer/wishlist');
+       
     }
 
     function removeFromWatchlist($id) {

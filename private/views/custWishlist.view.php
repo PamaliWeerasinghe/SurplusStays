@@ -125,9 +125,13 @@
                 <button class="quantity-btn plus">+</button>
             </div>
             <div class="popup-action-buttons">
+                <form action="" method="POST" id="AddToCartFromWishlist">
+                    <input type="hidden" id="watchlist_id"/>
+                    <input type="hidden" id="selected-Qty"/>
+                    <button class="popup-confirm-btn" onclick="insertToCart()" type="submit">Add to Cart</button>
+                    <button type="button" class="popup-cancel-btn" onclick="hideCartPopup()">Cancel</button>
+                </form>
                 
-                <button class="popup-confirm-btn" onclick="insertToCart($products_id)">Add to Cart</button>
-                <button type="button" class="popup-cancel-btn" onclick="hideCartPopup()">Cancel</button>
             </div>
         </div>
     </div>

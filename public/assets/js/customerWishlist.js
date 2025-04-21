@@ -25,33 +25,8 @@ function openDeletePopup(rowId) {  // Changed from openCartPopup to match onclic
     
 }
 
-// //delete popup functions
-// function openDeletePopup(rowId) {
-//     deletePopupContainer.classList.add("open-delete-popup-container");
-//     deletePopup.classList.add("open-popup");
-//     document.getElementById('popupRowID').value = rowId;
-    
-//     // Update form action
-//     const form = document.querySelector("#delete-popup form");
-//     form.action = `http://localhost/surplusstays/public/Customer/removeFromWatchlist/${rowId}`;
-//     }
-
-// function hideDeletePopup() {
-//     deletePopupContainer.classList.remove("open-delete-popup-container");
-//     deletePopup.classList.remove("open-popup");
-// }
-
-// Close popup when clicking outside
-// deletePopupContainer.addEventListener('click', function(e) {
-//     if (e.target === this) {
-//         hideDeletePopup();
-//     }
-// });
-
 //cart popup functions
 function openAddToCartPopup(rowId) {  // Changed from openCartPopup to match onclick
-    
-   
     
     cartPopupContainer.classList.add("open-cart-popup-container");
     cartPopup.classList.add("open-popup");
@@ -71,12 +46,16 @@ function openAddToCartPopup(rowId) {  // Changed from openCartPopup to match onc
         document.getElementById('bus_name').innerHTML=data.bus_name;
         document.getElementById('product_name').innerHTML=data.product_name;
         document.getElementById('expires_in').innerHTML=data.expires_in;
+        document.getElementById('watchlist_id').value=rowId;
+        
         if(data.qty_avail==0){
             document.getElementById('quantity-input-1').value=0;
             document.getElementById('quantity-input-1').disabled=true;
+            document.getElementById('selected-Qty').value=0;
         }else{
             document.getElementById('quantity-input-1').value=1;
             document.getElementById('quantity-input-1').disabled=false;
+            document.getElementById('selected-Qty').value=1;
         }
         document.getElementById('quantity-input-1').max=data.qty_avail;
         
@@ -103,24 +82,26 @@ cartPopupContainer.addEventListener('click', function(e) {
     }
 });
 // Add click outside to close
-wishlist-popup-container.addEventListener('click', function(e) {
-    if (e.target === this) {
+// wishlist-popup-container.addEventListener('click', function(e) {
+//     if (e.target === this) {
         
-        closedeletePopup();
-    }
-});
+//         closedeletePopup();
+//     }
+// });
 
 
 document.querySelectorAll('.popup-quantity-selector').forEach(popup => {
     const input = popup.querySelector('.quantity-input');
     const minusBtn = popup.querySelector('.quantity-btn.minus');
     const plusBtn = popup.querySelector('.quantity-btn.plus');
-  
+    
     minusBtn.addEventListener('click', () => {
+      
       let currentValue = parseInt(input.value);
       let min = parseInt(input.min);
       if (currentValue > min) {
         input.value = currentValue - 1;
+        document.getElementById('selected-Qty').value=input.value;
       }
     });
   
@@ -129,17 +110,22 @@ document.querySelectorAll('.popup-quantity-selector').forEach(popup => {
       let max = parseInt(input.max);
       if (currentValue < max) {
         input.value = currentValue + 1;
+        document.getElementById('selected-Qty').value=currentValue+1;
       }
     });
   });
   
+//add to cart
+function insertToCart(){
+    hideCartPopup();
+    const watchlistID=document.getElementById("watchlist_id").value;
+    const qtySelected=document.getElementById("selected-Qty").value;
+    const form=document.querySelector('#AddToCartFromWishlist');
+    form.action=`http://localhost/surplusstays/public/customer/WishlistToCart/${watchlistID}/${qtySelected}`;
 
-
-// //add to cart
-// // function insertToCart(){
-// //     let productQuantity = document.getElementById('quantity-input');
     
-// // }
+    
+}
 
 // function insertToCart(products_id, button) {
 //     const container = button.closest('.product-container'); // or specific wrapper class
@@ -173,3 +159,4 @@ document.querySelectorAll('.popup-quantity-selector').forEach(popup => {
 //         alert('An error occurred while adding to cart');
 //     });
 // }
+
