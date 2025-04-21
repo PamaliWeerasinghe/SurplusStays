@@ -20,7 +20,7 @@ define('LOGIN','http://localhost/SurplusStays/public/login');
 define('TEMPLATEROOT', 'http://localhost/SurplusStays/templates');
 define('ADMIN','http://localhost/SurplusStays/public/admin');
 //DATABASE
-define('DBNAME','surplusstays');
+define('DBNAME','database');
 define('DBHOST','localhost');
 //alwaysdata-host mysql-surplusstays.alwaysdata.net
 define('DBUSER','root');
