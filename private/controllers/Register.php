@@ -72,6 +72,8 @@ class Register extends Controller
                         'phoneNo' => $_POST['phone'],
                         'username' => $_POST['username'],
                         'city' => $_POST['city'],
+                        'latitude' => $_POST['latitude'],
+                        'longitude' => $_POST['longitude'],
                         'charity_description' => $_POST['description'],
                         'user_id' => $user_id
                     ];

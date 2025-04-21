@@ -1,37 +1,70 @@
-<aside class="sidePanel">
-    <div class="greeting">
-        <img class="profile-image" src="<?=ASSETS?>/customerImages/<?=basename(Auth::getUserPicture())?>" />
-        <label>Hi <span class="admin"><?=Auth::getusername()?></span></label>
+<link rel="stylesheet" href="<?=STYLES?>/charitySidePanel.css"> 
+
+<?php
+// Get the current URL path
+$current_url = $_SERVER['REQUEST_URI'];
+?>
+
+<div class="side-nav">
+    <div class="profile-section">
+        <div class="profile-container">
+            <img src="<?=ASSETS?>/charityImages/<?=basename(Auth::getUserPicture())?>" alt="Profile Image" class="profile-image">
+        </div>
+        <h2 class="welcome-text">Hi <?=Auth::getusername()?></h2>
     </div>
-    <div class="buttons">
-        <div class="btn-nonSelected" data-path="/surplusstays/public/customer">
-            <label>Dashboard</label>
-        </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/TrackExpiry">
-            <label>Browse Shops</label>
-        </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/Complaints">
-            <label>Cart</label>
-        </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/ManageCustomers">
-            <label>Wishlist</label>
-        </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/orders">
-            <label>Orders</label>
-        </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/customer/manageComplaints">
-            <label>Complaints</label>
-        </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/ManageCharityOrg">
-            <label>Payment History</label>
-        </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/admin/Reports">
-            <label>Profile</label>
-        </div>
-        <div class="btn-nonSelected" data-path="/surplusstays/public/Logout">
-            <label>Logout</label>
-        </div>
+    <ul class="nav-links">
+        <li class="nav-item <?= strpos($current_url, '/customer/index') == true ? 'active' : '' ?>">
+            <a href="<?=ROOT?>/customer/index">Dashboard</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/customer/browseShops') || strpos($current_url, '/charity/createEvent') == true ? 'active' : '' ?>">
+            <a href="<?=ROOT?>/customer/browseShops">Browse Shops</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/admin/Complaints') == true ? 'active' : '' ?>">
+            <a href="<?=ROOT?>/admin/Complaints">Cart</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/admin/ManageCustomers') == true ? 'active' : '' ?>">
+            <a href="<?=ROOT?>/admin/ManageCustomers">Wishlist</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/customer/orders') == true ? 'active' : '' ?>">
+            <a href="<?=ROOT?>/customer/orders">Orders</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/customer/manageComplaints') == true ? 'active' : '' ?>">
+            <a href="<?=ROOT?>/customer/manageComplaints">Complaint</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/admin/ManageCharityOrg') == true ? 'active' : '' ?>">
+            <a href="<?=ROOT?>//admin/ManageCharityOrg">Payment History</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/admin/Reports') == true ? 'active' : '' ?>">
+            <a href="<?=ROOT?>/admin/Reports">Profile</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/Logout') == true ? 'active' : '' ?>">
+            <a href="<?=ROOT?>/Logout">Logout</a>
+        </li>
+    </ul>
+</div>
+
+<script>
+document.addEventListener('DOMContentLoaded', function() {
+    // Add subtle animations when page loads
+    document.querySelectorAll('.nav-item').forEach(function(item, index) {
+        setTimeout(() => {
+            item.style.opacity = '1';
+        }, 100 * index);
+    });
+    
+    // Add hover effect
+    document.querySelectorAll('.nav-item').forEach(item => {
+        item.addEventListener('mouseenter', function() {
+            if (!this.classList.contains('active')) {
+                this.style.transform = 'translateY(-3px)';
+            }
+        });
         
-    </div>
-    <script src="<?=ROOT?>/assets/js/customerPagesNavigation.js"></script>
-</aside>
+        item.addEventListener('mouseleave', function() {
+            if (!this.classList.contains('active')) {
+                this.style.transform = 'translateY(0)';
+            }
+        });
+    });
+});
+</script>

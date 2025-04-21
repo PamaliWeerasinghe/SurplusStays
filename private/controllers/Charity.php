@@ -244,6 +244,10 @@ function getTopDonatingBusinesses()
         $shops = new BusinessModel();
         $users = new User();
 
+        $org = new Organization();
+        $org_id = Auth::getID();
+        $currOrg = $org->where('id', $org_id,'organization');
+
         $rows = $shops->findAll('business');
         $rows_p = $users->findAll('user');
 
@@ -258,8 +262,13 @@ function getTopDonatingBusinesses()
             $row->picture = $userPictures[$row->user_id] ?? '';
         }
 
+        $lat = $currOrg[0]->latitude;
+        $long = $currOrg[0]->longitude;
+
         $this->view('charityBrowseShops2',[
-            'rows' => $rows
+            'rows' => $rows,
+            'lat' => $lat,
+            'long' => $long
         ]);
     }
 

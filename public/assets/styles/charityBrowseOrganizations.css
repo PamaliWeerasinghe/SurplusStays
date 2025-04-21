@@ -66,12 +66,18 @@ body, html {
   
   .search-container {
     display: flex;
+    width: 400px;
     align-items: center;
     border: 1px solid #ccc;
     border-radius: 50px;
     padding: 5px;
     background-color: #f9f9f9;
+    transition: all 0.3s ease;
   }
+  .search-container:focus-within {
+    box-shadow: 0 0 0 2px rgba(1, 121, 119, 0.2);
+    border-color: #017977;
+}
   
   .search-input {
     border: none;
@@ -237,7 +243,7 @@ body, html {
 }
 
 .category {
-    background: #e9d6ff;
+    background: #07b39642;
     color: #6a1b9a;
     padding: 3px 10px;
     font-size: 12px;
@@ -275,7 +281,7 @@ body, html {
 }
 
 .raised {
-    color: #2dc653;
+    color: #017977;
 }
 
 .goal {
@@ -283,17 +289,23 @@ body, html {
 }
 
 .view-btn {
-    background: #9b287b;
-    color: white;
-    border: none;
-    padding: 8px 16px;
-    border-radius: 6px;
-    cursor: pointer;
-    font-size: 14px;
+  background-color: #005250;
+  border: none;
+  padding: 12px 25px;
+  color: white;
+  font-size: 16px;
+  border-radius: 30px;
+  cursor: pointer;
+  margin-right: 10px;
+  font-weight: 500;
+  transition: all 0.3s ease;
+  box-shadow: 0 4px 10px rgba(0, 82, 80, 0.3);
 }
 
 .view-btn:hover {
-    background: #7c1f61;
+  background-color: #017977;
+  transform: translateY(-2px);
+  box-shadow: 0 6px 12px rgba(0, 82, 80, 0.4);
 }
 
 /* Responsive */

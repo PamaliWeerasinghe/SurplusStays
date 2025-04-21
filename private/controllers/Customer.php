@@ -4,15 +4,6 @@ class Customer extends Controller{
         $this->view('CustomerDashboard');
     }
 
-    //customer registration
-    // function register()
-    // {
-    //     $errors = array();
-    //     $verify = new CustomerModel();
-
-    // }
-
-
     function manageComplaints()
     {
         if (!Auth::logged_in()) {
@@ -23,7 +14,7 @@ class Customer extends Controller{
         $customer_id = Auth::getID();
         // print_r($customer_id);
         $customer_id=1;
-        $data = $event->where(['customer_id'], [$customer_id], "complaints");
+        $data = $event->where('customer_id', $customer_id, "complaints");
 
         $this->view('custManageComplaints',['rows' => $data]);
         
@@ -226,13 +217,34 @@ class Customer extends Controller{
         ]);
     }
     
-
-
-
     //other pages
     function browseShops(){
-        $this->view('CustomerBrowseShops');
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+    
+        $shops = new BusinessModel();
+        $users = new User();
+    
+        $rows = $shops->findAll('business');
+        $rows_p = $users->findAll('user');
+    
+        // Build map of user_id to picture
+        $userPictures = [];
+        foreach ($rows_p as $user) {
+            $userPictures[$user->id] = $user->profile_pic;
+        }
+    
+        // Add picture to each business row
+        foreach ($rows as &$row) {
+            $row->picture = $userPictures[$row->user_id] ?? '';
+        }
+    
+        $this->view('customerBrowseShops2',[
+            'rows' => $rows
+        ]);
     }
+
     function cart(){
         $errors = array();
         $verify = new CustomerModel();
@@ -403,6 +415,28 @@ function updateCartQuantity() {
             'products'=>$customer,
             'business'=>$business,
             'user'=>$user
+        ]);
+    }
+
+    function viewShop($id = null)
+    {
+        $business = new BusinessModel();
+        $row = $business->where('id', $id, 'business');
+
+        $products = new Products();
+        $productRows = $products->where('business_id', $id, 'products');
+
+        $picture = '';
+        if ($row && isset($row[0]->user_id)) {
+            $user = new User();
+            $userRow = $user->where('id', $row[0]->user_id, 'user');
+            $picture = $userRow[0]->profile_pic ?? '';
+        }
+
+        $this->view('custViewShop', [
+            'row' => $row,
+            'productRows' => $productRows,
+            'picture' => $picture
         ]);
     }
 
