@@ -364,10 +364,33 @@ function updateCartQuantity() {
         $this->view('custPayment');
     }
 
+    // Get all the orders made by a customer
     function orders(){
-        $this->view('custViewOrders');
-    }
+        $orders=new AdminModel();
+        $cus_id=$_SESSION['USER'][0]->id;
+        $order_details=$orders->where(['customer_id'],[$cus_id],'order');
+        $order_count=$orders->countWithWhere('order',['customer_id'],[$cus_id]);
+        $this->view('custViewOrders',[
+            "orders"=>$order_details,
+            "order_count"=>$order_count
+        ]);
 
+    }
+    //view order items belonging to an order
+    function viewOrder($id){
+        $order=new AdminModel();
+        $order_details=$order->where(['id'],[$id],'order');
+        $order_details=$order_details[0];
+
+        $item_details=$order->where(['order_id'],[$id],'order_and_the_business');
+        
+        $this->view('custOrderDetails',[
+            "ord_id"=>$id,
+            "ord_details"=>$order_details,
+            "items"=>$item_details
+        ]);
+
+    }
 
     // wishlist
     function wishlist(){

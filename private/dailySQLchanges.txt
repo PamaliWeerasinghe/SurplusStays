@@ -114,14 +114,19 @@ INNER JOIN `customer` ON `customer`.id=`order`.`customer_id`
 order BY `order`.dateTime DESC;
 
 CREATE view order_and_the_business AS
-SELECT `order`.id AS order_id,
-business.id AS business_id,
-order_items.id AS order_item,
-products.id AS product_id
-FROM order_items
-INNER JOIN `order` ON `order`.id=order_items.order_id
-INNER JOIN products ON order_items.products_id=products.id
-INNER JOIN business ON products.business_id=business.id;
+SELECT `order`.id AS order_id,                          
+business.id AS business_id,                             
+order_items.id AS order_item,                           
+products.id AS product_id,                              
+`order_items`.qty AS qty,                               
+business.`name` AS bus_name,                            
+products.name AS product_name,                          
+products.price_per_unit AS original_price,              
+products.discountPrice AS discount                      
+FROM order_items                                        
+INNER JOIN `order` ON `order`.id=order_items.order_id   
+INNER JOIN products ON order_items.products_id=products.
+INNER JOIN business ON products.business_id=business.id  ;
 
 CREATE VIEW customer_details AS 
 SELECT customer.id AS cus_id,

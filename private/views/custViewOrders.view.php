@@ -1,103 +1,155 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo SITENAME ?></title>
+<?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
+<?php require APPROOT . '/views/customerRemoveFromWishlist.view.php' ?>
     <link rel="stylesheet" href="<?=STYLES?>/customer.css">
     <link rel="stylesheet" href="<?=STYLES?>/customerDashboard.css">
     <link rel="stylesheet" href="<?=STYLES?>/customerSidePanel.css">
-    <link rel="stylesheet" href="<?=STYLES?>/CustViewOrders.css">
+    <link rel="stylesheet" href="<?=STYLES?>/CustWishlist.css">
+   
 </head>
 
 <body>
     <!-- navbar -->
-
     <div class="main-div">
-    <?php echo $this->view('includes/navbar')?>
+        <?php echo $this->view('includes/navbar')?>
         <div class="sub-div-1">
-            <!-- included the admin side panel -->
             <?php require APPROOT."/views/includes/customerSidePanel.view.php"?>
             <div class="dashboard">
                 <div class="summary">
-                <div class="top-bar">
-                    <div class="search-bar">
-                            <input type="text" placeholder="Search..." />
+                    <div class="top-bar">
+                        <div class="search-bar">
+                            <!-- Search bar content -->
                         </div>
                         <div class="notification">
-                            <img src="<?=ASSETS?>/images/Bell.png" alt="Notification Bell" class="bell-icon">
+                            <!-- Notification content -->
                         </div>
                     </div>
                 </div>
 
-                <div class="box">
-                    
-                <!-- orders -->
-                <div class="orders-container">
-        <h1 class="orders-header">Orders</h1>
-        <div class="orders-table">
-            <table>
-                <thead>
-                    <tr>
-                        <th>Order Id</th>
-                        <th>Date</th>
-                        <th>Shop</th>
-                        <th>Product</th>
-                        <th>Payment</th>
-                        <th>Price</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    <tr>
-                        <td>#155</td>
-                        <td>20.02.2024</td>
-                        <td>Keels Borella</td>
-                        <td>4*Nuts</td>
-                        <td>Pay On Pickup <br/><span class="status processing">Processing</span></td>
-                        <td>Rs 112 <a href="#" class="details-link">View Full Details</a></td>
-                    </tr>
-                    <br/>
-                    <tr>
-                        <td>#156</td>
-                        <td>07.02.2024</td>
-                        <td>Wasana Bakers</td>
-                        <td>6*Pasta</td>
-                        <td>Online Payment <br/><span class="status processing">Processing</span></td>
-                        <td>Rs 144.50 <a href="#" class="details-link">View Full Details</a></td>
-                    </tr>
-                    <br/>
-                    <tr>
-                        <td>#157</td>
-                        <td>07.02.2024</td>
-                        <td>Food City Mathara</td>
-                        <td>6*Pasta</td>
-                        <td>Online Payment <br/><span class="status completed">Completed</span></td>
-                        <td>Rs 144.50 <a href="#" class="details-link">View Full Details</a></td>
-                    </tr>
-                    <br/>
-                    <!-- Add more rows here -->
-                </tbody>
-            </table>
-        </div>
-    </div>
+                <div class="box"style="margin-top: -28%;margin-bottom: 10%;">
+                    <div class="box-header">
+                        ORDERS PLACED - <?= $order_count ?> <?= $order_count == 1 ? 'order' : 'orders' ?>
+                    </div>
 
+                    <div class="wishlist-table">
+                        <table>
+                            <thead>
+                                <tr>
+                                    <th>Order</th>
+                                    <th>Total</th>
+                                    <th>Order Status</th>
+                                    <th></th>
+                                    
+                                </tr>
+                            </thead>
 
+                            <tbody>
+                                <?php foreach ($orders as $order): ?>
+                                <tr id="card-item-<?= $order->id ?>">
+                                    <td>
+                                        <div class="product-card">
+                                           
+                                            <div class="product-info">
+                                                <div class="product-details">
+                                                    <p style="color: black;">Ref No : <strong>#<?=$order->id?></strong><br/>
+                                                   
+                                                </div>
+                                               
+                                                <h3 class="product-title"><?= $order->dateTime ?></h3>
+                                               
+                                                <?php 
+                                                if($order->paymentMethod=="Collected"){
+                                                    ?>
+                                                         <p class="category">Collecting</p>
+                                                    <?php
+                                                }else{
+                                                    ?>
+                                                        <p class="category">Online Payment</p>
+                                                    <?php
 
+                                                }
+                                                
+                                                
+                                                ?>
+                                                
+                                                
+                                            </div>
+                                        </div>
+                                    </td>
 
+                                    <td>
+                                        Rs <?= number_format($order->total, 2) ?>
+                                    </td>
+                                        
+                                    <td>
+                                        <!-- <div class="product-status">
+                                            <?php if ($item->qty_avail > 0): ?>
+                                                <span class="in-stock">In Stock</span>
+                                            <?php elseif ($item->qty_avail == 0): ?>
+                                                <span class="out-of-stock">Out of Stock</span>
+                                            <?php else: ?>
+                                                <span class="unknown-status">Status Unknown</span>
+                                            <?php endif; ?>
+                                        </div> -->
+                                    </td>
 
+                                    <td>
+                                        <button class="add-to-cart-button" onclick="window.location.href='<?= ROOT ?>/Customer/viewOrder/<?=$order->id?>'">View Items</button>
+                                    </td>
+
+                                    
+                                </tr>
+                                <?php endforeach; ?>
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
-    
-                
-               
-
-
             </div>
-            
         </div>
         <?php echo $this->view('includes/footer')?>
     </div>
-    
-</body>
 
+   
+
+    <!-- popup for add to cart -->
+    <div class="cart-popup-container" id="cart-popup-container">
+    <div class="cart-popup" id="cart-popup">
+        <span class="popup-close-btn" onclick="hideCartPopup()">&times;</span>
+        <input type="hidden" id="popupRowID"/>
+        
+        <div class="popup-product-row">
+            <div class="popup-product-image">
+                <img src="" id="addToCartImage">
+            </div>
+            <div class="popup-product-info">
+                <p class="popup-category" id="bus_name"></p>
+                <h3 class="popup-product-title" id="product_name"></h3>
+                <div class="popup-product-details">
+                    <p class="popup-expiry-label">Expires On:</p>
+                    <p class="popup-expiry-date" id="expires_in"></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="popup-action-row">
+            <div class="popup-quantity-selector">
+                <button class="quantity-btn minus">-</button>
+                <input type="number" min="1" value="1" class="quantity-input" id="quantity-input-1">
+                
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <div class="popup-action-buttons">
+                <form action="" method="POST" id="AddToCartFromWishlist">
+                    <input type="hidden" id="watchlist_id"/>
+                    <input type="hidden" id="selected-Qty"/>
+                    <button class="popup-confirm-btn" onclick="insertToCart()" type="submit">Add to Cart</button>
+                    <button type="button" class="popup-cancel-btn" onclick="hideCartPopup()">Cancel</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="<?=ROOT?>/assets/js/customerWishlist.js"></script>
+</body>
 </html>
