@@ -105,14 +105,14 @@
         
         <div class="popup-product-row">
             <div class="popup-product-image">
-                <img src="<?=ASSETS?>/images/<?= $item->product_img ?>">
+                <img src="" id="addToCartImage">
             </div>
             <div class="popup-product-info">
-                <p class="popup-category"><?= $item->bus_name ?></p>
-                <h3 class="popup-product-title"><?= $item->product_name?></h3>
+                <p class="popup-category" id="bus_name"></p>
+                <h3 class="popup-product-title" id="product_name"></h3>
                 <div class="popup-product-details">
-                    <p class="popup-expiry-label">Expiry:</p>
-                    <p class="popup-expiry-date"><?= $item->expires_in ?></p>
+                    <p class="popup-expiry-label">Expires On:</p>
+                    <p class="popup-expiry-date" id="expires_in"></p>
                 </div>
             </div>
         </div>
@@ -120,7 +120,8 @@
         <div class="popup-action-row">
             <div class="popup-quantity-selector">
                 <button class="quantity-btn minus">-</button>
-                <input type="number" value="1" min="1" class="quantity-input" id="quantity-input">
+                <input type="number" min="1" value="1" class="quantity-input" id="quantity-input-1">
+                
                 <button class="quantity-btn plus">+</button>
             </div>
             <div class="popup-action-buttons">

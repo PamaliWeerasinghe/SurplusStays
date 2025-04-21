@@ -38,6 +38,8 @@ class Customer extends Controller{
             
         
     }
+   
+
 
     // function viewComplaint($id = null)
     // {
@@ -381,6 +383,12 @@ function updateCartQuantity() {
             // 'customer_id'=>$_SESSION['USER']
         ]);
         // $this->view('custWishList');
+    }
+    function AddToCartFromWishlist($id){
+        $item=new AdminModel();
+        $data=$item->where(['id'],[$id],'watchlist_details');
+        $data=$data[0];
+        echo json_encode($data);
     }
 
     function removeFromWatchlist($id) {

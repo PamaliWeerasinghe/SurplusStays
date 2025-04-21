@@ -32,6 +32,6 @@
 
 
 </body>
-<script src="<?= ROOT ?>/assets/js/adminViewCustomerDetails.js"></script>
+<!-- <script src="<?= ROOT ?>/assets/js/adminViewCustomerDetails.js"></script> -->
 
 </html>
