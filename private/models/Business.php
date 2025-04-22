@@ -2,7 +2,7 @@
 
 class Business extends Model
 {
-    protected $table = "business";
+    public $table = "business";
 
     protected $beforeInsert=[
         'hash_password'
@@ -30,9 +30,6 @@ class Business extends Model
         }
         if(empty($DATA['phone']) || !is_numeric($DATA['phone'])) {
             $this->errors['phone'] = "A valid phone number is required";
-        }
-        if(empty($DATA['address'])) {
-            $this->errors['address'] = "address is required";
         }
 
         if (empty($DATA['picture'])) {
