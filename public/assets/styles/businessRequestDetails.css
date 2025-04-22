@@ -161,3 +161,17 @@ body {
 .btn-ok:hover {
     background-color: #218838;
 }
+
+.feedbacktext {
+    display: flex;
+    justify-content: center; /* Centers horizontally */
+    align-items: center; /* Centers vertically (if container has a defined height) */
+  }
+  
+  textarea {
+    /* Optionally set a width for the textarea */
+    width: 80%;
+    border: none;
+    border-radius: 10px;
+  }
+

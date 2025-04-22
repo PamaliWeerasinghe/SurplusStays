@@ -398,9 +398,10 @@ class Business extends Controller
             $requestModel = new RequestModel();
             $request_id = $_POST['request_id'];
             $status = $_POST['status'];
+            $feedback=$_POST['feedback'];
 
             // Update request status
-            $requestModel->updateRequestStatus($request_id, $status);
+            $requestModel->updateRequestStatus($request_id, $status,$feedback);
 
             // Redirect back to the request details page
             $this->redirect('business/requests/');

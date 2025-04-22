@@ -46,10 +46,10 @@ class RequestModel extends Model
         return $this->db->query($query, ['request_id' => $request_id]);
     }
 
-    public function updateRequestStatus($request_id, $status)
+    public function updateRequestStatus($request_id, $status,$feedback)
     {
-        $query = "UPDATE donations SET status = :status WHERE id = :request_id";
-        return $this->db->query($query, ['status' => $status, 'request_id' => $request_id]);
+        $query = "UPDATE donations SET status = :status,feedback=:feedback WHERE id = :request_id";
+        return $this->db->query($query, ['status' => $status, 'request_id' => $request_id,'feedback'=>$feedback]);
     }
 
     public function countRequests($business_id)
