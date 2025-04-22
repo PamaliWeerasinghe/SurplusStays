@@ -2,7 +2,7 @@
 
 class Business extends Model
 {
-    protected $table = "business";
+    public $table = "business";
 
     protected $beforeInsert=[
         'hash_password'

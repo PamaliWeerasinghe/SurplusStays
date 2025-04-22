@@ -4,15 +4,12 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Charity Shop</title>
-    <link rel="stylesheet" href="<?=STYLES?>/customer.css">
     <link rel="stylesheet" href="<?=STYLES?>/custViewShop.css">
-    <link rel="stylesheet" href="<?=STYLES?>/customerSidePanel.css">
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body>
 
 <?php echo $this->view('includes/charityNavbar')?>
-<div class="page-wrapper">
     <div class="container">
         <?php echo $this->view('includes/customerSidePanel')?>
         <div class="container-right">   
@@ -93,7 +90,18 @@
                                                     <i class="far fa-clock"></i> 
                                                     <?= date("Y.m.d", strtotime($product->expiration_dateTime)) ?>
                                                 </span>
-                                                <button class="add-btn" title="Add to cart">+</button>
+                                                <button 
+                                                    class="add-btn" 
+                                                    title="Add to cart"
+                                                    data-name="<?= $product->name ?>"
+                                                    data-id="<?= $product->id ?>"
+                                                    data-business="<?= $product->business_id ?>"
+                                                    data-price="<?= $product->price_per_unit ?>"
+                                                    data-qty="<?= $product->qty ?>"
+                                                    data-expiry="<?= date("Y.m.d", strtotime($product->expiration_dateTime)) ?>"
+                                                    data-category="<?= $product->category ?>"
+                                                    data-image="<?= ROOT . '/' . explode(',', $product->pictures)[0] ?>"
+                                                >+</button>
                                             </div>
                                         </div>
                                         </div>
@@ -109,35 +117,87 @@
         </div>
     </div>
 </div>
+<?php if (!empty($_SESSION['cart_conflict'])): 
+    $conflict = $_SESSION['cart_conflict'];
+    unset($_SESSION['cart_conflict']); // only show once
+?>
+<div class="modal-overlay2" id="conflictModal" style="display:block;">
+    <div class="modal-content2">
+        <h3>Start a new order?</h3>
+        <p>You already have items from <strong><?= $conflict['previous_name'] ?></strong> in your cart.</p>
+        <p>Do you want to create a new order from <strong><?= $conflict['current_name'] ?></strong>?</p>
+
+        <form method="POST" action="<?= ROOT ?>/customer/confirmNewOrder">
+            <input type="hidden" name="product_id" value="<?= $conflict['product_id'] ?>">
+            <input type="hidden" name="qty" value="<?= $conflict['qty'] ?>">
+            <input type="hidden" name="business_id" value="<?= $conflict['current_id'] ?>">
+            <button type="submit" name="confirm" value="yes">Yes, create new order</button>
+            <a href="<?= ROOT ?>/customer/viewShop/<?= $conflict['current_id'] ?>">Cancel</a>
+        </form>
+    </div>
+</div>
+<?php endif; ?>
 
 
 
 <div class="modal-overlay" id="productModal">
-    <div class="modal-content">
-        <span class="close-button" id="modalClose">&times;</span>
-        <div class="modal-images">
-        <img id="modalImage" src="" alt="Product Image">
-        <div class="modal-image-controls">
-            <button id="prevImage">&lt;</button>
-            <button id="nextImage">&gt;</button>
+    <form method="POST" action="<?=ROOT?>/customer/addToCart">
+        <div class="modal-content">
+            <span class="close-button" id="modalClose">&times;</span>
+            <div class="modal-images">
+                <img id="modalImage" src="" alt="Product Image">
+                <div class="modal-image-controls">
+                    <button id="prevImage">&lt;</button>
+                    <button id="nextImage">&gt;</button>
+                </div>
+            </div>
+            <div class="modal-details">
+                <h2 id="modalName"></h2>
+                <p id="modalPrice"></p>
+                <p id="modalQty"></p>
+                <p id="modalExpiry"></p>
+                <p id="modalCategory"></p>
+                <div class="quantity-selector">      
+                    <label for="qtyInput">Quantity:</label>
+                    <input type="number" name="qty" id="qtyInput" min="1" value="1">
+                    <input type="hidden" name="product_id" id="hiddenProductId">
+                    <input type="hidden" name="business_id" id="hiddenBusinessId">             
+                </div>
+                <button type="submit" class="add-cart-button">Add to Cart</button>
+            </div>
         </div>
-        </div>
-        <div class="modal-details">
-        <h2 id="modalName"></h2>
-        <p id="modalPrice"></p>
-        <p id="modalQty"></p>
-        <p id="modalExpiry"></p>
-        <p id="modalCategory"></p>
-        <div class="quantity-selector">
-            <label for="qtyInput">Quantity:</label>
-            <input type="number" id="qtyInput" min="1" value="1">
-        </div>
-        <button class="add-cart-button">Add to Cart</button>
-        </div>
-    </div>
+    </form>
 </div>
 
 <script>
+
+    //handle the click and set the max for qtyInput:                          
+    document.querySelectorAll('.add-btn').forEach(button => {
+        button.addEventListener('click', () => {
+            const name = button.dataset.name;
+            const price = button.dataset.price;
+            const qty = button.dataset.qty;
+            const expiry = button.dataset.expiry;
+            const category = button.dataset.category;
+            const image = button.dataset.image;
+
+            document.getElementById('modalName').textContent = name;
+            document.getElementById('modalPrice').textContent = "Rs " + price;
+            document.getElementById('modalQty').textContent = qty + " left";
+            document.getElementById('modalExpiry').textContent = "Expires on: " + expiry;
+            document.getElementById('modalCategory').textContent = "Category: " + category;
+            document.getElementById('modalImage').src = image;
+            document.getElementById('hiddenProductId').value = button.dataset.id;
+            document.getElementById('hiddenBusinessId').value = button.dataset.business;
+
+            const qtyInput = document.getElementById('qtyInput');
+            qtyInput.max = qty;
+            qtyInput.value = 1;
+
+            document.getElementById('productModal').style.display = 'block';
+        });
+    });                            
+
     document.addEventListener("DOMContentLoaded", function () {
         const searchInput = document.querySelector(".search-input");
         const sortSelect = document.querySelector("select[name='sort-by']");
@@ -238,36 +298,6 @@
                 modalImage.src = '<?= ROOT ?>/' + images[index].trim();
             }
         }
-
-        document.querySelectorAll(".product-card").forEach(card => {
-            card.addEventListener("click", function () {
-                const name = card.querySelector(".product-name").textContent;
-                const price = card.querySelector(".product-price").textContent;
-                const qty = card.querySelector(".product-qty").textContent;
-                const expiry = card.querySelector(".expiry-date").textContent;
-                const category = card.closest(".category-section")?.querySelector("h3")?.textContent || "";
-
-                const imageData = card.querySelector("img").getAttribute("src");
-                const fullProduct = <?= json_encode($productRows) ?>;
-                const productObj = fullProduct.find(p => imageData.includes(p.pictures.split(',')[0].trim()));
-
-                if (productObj) {
-                    images = productObj.pictures.split(',');
-                    console.log(images);
-                    currentIndex = 0;
-                    showImage(currentIndex);
-                }
-
-                modalName.textContent = name;
-                modalPrice.textContent = price;
-                modalQty.textContent = qty;
-                modalExpiry.textContent = expiry;
-                modalCategory.textContent = "Category: " + category;
-                qtyInput.value = 1;
-
-                modal.style.display = "flex";
-            });
-        });
 
         closeModal.addEventListener("click", () => {
             modal.style.display = "none";

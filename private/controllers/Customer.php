@@ -245,128 +245,10 @@ class Customer extends Controller{
         ]);
     }
 
-    function cart(){
-        $errors = array();
-        $verify = new CustomerModel();
-        $cart_view = $verify->findAll("cart_view"); // Store results in $cart_view
-        $item_count = count($cart_view); // Now count the actual variable
-        
-        $this->view('CustomerCart', [
-            'errors' => $errors,
-            'cart_view' => $cart_view, // Pass the same variable to view
-            'item_count' => $item_count
-        ]);
-    }
-
-    // Add these methods to your Customer controller class
-
-function updateCartQuantity() {
-    if (!Auth::logged_in()) {
-        echo json_encode(['success' => false, 'message' => 'Not logged in']);
-        exit;
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $cart_id = $_POST['cart_id'] ?? null;
-        $new_quantity = $_POST['quantity'] ?? null;
-
-        if ($cart_id && $new_quantity !== null) {
-            $cart = new Cart();
-            $result = $cart->updateQuantity($cart_id, $new_quantity);
-            
-            if ($result) {
-                echo json_encode(['success' => true]);
-                exit;
-            }
-        }
-    }
-
-    echo json_encode(['success' => false, 'message' => 'Invalid request']);
-    exit;
-}
-
-
-    // function addToCart($id){
-    //     if(!Auth::logged_in()){
-    //         $this->redirect('login');
-    //     }
-
-    //     $cart = new Cart();
-    //     // $cart -> insert();
-    // }
-
-
-    function addToCart($products_id) {
-        if(!Auth::logged_in()) {
-            echo json_encode(['success' => false, 'message' => 'Please login to add items to cart']);
-            exit;
-        }
-    
-        // Get data from POST request
-        $data = json_decode(file_get_contents('php://input'), true);
-        $customer_id = $data['customer_id'] ?? Auth::getID();
-        $quantity = $data['quantity'] ?? 1;
-    
-        $cart = new Cart();
-        $result = $cart->addToCart($customer_id, $products_id, $quantity);
-    
-        if($result) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to add to cart']);
-        }
-        exit;
-    }
-
- function removeFromCart($id) {
-    if (!Auth::logged_in()) {
-        $this->redirect('login');
-    }
-    
-    $cart = new Cart();
-    $cart->delete($id, 'cart');
-    $this->redirect('customer/cart');
-}
-
-// function removeFromCart() {
-//     if (!Auth::logged_in()) {
-//         echo json_encode(['success' => false, 'message' => 'Not logged in']);
-//         exit;
-//     }
-
-//     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//         $cart_id = $_POST['cart_id'] ?? null;
-
-//         if ($cart_id) {
-//             $cart = new Cart();
-//             $result = $cart->delete($cart_id);
-            
-//             if ($result) {
-//                 echo json_encode(['success' => true]);
-//                 exit;
-//             }
-//         }
-//     }
-
-//     echo json_encode(['success' => false, 'message' => 'Invalid request']);
-//     exit;
-// }
-
-
-    // function removeFromCart(){
-
-    // }
-
-
 
     function paymentHistory(){
         $this->view('custPayment');
     }
-
-    function orders(){
-        $this->view('custViewOrders');
-    }
-
 
     // wishlist
     function wishlist(){
@@ -440,8 +322,288 @@ function updateCartQuantity() {
         ]);
     }
 
+    function addToCart()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
 
- 
+        $errors = [];
+        if (count($_POST) > 0) {
+            
+            $cart = new Cart();
+            $businessId = $_POST['business_id'];
+            $product = new Products();
+            $customerId = Auth::getId();
+            $productId = $_POST['product_id'];
+            $requestedQty = (int)$_POST['qty'];
+            $db = Database::getInstance();
+
+             // Check for conflicting shop
+            $existingBusinesses = $db->query("SELECT DISTINCT business_id FROM cart WHERE customer_id = ?", [$customerId]);
+
+            if (!empty($existingBusinesses) && $existingBusinesses[0]->business_id != $businessId) {
+                    // Conflict found
+                    $previousBusinessId = $existingBusinesses[0]->business_id;
+
+                    // Get shop names (assuming you have a businesses table)
+                    $shopModel = new BusinessModel();
+                    $currentShop = $shopModel->where('id', $businessId, 'business')[0]->name ?? 'Current Shop';
+                    $previousShop = $shopModel->where('id', $previousBusinessId, 'business')[0]->name ?? 'Previous Shop';
+
+                    // Store in session
+                    $_SESSION['cart_conflict'] = [
+                        'previous_id' => $previousBusinessId,
+                        'previous_name' => $previousShop,
+                        'current_id' => $businessId,
+                        'current_name' => $currentShop,
+                        'product_id' => $productId,
+                        'qty' => $_POST['qty'],
+                    ];
+
+                    $this->redirect('customer/viewShop/' . $businessId);
+                }
+            else{
+                if (isset($_POST['original_qty'])) {
+                    $requestedQty = (int)$_POST['qty'] - (int)$_POST['original_qty'];
+                }
+
+                // Check if the product already exists in the cart
+                $existing = $db->query(
+                    "SELECT * FROM cart WHERE customer_id = ? AND products_id = ? LIMIT 1",
+                    [$customerId, $productId]
+                );
+
+                // Fetch product from database
+                $prod = $product->where('id',$productId,'products');
+
+                
+                if ($existing && isset($existing[0])) {
+                    // Product already in cart → update qty
+                    $existingRow = $existing[0];
+                    $newQty = $existingRow->qty + $requestedQty;
+                    $cart->update($existingRow->id, ['qty' => $newQty], 'cart');
+                    // Update product qty
+                    $newQty_p = $prod[0]->qty - $requestedQty;
+                    $product->update($productId, ['qty' => $newQty_p], 'products');
+                    if (isset($_POST['original_qty'])) {
+                        $this->redirect('customer/cart');
+                    }
+                    else{
+                        $this->redirect('customer/viewShop/' . $businessId);
+                    }
+                    
+                }
+                else{
+                    if ($prod && $prod[0]->qty >= $requestedQty) {
+                    // Process the event if no errors
+                    if (empty($errors) && $cart->validate($_POST)) {
+                        $arr['customer_id'] = Auth::getId();
+                        $arr['products_id'] = $_POST['product_id'];
+                        $arr['business_id'] = $_POST['business_id'];
+                        $arr['qty'] = $_POST['qty'];
+                        $cart->insert($arr);
+
+                        // Update product qty
+                        $newQty = $prod[0]->qty - $requestedQty;
+                        $product->update($productId, ['qty' => $newQty], 'products');
+
+                        $this->redirect('customer/viewShop/' . $businessId);
+
+                    } else {
+                        $errors = array_merge($errors, $request->errors);
+                    }
+                    }else {
+                        $errors[] = "Not enough stock available.";
+                    }
+                }
+            }
+        }
+    }
+
+    function cart(){
+       
+        $cart = new Cart();
+        $customerId = Auth::getId();
+
+        $cartRows = $cart->where('customer_id', $customerId, 'cart');
+
+        $products = new Products();
+        $productRows = [];
+        $db = Database::getInstance();
+
+        if ($cartRows) {
+            // Collect all product IDs from the cart
+            $productIds = array_column($cartRows, 'products_id');
+    
+            // Create a string with placeholders for IN clause
+            $placeholders = implode(',', array_fill(0, count($productIds), '?'));
+            
+            // Prepare custom query to fetch all matching products
+            $query = "SELECT * FROM products WHERE id IN ($placeholders)";
+            $productRows = $db->query($query, $productIds);
+        }
+
+        $this->view('custCart', [
+            'cartRows' => $cartRows,
+            'productRows' => $productRows,
+        ]);
+    }
+    public function confirmNewOrder()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $customerId = Auth::getId();
+        $cart = new Cart();
+        $product = new Products();
+        $db = Database::getInstance();
+
+        // Get all cart items for customer
+        $cartItems = $cart->where('customer_id', $customerId, 'cart');
+
+        // Restore stock and remove each item properly
+        foreach ($cartItems as $item) {
+            $productId = $item->products_id;
+            $qtyToRestore = $item->qty;
+
+            // Get the product
+            $productRow = $product->where('id', $productId, 'products');
+            if ($productRow) {
+                $updatedQty = $productRow[0]->qty + $qtyToRestore;
+
+                // Update product stock
+                $product->update($productId, ['qty' => $updatedQty], 'products');
+
+                // Remove cart item
+                $cart->delete($item->id, 'cart');
+            }
+        }
+
+        // Now add the new product from the form
+        // You can call addToCart() or insert manually
+        $_POST['product_id'] = $_POST['product_id'] ?? null;
+        $_POST['qty'] = $_POST['qty'] ?? 1;
+        $_POST['business_id'] = $_POST['business_id'] ?? null;
+
+        if ($_POST['product_id'] && $_POST['qty']) {
+            $this->addToCart(); // Reuse your existing logic
+        } else {
+            $this->redirect('customer/viewShop/' . $_POST['business_id']);
+        }
+    }
+
+    function removeCartItem()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cart_id'])) {
+
+            $cartId = $_POST['cart_id'];
+            $cart = new Cart();
+            $product = new Products();
+            $db = Database::getInstance();
+
+            // Get the cart item
+            $cartItem = $cart->where('id', $cartId, 'cart');
+
+            if ($cartItem) {
+                $productId = $cartItem[0]->products_id;
+                $qtyToRestore = $cartItem[0]->qty;
+
+                // Get the product
+                $productRow = $product->where('id',$productId, 'products');
+
+                if ($productRow) {
+                    $updatedQty = $productRow[0]->qty + $qtyToRestore;
+
+                    // Update product stock
+                    $product->update($productId, ['qty' => $updatedQty], 'products');
+
+                    // Remove cart item
+                    $cart->delete($cartId, 'cart');
+                }
+            }
+
+            $this->redirect('customer/cart'); // Adjust as needed
+        }
+    }
+
+    function placeOrder()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $errors = [];
+        if (count($_POST) > 0) {
+            
+            $db = Database::getInstance();
+            $customerId = Auth::getId();
+            $order = new Order();
+            $paymentMethod = $_POST['payment_method']; // 'cash_on_pickup'
+            $cartItems = $_POST['cart']; // Cart items array
+            $total = $_POST['total']; // Total amount from the order summary
+
+            // 1. Insert into the `orders` table add vallidation
+            if (empty($errors) ) {   
+                $arr1['customer_id'] =  $customerId;
+                $arr1['dateTime'] = date('Y-m-d H:i:s');
+                $arr1['total'] = $total;
+                $arr1['paymentMethod'] = 'CashOnPickup';
+                $arr1['order_status'] = 'Pending'; // Default status
+                $order->insert($arr1);
+            }
+            // Get the ID of the newly inserted order
+            $orderId = $db->lastInsertId();
+
+            // 2. Insert into the `order_items` table
+            foreach ($cartItems as $cartItem) {
+
+                    $arrOrderItem['order_id'] = $orderId;
+                    $arrOrderItem['products_id'] = $cartItem['products_id'];
+                    $arrOrderItem['qty'] = $cartItem['qty'];
+                    
+                    
+
+                // Assuming $orderItem is your model for the `order_items` table
+                $orderItem = new OrderItem();
+                
+                $orderItem->insert($arrOrderItem);;
+
+                // // Update the product stock
+                // $product = new Products();
+                // $prod = $product->where('id', $cartItem['products_id'], 'products');
+                // if ($prod) {
+                //     $newStock = $prod[0]->qty - $cartItem['qty'];
+                //     $product->update($cartItem['products_id'], ['qty' => $newStock], 'products');
+                // }
+            }
+
+            //3. Remove items from the `cart` table using the `delete` method
+            foreach ($cartItems as $cartItem) {
+                $cart = new Cart();
+                $cart->delete($cartItem['id'], 'cart');
+            }
+
+            // Redirect to a success page or show a confirmation
+            $this->redirect('customer/');
+        }
+    }
+
+    function orders(){
+        $orders=new Model();
+        $cus_id=Auth::getId();
+        $order_details=$orders->where('customer_id',$cus_id,'order');
+        $order_count = is_array($order_details) ? count($order_details) : 0;
+        $this->view('custViewOrders',[
+            "orders"=>$order_details,
+            "order_count"=>$order_count
+        ]);
+    }
 
 }
 ?>

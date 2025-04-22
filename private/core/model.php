@@ -22,7 +22,7 @@ class Model
           $this->table=$table;
           //check whether the column exists before executing the query
           $column = addslashes($column);
-          $query = "select * from $this->table where $column = :value";
+          $query = "select * from `$this->table` where $column = :value";
           return $this->db->query($query, [
                // 'column' => $column,
                'value' => $value
@@ -32,7 +32,7 @@ class Model
      public function findAll($table)
      {    
           $this->table=$table;
-          $query = "select * from $this->table";
+          $query = "select * from `$this->table`";
           return $this->db->query($query);
      }
 
@@ -43,7 +43,7 @@ class Model
           $columns = implode(',', $keys);
           $values = implode(',:', $keys);
 
-          $query = "insert into $this->table ($columns) values (:$values)";
+          $query = "insert into `$this->table` ($columns) values (:$values)";
 
           return $this->db->query($query, $data);
      }
@@ -63,7 +63,7 @@ class Model
 
          
 
-          $query = "update $this->table set $str where id = :id";
+          $query = "update `$this->table` set $str where id = :id";
 
           return $this->db->query($query, $data);
      }
@@ -73,7 +73,7 @@ class Model
      public function delete($id,$table)
      {    
           $this->table=$table;
-          $query = "delete from $this->table where id = :id";
+          $query = "delete from `$this->table` where id = :id";
           $data['id'] = $id;
           return $this->db->query($query, $data);
      }
@@ -85,4 +85,8 @@ class Model
           $query="select MAX(id) AS last_id from $this->table";
           return $this->db->query($query);
      }
+     public function lastInsertId()
+    {
+        return $this->db->lastInsertId();
+    }
 }

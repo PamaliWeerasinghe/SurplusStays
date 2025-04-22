@@ -19,8 +19,8 @@ $current_url = $_SERVER['REQUEST_URI'];
         <li class="nav-item <?= strpos($current_url, '/customer/browseShops') || strpos($current_url, '/charity/createEvent') == true ? 'active' : '' ?>">
             <a href="<?=ROOT?>/customer/browseShops">Browse Shops</a>
         </li>
-        <li class="nav-item <?= strpos($current_url, '/admin/Complaints') == true ? 'active' : '' ?>">
-            <a href="<?=ROOT?>/admin/Complaints">Cart</a>
+        <li class="nav-item <?= strpos($current_url, '/customer/cart') == true ? 'active' : '' ?>">
+            <a href="<?=ROOT?>/customer/cart">Cart</a>
         </li>
         <li class="nav-item <?= strpos($current_url, '/admin/ManageCustomers') == true ? 'active' : '' ?>">
             <a href="<?=ROOT?>/admin/ManageCustomers">Wishlist</a>
@@ -31,11 +31,8 @@ $current_url = $_SERVER['REQUEST_URI'];
         <li class="nav-item <?= strpos($current_url, '/customer/manageComplaints') == true ? 'active' : '' ?>">
             <a href="<?=ROOT?>/customer/manageComplaints">Complaint</a>
         </li>
-        <li class="nav-item <?= strpos($current_url, '/admin/ManageCharityOrg') == true ? 'active' : '' ?>">
-            <a href="<?=ROOT?>//admin/ManageCharityOrg">Payment History</a>
-        </li>
-        <li class="nav-item <?= strpos($current_url, '/admin/Reports') == true ? 'active' : '' ?>">
-            <a href="<?=ROOT?>/admin/Reports">Profile</a>
+        <li class="nav-item <?= strpos($current_url, '/customer/profile') == true ? 'active' : '' ?>">
+            <a href="<?=ROOT?>/customer/profile">Profile</a>
         </li>
         <li class="nav-item <?= strpos($current_url, '/Logout') == true ? 'active' : '' ?>">
             <a href="<?=ROOT?>/Logout">Logout</a>

@@ -363,3 +363,76 @@ body, html {
     font-size: 1.5rem;
     cursor: pointer;
 }
+.modal-overlay2 {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100vw;
+    height: 100vh;
+    background: rgba(0, 0, 0, 0.6);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    z-index: 1000;
+    padding: 1rem;
+    box-sizing: border-box;
+}
+
+.modal-content2 {
+    background: #ffffff;
+    border-radius: 12px;
+    padding: 2rem;
+    max-width: 400px;
+    width: 100%;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    text-align: center;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+}
+
+.modal-content2 h3 {
+    margin-bottom: 1rem;
+    font-size: 1.5rem;
+    color: #333;
+}
+
+.modal-content2 p {
+    font-size: 1rem;
+    margin-bottom: 1rem;
+    color: #555;
+}
+
+.modal-content2 strong {
+    color: #005250;
+}
+
+.modal-content2 form {
+    display: flex;
+    flex-direction: column;
+    gap: 0.75rem;
+}
+
+.modal-content2 button {
+    padding: 0.6rem 1rem;
+    background-color:#005250;
+    color: white;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-size: 1rem;
+    transition: background-color 0.3s ease;
+}
+
+.modal-content2 button:hover {
+    background-color: #008986;
+}
+
+.modal-content2 a {
+    text-decoration: none;
+    color: #999;
+    font-size: 0.95rem;
+    transition: color 0.3s ease;
+}
+
+.modal-content2 a:hover {
+    color: #333;
+}

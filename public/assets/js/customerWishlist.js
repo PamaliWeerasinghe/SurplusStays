@@ -78,35 +78,35 @@ plusBtn.addEventListener('click', () => {
     
 // }
 
-function insertToCart(products_id, button) {
-    const container = button.closest('.product-container'); // or specific wrapper class
-    const quantityInput = container.querySelector('.quantity-input');
-    const quantity = quantityInput.value;
-    const customer_id = <?= Auth::getID() ?>;
+// function insertToCart(products_id, button) {
+//     const container = button.closest('.product-container'); // or specific wrapper class
+//     const quantityInput = container.querySelector('.quantity-input');
+//     const quantity = quantityInput.value;
+//     const customer_id = <?= Auth::getID() ?>;
 
-    fetch(`<?=ROOT?>/customer/addToCart/${products_id}`, {
-        method: 'POST',
-        headers: {
-            'Content-Type': 'application/json',
-        },
-        body: JSON.stringify({
-            customer_id: customer_id,
-            products_id: products_id,
-            quantity: quantity
-        })
-    })
-    .then(response => response.json())
-    .then(data => {
-        if (data.success) {
-            alert('Item added to cart successfully!');
-            hideCartPopup();
-            // Optional: Refresh cart count
-        } else {
-            alert('Error: ' + (data.message || 'Failed to add to cart'));
-        }
-    })
-    .catch(error => {
-        console.error('Error:', error);
-        alert('An error occurred while adding to cart');
-    });
-}
+//     fetch(`<?=ROOT?>/customer/addToCart/${products_id}`, {
+//         method: 'POST',
+//         headers: {
+//             'Content-Type': 'application/json',
+//         },
+//         body: JSON.stringify({
+//             customer_id: customer_id,
+//             products_id: products_id,
+//             quantity: quantity
+//         })
+//     })
+//     .then(response => response.json())
+//     .then(data => {
+//         if (data.success) {
+//             alert('Item added to cart successfully!');
+//             hideCartPopup();
+//             // Optional: Refresh cart count
+//         } else {
+//             alert('Error: ' + (data.message || 'Failed to add to cart'));
+//         }
+//     })
+//     .catch(error => {
+//         console.error('Error:', error);
+//         alert('An error occurred while adding to cart');
+//     });
+//}
