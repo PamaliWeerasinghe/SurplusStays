@@ -21,7 +21,7 @@ define('FORGOT','http://localhost/SurplusStays/public/forgot');
 define('TEMPLATEROOT', 'http://localhost/SurplusStays/templates');
 define('ADMIN','http://localhost/SurplusStays/public/admin');
 //DATABASE
-define('DBNAME','surplusstays_latest');
+define('DBNAME','surplusstays');
 define('DBHOST','localhost');
 //alwaysdata-host mysql-surplusstays.alwaysdata.net
 define('DBUSER','root');
