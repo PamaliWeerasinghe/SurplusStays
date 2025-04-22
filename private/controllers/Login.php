@@ -63,7 +63,7 @@ class Login extends Controller{
                     case 'charity':
                         $charity= new AdminUser();
                         $charity_details=$charity->where(['user_id'],[$user_details->id],'organization');
-                        print_r($charity_details);
+                        // print_r($charity_details);
                         Auth::authenticate($charity_details[0],$user_details);
                         $this->view('charity_dashboard',[
                             'charityDetails'=>$charity,
@@ -102,8 +102,9 @@ class Login extends Controller{
         //get token details from database
         $admin =new AdminModel();
         $find_token=$admin->where(['token'],[$token],'admin_details');
-        if(isset($find_token)){
-            print_r($find_token[0]);
+        
+        if(!empty($find_token)){
+            // print_r($find_token[0]);
             // $find_token=$find_token[0];
             if($find_token[0]->token_expiry>date("Y-m-d H:i:s")){
                 if($_GET['token']==$find_token[0]->token){
@@ -129,6 +130,8 @@ class Login extends Controller{
                 //prepare a page for invalid login
                 $this->view('404');
             }
+        }else{
+            $this->view('404');
         }
        
        

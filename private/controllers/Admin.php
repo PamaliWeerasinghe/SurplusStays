@@ -349,7 +349,7 @@ class Admin extends Controller
             } else {
 
                 $search = $verify->where(['email'], [$_POST['email']], 'admin_details');
-
+                print_r($search);
                 if (isset($search[0]->email)) {
                     $errors['admin'] = "An admin already exists";
                 } else {

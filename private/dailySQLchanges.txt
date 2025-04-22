@@ -52,7 +52,7 @@ ON business.id=products.business_id
 INNER JOIN `user`
 ON `user`.id =business.user_id
 WHERE status.`status`!='Inactive'
-order BY products.expiration_dateTime 
+order BY products.expiration_dateTime ;
 
 CREATE VIEW non_resolved_complaints AS
 SELECT complaints.id AS complaint_id,
@@ -176,7 +176,7 @@ INNER JOIN products
 ON order_items.products_id = products.id
 INNER JOIN business
 ON products.business_id=business.id
-GROUP BY order_items.products_id 
+GROUP BY order_items.products_id ;
 
 CREATE VIEW product_details AS
 SELECT products.id AS product_id,
@@ -198,7 +198,7 @@ WHERE products.status_id!='Inactive' ;
 
 CREATE VIEW customer_order_report AS 
 SELECT
-order.customer_id AS cus_id,
+`order`.customer_id AS cus_id,
 concat(customer.fname,' ', customer.lname) AS cus_name,
 COUNT(`order`.`id`) AS no_of_orders
 FROM `order`
