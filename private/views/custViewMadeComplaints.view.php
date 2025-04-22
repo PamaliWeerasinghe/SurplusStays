@@ -15,14 +15,29 @@
             <?php require APPROOT."/views/includes/customerSidePanel.view.php"?>
             <div class="dashboard">
                 <div class="summary">
-                <div class="" onclick="window.location.href='<?= ROOT ?>/Admin/addNewCustomer'" style="width: 70%;height:7vh;background-color:white;margin-top:8%" >
-                        <div>
-                            <label>
-                                + Add Buyer
-                            </label>
+                <div onclick="window.location.href='<?= ROOT ?>/Customer/MakeComplaint'" 
+     style="
+        width: 70%;
+        height: 7vh;
+        background-color: #ffffff;
+        margin-top: 8%;
+        box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        font-size: 1.2rem;
+        color: #333;
+        font-weight: bold;
+        cursor: pointer;
+        transition: all 0.3s ease;
+     " 
+     onmouseover="this.style.backgroundColor='#f0f0f0'" 
+     onmouseout="this.style.backgroundColor='#ffffff'">
+    <label style="cursor: pointer;">
+        + Add Complaint
+    </label>
+</div>
 
-                        </div>
-                    </div>
                
                     <!-- <div class="top-bar">
                         <div class="search-bar">

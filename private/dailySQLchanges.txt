@@ -126,7 +126,7 @@ products.price_per_unit AS original_price,
 products.discountPrice AS discount                      
 FROM order_items                                        
 INNER JOIN `order` ON `order`.id=order_items.order_id   
-INNER JOIN products ON order_items.products_id=products.
+INNER JOIN products ON order_items.products_id=products.id
 INNER JOIN business ON products.business_id=business.id  ;
 
 CREATE VIEW customer_details AS 
@@ -211,6 +211,7 @@ SELECT watchlist.products_id AS product_id,
 watchlist.id AS id,
 watchlist.customer_id AS cus_id,
 watchlist.datetime AS product_added,
+business.id AS bus_id,
 business.`name` AS bus_name,
 products.qty AS qty_avail,
 products.expiration_dateTime AS expires_in,
@@ -223,7 +224,7 @@ FROM watchlist
 INNER JOIN products ON products.id=watchlist.products_id
 INNER JOIN business ON business.id=products.business_id 
 INNER JOIN `status` ON products.status_id=`status`.id
-WHERE `status`.`status`!='Inactive'  
+WHERE `status`.`status`!='Inactive' ;  
 
 
 

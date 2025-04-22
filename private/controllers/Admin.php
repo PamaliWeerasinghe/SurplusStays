@@ -263,19 +263,7 @@ class Admin extends Controller
         }
     }
 
-    function loadItems()
-    {
-        if (isset($_POST['order_id'])) {
-            $order_id = $_POST['order_id'];
-            $admin = new AdminComplaints();
-            $items = $admin->getAllOrders($order_id);
-
-            echo json_encode($items);
-        } else {
-            http_response_code(400);
-            echo json_encode(['error' => 'Invalid Request']);
-        }
-    }
+  
     //view customer details - manage customers popup
     function customerDetails($user_id,$cus_id)
     {
@@ -308,133 +296,7 @@ class Admin extends Controller
         }
     }
 
-    // customer make a complaint
-    function makeComplaints()
-    {
-
-        $images = array();
-        if (count($_POST)) {
-            $errors = array();
-            $business_id = $_POST['shopID'];
-            $orderId = $_POST['orderid'];
-            $orderItem = $_POST['orderitem'];
-            $complaint = $_POST['complaint'];
-            $img1 = $_FILES['complaintImg1']['name'];
-            $img2 = $_FILES['complaintImg2']['name'];
-            $img3 = $_FILES['complaintImg3']['name'];
-            $img4 = $_FILES['complaintImg4']['name'];
-            $img5 = $_FILES['complaintImg5']['name'];
-
-
-
-            if (isset($img1)) {
-                array_push($images, $img1);
-            }
-            if (isset($img2)) {
-                array_push($images, $img2);
-            }
-            if (isset($img3)) {
-                array_push($images, $img3);
-            }
-            if (isset($img4)) {
-                array_push($images, $img4);
-            }
-            if (isset($img5)) {
-                array_push($images, $img5);
-            }
-
-            if ($orderId == 'oid') {
-                $errors["oid"] = 'Order ID not Selected';
-            }
-            if ($orderItem == 'selectItem') {
-                $errors["item"] = 'Order Item is not Selected';
-            }
-            if (empty($complaint)) {
-                $errors['complaint'] = "No complaint added";
-            }
-            if (empty($images[0]) && empty($images[1]) && empty($images[2]) && empty($images[3]) && empty($images[4])) {
-                $errors['images'] = "Complaint should contain at least one image";
-            }
-
-
-            $admin = new AdminComplaints();
-
-
-            $orders = $admin->getNoOfOrders(1);
-            $orderDetails = $admin->getAllOrders(1);
-
-            if (count($errors) > 0) {
-                $this->view('customerMakeComplaint', [
-                    "orders" => $orders,
-                    "orderDetails" => $orderDetails,
-                    "errors" => $errors
-                ]);
-            } else {
-                $errors = array();
-                //find the complaint status - (not attended)
-                $complaint_status = $admin->where(['name'], ['Not Attended'], 'complaint_status');
-                $complaint_status = $complaint_status[0];
-
-                //insert into complaints
-                $arr['business_id'] = $business_id;
-                $arr['complaint_status_id'] = $complaint_status->id;
-                $arr['complaint_dateTime'] = date('Y-m-d H:i:s');
-                $arr['customer_id'] = '1';
-                $arr['order_items_id'] = $orderItem;
-                $arr['description'] = $complaint;
-
-
-                // insert complaint images
-                $insertImg = array();
-
-                for ($i = 0; $i < count($images); $i++) {
-                    if (!empty($images[$i])) {
-                        $imgPath = $admin->uploadImage($images[$i], $i);
-                        array_push($insertImg, $imgPath);
-                    }
-                }
-
-                // Columns
-                $columns = ['business_id', 'customer_id', 'order_items_id'];
-
-                //values
-                $values = [$business_id, '1', $orderItem];
-
-
-                if (!$admin->insertComplaint($arr, $insertImg, $columns, $values)) {
-                    $errors["complaint_insertion"] = "Complaint already exists";
-                } else {
-                    // send notification for the admin
-                    $currentDateTime = date('Y-m-d H:i:s');
-                    // $email=$_SESSION['USER'];
-                    // $complaints=new AdminComplaints();
-                    $complaint_id = $admin->id;
-                    if (!Mail::sendCustomerComplaint($complaint_id, $currentDateTime, 'pamaliweerasinghe@gmail.com')) {
-                        error_log("Could't send the email");
-                        $_SESSION['alert_message']="Check your email";
-                        $_SESSION['alert_type']="success";
-                        $this->redirect('admin/makeComplaints');
-                    }
-                }
-
-                $this->view('customerMakeComplaint', [
-                    "orders" => $orders,
-                    "orderDetails" => $orderDetails,
-                    "errors" => $errors,
-                    'successfull'=>$_SESSION['alert_message'],
-                ]);
-            }
-        } else {
-            $admin = new AdminComplaints();
-            $orders = $admin->getNoOfOrders(1);
-            $orderDetails = $admin->getAllOrders(1);
-            $this->view('customerMakeComplaint', [
-                "orders" => $orders,
-                "orderDetails" => $orderDetails,
-                "email" => $_SESSION['USER_EMAIL']
-            ]);
-        }
-    }
+   
     // Reply to a complaint
     function ReplyToComplaint()
     {

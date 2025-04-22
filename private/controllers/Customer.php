@@ -35,8 +35,7 @@ class Customer extends Controller{
             $this->redirect('customer/wishlist');
 
         }
-            
-        
+               
     }
    
 
@@ -56,7 +55,151 @@ class Customer extends Controller{
         ]);
 
     }
+     // customer make a complaint
+     function makeComplaint()
+     {
+        // print_r($_SESSION['USER_EMAIL']);
+         $cus_id=$_SESSION['USER'][0]->id;
+         $images = array();
+         if (count($_POST)) {
+            
+             $errors = array();
+             $business_id = $_POST['shopID'];
+             $orderId = $_POST['orderid'];
+             $orderItem = $_POST['orderitem'];
+             $complaint = $_POST['complaint'];
+             $img1 = $_FILES['complaintImg1']['name'];
+             $img2 = $_FILES['complaintImg2']['name'];
+             $img3 = $_FILES['complaintImg3']['name'];
+             $img4 = $_FILES['complaintImg4']['name'];
+             $img5 = $_FILES['complaintImg5']['name'];
+ 
+ 
+            
+             if (isset($img1)) {
+                 array_push($images, $img1);
+             }
+             if (isset($img2)) {
+                 array_push($images, $img2);
+             }
+             if (isset($img3)) {
+                 array_push($images, $img3);
+             }
+             if (isset($img4)) {
+                 array_push($images, $img4);
+             }
+             if (isset($img5)) {
+                 array_push($images, $img5);
+             }
+            //  print_r($_POST);
+ 
+             if ($orderId == 'oid') {
+                 $errors["oid"] = 'Order ID not Selected';
+             }
+             if ($orderItem == 'SelectItem') {
+                 $errors["item"] = 'Order Item is not Selected';
+             }
+             if (empty($complaint)) {
+                 $errors['complaint'] = "No complaint added";
+             }
+             if (empty($images[0]) && empty($images[1]) && empty($images[2]) && empty($images[3]) && empty($images[4])) {
+                 $errors['images'] = "Complaint should contain at least one image";
+             }
+ 
+ 
+             $admin = new AdminComplaints();
+ 
+ 
+             $orders = $admin->getNoOfOrders($cus_id);
 
+            //  $orderDetails = $admin->getAllOrders();
+ 
+             if (count($errors) > 0) {
+                 $this->view('customerMakeComplaint', [
+                     "orders" => $orders,
+                    //  "orderDetails" => $orderDetails,
+                     "errors" => $errors
+                 ]);
+             } else {
+                 $errors = array();
+                 //find the complaint status - (not attended)
+                 $complaint_status = $admin->where(['name'], ['Pending'], 'complaint_status');
+                 $complaint_status = $complaint_status[0];
+ 
+                 //insert into complaints
+                 $arr['business_id'] = $business_id;
+                 $arr['complaint_status_id'] = $complaint_status->id;
+                 $arr['complaint_dateTime'] = date('Y-m-d H:i:s');
+                 $arr['customer_id'] = $cus_id;
+                 $arr['order_items_id'] = $orderItem;
+                 $arr['description'] = $complaint;
+ 
+ 
+                 // insert complaint images
+                 $insertImg = array();
+ 
+                 for ($i = 0; $i < count($images); $i++) {
+                     if (!empty($images[$i])) {
+                         $imgPath = $admin->uploadImage($images[$i], $i);
+                         array_push($insertImg, $imgPath);
+                     }
+                 }
+ 
+                 // Columns
+                 $columns = ['business_id', 'customer_id', 'order_items_id'];
+ 
+                 //values
+                 $values = [$business_id, $cus_id, $orderItem];
+ 
+ 
+                 if (!$admin->insertComplaint($arr, $insertImg, $columns, $values)) {
+                     $errors["complaint_insertion"] = "Complaint already exists";
+                 } else {
+                     // send notification for the admin
+                     $currentDateTime = date('Y-m-d H:i:s');
+                     // $email=$_SESSION['USER'];
+                     // $complaints=new AdminComplaints();
+                     $complaint_id = $admin->id;
+                     if (!Mail::sendCustomerComplaint($complaint_id, $currentDateTime, 'pamaliweerasinghe@gmail.com')) {
+                         error_log("Could't send the email");
+                         $_SESSION['alert_message']="Check your email";
+                         $_SESSION['alert_type']="success";
+                         $this->redirect('admin/makeComplaints');
+                     }
+                 }
+ 
+                 $this->view('customerMakeComplaint', [
+                     "orders" => $orders,
+                    //  "orderDetails" => $orderDetails,
+                     "errors" => $errors,
+                     'successfull'=>$_SESSION['alert_message'],
+                 ]);
+             }
+         } else {
+             $admin = new AdminComplaints();
+             $orders = $admin->getNoOfOrders($cus_id);
+            //  $orderDetails = $admin->getAllOrders(1);
+             $this->view('customerMakeComplaint', [
+                 "orders" => $orders,
+                //  "orderDetails" => $orderDetails,
+                 "email" => $_SESSION['USER_EMAIL']
+             ]);
+         }
+     }
+     //load the items in the order when the ORDER ID is selected
+     function loadItems()
+     {
+         if (isset($_POST['order_id'])) {
+             $order_id = $_POST['order_id'];
+             $admin = new AdminComplaints();
+             $items = $admin->getAllOrders($order_id);
+ 
+             echo json_encode($items);
+         } else {
+             http_response_code(400);
+             echo json_encode(['error' => 'Invalid Request']);
+         }
+     }
     // function makeComplaint()
     // {
     //     if (!Auth::logged_in()) {
@@ -452,6 +595,7 @@ function updateCartQuantity() {
             //Get the relevant details to add to the cart table
             $products_id=$wishlist_row->product_id;
             $cus_id=$wishlist_row->cus_id;
+            $bus_id=$wishlist_row->bus_id;
     
             //remove from wishlist
             $wishlist->delete($wishlist_id, 'watchlist');
@@ -466,6 +610,7 @@ function updateCartQuantity() {
             //insert into the cart
             $data['products_id']=$products_id;
             $data['customer_id']=$cus_id;
+            $data['business_id']=$bus_id;
             $data['qty']=$qty;
             $wishlist->insert($data,'cart');
     
