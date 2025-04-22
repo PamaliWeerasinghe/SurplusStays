@@ -27,7 +27,7 @@
                         echo $seacher->renderSearchBar($columns);
                         ?>
                     </div>
-                    <div class="add-buyer" onclick="window.location.href='<?=ROOT?>/Admin/addNewBusiness'">
+                    <div class="add-buyer" onclick="window.location.href='<?=ROOT?>/Admin/addNewBusiness'" style="margin-top: 4%";>
                             <div>
                                 <label>
                                 + Add Supplier

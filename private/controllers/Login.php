@@ -123,15 +123,15 @@ class Login extends Controller{
                     $this->redirect('admin/dashboard');
                 }else{
                     //prepare a page for invalid login
-                    $this->view('404');
+                    $this->view('AdminInvalidLogin');
                 }
             }else{
                 $errors["token_expiry"]="Token is expired. Retry to login";
                 //prepare a page for invalid login
-                $this->view('404');
+                $this->view('AdminInvalidLogin');
             }
         }else{
-            $this->view('404');
+            $this->view('AdminInvalidLogin');
         }
        
        

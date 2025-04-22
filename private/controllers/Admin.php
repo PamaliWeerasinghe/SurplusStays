@@ -525,6 +525,15 @@ class Admin extends Controller
             }
             //get the counts
             $countsForBars = $admin->admin_bar($weekDates[0], $weekDates[6]);
+
+            $countForInactiveCust=$admin->countWithWhere('user',['role','status_id'],['customer',2]);
+            $countForInactiveBus=$admin->countWithWhere('user',['role','status_id'],['business',2]);
+            $countForInactiveCharity=$admin->countWithWhere('user',['role','status_id'],['charity',2]);
+            $countAllCustomers=$admin->countWithWhere('user',['role','status_id'],['customer',1]);
+            $countDontations=$admin->count('donations');
+            
+            $inactUser_count=$countForInactiveCust+$countForInactiveBus+$countForInactiveCharity;
+            
             //get the week days
             $days = [
                 'Monday' => 0,
@@ -550,7 +559,11 @@ class Admin extends Controller
                 "products" => $products,
                 "products_pager" => $products_pager,
                 "days" => $days,
-                "total" => $total
+                "total" => $total,
+                "inactUser_count"=>$inactUser_count,
+                "totalCustomers"=>$countAllCustomers,
+                "noOfComplaints"=> $complaintCountData,
+                "donations"=>$countDontations
 
 
             ]);
@@ -595,9 +608,21 @@ class Admin extends Controller
         $products_offset = $products_pager->offset;
         $products = $admin->select('about_to_expire_products', $product_limit, $products_offset, $search, $searchBy, $sort, $order);
 
+        //count from products where notifiy_status_id 
+        $productsNoty=$admin->countWithWhere('products',['notify_status_id'],[1]);
+        //Expired products
+        $expired=$admin->countWithWhere('products',['status_id'],[2]);
+        //all orderscount
+        $orders=$admin->count('order');
+        //total Revenue
+        $revenue=$admin->totalRevenue('order');
         $this->view('adminTrackExpiryPage', [
             "rows" => $products,
-            "products_pager" => $products_pager
+            "products_pager" => $products_pager,
+            "productsSaved"=>$productsNoty,
+            "expired"=>$expired,
+            "orders"=>$orders,
+            "revenue"=>$revenue
 
         ]);
     }

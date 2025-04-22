@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>404 - Page Not Found</title>
+    <title>Invalid Login</title>
     <style>
         /* General Reset */
         * {
@@ -27,16 +27,16 @@
         /* Container Styling */
         .container {
             max-width: 600px;
-            padding: 20px;
+            padding: 40px;
             background-color: #fff;
             border-radius: 10px;
             box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
         }
 
         /* Heading Styling */
-        h1 {
-            font-size: 6rem;
-            color: #e74c3c;
+        h3 {
+            font-size: 3rem;
+            color:rgb(73, 153, 105);
             margin-bottom: 20px;
         }
 
@@ -56,7 +56,7 @@
         .home-link {
             display: inline-block;
             padding: 10px 20px;
-            background-color: #3498db;
+            background-color: #3f7d58;
             color: #fff;
             text-decoration: none;
             border-radius: 5px;
@@ -64,16 +64,16 @@
         }
 
         .home-link:hover {
-            background-color: #2980b9;
+            background-color:rgb(73, 153, 105);
         }
     </style>
 </head>
 <body>
     <div class="container">
-        <h1>Invalid Login</h1>
-        <p class="message">Oops! The page you're looking for doesn't exist.</p>
-        <p class="sub-message">You may have mistyped the address or the page may have moved.</p>
-        <a href="/" class="home-link">Go back to the homepage</a>
+        <h3>INVALID LOGIN</h3>
+        <p class="message">Oops! The link has been expired.</p>
+        <p class="sub-message">You may have to re-validate yourself and try to login.</p>
+        <a href="<?=ROOT?>" class="home-link">Go back to the homepage</a>
     </div>
 
     <script>

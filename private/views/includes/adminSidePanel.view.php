@@ -1,6 +1,6 @@
 <aside class="sidePanel">
     <div class="greeting">
-        <img src="<?=ASSETS?>/images/sample_profile_pic.png" />
+        <img src="<?=ASSETS?>/adminImages/<?=$_SESSION['USER_PIC']?>" />
         
         <label>Hi <span class="admin"><?=  (Auth::logged_in()) ?$_SESSION['USER']->name:''?>!</span></label>
     </div>

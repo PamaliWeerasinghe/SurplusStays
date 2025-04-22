@@ -12,12 +12,16 @@
 
 .greeting{
     display: flex;
+    flex-direction: column;
     justify-content: center;
     align-items: center;
     padding: 6%;
 }
+.greeting img{
+    width: 30%;
+}
 .greeting label{
-    font-size: larger;
+    font-size: large;
     font-weight: bolder;
     margin-left: 2%;
 }
