@@ -17,6 +17,7 @@ define('COMPLAINTS', 'http://localhost/SurplusStays/public/assets/complaints/');
 define('CUSTOMER','http://localhost/SurplusStays/public/assets/customerImages');
 define('BUSINESS','http://localhost/SurplusStays/public/assets/businessImages');
 define('LOGIN','http://localhost/SurplusStays/public/login');
+define('FORGOT','http://localhost/SurplusStays/public/forgot');
 define('TEMPLATEROOT', 'http://localhost/SurplusStays/templates');
 define('ADMIN','http://localhost/SurplusStays/public/admin');
 //DATABASE

@@ -141,7 +141,7 @@ class Login extends Controller{
         //get the token details from the database
         $user=new AdminModel();
         $find_token=$user->where(['token'],[$token],'user');
-
+    
         if(isset($find_token)){
             if($find_token[0]->token_expiry > date("Y-m-d H:i:s")){
                 if($_GET['token']==$find_token[0]->token){
@@ -150,6 +150,7 @@ class Login extends Controller{
                     if(isset($user_details[0]->id)){
                         $user_details=$user_details[0];
                         $id=$user_details->id;
+                        // print_r($user_details->role);
                         switch ($user_details->role){
                             case 'customer':
                                 $role_details=$user->where(['user_id'],[$id],'customer');
@@ -163,6 +164,11 @@ class Login extends Controller{
                                 break;
                             case 'business':
                                 $role_details=$user->where(['user_id'],[$id],'business');
+                                Auth::authenticate($user_details,$role_details[0]);
+                                $this->redirect('login/ResetPassword');
+                                break;
+                            case 'admin':
+                                $role_details=$user->where(['user_id1'],[$id],'admin');
                                 Auth::authenticate($user_details,$role_details[0]);
                                 $this->redirect('login/ResetPassword');
                                 break;
@@ -226,8 +232,11 @@ class Login extends Controller{
         $this->view('ForgotPassword');
     }
     function ResetPassword(){
+        // print_r(count($_POST));
+        // print_r($_SESSION['USER']->id);
+        // print_r(Auth::getUserId());
         $errors=array();
-        $id=$_SESSION['USER']->id;
+        $id=Auth::getUserId();
         if(count($_POST)>0){
             if($_POST['new_password']!=$_POST['renter_password']){
                 $errors['mismatch']="Two passwords doesn't match";
@@ -236,6 +245,8 @@ class Login extends Controller{
                 $user=new AdminModel();
                 $data['password']=$password;
                 $user->update($id,$data,'user');
+
+                $this->redirect('login/');
             }
           
 

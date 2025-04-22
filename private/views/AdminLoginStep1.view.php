@@ -53,7 +53,10 @@
                 <input value="<?=get_var('email')?>" placeholder="ENTER YOUR USERNAME" type="email" class="input"  name="email" required>
                 <h4>PASSWORD :</h4>
                 <input value="<?=get_var('password')?>" placeholder="ENTER YOUR PASSWORD" type="password" class="input"  name="password"  required>
-                <p><a style="text-decoration: none;" href='<?=ROOT?>/register/register'> Forgot your password ?</a></p>
+                <p><a style="text-decoration: none;" 
+                href="<?=LOGIN?>/forgot">
+                 Forgot your password ?
+                </a></p>
             </div>
             
             <button type="submit" class="register-button">LOG IN</button>

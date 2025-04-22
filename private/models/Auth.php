@@ -80,4 +80,16 @@ class Auth
             return $_SESSION['USER']->id;
         }
     }
+    public static function getUserRole()
+    {
+        if(session_status() == PHP_SESSION_NONE) {
+            session_start();
+        }
+
+        // Check if the user session contains an organization ID
+        if(isset($_SESSION['USER_ROLE']))
+        {
+            return $_SESSION['USER_ROLE'];
+        }
+    }
 }
