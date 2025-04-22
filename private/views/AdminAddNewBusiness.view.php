@@ -45,7 +45,7 @@
         <form method="post" class="right" enctype="multipart/form-data">
             <div class="details">
                 <div class="steps">
-                <div class="step-number"><h3>ORGANIZATION DETAILS</h3></div>
+                <div class="step-number"><h3>BUSINESS DETAILS</h3></div>
                     
                 </div>
                 <?php if (!empty($errors)): ?>
@@ -64,7 +64,7 @@
                 <h4>BUSINESS LOGO :</h4>
                 <div class="upload-wrapper">
                         <label for="upload-1">
-                            <img src="<?=ASSETS?>/images/upload.png" alt="Upload Image" class="upload-icon" id="profilePreview">
+                            <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview">
                         </label>
                         <input type="file" id="upload-1" name="profile_picture" style="display: none;" accept="image/*">
                     </div>

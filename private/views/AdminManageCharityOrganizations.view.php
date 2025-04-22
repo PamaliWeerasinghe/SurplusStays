@@ -28,7 +28,7 @@
                         echo $seacher->renderSearchBar($columns);
                         ?>
                     </div>
-                    <div class="add-buyer" onclick="window.location.href='<?= ROOT ?>/Admin/addNewCharityOrg'">
+                    <div class="add-buyer" onclick="window.location.href='<?= ROOT ?>/Admin/addNewCharityOrg'" style="margin-top: 4%";>
                         <div>
                             <label>
                                 + Add Charity Organization
@@ -41,7 +41,7 @@
                 </div>
                 <div class="Business-complaints-order-status">
                     <div class="order">
-                        <label>Charity Organizations</label>
+                        <!-- <label>Charity Organizations</label> -->
                         <div>
                         <?php
                     $columns = [
