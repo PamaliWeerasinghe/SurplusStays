@@ -19,23 +19,23 @@
                     </div>
                 </div>
                 <div class="events-header">
-                <h2>Events</h2>
-                <div class="search-container">
-                    <input type="text" class="search-input" placeholder="Search Events...">
-                    <button class="search-button">
-                    <i class="search-icon"></i>
-                    </button>
-                </div>
-                <div class="filter-container">
-                    <p>Filter By: </p>
-                    <select id="filter" class="filter-select">
-                    <option value="dateAdded">Date Added</option>
-                    <option value="dateAdded">Ongoing</option>
-                    <option value="dateAdded">Drafts</option>
-                    <option value="dateAdded">Closed</option>
-                    </select>
-                </div>
-                <button class="create-event-button" onclick="window.location.href='<?=ROOT?>/charity/createEvent'">+ Create Event</button>
+                    <h2>Events</h2>
+                    <div class="search-container">
+                        <input type="text" id="searchInput" class="search-input" placeholder="Search Events...">
+                        <button class="search-button">
+                        <i class="search-icon"></i>
+                        </button>
+                    </div>
+                    <div class="filter-container">
+                        <p>Filter By: </p>
+                        <select id="filter" class="filter-select">
+                            <option value="all">All</option>
+                            <option value="1">Ongoing</option>
+                            <option value="2">Draft</option>
+                            <option value="3">Closed</option>
+                        </select>
+                    </div>
+                    <button class="create-event-button" onclick="window.location.href='<?=ROOT?>/charity/createEvent'">+ Create Event</button>
                 </div>
                 <div class="complaints-status">
                     <div class="table-container">
@@ -92,7 +92,6 @@
                                 <tr><td colspan="5"><h4>No events found</h4></td></tr>
                             <?php endif; ?>
                         </tbody>
-
                         </table>
                     </div>
                 </div>
@@ -137,6 +136,45 @@
                 event.stopPropagation();
             });
         });
+
+        
+        document.addEventListener("DOMContentLoaded", function () {
+            const searchInput = document.querySelector(".search-input");
+            const searchButton = document.querySelector(".search-button");
+            const filterSelect = document.querySelector(".filter-select");
+            const rows = document.querySelectorAll(".admin-order-table tbody tr");
+
+            function filterEvents() {
+                const searchTerm = searchInput.value.toLowerCase().trim();
+                const filterValue = filterSelect.value;
+
+                rows.forEach(row => {
+                    const eventName = row.querySelector(".event-name h3").textContent.toLowerCase();
+                    const statusButton = row.querySelector(".status");
+                    let showRow = true;
+
+                    // Filter by search
+                    if (searchTerm && !eventName.includes(searchTerm)) {
+                        showRow = false;
+                    }
+
+                    // Filter by status
+                    if (filterValue === "1" && !statusButton.classList.contains("ongoing")) {
+                        showRow = false;
+                    } else if (filterValue === "2" && !statusButton.classList.contains("draft")) {
+                        showRow = false;
+                    } else if (filterValue === "3" && !statusButton.classList.contains("closed")) {
+                        showRow = false;
+                    }
+
+                    row.style.display = showRow ? "" : "none";
+                });
+            }
+
+            searchButton.addEventListener("click", filterEvents);
+            filterSelect.addEventListener("change", filterEvents);
+        });
+
     </script>
     
 </body>

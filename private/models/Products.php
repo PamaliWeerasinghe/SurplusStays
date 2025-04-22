@@ -1,7 +1,7 @@
 <?php
 class Products extends Model
 {
-    public $table = "products";
+    protected $table = "products";
     public function validate($DATA)
     {
         // Reset errors

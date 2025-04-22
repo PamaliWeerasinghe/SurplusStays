@@ -2,7 +2,7 @@
 <?php require APPROOT.'/views/AdminTrackExpiryViewItemPopup.view.php'?>
     <title><?php echo SITENAME ?></title>
     <link rel="stylesheet" href="<?=STYLES?>/adminTrackExpiry.css" />
-    <link rel="stylesheet" href="<?=STYLES?>/customerSidePanel.css" />
+    <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
     <link rel="stylesheet" href="<?=STYLES?>/admin.css">
 </head>
 
@@ -10,7 +10,7 @@
 <?php echo $this->view('includes/navbar')?>
     <div class="main-div">
         <div class="sub-div-1">
-            <?php require APPROOT . "/views/includes/customerSidePanel.view.php" ?>
+            <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary" >
                     <!-- <div class="notifications-type2">
@@ -36,7 +36,7 @@
                                 <th>OrderID</th>
                                 <th>Date & Time</th>
                                 <th>Shop</th>
-                                <!-- <th>Product</th> -->
+                                <th>Product</th>
                                 <th>Payment</th>
                                 <th>Price</th>
                             </tr>
@@ -46,7 +46,7 @@
                                 <td>#154</td>
                                 <td>14.02.2024 <br/> 02: 45: 30</td>
                                 <td>Cargills - Rajagiriya</td>
-                                <!-- <td>Full Bread</td> -->
+                                <td>Full Bread</td>
                                 <td>
                                     <label>
                                         
@@ -59,7 +59,7 @@
                                 <td>#154</td>
                                 <td>14.02.2024 <br/> 02: 45: 30</td>
                                 <td>Cargills - Rajagiriya</td>
-                                <!-- <td>Full Bread</td> -->
+                                <td>Full Bread</td>
                                 <td><button class="take-action">Notified</button></td>
                                 <td style="text-align: center;">Rs. 64.50 <br/><label>View Full Details</label></td>
                             </tr>

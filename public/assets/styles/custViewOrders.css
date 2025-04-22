@@ -1,0 +1,88 @@
+/* Basic Styling */
+.content {
+    padding: 20px;
+    max-width: 1000px;
+    margin: 0 auto;
+    background-color: #ffffff;
+    border-radius: 8px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+h1 {
+    font-size: 1.5rem;
+    color: #333;
+    margin-bottom: 20px;
+}
+
+/* Table Styling */
+table {
+    width: 100%;
+    border-collapse: collapse;
+}
+
+thead {
+    background-color: #F0F4F8;
+}
+
+thead th {
+    padding: 15px;
+    text-align: left;
+    font-size: 0.9rem;
+    color: #666;
+}
+
+tbody tr {
+    border-bottom: 1px solid #E5E5E5;
+}
+
+tbody td {
+    padding: 15px;
+    font-size: 0.9rem;
+    color: #333;
+    text-align: left;
+}
+
+tbody tr:hover {
+    background-color: #F9F9F9;
+}
+
+/* Status Badge Styling */
+.status {
+    padding: 5px 10px;
+    border-radius: 15px;
+    font-size: 0.8rem;
+    font-weight: bold;
+    color: white;
+}
+
+.processing {
+    background-color: #e05b4a;
+}
+
+.completed {
+    background-color: #2A5934;
+}
+
+span.status {
+    margin-left: 10px;
+}
+
+/* Price Styling */
+tbody td:last-child {
+    text-align: right;
+}
+
+tbody td:last-child span {
+    margin-left: 20px;
+}
+
+a {
+    font-size: 0.8rem;
+    color: #1B4332;
+    text-decoration: none;
+    margin-left: 20px;
+}
+
+a:hover {
+    text-decoration: underline;
+}

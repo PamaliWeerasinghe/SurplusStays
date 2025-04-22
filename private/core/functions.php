@@ -1,6 +1,7 @@
 <?php
 
 function get_var($key, $default = "")
+function get_var($key, $default = "")
 {
     if(isset($_POST[$key]))
     {
