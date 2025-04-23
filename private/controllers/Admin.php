@@ -183,7 +183,7 @@ class Admin extends Controller
     function DeleteCustomer($id)
     {
         $customer = new AdminModel();
-        $data["status_id"] = 3;
+        $data["status_id"] = 2;
         $customer->update($id, $data, 'user');
 
         $this->ManageCustomers();
@@ -192,12 +192,12 @@ class Admin extends Controller
 
     //Admin views a customer
     function viewCustomer($user_id,$cus_id)
-    { {
+    { 
 
             $customer = new AdminModel();
             $errors = array();
             $arr = array();
-            // print_r($_FILES);
+            
 
             if (count($_POST) > 0) {
                 if ($customer->validateEditCustomer($_POST)) {
@@ -220,13 +220,15 @@ class Admin extends Controller
                     if(isset($arr['profile_pic'])){
                         $user['profile_pic']=$arr['profile_pic'];
                     }
+                    // print_r($cus_details);
+                    
                     if(!empty($user) && !empty($cus_details)){
                         $customer->update($user_id, $user, 'user');
                         $customer->update($cus_id, $cus_details, 'customer');
                     }else if (!empty($user)){
                         $customer->update($user_id, $user, 'user');
-                    }else if (!empty($business_details)){
-                        $customer->update($cus_id, $business_details, 'customer');
+                    }else if (!empty($cus_details)){
+                        $customer->update($cus_id, $cus_details, 'customer');
                     }else{
                        
                         $data = $customer->where(['cus_id'], [$cus_id], 'customer_details');
@@ -260,7 +262,7 @@ class Admin extends Controller
                     'rows' => $data
                 ]);
             }
-        }
+        
     }
 
   
