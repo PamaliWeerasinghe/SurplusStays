@@ -353,6 +353,14 @@ body, html {
     color: #333;
     margin-bottom: 15px;
 }
+.star-rating {
+    font-size: 1.2rem;
+}
+
+.star {
+    margin-right: 2px;
+}
+
 
 .event-name img.event-img {
     width: 60px;

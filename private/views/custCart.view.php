@@ -122,6 +122,28 @@
         </div>
     </div>
     <?php echo $this->view('includes/footer')?>
+
+    <script>
+        window.addEventListener('load', adjustContainerHeight);
+        window.addEventListener('resize', adjustContainerHeight);
+
+        function adjustContainerHeight() {
+            const complaintStatuses = document.querySelectorAll('.complaints-status');
+            const container = document.querySelector('.container');
+            const containerright = document.querySelector('.container-right');
+
+            if (complaintStatuses.length && container) {
+            let totalHeight = 0;
+            complaintStatuses.forEach(el => {
+                totalHeight += el.offsetHeight;
+            });
+            container.style.height = totalHeight + 300 + 'px';
+            containerright.style.height = totalHeight + 300 +'px';
+            }
+        }
+    </script>
+
+    
     
 </body>
 

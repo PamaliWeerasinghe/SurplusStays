@@ -164,6 +164,20 @@
                                                     <h3><?= htmlspecialchars($row->name) ?></h3>
                                                 </div>
                                             </div>
+                                            <div class="rating">
+                                                <?php if ($row->average_rating !== null): ?>
+                                                    <div class="star-rating">
+                                                        <?php for ($i = 1; $i <= 5; $i++): ?>
+                                                            <span class="star" style="color: <?= $i <= round($row->average_rating) ? '#FFD700' : '#ccc' ?>">&#9733;</span>
+                                                        <?php endfor; ?>
+                                                        <span style="margin-left: 5px;">(<?= htmlspecialchars($row->ratingCount ?? 0) ?>)</span>
+                                                    </div>
+                                                <?php else: ?>
+                                                    <div class="star-rating">
+                                                        <span style="color: #999;">Unrated</span>
+                                                    </div>
+                                                <?php endif; ?>
+                                            </div>
                                             <div class="date">
                                                 <span class="status open">Open Today</span><br>10.00AM-22.00PM
                                             </div>

@@ -5,7 +5,8 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITENAME ?></title>
-    <link rel="stylesheet" href="<?=STYLES?>/CustViewOrders.css">
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?=STYLES?>/CustWishlist.css">
 </head>
 <body>
     <?php echo $this->view('includes/charityNavbar')?>
@@ -16,12 +17,11 @@
                 <div class="top-bar">
                 </div>
                 <div class="searchWelcome">
-                <h2>WISHLIST - <?= $item_count ?> <?= $item_count == 1 ? 'item' : 'items' ?>
-                </h2>
+                    <h2>WISHLIST - <?= $item_count ?> <?= $item_count == 1 ? 'item' : 'items' ?></h2>
                 </div>
 
                 <div class="complaints-status">
-                <div class="wishlist-table">
+                    <div class="wishlist-table">
                         <table>
                             <thead>
                                 <tr>
@@ -38,21 +38,21 @@
                                 <tr id="card-item-<?= $item['product_id'] ?>">
                                     <td>
                                         <div class="product-card">
-                                            <div>
+                                            <div class="product-image">
                                                 <img src="<?= ROOT . '/' . explode(',', $item['image'])[0] ?>">
                                             </div>
                                             <div class="product-info">
-                                                <p class="category"><?= $item['business_name'] ?></p> <!-- Replace with actual business name if available -->
-                                                <h3 class="product-title"><?= $item['product_id'] ?></h3> <!-- Replace with actual product name if available -->
+                                                <p class="category"><?= $item['business_name'] ?></p>
+                                                <h3 class="product-title"><?= $item['product_id'] ?></h3>
                                                 <div class="product-details">
-                                                    <p style="color: black;"><strong>Expiry:</strong></p>
-                                                    <p style="color:red"><strong><?= $item['expiry'] ?></strong></p>
+                                                    <p class="expiry-label">Expiry:</p>
+                                                    <p class="expiry-date"><?= $item['expiry'] ?></p>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
 
-                                    <td>
+                                    <td class="price-column">
                                         Rs <?= number_format((float)($item['price'] ?? 0), 2) ?>
                                     </td>
 
@@ -69,11 +69,15 @@
                                     </td>
 
                                     <td>
-                                        <button class="add-to-cart-button" onclick="openAddToCartPopup(<?= $item['product_id'] ?>)">Add to Cart</button>
+                                        <button class="add-to-cart-button" onclick="openAddToCartPopup(<?= $item['product_id'] ?>)">
+                                            <span>Add to Cart</span>
+                                        </button>
                                     </td>
 
                                     <td>
-                                        <img src="<?= ASSETS ?>/images/delete.png" class="delete-btn" onclick="openDeletePopup(<?= $item['product_id'] ?>)">
+                                        <div class="delete-container">
+                                            <img src="<?= ASSETS ?>/images/delete.png" class="delete-btn" onclick="openDeletePopup(<?= $item['product_id'] ?>)">
+                                        </div>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
@@ -85,49 +89,46 @@
         </div>
     </div>
 
-     <!-- popup for add to cart -->
-     <div class="cart-popup-container" id="cart-popup-container">
-    <div class="cart-popup" id="cart-popup">
-        <span class="popup-close-btn" onclick="hideCartPopup()">&times;</span>
-        <input type="hidden" id="popupRowID"/>
-        
-        <div class="popup-product-row">
-            <div class="popup-product-image">
-                <img src="" id="addToCartImage">
+    <!-- popup for add to cart -->
+    <div class="cart-popup-container" id="cart-popup-container">
+        <div class="cart-popup" id="cart-popup">
+            <span class="popup-close-btn" onclick="hideCartPopup()">&times;</span>
+            <input type="hidden" id="popupRowID"/>
+            
+            <div class="popup-product-row">
+                <div class="popup-product-image">
+                    <img src="" id="addToCartImage">
+                </div>
+                <div class="popup-product-info">
+                    <p class="popup-category" id="bus_name"></p>
+                    <h3 class="popup-product-title" id="product_name"></h3>
+                    <div class="popup-product-details">
+                        <p class="popup-expiry-label">Expires On:</p>
+                        <p class="popup-expiry-date" id="expires_in"></p>
+                    </div>
+                </div>
             </div>
-            <div class="popup-product-info">
-                <p class="popup-category" id="bus_name"></p>
-                <h3 class="popup-product-title" id="product_name"></h3>
-                <div class="popup-product-details">
-                    <p class="popup-expiry-label">Expires On:</p>
-                    <p class="popup-expiry-date" id="expires_in"></p>
+            
+            <div class="popup-action-row">
+                <div class="popup-quantity-selector">
+                    <button class="quantity-btn minus">-</button>
+                    <input type="number" min="1" value="1" class="quantity-input" id="quantity-input-1">
+                    <button class="quantity-btn plus">+</button>
+                </div>
+                <div class="popup-action-buttons">
+                    <form action="" method="POST" id="AddToCartFromWishlist">
+                        <input type="hidden" id="watchlist_id"/>
+                        <input type="hidden" id="selected-Qty"/>
+                        <button class="popup-confirm-btn" onclick="insertToCart()" type="submit">Add to Cart</button>
+                        <button type="button" class="popup-cancel-btn" onclick="hideCartPopup()">Cancel</button>
+                    </form>
                 </div>
             </div>
         </div>
-        
-        <div class="popup-action-row">
-            <div class="popup-quantity-selector">
-                <button class="quantity-btn minus">-</button>
-                <input type="number" min="1" value="1" class="quantity-input" id="quantity-input-1">
-                
-                <button class="quantity-btn plus">+</button>
-            </div>
-            <div class="popup-action-buttons">
-                <form action="" method="POST" id="AddToCartFromWishlist">
-                    <input type="hidden" id="watchlist_id"/>
-                    <input type="hidden" id="selected-Qty"/>
-                    <button class="popup-confirm-btn" onclick="insertToCart()" type="submit">Add to Cart</button>
-                    <button type="button" class="popup-cancel-btn" onclick="hideCartPopup()">Cancel</button>
-                </form>
-                
-            </div>
-        </div>
     </div>
-</div>
 
     <?php echo $this->view('includes/footer')?>
     <script src="<?=ROOT?>/assets/js/customerWishlist.js"></script>
 
 </body>
-
 </html>

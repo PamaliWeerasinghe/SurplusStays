@@ -225,6 +225,7 @@ class Customer extends Controller{
     
         $shops = new BusinessModel();
         $users = new User();
+        $ratings = new BusinessRating();
     
         $rows = $shops->findAll('business');
         $rows_p = $users->findAll('user');
@@ -235,9 +236,22 @@ class Customer extends Controller{
             $userPictures[$user->id] = $user->profile_pic;
         }
     
-        // Add picture to each business row
+         // Attach picture and average rating to each business row
         foreach ($rows as &$row) {
             $row->picture = $userPictures[$row->user_id] ?? '';
+
+            // Fetch ratings for this business
+            $ratingRows = $ratings->where('business_id', $row->id,'business_rating');
+            if ($ratingRows) {
+                $total = 0;
+                foreach ($ratingRows as $r) {
+                    $total += (int)$r->rating;
+                }
+                $row->average_rating = round($total / count($ratingRows), 1); // 1 decimal
+                $row->ratingCount = count($ratingRows);
+            } else {
+                $row->average_rating = null; // or 0 if preferred
+            }
         }
     
         $this->view('customerBrowseShops2',[
