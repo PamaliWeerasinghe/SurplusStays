@@ -305,12 +305,8 @@ class Admin extends Controller
         if (count($_POST)) {
             $id = $_POST['id'];
             $admin = new AdminModel();
-            $check=$admin->where(['complaint_id'],[$id],'complaintdetails');
-            if(!empty($check)){
-                $errors['admin_reply']="Already Has Replied";
-
-            }else{
-                $arr['adminReply'] = $_POST['feedback'];
+            
+            $arr['adminReply'] = $_POST['feedback'];
 
             //$feedback=$admin->update($id,$arr,'complaints');
             // returns an empty array
@@ -322,17 +318,14 @@ class Admin extends Controller
                 $user = new AdminComplaints();
                 $complaint_details = $user->complaintDetails($id);
                 $complaint_images = $user->getComplaintImages($id);
-               
-            }
-            }
-            
-        }
-        $this->view('AdminSeeComplainPage', [
-            "complaint_details" => $complaint_details[0],
-            "complaint_imgs" => $complaint_images,
-            "errors" => $errors
+                $this->view('AdminSeeComplainPage', [
+                    "complaint_details" => $complaint_details[0],
+                    "complaint_imgs" => $complaint_images,
+                    "errors" => $errors
 
-        ]);
+                ]);
+            }
+        }
     }
     //View a charity organization
     function CharityOrgView()
