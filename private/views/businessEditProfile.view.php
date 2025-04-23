@@ -4,9 +4,10 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Edit Profile</title>
-    <link rel="stylesheet" href="<?= ROOT ?>/assets/styles/business_register.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoo4pzFf80sXYMtcQUux4CWSCY9nDbvig&libraries=places&callback=initMap" async defer></script>
+    <title><?php echo SITENAME ?></title>
+    <link rel="stylesheet" href="<?= STYLES ?>/businessSidePanel.css" />
+    <link rel="stylesheet" href="<?= STYLES ?>/businessEditProfile.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOjGDz3PRLABXKf8sf5d___lX-RuWo3L4&libraries=places&callback=initMap" async defer></script>
 
     <script>
         let map, marker;
@@ -46,99 +47,113 @@
 </head>
 
 <body>
-    <?php echo $this->view('includes/navbar_unregistered') ?>
-
-    <div class="container">
-        <div class="left">
-            <img src="<?= ASSETS ?>/images/register_background.png" class="left-image" alt="Register image">
-            <h3>Join the SurplusStays Network</h3>
-            <p>Are you a business looking to make a positive impact by reducing food waste and helping those in need? Register with SurplusStays and start donating your surplus food today.</p>
-        </div>
-
-        <form method="post" class="right" enctype="multipart/form-data">
-            <div class="details">
-                <div class="steps">
-                    <h3>BUSINESS DETAILS</h3>
+    <?php echo $this->view('includes/businessNavbar') ?>
+    <div class="main-div">
+        <div class="sub-div-1">
+            <?php echo $this->view('includes/businessSidePanel') ?>
+            <div class="dashboard">
+                <div class="summary">
                 </div>
 
-                <?php if (!empty($errors)): ?>
-                    <div class="error alert">
-                        <ul>
-                            <?php foreach ($errors as $error): ?>
-                                <li><?= $error ?></li>
-                            <?php endforeach; ?>
-                        </ul>
+                <div class="main-box">
+                    <div class="header">
+                        <h2>Edit Profile</h2>
                     </div>
-                <?php endif; ?>
 
-                <h4>BUSINESS NAME :</h4>
-                <input placeholder="ENTER YOUR BUSINESS NAME" value="<?= get_var('name', $row[0]->name) ?>" type="text" name="name" class="input">
+                    <form method="POST" enctype="multipart/form-data">
 
-                <h4>BUSINESS TYPE :</h4>
-                <select name="type" class="select">
-                    <option value="" disabled selected>SELECT THE TYPE</option>
-                    <option value="Individual" <?= get_var('type', $row[0]->type) == 'Individual' ? 'selected' : '' ?>>Individual</option>
-                    <option value="Smallbusiness" <?= get_var('type', $row[0]->type) == 'Smallbusiness' ? 'selected' : '' ?>>Smallbusiness</option>
-                    <option value="Supermarket" <?= get_var('type', $row[0]->type) == 'Supermarket' ? 'selected' : '' ?>>Supermarket</option>
-                    <option value="Other" <?= get_var('type', $row[0]->type) == 'Other' ? 'selected' : '' ?>>Other</option>
-                </select>
-
-                <h4>BUSINESS EMAIL:</h4>
-                <input placeholder="ENTER AN EMAIL" value="<?= get_var('email', $row[0]->email) ?>" type="text" name="email" class="input">
-
-                <h4>PHONE NUMBER :</h4>
-                <input placeholder="ENTER A PHONE NUMBER" value="<?= get_var('phone', $row[0]->phone_no) ?>" type="text" name="phone" class="input">
-
-                <h4>BUSINESS LOCATION :</h4>
-                <input type="hidden" id="latitude" name="latitude" value="<?= get_var('latitude', $row[0]->latitude ?? '') ?>">
-                <input type="hidden" id="longitude" name="longitude" value="<?= get_var('longitude', $row[0]->longitude ?? '') ?>">
-                <div id="map" style="height: 400px; width: 100%;"></div><br>
-
-                <h4>USERNAME :</h4>
-                <input placeholder="ENTER A USERNAME" value="<?= get_var('username', $row[0]->username) ?>" type="text" name="username" class="input">
-
-                <h4>PROFILE PICTURE :</h4>
-                <div class="upload-wrapper">
-                    <?php
-                    $picturePath = !empty($row[0]->pictures) ? htmlspecialchars($row[0]->pictures) : '';
-                    ?>
-                    <label for="upload-1">
-                        <img 
-                            src="<?= $picturePath ? ROOT . $picturePath : ASSETS . '/icons/uploadArea.png' ?>" 
-                            alt="Upload Image" 
-                            class="upload-icon" 
-                            id="profilePreview-1"
-                            style="width: 150px; height: 150px; object-fit: cover; border-radius: 8px;"
-                        >
-                        <?php if ($picturePath): ?>
-                            <img class="delete-btn" src="<?= ASSETS ?>/icons/delete-button.png" alt="Delete">
+                        <?php if (!empty($errors)): ?>
+                            <div class="error alert">
+                                <ul>
+                                    <?php foreach ($errors as $error): ?>
+                                        <li><?= $error ?></li>
+                                    <?php endforeach; ?>
+                                </ul>
+                            </div>
                         <?php endif; ?>
-                    </label>
-                    <input type="file" id="upload-1" name="upload-1" style="display: none;">
+
+                        <div class="input-group">
+                            <label for="product-name">Business Name :</label>
+                            <input placeholder="ENTER YOUR BUSINESS NAME" value="<?= get_var('name', $currbusiness[0]->name) ?>" type="text" name="name">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="category">Business Type :</label>
+                            <select name="type">
+                                <option value="" disabled>SELECT THE TYPE</option>
+                                <option value="Individual" <?= get_var('type', $currbusiness[0]->type) == 'Individual' ? 'selected' : '' ?>>Individual</option>
+                                <option value="Smallbusiness" <?= get_var('type', $currbusiness[0]->type) == 'Smallbusiness' ? 'selected' : '' ?>>Smallbusiness</option>
+                                <option value="Supermarket" <?= get_var('type', $currbusiness[0]->type) == 'Supermarket' ? 'selected' : '' ?>>Supermarket</option>
+                                <option value="Other" <?= get_var('type', $currbusiness[0]->type) == 'Other' ? 'selected' : '' ?>>Other</option>
+                            </select>
+
+
+                        </div>
+
+                        <div class="input-group">
+                            <label for="description">Email :</label>
+                            <input placeholder="ENTER AN EMAIL" value="<?= get_var('email', $curruser[0]->email) ?>" type="text" name="email">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="quantity">Phone Number :</label>
+                            <input placeholder="ENTER A PHONE NUMBER" value="<?= get_var('phone', $currbusiness[0]->phoneNo) ?>" type="text" name="phone">
+                        </div>
+
+                        <div class="input-group">
+                            <label for="price">Business Location :</label>
+                            <input type="hidden" id="latitude" name="latitude" value="<?= get_var('latitude', $currbusiness[0]->latitude ?? '') ?>">
+                            <input type="hidden" id="longitude" name="longitude" value="<?= get_var('longitude', $currbusiness[0]->longitude ?? '') ?>">
+                            <div id="map" style="height: 400px; width: 100%;"></div><br>
+                        </div>
+
+                        <div class="input-group">
+                            <label for="expiration">Username :</label>
+                            <input placeholder="ENTER A USERNAME" value="<?= get_var('username', $currbusiness[0]->username) ?>" type="text" name="username">
+                        </div>
+
+                        <div class="input-group">
+                        <label for="expiration">Profile Picture :</label>
+                        <div class="upload-wrapper">
+                            <label for="upload-1">
+                                <?php if (!empty($curruser[0]->profile_pic)): ?>
+                                    <img src="<?= ASSETS ?>/businessImages/<?= $curruser[0]->profile_pic ?>" alt="Upload Image" class="upload-icon" id="profilePreview-1">
+                                <?php else: ?>
+                                    <img src="<?= ASSETS ?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview-1">
+                                <?php endif; ?>
+                            </label>
+                            <input type="file" id="upload-1" name="upload-1" style="display: none;">
+                        </div>
+                        </div>
+
+                        <div class="button-group">
+                            <a href="<?= ROOT ?>/business/profile">
+                                <button type="button" class="btn-cancel">Cancel</button>
+                            </a>
+                            <button type="submit" class="btn-create">Confirm</button>
+                        </div>
+                    </form>
                 </div>
             </div>
+        </div>
+        <?php echo $this->view('includes/footer') ?>
 
-            <button class="register-button">CONFIRM</button>
-        </form>
-    </div>
+        <!-- JavaScript to Show Preview -->
+        <script>
 
-    <?php echo $this->view('includes/footer') ?>
+            document.getElementById('upload-1').addEventListener('change', function(event) {
+                const file = event.target.files[0];
+                if (file) {
+                    const reader = new FileReader();
+                    reader.onload = function(e) {
+                        const previewImage = document.getElementById('profilePreview-1');
+                        previewImage.src = e.target.result; // Update image source
+                        
+                    };
+                    reader.readAsDataURL(file);
+                }
+            });
+        </script>
 
-    <!-- Image Preview Script -->
-    <script>
-        document.getElementById('upload-1').addEventListener('change', function(event) {
-            const file = event.target.files[0];
-            if (file) {
-                const reader = new FileReader();
-                reader.onload = function(e) {
-                    const previewImage = document.getElementById('profilePreview-1');
-                    previewImage.src = e.target.result; // Update image source
-                    previewImage.style.display = 'block'; // Ensure it's visible
-                };
-                reader.readAsDataURL(file);
-            }
-        });
-    </script>
 </body>
-
 </html>

@@ -50,8 +50,8 @@ class Business extends Controller
             foreach ($allProducts as $row) {
                 $productExpiration = new DateTime($row->expiration_dateTime);
                 if ($currentDateTime > $productExpiration) {
-                    $arr['status_id']=2;
-                    $product->update($row->id, $arr,'products');
+                    $arr['status_id'] = 2;
+                    $product->update($row->id, $arr, 'products');
                 }
             }
         }
@@ -398,10 +398,10 @@ class Business extends Controller
             $requestModel = new RequestModel();
             $request_id = $_POST['request_id'];
             $status = $_POST['status'];
-            $feedback=$_POST['feedback'];
+            $feedback = $_POST['feedback'];
 
             // Update request status
-            $requestModel->updateRequestStatus($request_id, $status,$feedback);
+            $requestModel->updateRequestStatus($request_id, $status, $feedback);
 
             // Redirect back to the request details page
             $this->redirect('business/requests/');
@@ -441,6 +441,7 @@ class Business extends Controller
         // Handle response submission (safely check for POST data)
         if (isset($_POST['response']) && !empty($_POST['response'])) {
             $complaintModel->addResponse($id, $_POST['response']);
+            $this->redirect('business/complaints');
         }
 
         $this->view('businessComplaintDetails', ['complaint' => $complaintDetails]);
@@ -448,34 +449,39 @@ class Business extends Controller
 
     function profile()
     {
-        $this->view('businessProfile');
+
+        $business = new BusinessModel();
+        $businessId = Auth::getUserId();
+        $currbusiness = $business->where('id', $businessId, 'business');
+        $user_id = $currbusiness[0]->user_id;
+
+        $user = new User();
+        $curruser = $user->where('id', $user_id, 'user');
+
+        $this->view('businessProfile', [
+            'currbusiness' => $currbusiness,
+            'curruser' => $curruser
+        ]);
     }
 
 
     function editprofile()
     {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
 
+        $business = new BusinessEditProfile();
+        $businessId = Auth::getUserId();
+        $currbusiness = $business->where('id', $businessId, 'business');
+        $user_id = $currbusiness[0]->user_id;
+
+        $user = new User();
+        $curruser = $user->where('id', $user_id, 'user');
         $errors = [];
 
-        $businessModel = new BusinessModel();
-        $userTable = new User();
 
-        $businessId = Auth::getUserId(); // Get current user id
-        $row = $businessModel->where('id', $businessId, 'business');
-
-        if ($row) {
-            $row = $row[0]; // Get the first (and only) record
-        } else {
-            $errors[] = "Business not found.";
-        }
-
-        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
 
             $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/businessImages/";
-            $uploadedPicture = '';
+            $errors = [];
 
             if (isset($_FILES['upload-1']) && $_FILES['upload-1']['error'] === 0) {
                 $fileName = basename($_FILES['upload-1']['name']);
@@ -487,55 +493,91 @@ class Business extends Controller
                     $filePath = $targetDir . $uniqueName;
 
                     if (move_uploaded_file($_FILES['upload-1']['tmp_name'], $filePath)) {
-                        $uploadedPicture = '/assets/businessImages/' . $uniqueName;
+                        $profile_pic_path =  $uniqueName;
                     } else {
-                        $errors[] = "Failed to upload the image.";
+                        $errors[] = "Failed to upload image: {$fileName}.";
                     }
                 } else {
                     $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed.";
                 }
-            } elseif (!empty($row->pictures)) {
-                $uploadedPicture = $row->pictures; // keep existing image if none is uploaded
             } else {
-                $errors[] = "An event image is required.";
+                $profile_pic_path = $curruser[0]->profile_pic ?? '';
             }
 
-            $_POST['pictures'] = $uploadedPicture;
 
-            if (count($errors) === 0 && $businessModel->validate($_POST)) {
-                $businessData = [
-                    'name' => $_POST['name'],
-                    'email' => $_POST['email'],
-                    'phone_no' => $_POST['phone'],
-                    'username' => $_POST['username'],
-                    'type' => $_POST['type'],
-                    'picture' => $_POST['picture'],
-                    'pictures' => $_POST['pictures'], // storing the image path here
-                    'latitude' => $_POST['latitude'],
-                    'longitude' => $_POST['longitude'],
-                ];
+            // Validate and process form data
+            if (empty($errors) && $business->validate($_POST)) {
 
-                $businessModel->update($businessId, $businessData, 'business');
-
+                // Save data to `user` table
                 $userData = [
                     'email' => $_POST['email'],
+                    'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
+                    'profile_pic' => $profile_pic_path
                 ];
-                $userTable->update($businessId, $userData, 'user');
 
-                $this->redirect('login');
+                $businessData = [
+                    'name' => $_POST['name'],
+                    'phoneNo' => $_POST['phone'], //phone_no
+                    'username' => $_POST['username'],
+                    'type' => $_POST['type'], //business_type
+                    'latitude' => $_POST['latitude'],
+                    'longitude' => $_POST['longitude']
+                ];
+
+                $user->update($user_id, $userData, 'user');
+                $business->update($businessId, $businessData, 'business');
+
+                $this->redirect('business/profile');
+            } elseif (!$business->validate($_POST)) {
+                $errors = $business->errors;
+            }
+        }
+        // Render the business registration view
+        $this->view('businessEditProfile', [
+            'errors' => $errors,
+            'currbusiness' => $currbusiness,
+            'curruser' => $curruser
+        ]);
+    }
+
+    function changepassword($userId)
+    {
+        $user = new BusinessChangePassword();
+        $errors = [];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if ($user->validate($_POST, $userId)) {
+                $passwordData = [
+                    'password' => password_hash($_POST['password'], PASSWORD_DEFAULT)
+                ];
+
+                $user->update($userId, $passwordData, 'user');
+                $this->redirect('business/profile');
             } else {
-                $errors = array_merge($errors, $businessModel->errors);
+                $errors = $user->errors;
             }
         }
 
-        $this->view('businessEditProfile', [
-            'errors' => $errors,
-            'row' => [$row], // Pass as array for get_var() compatibility
+        $this->view('businessChangePassword', [
+            'errors' => $errors
         ]);
     }
 
 
 
+    function deleteprofile($id)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $user = new user();
+            $arr['status_id'] = 2;
+            $user->update($id, $arr, 'user');
+            $this->redirect('logout');
+        }
+    }
 
     function test($name)
     {

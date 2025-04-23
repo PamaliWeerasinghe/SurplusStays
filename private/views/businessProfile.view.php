@@ -49,6 +49,7 @@
 
                 </div>
 
+
                 <div class="main-box">
                     <div class="header">
                         <h2>Business Information</h2>
@@ -61,10 +62,10 @@
                                 <img class="img" src="<?= ASSETS ?>/businessImages/<?= basename(Auth::getUserPicture()) ?>" alt="Business Logo">
                             </div>
                             <div class="text">
-                                <h4><?= Auth::getName() ?> ⭐ 4.9/5.0</h4>
-                                <p><strong>Business type : </strong> <?= Auth::gettype() ?></p>
-                                <p><strong>Phone Number:</strong> <?= Auth::getphoneNo() ?></p>
-                                <p><strong>Email Address:</strong> <?= Auth::getemail() ?></p>
+                                <h4><?= $currbusiness[0]->name ?> ⭐ 4.9/5.0</h4>
+                                <p><strong>Business type : </strong> <?= $currbusiness[0]->type ?></p>
+                                <p><strong>Phone Number:</strong> <?= $currbusiness[0]->phoneNo ?></p>
+                                <p><strong>Email Address:</strong> <?= $curruser[0]->email ?></p>
                             </div>
                         </div>
                     </div>
@@ -79,14 +80,52 @@
 
                     <div class="sub-box">
                         <h3>Account Security</h3>
-                        <div class="items-colomn">
-                            <p><strong>Change Password : </strong> <a href="#">Click here to change password</a></p>
+                        <div class="button-group">
+                        
                             <button onclick="window.location.href='<?= ROOT ?>/business/editprofile'">Edit Profile</button>
+                            <button onclick="window.location.href='<?= ROOT ?>/business/changepassword/<?= $curruser[0]->id ?>'">Change Password</button>
+                            <form id="deleteForm<?= $curruser[0]->id ?>" action="<?= ROOT ?>/business/deleteprofile/<?= $curruser[0]->id ?>" method="post">
+
+                                <button class="deletebutton" type="button" data-form-id="deleteForm<?= $curruser[0]->id ?>">Delete Profile</button>
+
+                            </form>
                         </div>
                     </div>
                 </div>
             </div>
         </div>
+        <!-- Simple Delete Confirmation Popup -->
+        <div id="deletePopup" class="popup">
+            <div class="popup-content">
+                <p>Confirm Profile Deletion</p>
+                <p>Are you certain you wish to permanently delete this profile? This action cannot be undone.</p>
+                <div class="button-container">
+                    <button class="btn-ok" id="confirmDelete">Confirm Deletion</button>
+                    <button class="btn-cancel" id="cancelDelete">Cancel</button>
+                </div>
+            </div>
+        </div>
+
+        <script>
+            /* deleteform popup */
+            let deleteForm = null;
+
+            document.querySelectorAll('.deletebutton').forEach(button => {
+                button.addEventListener('click', event => {
+                    event.preventDefault();
+                    deleteForm = document.getElementById(button.dataset.formId);
+                    document.getElementById('deletePopup').style.display = 'block';
+                });
+            });
+
+            document.getElementById('confirmDelete').addEventListener('click', () => {
+                if (deleteForm) deleteForm.submit();
+            });
+
+            document.getElementById('cancelDelete').addEventListener('click', () => {
+                document.getElementById('deletePopup').style.display = 'none';
+            });
+        </script>
         <?php echo $this->view('includes/footer') ?>
 </body>
 

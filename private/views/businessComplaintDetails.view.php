@@ -40,20 +40,28 @@
                         </div>
 
                         <?php if ($complaint[0]->status === 'Pending') : ?>
-                            <?php if(empty($complaint[0]->feedback)) ?>
-                            <div class="complaint-response-container">
-                                <h3>Respond to Complaint</h3>
-                                <form id="myform" method="POST" >
-                                    <textarea name="response" placeholder="Write your response here..."></textarea>
-                                    <button type="submit">Submit Response</button>
-                                    <p class="advise"><strong>Please wait for the admin's reply after submitting.</strong> </p>
-                                </form>
-                            </div>
-                            <?php else :?>
-                                <p style="color: red;"><?= htmlspecialchars($complaint[0]->adminReply) ?></p>
-                            <?php endif?>
+                            <?php if (empty($complaint[0]->feedback)) : ?>
+                                <div class="complaint-response-container">
+                                    <h3>Respond to Complaint</h3>
+                                    <form id="myform" method="POST">
+                                        <textarea name="response" placeholder="Write your response here..."></textarea>
+                                        <button type="submit">Submit Response</button>
+                                        <p class="advise"><strong>Please wait for the admin's reply after submitting.</strong> </p>
+                                    </form>
+                                </div>
+
+                            <?php else : ?>
+                                <div class="complaint-response-container">
+                                    <h3>Your Response</h3>
+                                    <p style="color: red;"><?= htmlspecialchars($complaint[0]->feedback) ?></p>
+                                </div>
+                            <?php endif; ?>
 
                         <?php else : ?>
+                            <div class="complaint-response-container">
+                                <h3>Your Response</h3>
+                                <p style="color: red;"><?= htmlspecialchars($complaint[0]->feedback) ?></p>
+                            </div>
                             <div class="complaint-response-container">
                                 <h3>Admin Response</h3>
                                 <p style="color: red;"><?= htmlspecialchars($complaint[0]->adminReply) ?></p>
@@ -64,7 +72,7 @@
                         <p>Complaint not found.</p>
                     <?php endif; ?>
 
-                   
+
                 </div>
             </div>
         </div>

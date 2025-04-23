@@ -79,7 +79,7 @@ class Products extends Model
         } else if ($filter === 'Quantity') {
             $orderBy = "ORDER BY qty ASC";
         } else if ($filter === 'Expiration') {
-            $orderBy = "ORDER BY expiration_date_time ASC";
+            $orderBy = "ORDER BY expiration_dateTime ASC";
         }
 
         $query = "SELECT * FROM $this->table WHERE business_id = :business_id $orderBy";
