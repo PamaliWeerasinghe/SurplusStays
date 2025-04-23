@@ -225,4 +225,22 @@ FROM watchlist
 INNER JOIN products ON products.id=watchlist.products_id
 INNER JOIN business ON business.id=products.business_id 
 INNER JOIN `status` ON products.status_id=`status`.id
-WHERE `status`.`status`!='Inactive' ;  
+WHERE `status`.`status`!='Inactive' ; 
+
+CREATE VIEW donations_received AS
+SELECT 
+business.id AS bus_id,
+business.`name` AS bus_name,
+donations.organization_id AS org_id,
+donations.title AS donate_title,
+donations.message AS donate_msg,
+donations.`status` AS donate_status,
+donations.`date` AS donate_date,
+donations.feedback AS donate_feedback,
+`user`.profile_pic AS business_logo
+FROM donations
+INNER JOIN business 
+ON  donations.business_id=business.id 
+INNER JOIN `user`
+ON business.user_id=`user`.id;
+

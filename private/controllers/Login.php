@@ -77,7 +77,7 @@ class Login extends Controller{
                 }
                 //password doesn't match
                 }else{
-                    $errors['password'] = "Please check your password";
+                    $errors['password'] = "Please check your login details";
                     $this->view('AdminLoginStep1', [
                         'errors' => $errors
                     ]);

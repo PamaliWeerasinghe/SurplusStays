@@ -302,9 +302,18 @@ class Admin extends Controller
         if (Auth::logged_in()) {
             $admin = new AdminModel();
             $org = $admin->where(['user_id'], [$user_id], 'charity_details');
-            // $org_donations=$admin->where([])
-            
-            echo json_encode($org);
+            //donation details
+            $org_donations=$admin->where(['org_id'],[$org_id],'donations_received');
+            //get the no. of donations
+            $donation_count=$admin->countWithWhere('donations_received',['org_id'],[$org_id]);
+            //get the business logos of those recently donated
+            $businesses=$admin->whereWithLimit('donations_received', ['org_id'] ,[$org_id],2);
+            $data["org"]=$org;
+            $data["donations"]=$org_donations;
+            $data["countDonations"]=$donation_count;
+            $data["businesses"]=$businesses;
+
+            echo json_encode($data);
         }
     }
 

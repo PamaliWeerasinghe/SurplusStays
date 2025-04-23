@@ -40,21 +40,21 @@
                                 <img src="" id="customerImg"/>
                             </div>
                             <div class="view-customer-details">
-                                <h3>PERSONAL INFORMATION</h3>
-                                <label>Name : <label id="fname"></label>&nbsp;<label id="lname"></label></label></label>
+                                <h3>ORGANIZATION INFORMATION</h3>
+                                <label>Name : <label id="name"></label></label>
                                 <label>Email : &nbsp;<label id="email"></label></label>
                                 <label>Phone : <label id="phoneNo"></label></label>
                             </div>
                         </div>
                         <div class="view-customer-row2">
-                            <label>No. of Orders : <label id="orders"></label></label>
+                            <label>No. of Donations : <label id="orders"></label></label>
                             <!-- <label>No. of Items  : 25</label> -->
                         </div>
                         <div class="view-customer-row3">
 
                         </div>
                         <div class="view-customer-row4">
-                            <h3>COMPLAINTS</h3>
+                            <h3>DONATIONS</h3>
                         </div>
                         <div class="view-customer-row5">
                         <table class="order-table">
@@ -68,7 +68,7 @@
                       
                     </div>
                     <div class="profile-details">
-                        <h3>RECENTLY PURCHASED</h3>
+                        <h3>RECENTLY DONATED BUSINESSES</h3>
                         <div class="profile-section-1" id="profile-section-1">
                            
                         </div>
@@ -84,7 +84,7 @@
         </div>
     </div>
 
-    <script src="<?= ROOT ?>/assets/js/adminViewCustomerDetails.js"></script>
+    <script src="<?= ROOT ?>/assets/js/adminViewCharityDetails.js"></script>
     <script src="<?=ROOT?>/assets/js/deletePopup.js"></script>
 </body>
 
