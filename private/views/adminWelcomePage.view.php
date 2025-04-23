@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITENAME ?></title>
+    <link rel="icon" href="<?=ASSETS?>/images/nav-logo.png"/>
     <link rel="stylesheet" href="<?= STYLES ?>/admin.css">
     <link rel="stylesheet" href="<?= STYLES ?>/adminDashboard.css">
 </head>
@@ -260,7 +261,19 @@
                                         <td><?= $complaint->complaint_date ?> &nbsp; &nbsp;<?=$complaint->complaint_id?></td>
                                         <td><?= $complaint->fname ?>&nbsp;<?= $complaint->lname ?> </td>
                                         <td><?= $complaint->product ?></td>
-                                        <td><button class="completed" style="border-radius: 10px;"><?= $complaint->complaint_status ?></button></td>
+                                        <?php 
+                                        if($complaint->complaint_status=='Pending'){
+                                            ?>
+                                                <td><button class="take-action" style="border-radius: 10px;"><?= $complaint->complaint_status ?></button></td>
+                                            <?php
+                                        }else{
+                                            ?>
+                                            <td><button class="completed" style="border-radius: 10px;"><?= $complaint->complaint_status ?></button></td>
+                                            <?php
+
+                                        }
+                                        ?>
+                                        
                                     </tr>
                                 <?php endforeach; ?>
                             </tbody>
