@@ -179,11 +179,19 @@ class Admin extends Controller
             $this->redirect('register');
         }
     }
+    //Admin Deletes a business
+    function DeleteBusiness($id){
+        $business= new AdminModel();
+        $data["status_id"] = 2;
+        $business->update($id, $data, 'user');
+
+        $this->ManageBusinesses();
+    }
     //Admin Deletes a customer
     function DeleteCustomer($id)
     {
         $customer = new AdminModel();
-        $data["status_id"] = 3;
+        $data["status_id"] = 2;
         $customer->update($id, $data, 'user');
 
         $this->ManageCustomers();
@@ -192,12 +200,12 @@ class Admin extends Controller
 
     //Admin views a customer
     function viewCustomer($user_id,$cus_id)
-    { {
+    { 
 
             $customer = new AdminModel();
             $errors = array();
             $arr = array();
-            // print_r($_FILES);
+            
 
             if (count($_POST) > 0) {
                 if ($customer->validateEditCustomer($_POST)) {
@@ -220,13 +228,15 @@ class Admin extends Controller
                     if(isset($arr['profile_pic'])){
                         $user['profile_pic']=$arr['profile_pic'];
                     }
+                    // print_r($cus_details);
+                    
                     if(!empty($user) && !empty($cus_details)){
                         $customer->update($user_id, $user, 'user');
                         $customer->update($cus_id, $cus_details, 'customer');
                     }else if (!empty($user)){
                         $customer->update($user_id, $user, 'user');
-                    }else if (!empty($business_details)){
-                        $customer->update($cus_id, $business_details, 'customer');
+                    }else if (!empty($cus_details)){
+                        $customer->update($cus_id, $cus_details, 'customer');
                     }else{
                        
                         $data = $customer->where(['cus_id'], [$cus_id], 'customer_details');
@@ -260,22 +270,10 @@ class Admin extends Controller
                     'rows' => $data
                 ]);
             }
-        }
+        
     }
 
-    function loadItems()
-    {
-        if (isset($_POST['order_id'])) {
-            $order_id = $_POST['order_id'];
-            $admin = new AdminComplaints();
-            $items = $admin->getAllOrders($order_id);
-
-            echo json_encode($items);
-        } else {
-            http_response_code(400);
-            echo json_encode(['error' => 'Invalid Request']);
-        }
-    }
+  
     //view customer details - manage customers popup
     function customerDetails($user_id,$cus_id)
     {
@@ -299,142 +297,18 @@ class Admin extends Controller
         }
     }
     //view charity details
-    function charityDetails($id)
+    function charityDetails($user_id,$org_id)
     {
         if (Auth::logged_in()) {
             $admin = new AdminModel();
-            $org = $admin->where(['user_id'], [$id], 'charity_details');
+            $org = $admin->where(['user_id'], [$user_id], 'charity_details');
+            // $org_donations=$admin->where([])
+            
             echo json_encode($org);
         }
     }
 
-    // customer make a complaint
-    function makeComplaints()
-    {
-
-        $images = array();
-        if (count($_POST)) {
-            $errors = array();
-            $business_id = $_POST['shopID'];
-            $orderId = $_POST['orderid'];
-            $orderItem = $_POST['orderitem'];
-            $complaint = $_POST['complaint'];
-            $img1 = $_FILES['complaintImg1']['name'];
-            $img2 = $_FILES['complaintImg2']['name'];
-            $img3 = $_FILES['complaintImg3']['name'];
-            $img4 = $_FILES['complaintImg4']['name'];
-            $img5 = $_FILES['complaintImg5']['name'];
-
-
-
-            if (isset($img1)) {
-                array_push($images, $img1);
-            }
-            if (isset($img2)) {
-                array_push($images, $img2);
-            }
-            if (isset($img3)) {
-                array_push($images, $img3);
-            }
-            if (isset($img4)) {
-                array_push($images, $img4);
-            }
-            if (isset($img5)) {
-                array_push($images, $img5);
-            }
-
-            if ($orderId == 'oid') {
-                $errors["oid"] = 'Order ID not Selected';
-            }
-            if ($orderItem == 'selectItem') {
-                $errors["item"] = 'Order Item is not Selected';
-            }
-            if (empty($complaint)) {
-                $errors['complaint'] = "No complaint added";
-            }
-            if (empty($images[0]) && empty($images[1]) && empty($images[2]) && empty($images[3]) && empty($images[4])) {
-                $errors['images'] = "Complaint should contain at least one image";
-            }
-
-
-            $admin = new AdminComplaints();
-
-
-            $orders = $admin->getNoOfOrders(1);
-            $orderDetails = $admin->getAllOrders(1);
-
-            if (count($errors) > 0) {
-                $this->view('customerMakeComplaint', [
-                    "orders" => $orders,
-                    "orderDetails" => $orderDetails,
-                    "errors" => $errors
-                ]);
-            } else {
-                $errors = array();
-                //find the complaint status - (not attended)
-                $complaint_status = $admin->where(['name'], ['Not Attended'], 'complaint_status');
-                $complaint_status = $complaint_status[0];
-
-                //insert into complaints
-                $arr['business_id'] = $business_id;
-                $arr['complaint_status_id'] = $complaint_status->id;
-                $arr['complaint_dateTime'] = date('Y-m-d H:i:s');
-                $arr['customer_id'] = '1';
-                $arr['order_items_id'] = $orderItem;
-                $arr['description'] = $complaint;
-
-
-                // insert complaint images
-                $insertImg = array();
-
-                for ($i = 0; $i < count($images); $i++) {
-                    if (!empty($images[$i])) {
-                        $imgPath = $admin->uploadImage($images[$i], $i);
-                        array_push($insertImg, $imgPath);
-                    }
-                }
-
-                // Columns
-                $columns = ['business_id', 'customer_id', 'order_items_id'];
-
-                //values
-                $values = [$business_id, '1', $orderItem];
-
-
-                if (!$admin->insertComplaint($arr, $insertImg, $columns, $values)) {
-                    $errors["complaint_insertion"] = "Complaint already exists";
-                } else {
-                    // send notification for the admin
-                    $currentDateTime = date('Y-m-d H:i:s');
-                    // $email=$_SESSION['USER'];
-                    // $complaints=new AdminComplaints();
-                    $complaint_id = $admin->id;
-                    if (!Mail::sendCustomerComplaint($complaint_id, $currentDateTime, 'pamaliweerasinghe@gmail.com')) {
-                        error_log("Could't send the email");
-                        $_SESSION['alert_message']="Check your email";
-                        $_SESSION['alert_type']="success";
-                        $this->redirect('admin/makeComplaints');
-                    }
-                }
-
-                $this->view('customerMakeComplaint', [
-                    "orders" => $orders,
-                    "orderDetails" => $orderDetails,
-                    "errors" => $errors,
-                    'successfull'=>$_SESSION['alert_message'],
-                ]);
-            }
-        } else {
-            $admin = new AdminComplaints();
-            $orders = $admin->getNoOfOrders(1);
-            $orderDetails = $admin->getAllOrders(1);
-            $this->view('customerMakeComplaint', [
-                "orders" => $orders,
-                "orderDetails" => $orderDetails,
-                "email" => $_SESSION['USER_EMAIL']
-            ]);
-        }
-    }
+   
     // Reply to a complaint
     function ReplyToComplaint()
     {
@@ -443,6 +317,7 @@ class Admin extends Controller
         if (count($_POST)) {
             $id = $_POST['id'];
             $admin = new AdminModel();
+            
             $arr['adminReply'] = $_POST['feedback'];
 
             //$feedback=$admin->update($id,$arr,'complaints');
@@ -487,7 +362,7 @@ class Admin extends Controller
             } else {
 
                 $search = $verify->where(['email'], [$_POST['email']], 'admin_details');
-
+                print_r($search);
                 if (isset($search[0]->email)) {
                     $errors['admin'] = "An admin already exists";
                 } else {
@@ -663,6 +538,15 @@ class Admin extends Controller
             }
             //get the counts
             $countsForBars = $admin->admin_bar($weekDates[0], $weekDates[6]);
+
+            $countForInactiveCust=$admin->countWithWhere('user',['role','status_id'],['customer',2]);
+            $countForInactiveBus=$admin->countWithWhere('user',['role','status_id'],['business',2]);
+            $countForInactiveCharity=$admin->countWithWhere('user',['role','status_id'],['charity',2]);
+            $countAllCustomers=$admin->countWithWhere('user',['role','status_id'],['customer',1]);
+            $countDontations=$admin->count('donations');
+            
+            $inactUser_count=$countForInactiveCust+$countForInactiveBus+$countForInactiveCharity;
+            
             //get the week days
             $days = [
                 'Monday' => 0,
@@ -688,7 +572,11 @@ class Admin extends Controller
                 "products" => $products,
                 "products_pager" => $products_pager,
                 "days" => $days,
-                "total" => $total
+                "total" => $total,
+                "inactUser_count"=>$inactUser_count,
+                "totalCustomers"=>$countAllCustomers,
+                "noOfComplaints"=> $complaintCountData,
+                "donations"=>$countDontations
 
 
             ]);
@@ -709,6 +597,12 @@ class Admin extends Controller
 
             $data['notify_status_id'] = 1;
             $admin->update($_POST['product_id'], $data, 'products');
+
+            $data=$admin->where(['product_id'],[$_POST['product_id']], 'product_details');
+            $data=$data[0];
+
+            Mail::sendProductExpiryNotification($_POST['product_id'], $_POST['email'],$data);
+
         }
         //sort and search
         $search = $_GET['search'] ?? '';
@@ -727,9 +621,21 @@ class Admin extends Controller
         $products_offset = $products_pager->offset;
         $products = $admin->select('about_to_expire_products', $product_limit, $products_offset, $search, $searchBy, $sort, $order);
 
+        //count from products where notifiy_status_id 
+        $productsNoty=$admin->countWithWhere('products',['notify_status_id'],[1]);
+        //Expired products
+        $expired=$admin->countWithWhere('products',['status_id'],[2]);
+        //all orderscount
+        $orders=$admin->count('order');
+        //total Revenue
+        $revenue=$admin->totalRevenue('order');
         $this->view('adminTrackExpiryPage', [
             "rows" => $products,
-            "products_pager" => $products_pager
+            "products_pager" => $products_pager,
+            "productsSaved"=>$productsNoty,
+            "expired"=>$expired,
+            "orders"=>$orders,
+            "revenue"=>$revenue
 
         ]);
     }
@@ -751,10 +657,11 @@ class Admin extends Controller
         $noOfPages_complaints = ceil($complaintsCountData / $complaint_limit);
 
         //Pagination for complaints
+        // displays only the non-resolved complaints
         $complaints_pager = Pager::getInstance('non_resolved_complaints', $noOfPages_complaints, $complaint_limit);
         $complaints_offset = $complaints_pager->offset;
         $complaints = $admin->selectNotAttended('non_resolved_complaints', $complaint_limit, $complaints_offset, $search, $searchBy, $sort, $order);
-
+        
       
         $this->view('AdminBusinessComplaints', [
             "complaints" => $complaints,
@@ -831,6 +738,65 @@ class Admin extends Controller
         } else {
             $this->view('adminLoginStep1');
         }
+    }
+    //Add new business
+    function addNewBusiness(){
+        $errors=array();
+        // print_r($_FILES);
+        if(count($_POST)>0){
+            $business=new AdminBusiness();
+            if($business->validateBusiness($_POST)){
+            
+                $user['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                $user['email'] = $_POST['email'];
+                $user['role'] = 'business';
+                $user['profile_pic'] = $business->uploadBusinessPic($_FILES['profile_picture']['name']);
+                $user['reg_date'] = date('Y-m-d H:i:s');
+                $user['status_id'] = 1;
+    
+                $add_business['name']=$_POST['name'];
+                $add_business['phoneNo']=$_POST['phone'];
+                $add_business['username']=$_POST['username'];
+                $add_business['latitude']=$_POST['latitude'];
+                $add_business['longitude']=$_POST['longitude'];
+    
+                $user_columns = ['email', 'password', 'role', 'profile_pic', 'reg_date'];
+                $user_values = [$user['email'], $user['password'], $user['role'], $user['profile_pic'], $user['reg_date']];
+    
+                $business_columns=['name','phoneNo','username','latitude','longitude'];
+                $business_values=[$add_business['name'],$add_business['phoneNo'],$add_business['username'],$add_business['latitude'],$add_business['longitude']];
+    
+                if(!($business->insertBusiness(
+                    $user_columns,
+                    $user_values,
+                    $business_columns,
+                    $business_values,
+                    $user,
+                    $add_business
+                ))){
+                    $errors["business_insertion"] = "Business already exists";
+                        $this->view('AdminAddNewBusiness', [
+                            "errors" => $errors
+                        ]);
+                }else {
+                    $this->redirect('/Admin/ManageBusinesses');
+                }
+            
+    
+            }else {
+                $errors = $business->errors;
+                $this->view('AdminAddNewBusiness', [
+                    "errors" => $errors
+                ]);
+            }
+            
+        }else{
+            $this->view('AdminAddNewBusiness');
+        }
+        
+
+    
+        
     }
     //Add new customer
     function addNewCustomer()
@@ -1035,8 +1001,42 @@ class Admin extends Controller
     //Default page
     function index()
     {
-        $this->view('new_customerMakeComplaint');
+        $this->view('adminReport1');
         
     }
-   
+    function report()
+    {
+        $this->view('AdminReports');
+    }
+    function report1()
+    {
+        $admin=new AdminModel();
+        $data=$admin->findAll('saved_from_wastage_report');
+       
+
+        $this->view('adminReport1', [
+            "products" => $data
+        ]);
+    }
+    function report2()
+    {
+        $admin=new AdminModel();
+        $data=$admin->where(['notify_status_id'],[1],'product_details');
+       
+
+        $this->view('AdminReport2', [
+            "products" => $data
+        ]);
+    }
+    function report3()
+    {
+        $admin=new AdminModel();
+        $data=$admin->findAll('customer_order_report');
+       
+
+        $this->view('AdminReport3', [
+            "customers" => $data
+        ]);
+    }
+    
 }

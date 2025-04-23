@@ -24,7 +24,7 @@
                     <input type="hidden" id="complaintID" name="id"/>
                     
                 
-                <button type="submit" class="send-icon" onclick="sendReply();">
+                <button type="submit" class="send-icon">
                         <img src="<?= ASSETS ?>/icons/send-msg.png" class="send-icon"/>
                 </button>  
                 </div>  

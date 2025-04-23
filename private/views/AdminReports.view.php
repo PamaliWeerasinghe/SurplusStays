@@ -1,4 +1,5 @@
 <?php require APPROOT.'/views/includes/htmlHeader.view.php'?>
+
     <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
     <link rel="stylesheet" href="<?=STYLES?>/adminReports.css">
     <link rel="stylesheet" href="<?=STYLES?>/admin.css">
@@ -19,167 +20,65 @@
                     <div class="orange-bar">
                         <label>REPORTS</label>
                     </div>
-                    <div class="white-bar">
-                        <label>SURPLUS SAVED FROM WASTAGE</label>
-                    </div>
-                    <table class="order-table">
-    <thead>
-      <tr>
-        <th>Product Name</th>
-       
-        <th>Quantity Saved</th>
-        <th>Unit Price</th>
-        <th>Discounted Price</th>
-        <th>Left Overs</th>
-      </tr>
-    </thead>
-    <tbody id="pdf-content">
-      <!-- <?=print_r($products)?> -->
-      <?php foreach($products as $product):?>
-       <tr>
-        <td><?=$product->product_name?></td>   
-        <td><?=$product->qty_saved?></td>
-        <td>Rs. <?=$product->original_price?></td>
-        <td>Rs. <?=$product->discounted_price?></td>
-        <td><?=$product->left_overs?></td>
-      </tr>
-      
-      <?php endforeach;?>
-     
-    
-    </tbody>
-    
-  </table>
-  <?= $products_pager->display();?>
-  <div class="get-report-btn">
-    <button onclick="generatePDF()">Get Report</button>
-  </div>
-  <div class="reports-next">
-                        <img src="<?=ASSETS?>/images/down.png"/>
-                    </div>
-    <!-- Report 02 -->
-                    <div class="white-bar">
-                        <label>MOST POPULAR SURPLUS ITEMS</label>
-                    </div>
-                    <table class="order-table">
-    <thead>
-      <tr>
-        <th>Product</th>
-        <th>Product Name</th>
-        <th>Company</th>
-        <th>Location</th>
-        <th>Surplus Saved</th>
-        
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-        <img src="<?=ASSETS?>/images/chips.png" />
-        </td>
-        <td>Uswatte Crispy Chips</td>
-        <td>
-        <img src="<?=ASSETS?>/images/keells.png"  />
-        </td>
-        <td>Rajagiriya</td>
-        <td>10</td>
-    
-      </tr>
-      <tr>
-        <td>
-        <img src="<?=ASSETS?>/images/popcorn.png" />
-        </td>
-        <td>Pop Corn</td>
-        <td>
-        <img src="<?=ASSETS?>/images/laughs.png"  />
-        </td>
-        <td>Rajagiriya</td>
-        <td>10</td>
-    
-      </tr>
-      <tr>
-        <td>
-        <img src="<?=ASSETS?>/images/pasta.png" />
-        </td>
-        <td>Cheese Pasta (Dinner)</td>
-        <td>
-        <img src="<?=ASSETS?>/images/keells.png"  />
-        </td>
-        <td>Malabe</td>
-        <td>10</td>
-    
-      </tr>
-      
-      
-    </tbody>
-  </table>
-  <div class="get-report-btn">
-    <button>Get Report</button>
-  </div>
-  <div class="reports-next">
-                        <img src="<?=ASSETS?>/images/down.png"/>
-                    </div>
-
-                    <!-- Report 03 -->
-                    <div class="white-bar">
-                        <label>MOST INCLUDED CHARITY ORGANIZATIONS TO REDUCE WASTAGE</label>
-                    </div>
-                    <!-- <table class="order-table">
-    <thead>
-      <tr>
-        <th>Organization</th>
-        <th>Donations Requested</th>
-        <th>Donations Received</th>
-        <th>No. of Complaints</th>
-        
-        
-      </tr>
-    </thead>
-    <tbody>
-      <tr>
-        <td>
-        <img src="<?=ASSETS?>/images/ginyard.png" />
-        </td>
-        <td>25</td>
-        <td>
-        30
-        </td>
-        <td>0</td>
-    
-    
-      </tr>
-      <tr>
-        <td>
-        <img src="<?=ASSETS?>/images/warnerandspencer.png" />
-        </td>
-        <td>25</td>
-        <td>
-        30
-        </td>
-        <td>5</td>
-    
-    
-      </tr>
-      
-      
-      
-    </tbody>
-  </table> -->
-  
-  <div class="get-report-btn">
-    <button>Get Report</button>
-  </div>
-  <div class="reports-next">
-                        <img src="<?=ASSETS?>/images/down.png"/>
-                    </div>
-
-                    
-                    <div class="arrow-div">
-                        <div class="arrows">
-                            <img src="<?=ASSETS?>/images/Arrow right-circle.png"/>
-                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png"/>
-                            
+                    <div class="white-bar-report">
+                        <div class="report-img">
+                            <img src="<?=ASSETS?>/images/saveFood.jpg" />
                         </div>
+                        <div class="report-description">
+                          <div>
+                            <h4>SURPLUS SAVED </h4>
+                          </div>    
+                          <div class="report-description-text">
+                            <p>The food those were saved from going to waste.
+                              Contains the details of all the products that were purchased until today!
+                            
+                            </p>
+                            <button class="view-report-btn" onclick="window.location.href=`http://localhost/surplusstays/public/admin/Report1`">View Report</button>
+                          </div> 
+                          
+                          
+                        </div>
+                        
+                    </div>
+                    <div class="white-bar-report">
+                        <div class="report-img">
+                            <img src="<?=ASSETS?>/images/notify_bus.jpg"  />
+                        </div>
+                        <div class="report-description">
+                          <div>
+                            <h4>NOTIFIED EXPIRATION </h4>
+                          </div>    
+                          <div class="report-description-text">
+                            <p>The food those were saved after notifying the product owner about the expiration of the product
+                              in the next few days!
+                            
+                            </p>
+                            <button class="view-report-btn" onclick="window.location.href=`http://localhost/surplusstays/public/admin/Report2`">View Report</button>
+                          </div> 
+                          
+                          
+                        </div>
+                        
+                    </div>
+                    <div class="white-bar-report">
+                        <div class="report-img">
+                            <img src="<?=ASSETS?>/images/cus_report.jpg"  />
+                        </div>
+                        <div class="report-description">
+                          <div>
+                            <h4>DETAILS OF CUSTOMERS </h4>
+                          </div>    
+                          <div class="report-description-text">
+                            <p>The details of all the customers who have been a part of the Surplus Stays community, 
+                              which helped to reduce food waste and save surplus.
+                            
+                            </p>
+                            <button class="view-report-btn" onclick="window.location.href=`http://localhost/surplusstays/public/admin/report3`">View Report</button>
+                          </div> 
+                          
+                          
+                        </div>
+                        
                     </div>
 
                 </div>
@@ -188,6 +87,7 @@
             </div>
         </div>
         <?php echo $this->view('includes/footer')?>
-</body>
+        <script src="<?= ROOT ?>/assets/js/adminReports.js"></script>
+      </body>
 
 </html>

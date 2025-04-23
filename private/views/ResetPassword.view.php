@@ -18,7 +18,7 @@
             <div class="details">
                 <div class="steps">
                     <h4></h4>
-                    <div class="step-number"><h3>User Login</h3></div>
+                    <div class="step-number"><h3>Reset Password</h3></div>
                     <p></p>
                 </div>
                 <?php if (!empty($errors)): ?>

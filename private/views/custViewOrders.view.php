@@ -250,4 +250,48 @@
 
 </body>
 
+   
+
+    <!-- popup for add to cart -->
+    <div class="cart-popup-container" id="cart-popup-container">
+    <div class="cart-popup" id="cart-popup">
+        <span class="popup-close-btn" onclick="hideCartPopup()">&times;</span>
+        <input type="hidden" id="popupRowID"/>
+        
+        <div class="popup-product-row">
+            <div class="popup-product-image">
+                <img src="" id="addToCartImage">
+            </div>
+            <div class="popup-product-info">
+                <p class="popup-category" id="bus_name"></p>
+                <h3 class="popup-product-title" id="product_name"></h3>
+                <div class="popup-product-details">
+                    <p class="popup-expiry-label">Expires On:</p>
+                    <p class="popup-expiry-date" id="expires_in"></p>
+                </div>
+            </div>
+        </div>
+        
+        <div class="popup-action-row">
+            <div class="popup-quantity-selector">
+                <button class="quantity-btn minus">-</button>
+                <input type="number" min="1" value="1" class="quantity-input" id="quantity-input-1">
+                
+                <button class="quantity-btn plus">+</button>
+            </div>
+            <div class="popup-action-buttons">
+                <form action="" method="POST" id="AddToCartFromWishlist">
+                    <input type="hidden" id="watchlist_id"/>
+                    <input type="hidden" id="selected-Qty"/>
+                    <button class="popup-confirm-btn" onclick="insertToCart()" type="submit">Add to Cart</button>
+                    <button type="button" class="popup-cancel-btn" onclick="hideCartPopup()">Cancel</button>
+                </form>
+                
+            </div>
+        </div>
+    </div>
+</div>
+
+    <script src="<?=ROOT?>/assets/js/customerWishlist.js"></script>
+</body>
 </html>

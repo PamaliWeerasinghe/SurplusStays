@@ -30,7 +30,7 @@
                             </div>
                             <div class="see-product-details">
                                     <div>
-                                    <h2><?=$complaint_details->product_name?></h2>
+                                    <h2><?=$complaint_details->product?></h2>
                                     </div>
                                     <div>
                                     <h3>Customer Feedback</h3>
@@ -40,28 +40,8 @@
                                         <?=$complaint_details->complaintDescription?>
                                         </p>
                                     </div>
-                                    <div class="see-product-location">
-                                        <div>
-                                        <label>
-                                            Shop : <?=$complaint_details->business_name?>
-                                        </label>
-                                        </div>
-                                            
-                                        <div class="see-product-location-details">
-                                        
-                                        
-                                        </div>
-                                       
-                                    </div>
-                                    <div>
-                                        <label>Amount Paid : Rs. <?=$complaint_details->total?></label>
-                                    </div>
-                                    <div>
-                                        <label>Quantity : <?=$complaint_details->itemQty?></label>
-                                    </div>
-                                    <div>
-                                        <label>Payment Method :<?=$complaint_details->paymentMethod?></label>
-                                    </div>
+                                  
+                                  
                                    
                                     
                             </div>
@@ -70,6 +50,21 @@
                         <?php foreach ($complaint_imgs as $complaint_img): ?>
                             <img src="<?=COMPLAINTS?><?=$complaint_img->path?>" id="complaintImg<?=$complaint_img->id?>"/>
                         <?php endforeach ?>
+                        </div>
+                        <div class="sub-details">
+                            <label>
+                            Shop : <?=$complaint_details->business_name?>
+                            </label>
+                        
+                        </div>
+                        <div class="sub-details">
+                            <label>Amount Paid : Rs. <?=$complaint_details->product_price?></label>
+                        </div>
+                        <div class="sub-details">
+                            <label>Quantity : <?=$complaint_details->itemQty?></label>
+                        </div>
+                        <div class="sub-details">
+                            <label>Payment Method :<?=$complaint_details->paymentMethod?></label>
                         </div>
                         <div class="sub-details" >
                             <label>Mentioned expiration date and time : <?=$complaint_details->complaint_date?></label>
@@ -86,16 +81,34 @@
                             <div>
                                 <h3>Feedback from the Business regarding the complain</h3>
                             </div>
-                            <div>
+                            <div style="text-align: center;">
                                         <p>
-                                        <?=$complaint_details->feedback?>
+                                        <?= (empty($complaint_details->feedback))?'<h3 style="color:#3f7d58">Response Pending From the Business</h3>':$complaint_details->feedback?>
                                         </p>
                                     </div>
                         </div>
-                        <div class="business-response-area-btn">
-                            <button class="complain-btn1" onclick="refundMoney(<?=$complaint_details->complaint_id?>);">Refund Money</button>
-                            <button class="complain-btn2" onclick="replyToCustomer(<?=$complaint_details->complaint_id?>);">Reply To Customer</button>
+                        <div class="business-response-area">
+                            <div>
+                                <h3>Feedback from the Admin</h3>
+                            </div>
+                            <div style="text-align: center;">
+                                        <p>
+                                        <?= (empty($complaint_details->admin_reply))?'<h3 style="color:#3f7d58">Not Attended</h3>':$complaint_details->admin_reply?>
+                                        </p>
+                                    </div>
                         </div>
+                        <?php 
+                        if(empty($complaint_details->admin_reply)){
+                            ?>
+                                 <div class="business-response-area-btn">
+                            
+                                    <button class="complain-btn1" onclick="replyToCustomer(<?=$complaint_details->complaint_id?>);">Reply To Customer</button>
+                                </div>
+                            <?php
+                        }
+                        
+                        ?>
+                       
                            
                     </div>
 

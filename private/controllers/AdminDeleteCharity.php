@@ -3,7 +3,7 @@
 class AdminDeleteCharity extends Controller{
     function index($id){
         $charity=new AdminModel();
-        $data["status_id"]=3;
+        $data["status_id"]=2;
         $charity->update($id,$data,'user');
        
         $this->redirect("Admin/ManageCharityOrg");

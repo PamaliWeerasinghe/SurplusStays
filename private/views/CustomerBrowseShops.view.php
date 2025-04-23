@@ -37,27 +37,20 @@
                     </div>
                 </div>
                 <div class="admin-order-status">
-                    <div class="order">
-                        <h2>Store Locator</h2>
+                    <div class="customer-order">
+                        <label>Shop Name</label>
+                        <label>City</label>
+                        <label>Ratings</label>
+                        <label>Status</label>
+                        <label>Action</label>
+                        
                     </div>
-                    <div class="location">
-                            <input type="text" class="location-address" placeholder="No.908, GalleRoad, Katukurunda, Kalutara"/>
-                            <select class="location-distance">
-                                <option>Distance</option>
-                            </select>
-                            <button class="location-btn">
-                                Search
-                            </button>
-                    </div>
-                    <div class="map">
-                    <iframe src="https://www.google.com/maps/embed?pb=YourMapURL"
-                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
-                    </iframe>
-                    </div>
+                   
+                   
 
-                    <div class="shop">
+                    <div class="browse-shop">
                         <img src="<?=ASSETS?>/images/keells.png"/>
-                        <label>Keells Super</label>
+                        <!-- <label>Keells Super</label> -->
                         <div>
                             <img src="<?=ASSETS?>/images/location.png"/>
                             <label>Kalutara</label>
@@ -66,15 +59,15 @@
                             <img src="<?=ASSETS?>/images/star-rating.png"/>
                             <label>3.0</label>
                         </div>
-                        <div>
-                            <label class="shop-label1">Open Today</label>
+                        <div class="browse-shop-div">
+                            <label class="browse-shop-label1">Open Today</label>
                             <label class="shop-label2">10.00 A.M -22.00 P.M</label>
                         </div>
                         <button class="shop-btn">Send Request</button>
                     </div>
-                    <div class="shop">
+                    <div class="browse-shop">
                         <img src="<?=ASSETS?>/images/keells.png"/>
-                        <label>Keells Super</label>
+                        <!-- <label>Keells Super</label> -->
                         <div>
                             <img src="<?=ASSETS?>/images/location.png"/>
                             <label>Kalutara</label>
@@ -83,15 +76,15 @@
                             <img src="<?=ASSETS?>/images/star-rating.png"/>
                             <label>3.0</label>
                         </div>
-                        <div>
-                            <label class="shop-label1">Open Today</label>
+                        <div class="browse-shop-div">
+                            <label class="browse-shop-label1">Open Today</label>
                             <label class="shop-label2">10.00 A.M -22.00 P.M</label>
                         </div>
                         <button class="shop-btn">Send Request</button>
                     </div>
-                    <div class="shop">
+                    <div class="browse-shop">
                         <img src="<?=ASSETS?>/images/keells.png"/>
-                        <label>Keells Super</label>
+                        <!-- <label>Keells Super</label> -->
                         <div>
                             <img src="<?=ASSETS?>/images/location.png"/>
                             <label>Kalutara</label>

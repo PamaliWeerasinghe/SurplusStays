@@ -50,7 +50,7 @@
                 <form method="post">
                 
                 <h4>EMAIL ADDRESS :</h4>
-                <input value="<?=get_var('email')?>" placeholder="ENTER YOUR USERNAME" type="email" class="input"  name="email" required>
+                <input value="<?=get_var('email')?>" placeholder="ENTER YOUR EMAIL" type="email" class="input"  name="email" required>
                 
                 <p style="margin-top: 8%;">Doesn't have an account?<a style="text-decoration: none;" href='<?=ROOT?>/register/register'>&nbsp;Register Now </a></p>
             </div>

@@ -20,7 +20,9 @@ SELECT `complaints`.`id` AS `complaint_id`,
             `expiration_dateTime` AS `product_expirationTime`,
             `discountPrice`,
             `products`.`name` AS product,
-            `user`.`id` AS user_id
+            `products`.price_per_unit AS product_price,
+            `user`.`id` AS user_id,
+            complaints.adminReply AS admin_reply
 FROM `complaints` 
 INNER JOIN `order_items` ON `complaints`.`order_items_id`=`order_items`.`id` 
 INNER JOIN `products` ON `products`.`id`=`order_items`.`products_id`
@@ -28,7 +30,7 @@ INNER JOIN `order` ON `order_items`.`order_id`=`order`.`id`
 INNER JOIN `complaint_status` ON `complaints`.`complaint_status_id`=`complaint_status`.`id`
 INNER JOIN `business` ON `business`.`id`=`complaints`.`business_id`
 INNER JOIN `customer` ON `customer`.`id`=`complaints`.`customer_id`
-INNER JOIN `user`  ON `user`.`id`=`customer`.`user_id` ;
+INNER JOIN `user`  ON `user`.`id`=`customer`.`user_id`  ;
 
 CREATE VIEW trackExpiry AS 
 SELECT products.id AS product_id,products.expiration_dateTime AS best_before,products.name AS product_name,notify_status.status AS notify_status,
@@ -40,13 +42,16 @@ order BY products.expiration_dateTime DESC ;
 
 CREATE VIEW about_to_expire_products AS
 SELECT products.id AS product_id, products.expiration_dateTime AS bestBefore, products.`name`AS product_name,notify_status.`status` AS notify_status, 
-products.price_per_unit AS price, business.`name` AS business_name, products.status_id AS status_id from products
+products.price_per_unit AS price, business.`name` AS business_name, products.status_id AS status_id,user.email AS email
+from products
 INNER JOIN status
 ON status.id=products.status_id
 INNER JOIN notify_status
 ON notify_status.id=products.notify_status_id
 INNER JOIN business
 ON business.id=products.business_id
+INNER JOIN `user`
+ON `user`.id =business.user_id
 WHERE status.`status`!='Inactive'
 order BY products.expiration_dateTime ;
 
@@ -111,14 +116,19 @@ INNER JOIN `customer` ON `customer`.id=`order`.`customer_id`
 order BY `order`.dateTime DESC;
 
 CREATE view order_and_the_business AS
-SELECT `order`.id AS order_id,
-business.id AS business_id,
-order_items.id AS order_item,
-products.id AS product_id
-FROM order_items
-INNER JOIN `order` ON `order`.id=order_items.order_id
+SELECT `order`.id AS order_id,                          
+business.id AS business_id,                             
+order_items.id AS order_item,                           
+products.id AS product_id,                              
+`order_items`.qty AS qty,                               
+business.`name` AS bus_name,                            
+products.name AS product_name,                          
+products.price_per_unit AS original_price,              
+products.discountPrice AS discount                      
+FROM order_items                                        
+INNER JOIN `order` ON `order`.id=order_items.order_id   
 INNER JOIN products ON order_items.products_id=products.id
-INNER JOIN business ON products.business_id=business.id;
+INNER JOIN business ON products.business_id=business.id  ;
 
 CREATE VIEW customer_details AS 
 SELECT customer.id AS cus_id,
@@ -159,11 +169,60 @@ sum(order_items.qty) AS qty_saved,
 products.price_per_unit AS original_price,
 products.discountPrice AS discounted_price,
 products.qty AS left_overs,
-products.status_id AS status_id
+products.status_id AS status_id,
+products.business_id AS bus_id,
+business.`name` AS bus_name
 FROM order_items
 INNER JOIN products
 ON order_items.products_id = products.id
+INNER JOIN business
+ON products.business_id=business.id
 GROUP BY order_items.products_id ;
 
+CREATE VIEW product_details AS
+SELECT products.id AS product_id,
+products.business_id AS bus_id,
+products.`name` AS product_name,
+products.`description` AS product_description,
+products.qty AS qty_avail,
+products.price_per_unit AS unit_price,
+products.expiration_dateTime AS expires_in,
+products.discountPrice AS discount,
+products.pictures AS product_img,
+products.notify_status_id AS notify_status_id,
+products.status_id AS status_id,
+business.`name` AS bus_name
+FROM products
+INNER JOIN business
+ON products.business_id=business.id
+WHERE products.status_id!='Inactive' ;
 
+CREATE VIEW customer_order_report AS 
+SELECT
+`order`.customer_id AS cus_id,
+concat(customer.fname,' ', customer.lname) AS cus_name,
+COUNT(`order`.`id`) AS no_of_orders
+FROM `order`
+INNER JOIN customer
+ON customer.id=`order`.customer_id
+GROUP BY cus_id;
 
+CREATE VIEW watchlist_details AS 
+SELECT watchlist.products_id AS product_id,
+watchlist.id AS id,
+watchlist.customer_id AS cus_id,
+watchlist.datetime AS product_added,
+business.id AS bus_id,
+business.`name` AS bus_name,
+products.qty AS qty_avail,
+products.expiration_dateTime AS expires_in,
+products.price_per_unit AS original_price,
+products.discountPrice AS discount,
+products.pictures AS product_img,
+products.`name` AS product_name,
+products.status_id AS product_status
+FROM watchlist
+INNER JOIN products ON products.id=watchlist.products_id
+INNER JOIN business ON business.id=products.business_id 
+INNER JOIN `status` ON products.status_id=`status`.id
+WHERE `status`.`status`!='Inactive' ;  

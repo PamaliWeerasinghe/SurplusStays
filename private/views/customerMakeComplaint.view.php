@@ -1,7 +1,7 @@
 <?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
 <?php require APPROOT . '/views/adminReplyToCustomer.view.php' ?>
 <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>  
-<link rel="stylesheet" href="<?= STYLES ?>/adminSidePanel.css" />
+<link rel="stylesheet" href="<?=STYLES?>/customerSidePanel.css">
 <link rel="stylesheet" href="<?= STYLES ?>/admin.css">
 <link rel="stylesheet" href="<?= STYLES ?>/adminSeeComplains.css">
 <link rel="stylesheet" href="<?= STYLES ?>/customerMakeComplain.css">
@@ -13,7 +13,7 @@
    
     <div class="main-div" >
         <div class="sub-div-1" >
-            <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
+            <?php require APPROOT . "/views/includes/customerSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary">
                     
@@ -72,8 +72,8 @@
                                 <div class="main-img-details">
 
                                     <div class="see-product-details">
-                                        <h2>Purchased From : </h2><label id="shopName"></label>
-                                        <input type="hidden" id="shopID" name="shopID" />
+                                        <h2>Purchased From : </h2><label id="shopName" ></label>
+                                        <input type="hidden" id="shopID" name="shopID"  />
                                         <div style="width: 100%;">
                                             <h2>Select Item</h2>
                                             <select style="width: 100%;" id="orderItems" name="orderitem">

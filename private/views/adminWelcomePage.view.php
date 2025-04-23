@@ -24,11 +24,20 @@
                     <div class="summary-blocks">
                         <div class="summaries">
                             <div class="summaries-1">
+                                <img src="<?= ASSETS ?>/images/rating.png" />
+                            </div>
+                            <div class="summaries-2">
+                                <label class="summaries-2-label1">Customers</label>
+                                <label class="summaries-2-label2"><?=$totalCustomers?></label>
+                            </div>
+                        </div>
+                        <div class="summaries">
+                            <div class="summaries-1">
                                 <img src="<?= ASSETS ?>/images/manifest.png" />
                             </div>
                             <div class="summaries-2">
-                                <label class="summaries-2-label1">Remove Users</label>
-                                <label class="summaries-2-label2">25</label>
+                                <label class="summaries-2-label1">Left Users</label>
+                                <label class="summaries-2-label2"><?=$inactUser_count?></label>
                             </div>
                         </div>
                         <div class="summaries">
@@ -37,7 +46,7 @@
                             </div>
                             <div class="summaries-2">
                                 <label class="summaries-2-label1">Complaints</label>
-                                <label class="summaries-2-label2">4500</label>
+                                <label class="summaries-2-label2"><?=$noOfComplaints?></label>
                             </div>
                         </div>
                         <div class="summaries">
@@ -46,27 +55,19 @@
                             </div>
                             <div class="summaries-2">
                                 <label class="summaries-2-label1">Donations</label>
-                                <label class="summaries-2-label2">7900</label>
+                                <label class="summaries-2-label2"><?=$donations?></label>
                             </div>
                         </div>
-                        <div class="summaries">
-                            <div class="summaries-1">
-                                <img src="<?= ASSETS ?>/images/rating.png" />
-                            </div>
-                            <div class="summaries-2">
-                                <label class="summaries-2-label1">Customers</label>
-                                <label class="summaries-2-label2">568</label>
-                            </div>
-                        </div>
+                        
                     </div>
                 </div>
                 <div class="admin-order-status" >
                     <div class="order" style="justify-content: center;">
-                        <label>Surplus food Secured Within this Week</label>
+                        <label><b>Surplus food Secured Within this Week</b></label>
                         
                     </div>
                     <div class="order-dropdown" style="justify-content: center;">
-                        <label class="order-status-label2"><?=$total?></label>
+                        <label class="order-status-label2">#<?=$total?></label>
                        
                        
                     </div>
@@ -174,7 +175,7 @@
                 </div> -->
                 <div class="product-status">
                     <div>
-                        <label>Recent Expiration Products</label>
+                        <label><b>Recent Expiration Products</b></label>
 
                     </div>
                     <div class="order-dropdown">
@@ -236,7 +237,7 @@
 
                 </div>
 
-                <div class="complaints-status" style="margin-top: 10%;">
+                <div class="complaints-status" style="margin-top: 20%;">
                     <div>
                         <label>Recent Complaints Recieved</label>
 

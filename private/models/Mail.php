@@ -47,7 +47,35 @@ class Mail
             echo "Message could not be sent. Mailer Error: {$mail->ErrorInfo}";
         }
     }
+    //send notification to the business about the product expiration
+    public static function sendProductExpiryNotification($id,$toEmail,$data){
+        // $img=ASSETS.'/images/'.$data->product_img;
+        $product_name=$data->product_name;
+        $business_name=$data->bus_name;
+        $expiry_date=$data->expires_in;
 
+        //current datetime
+        $now = new DateTime();
+        //convert the expiry date to datetime object
+        $expiry_date = new DateTime($expiry_date);
+        $interval=$expiry_date->diff($now);
+
+        //load the template
+        $template=file_get_contents(TEMPLATEROOT.'/sendBusinessProductExpiryNotifi.html');
+        //create the link
+        $link=ROOT.'/business/viewProduct/'.$id;
+        //replace placeholders
+        $template=str_replace('{{product_name}}',$product_name,$template);
+        $template=str_replace('{{business_name}}',$business_name,$template);
+        // $template=str_replace('{{image}}',$img,$template);
+        $template=str_replace('{{productView_link}}',$link,$template);
+        $template=str_replace('{{days}}',$interval->days,$template);
+        $template=str_replace('{{year}}',date('Y'),$template);
+
+        $subject="Product Expiration Notification";
+        return self::sendMail($toEmail,'',$subject,$template);
+
+    }
     //send admin the dashboard link to continue
     public static function sendAdminDashboard($toEmail,$token)
     {

@@ -71,7 +71,7 @@ function viewCustomer(user_id,cus_id){
                         <td>#${index+1}</td>
                         <td>${complaints.customer_email}</td>
                         <td>${complaints.complaint_date}</td>
-                        <td style="text-align: center;">${complaints.complaint_status==='Not Attended'?' <button class="take-action" style="font-size:10px">Take Action</button>':
+                        <td style="text-align: center;">${complaints.complaint_status==='Pending'?' <button class="take-action" style="font-size:10px">Take Action</button>':
                             ' <button class="completed" style="font-size:10px">Resolved</button>'
                         }
                         </td>

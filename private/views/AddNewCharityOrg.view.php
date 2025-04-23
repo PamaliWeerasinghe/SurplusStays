@@ -38,16 +38,12 @@
                 <h4>ORGANIZATION NAME :</h4>
                 <input placeholder="ENTER YOUR ORGANIZATION NAME" value="<?=get_var('name')?>" type="text" name="name" class="input" >
                 <h4>ORGANIZATION LOGO :</h4>
-                <div class="img-container">
-                <div id="profile-pic-preview" class="preview-container">
-                    <p class="preview-placeholder">No image selected</p>
-                    
-                </div>
-                   
-                    <input type="file" id="profilePic" name="logo"/>
-                
-                
-                </div>
+                <div class="upload-wrapper">
+                        <label for="upload-1">
+                            <img src="<?=ASSETS?>/icons/uploadArea.png" alt="Upload Image" class="upload-icon" id="profilePreview">
+                        </label>
+                        <input type="file" id="upload-1" name="profile_picture" style="display: none;" accept="image/*">
+                    </div>
                 <h4>ORGANIZATION CITY :</h4>
                 <input placeholder="ENTER YOUR ORGANIZATION CITY" value="<?=get_var('city')?>" type="text" name="city" class="input">
                 <h4>ORGANIZATION EMAIL:</h4>
@@ -65,41 +61,24 @@
                 <p>BY REGISTERING YOU AGREE TO OUR <a style="text-decoration:none;" href="url">TERMS AND CONDITIONS</a> AND <a style="text-decoration:none;" href="url">PRIVACY POLICY</a></p>                  
             </div>
             <button class="register-button" type="submit">REGISTER NOW</button>
-</form>
+</form>         
     </div>
 
 <?php echo $this->view('includes/footer')?>
 
+<!-- JavaScript to Show Preview -->
 <script>
-      document
-        .getElementById("profilePic")
-        .addEventListener("change", function (e) {
-          const file = e.target.files[0];
-          const previewContainer = document.getElementById(
-            "profile-pic-preview"
-          );
-          previewContainer.innerHTML = ""; // Clear previous preview or placeholder
-
-          if (file) {
-            const reader = new FileReader();
-            reader.onload = function (e) {
-              const img = document.createElement("img");
-              img.src = e.target.result;
-              img.alt = "Profile Preview";
-              img.style.width = "100px";
-              img.style.height = "100px";
-              previewContainer.appendChild(img);
-            };
-            reader.readAsDataURL(file);
-          } else {
-            // If no file is selected, display a placeholder text
-            const placeholder = document.createElement("p");
-            placeholder.className = "preview-placeholder";
-            placeholder.textContent = "No image selected";
-            previewContainer.appendChild(placeholder);
-          }
-        });
-    </script>
+document.getElementById('upload-1').addEventListener('change', function(event) {
+    const file = event.target.files[0];
+    if (file) {
+        const reader = new FileReader();
+        reader.onload = function(e) {
+            document.getElementById('profilePreview').src = e.target.result;
+        };
+        reader.readAsDataURL(file);
+    }
+});
+</script>
 
 </body>
 </html>

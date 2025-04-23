@@ -61,7 +61,7 @@ body {
     padding: 10px 20px;
     border-radius: 10px;
     border: none;
-    font-size: 14px;
+    font-size: small;
     font-weight: bold;
     color: #fff;
     cursor: pointer;
@@ -125,7 +125,7 @@ body {
     padding: 0 20px 0 50px;
     border: 2px solid #e0e0e0;
     border-radius: 25px;
-    font-size: 16px;
+    font-size: small;
     transition: all 0.3s ease;
     background-color: #f8f9fa;
     outline: none;
@@ -183,7 +183,7 @@ body {
     border-radius: 50%;
     width: 18px;
     height: 18px;
-    font-size: 10px;
+    font-size: small;
     display: flex;
     align-items: center;
     justify-content: center;
@@ -219,6 +219,9 @@ body {
     flex-direction: column;
     /* margin-bottom: 8%; */
 }
+.summaries:hover{
+  cursor: pointer;
+}
 
 .summaries-1{
     display: flex;
@@ -236,11 +239,11 @@ body {
     justify-content: center;
     align-items: center;
 }
-.summaries-2 label{
+/* .summaries-2 label{
     font-weight: bolder;
     font-size:larger;
 
-}
+} */
 
 
 .order-status{
@@ -303,7 +306,7 @@ body {
   
   .order-table th, .order-table td {
     padding: 12px 20px;
-    font-size: medium;
+    font-size: small;
     color: #333;
   }
   
@@ -345,6 +348,9 @@ body {
 .order-table .completed {
     background-color: #1B4332;
 
+}
+.order-table .completed:hover{
+  background-color: #1B4332;
 }
 .order-table tr :hover{
     background-color: #f6f6d5;

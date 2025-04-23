@@ -22,7 +22,7 @@ function loadOrderItems() {
     oid.addEventListener("change", (event) => {
       const orderID = event.target.value;
       if(orderID){
-        fetch('http://localhost/SurplusStays/public/admin/loadItems',{
+        fetch('http://localhost/SurplusStays/public/Customer/loadItems',{
           method: "POST",
           headers:{
             "content-Type":"application/x-www-form-urlencoded",
@@ -49,6 +49,7 @@ function loadOrderItems() {
 
               // set the business name after selection
               document.getElementById("shopName").innerHTML=item.business_name;
+              document.getElementById('shopName').value=item.business_name;
               // set the business id after selection
               document.getElementById("shopID").value=item.business_id;
           });

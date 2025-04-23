@@ -22,12 +22,12 @@
                 <h2>Hi Janitha!</h2>
             </div>
             <ul class="nav-links">
-            <li class="nav-item "><a href="#">Dashboard</a></li>
+                <li class="nav-item "><a href="#">Dashboard</a></li>
+                <li class="nav-item"><a href="#">Manage Events</a></li>
+                <li class="nav-item"><a href="#">Donations</a></li>
                 <li class="nav-item"><a href="#">Browse Shops</a></li>
-                <li class="nav-item"><a href="#">Cart</a></li>
-                <li class="nav-item"><a href="#">Wishlist</a></li>
-                <li class="nav-item"><a href="#">Orders</a></li>
-                <li class="nav-item"><a href="#">View Payment History</a></li>
+                <li class="nav-item active"><a href="#">Orders</a></li>
+                <li class="nav-item"><a href="#">Reports</a></li>
                 <li class="nav-item"><a href="#">Profile</a></li>
             </ul>
         </div>

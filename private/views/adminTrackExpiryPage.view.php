@@ -20,7 +20,7 @@
                                 <label>Additional Surplus Saved</label>
                             </div>
                             <div class="summaries-2">
-                                <label>Rs. 4000</label>
+                                <label><?=$productsSaved?></label>
                             </div>
 
 
@@ -30,7 +30,7 @@
                                 <label>Expired Surplus Items</label>
                             </div>
                             <div class="summaries-2">
-                                <label>589</label>
+                                <label><?=$expired?></label>
                             </div>
 
 
@@ -40,7 +40,7 @@
                                 <label>Total Transactions</label>
                             </div>
                             <div class="summaries-2">
-                                <label>223</label>
+                                <label><?=$orders?></label>
                             </div>
 
 
@@ -50,7 +50,7 @@
                                 <label>Total Revenue</label>
                             </div>
                             <div class="summaries-2">
-                                <label>Rs. 52000</label>
+                                <label>Rs. <?=$revenue?></label>
                             </div>
 
 
@@ -115,10 +115,10 @@
                             <tr>
                                 <td><?=$row->product_id?></td>
                                 <td>
-                                    <label id="days<?=$row->product_id?>">00</label>
-                                    <label id="hours<?=$row->product_id?>">00</label>
-                                    <label id="minutes<?=$row->product_id?>">00</label>
-                                    <label id="seconds<?=$row->product_id?>">00</label>
+                                    <label id="days<?=$row->product_id?>"style="font-size:small">00</label>
+                                    <label id="hours<?=$row->product_id?>" style="font-size:small">00</label>
+                                    <label id="minutes<?=$row->product_id?>" style="font-size:small">00</label>
+                                    <label id="seconds<?=$row->product_id?>" style="font-size:small">00</label>
                                     
                                 </td>
                                 <td><?=$row->business_name?></td>
@@ -133,6 +133,7 @@
                                         <form method="post">
                                             <td><button class="take-action" type="submit">Notify</button></td>
                                             <input type="hidden" value="<?=$row->product_id?>" name="product_id"/>
+                                            <input type="hidden" value="<?=$row->email?>" name="email"/>
                                         </form>
                                        
                                         <?php

@@ -138,6 +138,12 @@ class Admin_Model
           return isset($results[0]->totalRows) ? $results[0]->totalRows : 0;
 
      }
+     //get the sum of order total
+     public function totalRevenue($table){
+          $this->table=$table;
+          $query="select sum(total) as total_sum from `$this->table`";
+          return $this->db->query($query)[0]->total_sum;
+     }
      //get the count of items in a column
      public function count($table){
           $this->table=$table;

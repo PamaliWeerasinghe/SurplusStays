@@ -1,5 +1,5 @@
 <?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
-<?php require APPROOT . '/views/deleteConfirmation.view.php' ?>
+<?php require APPROOT . '/views/adminViewCharityPopup.view.php' ?>
 <link rel="stylesheet" href="<?= STYLES ?>/adminSidePanel.css" />
 <link rel="stylesheet" href="<?= STYLES ?>/adminManageActors.css" />
 <link rel="stylesheet" href="<?= STYLES ?>/admin.css">
@@ -28,7 +28,7 @@
                         echo $seacher->renderSearchBar($columns);
                         ?>
                     </div>
-                    <div class="add-buyer" onclick="window.location.href='<?= ROOT ?>/Admin/addNewCharityOrg'">
+                    <div class="add-buyer" onclick="window.location.href='<?= ROOT ?>/Admin/addNewCharityOrg'" style="margin-top: 4%";>
                         <div>
                             <label>
                                 + Add Charity Organization
@@ -41,7 +41,7 @@
                 </div>
                 <div class="Business-complaints-order-status">
                     <div class="order">
-                        <label>Charity Organizations</label>
+                        <!-- <label>Charity Organizations</label> -->
                         <div>
                         <?php
                     $columns = [
@@ -107,7 +107,7 @@
                         </div> -->
                        
                        
-                            <tr  onclick="viewOrganization(<?=$row->user_id?>)">
+                            <tr  onclick="viewOrganization(<?=$row->user_id?>,<?=$row->org_id?>)">
                                 <td><img src="<?=ASSETS?>/charityImages/<?= $row->profile_pic ?>" class="pic"/></td>
                                 <td># <?= $row->org_id?></td>
                                 <td><?=$row->org_name?></td>
@@ -156,5 +156,5 @@
     <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>
   
     <script src="<?=ROOT?>/assets/js/deletePopup.js"></script>
-    <script src="<?=ROOT?>/assets/js/adminManageCharity.js"></script>
+    <script src="<?=ROOT?>/assets/js/adminViewCharityDetails.js"></script>
     <script src="<?= ROOT ?>/assets/js/PagerAndSorter.js"></script>

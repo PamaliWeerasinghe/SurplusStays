@@ -78,7 +78,5 @@ class Database
         return $this->con->lastInsertId();
     }
 
-    
-
 }
 
