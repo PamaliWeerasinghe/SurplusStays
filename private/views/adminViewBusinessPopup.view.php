@@ -1,4 +1,4 @@
-<?php require APPROOT . '/views/customerDeleteConfirmation.view.php'?>
+<?php require APPROOT . '/views/businessDeleteConfirmation.view.php'?>
 <!DOCTYPE html>
 <html lang="en">
 

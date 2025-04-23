@@ -226,6 +226,3 @@ INNER JOIN products ON products.id=watchlist.products_id
 INNER JOIN business ON business.id=products.business_id 
 INNER JOIN `status` ON products.status_id=`status`.id
 WHERE `status`.`status`!='Inactive' ;  
-
-
-

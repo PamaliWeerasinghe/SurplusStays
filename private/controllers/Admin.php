@@ -179,6 +179,14 @@ class Admin extends Controller
             $this->redirect('register');
         }
     }
+    //Admin Deletes a business
+    function DeleteBusiness($id){
+        $business= new AdminModel();
+        $data["status_id"] = 2;
+        $business->update($id, $data, 'user');
+
+        $this->ManageBusinesses();
+    }
     //Admin Deletes a customer
     function DeleteCustomer($id)
     {

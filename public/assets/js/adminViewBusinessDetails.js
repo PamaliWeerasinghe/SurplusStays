@@ -1,3 +1,30 @@
+document.addEventListener("DOMContentLoaded", () => {
+    document.getElementById("delete_business").onclick = function () {
+        closeCustomer();
+        user_id=document.getElementById("hidden_id").value;
+        deletePopup(user_id);
+    };
+});
+
+
+function deletePopup(rowId){
+    let popup=document.getElementById("popup");
+    let popupContainer=document.getElementById("popup-container");
+    
+        popupContainer.className="open-popup-container";
+        popup.classList.add("open-popup");
+        
+        //setting the ID in the hidden input field
+        document.getElementById('popupRowId').value=rowId;
+
+        //dynamically set the form action
+        const form=document.querySelector('#popup form');
+        form.action=`http://localhost/surplusstays/public/Admin/DeleteBusiness/${rowId}`;
+        
+    
+}
+
+
 function viewBusiness(user_id,business_id){
     // alert(business_id);
     let rcpopup = document.getElementById("rcpopup");
@@ -24,7 +51,7 @@ function viewBusiness(user_id,business_id){
             document.getElementById("edit_business").onclick=function(){
                 window.location.href=`http://localhost/SurplusStays/public/admin/viewBusiness/${user_id}/${business_id}}`
             }
-            document.getElementById("hidden_id").value=business_id;
+            document.getElementById("hidden_id").value=user_id;
             
             //selects the table body
             let tbody=document.querySelector(".order-table tbody");
