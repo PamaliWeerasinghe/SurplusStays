@@ -316,34 +316,6 @@ function updateCartQuantity() {
     $this->redirect('customer/cart');
 }
 
-// function removeFromCart() {
-//     if (!Auth::logged_in()) {
-//         echo json_encode(['success' => false, 'message' => 'Not logged in']);
-//         exit;
-//     }
-
-//     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//         $cart_id = $_POST['cart_id'] ?? null;
-
-//         if ($cart_id) {
-//             $cart = new Cart();
-//             $result = $cart->delete($cart_id);
-            
-//             if ($result) {
-//                 echo json_encode(['success' => true]);
-//                 exit;
-//             }
-//         }
-//     }
-
-//     echo json_encode(['success' => false, 'message' => 'Invalid request']);
-//     exit;
-// }
-
-
-    // function removeFromCart(){
-
-    // }
 
 
 
@@ -381,12 +353,176 @@ function updateCartQuantity() {
     }
 
     function profile(){
-        $this->view('custProfile');
+        $errors = array();
+        $cust = new CustomerModel();
+        $cust_id = Auth::getuserid();
+        $currentCustomer = $cust -> where('id', $cust_id, 'customer');
+        $user_id = $currentCustomer[0]->user_id;
+
+        $user = new User();
+        $currUser = $user->where('id', $user_id,'user');
+
+
+
+        $this->view('custProfile', [
+            'errors'=>$errors,
+            'cust'=>$currentCustomer,
+            'user'=>$currUser
+        ]);
     }
 
-    function changePassword(){
-        $this->view('custChangePassword');
+    function editProfile(){
+        if(!Auth::logged_in()){
+            $this->redirect('login');
+        }
+
+        $errors = array();
+        $cust = new CustomerModel();
+
+        $cust_id = Auth::getuserid();
+        $currentCustomer = $cust -> where('id', $cust_id, 'customer');
+        $user_id = $currentCustomer[0]->user_id;
+
+        $user = new User();
+        $currUser = $user->where('id', $user_id,'user');
+
+        if($_SERVER['REQUEST_METHOD'] === 'POST'){
+
+            //profile picture upload
+            $profile_pic_path = $currUser[0]->profile_pic;
+            if(isset($_FILES['profile_pic'])&& $_FILES['profile_pic']['error']===0){
+                $targetDir = $_SERVER['DOCUMENT_ROOT']."/SurplusStays/public/assets/customerImages";
+                $fileName = basename($_FILES['profile_pic']['name']);
+                $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+                $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+
+                if(in_array(strtolower($fileType), $allowedTypes)){
+                    $uniqueName = uniqid('img_', true).'.'.$fileType;
+                    $filePath = $targetDir.'/'.$uniqueName;
+
+                    if(move_uploaded_file($_FILES['profile_pic']['tmp_name'], $filePath)){
+                        $profile_pic_path=$uniqueName;
+                    }else{
+                        $errors[] = "Failed to upload profile picture.";
+                    }
+                }else{
+                    $errors[] = "Invalid image format.";
+                }
+            }
+
+
+            //validate and update
+            if(empty($errors) && $cust->validateEdit($_POST)){
+                $custData = [
+                    'fname' => $_POST['fname'],
+                    'lname' => $_POST['lname'],
+                    'phoneNo' => $_POST['phone'],
+                    'username' => $_POST['username']
+                ];
+
+                $userData = [
+                    'profile_pic'=>$profile_pic_path
+                ];
+
+                $cust->update($cust_id, $custData, 'customer');
+                $user->update($user_id, $userData, 'user');
+
+                $this-> redirect('customer/profile');
+            }
+        }
+
+        $this->view('custEditProfile', [
+            'cust' => $currentCustomer,
+            'user' => $currUser,
+            'errors' => $errors
+        ]);
+
     }
+
+      function deleteAccount() {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+    
+        $cust = new CustomerModel();
+        $user = new User();
+    
+        $cust_id = Auth::getuserid();
+        $currentCustomer = $cust->where('id', $cust_id, 'customer');
+        $user_id = $currentCustomer[0]->user_id;
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $userData = ['status_id' => 2];
+
+            $user->update($user_id, $userData, 'user');
+            Auth::logout();
+            $this->redirect('/');
+            
+            
+            // if ($user->update($user_id, $userData, 'user')) {
+            //     Auth::logout();
+            //     $this->redirect('/');
+            // } else {
+
+            //     $this->redirect('customer/profile'); 
+            // }
+        }
+    }
+
+      function changePassword() {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+    
+        $errors = array();
+        $cust = new CustomerModel();
+        $user = new User();
+    
+        $cust_id = Auth::getuserid();
+        $currentCustomer = $cust->where('id', $cust_id, 'customer');
+        $user_id = $currentCustomer[0]->user_id;
+        $currUser = $user->where('id', $user_id, 'user');
+    
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+            // Validate inputs
+            if (empty($_POST['current-password'])) {
+                $errors['current-password'] = "Current password is required";
+            }
+            if (empty($_POST['new-password'])) {
+                $errors['new-password'] = "New password is required";
+            } elseif (strlen($_POST['new-password']) < 6) {
+                $errors['new-password'] = "Password must be at least 6 characters";
+            }
+            if ($_POST['new-password'] !== $_POST['reenter-password']) {
+                $errors['reenter-password'] = "Passwords don't match";
+            }
+    
+            if (empty($errors)) {
+                if (!password_verify($_POST['current-password'], $currUser[0]->password)) {
+                    $errors['current-password'] = "Current password is incorrect";
+                } else {
+                    // Update password
+                    $data = [
+                        'password' => password_hash($_POST['new-password'], PASSWORD_DEFAULT)
+                    ];
+                    
+                    if (empty($user->update($user_id, $data, 'user'))) {
+                        $errors['success']="Password changed successfully";
+                        $this->redirect('customer/profile');
+                    } else {
+                        $errors['database'] = "Failed to update password";
+                    }
+                }
+            }
+        }
+    
+        $this->view('custChangePassword', [
+            'cust' => $currentCustomer,
+            'user' => $currUser,
+            'errors' => $errors
+        ]);
+    }
+
 
     function insideShop(){
         // $this->view('insideShop');
