@@ -13,23 +13,12 @@
             <?php require APPROOT . "/views/includes/customerSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary" >
-                    <!-- <div class="notifications-type2">
-                        
-
-                        
-                    </div> -->
-                    
-
                 </div>
                 <div class="order-status" style="margin-top: -28%;">
                     <div class="order">
                         <label>Orders</label>
-                        <!-- <select>
-                            <option>All Time</option>
-                        </select> -->
                     </div>
 
-                   
                     <table class="order-table" >
                         <thead>
                             <tr>

@@ -8,7 +8,6 @@
     <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.4/css/all.min.css" rel="stylesheet">
 </head>
 <body>
-
 <?php echo $this->view('includes/charityNavbar')?>
     <div class="container">
         <?php echo $this->view('includes/customerSidePanel')?>
@@ -102,6 +101,22 @@
                                                     data-category="<?= $product->category ?>"
                                                     data-image="<?= ROOT . '/' . explode(',', $product->pictures)[0] ?>"
                                                 >+</button>
+                                                <?php
+                                                $wishlistIds = $wishlistProductIds ?? [];
+                                                ?>
+                                                    <?php if (in_array($product->id, $wishlistIds)): ?>
+                                                        <form method="POST" action="<?= ROOT ?>/customer/removeFromWishlist">
+                                                            <input type="hidden" name="product_id" value="<?= $product->id ?>">
+                                                            <input type="hidden" name="business_id" value="<?= $product->business_id ?>">
+                                                        <button type="submit" class="wishlist-btn" style="color: red;" >❤</button>
+                                                        </form>
+                                                    <?php else: ?>
+                                                        <form method="POST" action="<?= ROOT ?>/customer/addToWishlist">
+                                                            <input type="hidden" name="product_id" value="<?= $product->id ?>">
+                                                            <input type="hidden" name="business_id" value="<?= $product->business_id ?>">
+                                                        <button type="submit" name="confirm" value="yes" class="wishlist-btn">❤</button>
+                                                        </form>
+                                                    <?php endif; ?>
                                             </div>
                                         </div>
                                         </div>
@@ -141,7 +156,7 @@
 
 
 <div class="modal-overlay" id="productModal">
-    <form method="POST" action="<?=ROOT?>/customer/addToCart">
+    
         <div class="modal-content">
             <span class="close-button" id="modalClose">&times;</span>
             <div class="modal-images">
@@ -157,6 +172,7 @@
                 <p id="modalQty"></p>
                 <p id="modalExpiry"></p>
                 <p id="modalCategory"></p>
+                <form method="POST" action="<?=ROOT?>/customer/addToCart">
                 <div class="quantity-selector">      
                     <label for="qtyInput">Quantity:</label>
                     <input type="number" name="qty" id="qtyInput" min="1" value="1">
@@ -164,9 +180,9 @@
                     <input type="hidden" name="business_id" id="hiddenBusinessId">             
                 </div>
                 <button type="submit" class="add-cart-button">Add to Cart</button>
+                </form>
             </div>
         </div>
-    </form>
 </div>
 
 <script>

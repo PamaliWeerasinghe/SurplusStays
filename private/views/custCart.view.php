@@ -17,15 +17,13 @@
                 <div class="top-bar">
                 </div>
                 <div class="searchWelcome">
-                <h2>Search Our Shops</h2>
+                <h2>Cart</h2>
+                <h2><?= count($cartRows) ?> Products</h2>
                 </div>
 
                 <div class="complaints-status">
                     <div class="cart-container">
-                        <div class="cart-header">
-                            <h2>Cart</h2>
-                            <span><?= count($cartRows) ?> Products</span>
-                        </div>
+                   
 
                         <div class="cart-grid">
                             <?php foreach ($cartRows as $cartItem): ?>
@@ -107,6 +105,7 @@
                                     <input type="hidden" name="cart[<?= $cartItem->id ?>][customer_id]" value="<?= $cartItem->customer_id ?>"> <!-- Assuming you have customer ID variable -->
                                     <input type="hidden" name="cart[<?= $cartItem->id ?>][qty]" value="<?= $cartItem->qty ?>">
                                     <input type="hidden" name="cart[<?= $cartItem->id ?>][business_id]" value="<?= $cartItem->business_id ?>">
+                                    <input type="hidden" name="businessID" value="<?= $cartItem->business_id ?>">
                                     <input type="hidden" name="total" value="<?= $total ?>">
                                 <?php endforeach; ?>
 

@@ -582,3 +582,96 @@ body, html {
 .popup-cancel-btn:hover {
     background-color: #e9ecef;
 }
+
+.add-btn {
+    background: #005250;
+    color: white;
+    border: none;
+    width: 28px;
+    height: 28px;
+    border-radius: 50%;
+    font-size: 18px;
+    line-height: 1;
+    cursor: pointer;
+    transition: background-color 0.3s;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+}
+
+.add-btn:hover {
+    background: #003a38;
+}
+
+.modal-overlay {
+    display: none;
+    position: fixed;
+    z-index: 9999;
+    left: 0; top: 0; right: 0; bottom: 0;
+    background-color: rgba(0,0,0,0.7);
+    justify-content: center;
+    align-items: center;
+}
+  
+.modal-content {
+    background: white;
+    display: flex;
+    padding: 2rem;
+    border-radius: 16px;
+    max-width: 700px;
+    width: 90%;
+    display: flex;
+    gap: 2rem;
+    flex-wrap: wrap;
+    position: relative;
+}
+
+.modal-image-controls button {
+    margin: 0 5px;
+    padding: 5px 10px;
+    font-size: 1rem;
+}
+  
+.modal-details {
+    flex: 1 1 300px;
+}
+  
+.quantity-selector {
+    margin: 1rem 0;
+}
+  
+.add-cart-button {
+    background-color:#005250 ;
+    color: white;
+    border: none;
+    padding: 0.7rem 1.5rem;
+    font-size: 1rem;
+    border-radius: 8px;
+    cursor: pointer;
+}
+  
+.close-button {
+    position: absolute;
+    top: 10px; right: 20px;
+    font-size: 1.5rem;
+    cursor: pointer;
+}
+.star-rating {
+    margin: 15px 0;
+    text-align: center;
+}
+.stars {
+    display: inline-flex;
+    gap: 10px;
+}
+.star {
+    font-size: 2rem;
+    color: #ccc;
+    cursor: pointer;
+    transition: color 0.3s;
+}
+.star.selected,
+.star:hover,
+.star.hovered ~ .star {
+    color: #FFD700;
+}

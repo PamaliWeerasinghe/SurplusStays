@@ -22,8 +22,8 @@ $current_url = $_SERVER['REQUEST_URI'];
         <li class="nav-item <?= strpos($current_url, '/customer/cart') == true ? 'active' : '' ?>">
             <a href="<?=ROOT?>/customer/cart">Cart</a>
         </li>
-        <li class="nav-item <?= strpos($current_url, '/admin/ManageCustomers') == true ? 'active' : '' ?>">
-            <a href="<?=ROOT?>/admin/ManageCustomers">Wishlist</a>
+        <li class="nav-item <?= strpos($current_url, '/customer/wishlist') == true ? 'active' : '' ?>">
+            <a href="<?=ROOT?>/customer/wishlist">Wishlist</a>
         </li>
         <li class="nav-item <?= strpos($current_url, '/customer/orders') == true ? 'active' : '' ?>">
             <a href="<?=ROOT?>/customer/orders">Orders</a>

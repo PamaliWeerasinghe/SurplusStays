@@ -1,21 +1,73 @@
-/* Main container styles */
-.box {
-    width: 88%;
-    background-color: #F0F8FF;
-    margin-top: -20%;
-    border-radius: 20px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+body, html {
+    height: 100%; /* Ensure body and html take full height */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
 }
 
-.box-header {
-    background-color: #FD5D34;
+.container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0;
+}
+
+.top-nav {
+    background-color: #005250;
     color: white;
-    border-radius: 20px 20px 0px 0px;
-    padding: 15px;
-    text-align: center;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-bar {
+    margin-top: 5px;
+}
+
+.container-right{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 1500px;
+}
+
+.searchWelcome{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-left: 6.5%;
+    margin-top: 40px;
+    width: 85%;
+    height: 40px;
+}
+
+  .searchWelcome h2{
+    color: black;
+  }
+  
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    padding-left: 10px;
+  }
+
+.complaints-status {
+    margin-left: 6.5%;
+    width: 88%;
+    margin-top: 60px;
     margin-bottom: 20px;
-    font-size: 18px;
-    font-weight: bold;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: #F0F8FF;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
 }
 
 /* Table styles */
@@ -85,6 +137,17 @@
 .product-info .product-details {
     font-size: 14px;
 }
+.wishlist-btn {
+    background: none;
+    border: none;
+    font-size: 18px;
+    cursor: pointer;
+}
+.wishlist-btn:disabled {
+    cursor: default;
+    opacity: 0.6;
+}
+
 
 /* Status styles */
 .in-stock {
