@@ -93,7 +93,7 @@
                               which helped to reduce their food waste by sales and donations of the surplus.
                             
                             </p>
-                            <button class="view-report-btn" onclick="window.location.href=`http://localhost/surplusstays/public/admin/report4`">View Report</button>
+                            <button class="view-report-btn" onclick="window.location.href=`http://localhost:8080/surplusstays/public/admin/report4`">View Report</button>
                           </div> 
                           
                           
@@ -113,7 +113,7 @@
                               which helped to get their necessary donations and to reduce the wastage of surplus.
                             
                             </p>
-                            <button class="view-report-btn" onclick="window.location.href=`http://localhost/surplusstays/public/admin/report5`">View Report</button>
+                            <button class="view-report-btn" onclick="window.location.href=`http://localhost:8080/surplusstays/public/admin/report5`">View Report</button>
                           </div> 
                           
                           
