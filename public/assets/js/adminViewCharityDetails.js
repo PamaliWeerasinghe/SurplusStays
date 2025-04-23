@@ -88,7 +88,7 @@ function viewOrganization(user_id,cus_id){
             container2.innerHTML="";
             
             if(data.businesses && Array.isArray(data.businesses) && data.businesses.length>0){
-                path='http://localhost/SurplusStays/public/assets/images/'
+                path='http://localhost/SurplusStays/public/assets/businessImages/'
                
                 data.businesses.forEach((images,index)=>{
                     
@@ -99,7 +99,7 @@ function viewOrganization(user_id,cus_id){
                     if(images.business_logo==null){
                         container.innerHTML="No image Found"
                     }else{
-                        src=path+images.pictures;
+                        src=path+images.business_logo;
                         container.style.backgroundRepeat='no-repeat'
                         container.style.backgroundPosition='center'
                         container.style.backgroundSize='contain'
