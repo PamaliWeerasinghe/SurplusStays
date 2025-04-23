@@ -20,6 +20,7 @@ SELECT `complaints`.`id` AS `complaint_id`,
             `expiration_dateTime` AS `product_expirationTime`,
             `discountPrice`,
             `products`.`name` AS product,
+            `products`.price_per_unit AS product_price,
             `user`.`id` AS user_id,
             complaints.adminReply AS admin_reply
 FROM `complaints` 

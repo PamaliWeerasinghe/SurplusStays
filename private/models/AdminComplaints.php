@@ -88,8 +88,8 @@ class AdminComplaints extends AdminModel
     {
         $query = "SELECT `complaints`.`id` AS `complaint_id`,
             `order_items_id`,
+            `customer`.`id` AS `customer_id`,
             `feedback`,
-            `products`.`name` AS `product_name`,
             `order`.`id` AS `order_id`,
             `complaint_status`.`name` AS `complaint_status`,
             `complaints`.`business_id` AS `businessID`,
@@ -104,17 +104,21 @@ class AdminComplaints extends AdminModel
             `paymentMethod`,
             `user`.`email` AS `customer_email`,
             `customer`.`phoneNo` AS `customer_phone`,
-            `expiration_dateTime` AS `product`,
-            `discountPrice`
-         FROM `complaints` 
-        INNER JOIN `order_items` ON `complaints`.`order_items_id`=`order_items`.`id` 
-        INNER JOIN `products` ON `products`.`id`=`order_items`.`products_id`
-        INNER JOIN `order` ON `order_items`.`order_id`=`order`.`id`
-        INNER JOIN `complaint_status` ON `complaints`.`complaint_status_id`=`complaint_status`.`id`
-        INNER JOIN `business` ON `business`.`id`=`complaints`.`business_id`
-        INNER JOIN `customer` ON `customer`.`id`=`complaints`.`customer_id`
-        INNER JOIN `user`  ON `user`.`id`=`customer`.`user_id`
-        WHERE `complaints`.`id`= :value";
+            `expiration_dateTime` AS `product_expirationTime`,
+            `discountPrice`,
+            `products`.`name` AS product,
+            `products`.price_per_unit AS product_price,
+            `user`.`id` AS user_id,
+            complaints.adminReply AS admin_reply
+            FROM `complaints` 
+            INNER JOIN `order_items` ON `complaints`.`order_items_id`=`order_items`.`id` 
+            INNER JOIN `products` ON `products`.`id`=`order_items`.`products_id`
+            INNER JOIN `order` ON `order_items`.`order_id`=`order`.`id`
+            INNER JOIN `complaint_status` ON `complaints`.`complaint_status_id`=`complaint_status`.`id`
+            INNER JOIN `business` ON `business`.`id`=`complaints`.`business_id`
+            INNER JOIN `customer` ON `customer`.`id`=`complaints`.`customer_id`
+            INNER JOIN `user`  ON `user`.`id`=`customer`.`user_id` 
+            WHERE `complaints`.`id`= :value";
 
         return $this->db->query($query, [
             'value' => $id

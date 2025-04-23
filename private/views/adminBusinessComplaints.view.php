@@ -69,7 +69,7 @@
                                 <td># <?= $complaint->complaint_id ?></td>
                                 <td><?=$complaint->DESCRIPTION?></td>
                                 <td><?=$complaint->complaint_dateTime?></td>
-                                <?php if($complaint->status=='Not Attended'){?>
+                                <?php if($complaint->status=='Pending'){?>
                                     <td style="text-align: center;"><button class="take-action">Attend</button></td>
                                 <?php }else{?>
                                     <td style="text-align: center;"><button class="completed">Resolved</button></td>

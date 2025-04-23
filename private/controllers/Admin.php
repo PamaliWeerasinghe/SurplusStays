@@ -305,7 +305,12 @@ class Admin extends Controller
         if (count($_POST)) {
             $id = $_POST['id'];
             $admin = new AdminModel();
-            $arr['adminReply'] = $_POST['feedback'];
+            $check=$admin->where(['complaint_id'],[$id],'complaintdetails');
+            if(!empty($check)){
+                $errors['admin_reply']="Already Has Replied";
+
+            }else{
+                $arr['adminReply'] = $_POST['feedback'];
 
             //$feedback=$admin->update($id,$arr,'complaints');
             // returns an empty array
@@ -317,14 +322,17 @@ class Admin extends Controller
                 $user = new AdminComplaints();
                 $complaint_details = $user->complaintDetails($id);
                 $complaint_images = $user->getComplaintImages($id);
-                $this->view('AdminSeeComplainPage', [
-                    "complaint_details" => $complaint_details[0],
-                    "complaint_imgs" => $complaint_images,
-                    "errors" => $errors
-
-                ]);
+               
             }
+            }
+            
         }
+        $this->view('AdminSeeComplainPage', [
+            "complaint_details" => $complaint_details[0],
+            "complaint_imgs" => $complaint_images,
+            "errors" => $errors
+
+        ]);
     }
     //View a charity organization
     function CharityOrgView()
@@ -644,10 +652,11 @@ class Admin extends Controller
         $noOfPages_complaints = ceil($complaintsCountData / $complaint_limit);
 
         //Pagination for complaints
+        // displays only the non-resolved complaints
         $complaints_pager = Pager::getInstance('non_resolved_complaints', $noOfPages_complaints, $complaint_limit);
         $complaints_offset = $complaints_pager->offset;
         $complaints = $admin->selectNotAttended('non_resolved_complaints', $complaint_limit, $complaints_offset, $search, $searchBy, $sort, $order);
-
+        
       
         $this->view('AdminBusinessComplaints', [
             "complaints" => $complaints,
