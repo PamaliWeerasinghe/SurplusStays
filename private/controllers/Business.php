@@ -553,7 +553,7 @@ class Business extends Controller
                 ];
 
                 $user->update($userId, $passwordData, 'user');
-                $this->redirect('business/profile');
+                $this->redirect('logout');
             } else {
                 $errors = $user->errors;
             }

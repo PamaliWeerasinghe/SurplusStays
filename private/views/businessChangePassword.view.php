@@ -38,17 +38,17 @@
                        
                         <div class="input-group">
                             <label for="product-name">Current password :</label>
-                            <input type="text" value="<?= get_var('current_password') ?>" name="current_password">
+                            <input type="password" value="<?= get_var('current_password') ?>" name="current_password">
                         </div>
                         
                         <div class="input-group">
                             <label for="product-name">New password :</label>
-                            <input type="text" value="<?= get_var('password') ?>" name="password" placeholder="ENTER A PASSWORD">
+                            <input type="password" value="<?= get_var('password') ?>" name="password" placeholder="ENTER A PASSWORD">
                         </div>
 
                         <div class="input-group">
                             <label for="product-name">Confirm new password :</label>
-                            <input type="text" value="<?= get_var('confirm_password') ?>" name="confirm_password" placeholder="RE-ENTER A PASSWORD">
+                            <input type="password" value="<?= get_var('confirm_password') ?>" name="confirm_password" placeholder="RE-ENTER A PASSWORD">
                         </div>
 
                         <div class="button-group">

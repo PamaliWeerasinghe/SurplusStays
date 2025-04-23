@@ -92,7 +92,7 @@
 
                         <div class="input-group">
                             <label for="description">Email :</label>
-                            <input placeholder="ENTER AN EMAIL" value="<?= get_var('email', $curruser[0]->email) ?>" type="text" name="email">
+                            <input placeholder="ENTER AN EMAIL" value="<?= get_var('email', $curruser[0]->email) ?>" type="text" name="email" disabled>
                         </div>
 
                         <div class="input-group">
