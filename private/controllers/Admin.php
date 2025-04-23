@@ -4,7 +4,7 @@ class Admin extends Controller
     
     //Admin view charity organization details
     function viewCharity($user_id,$charity_id)
-    { {
+    { 
 
             $charity = new AdminModel();
             $errors = array();
@@ -75,7 +75,7 @@ class Admin extends Controller
                     'rows' => $data
                 ]);
             }
-        }
+        
     }
     //Admin view business details
     function viewBusiness($user_id,$business_id)

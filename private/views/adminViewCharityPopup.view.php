@@ -14,7 +14,7 @@
 
         <div class="popup" id="rcpopup">
             <div class="msg-div">
-                <div class="close-btn" onclick="closeCustomer()">&times;</div>
+                <div class="close-btn" onclick="closeCharity()">&times;</div>
             </div>
             <div class="edit-delete">
                 <span class="material-symbols-outlined" style="z-index:999;" id="edit_customer" >

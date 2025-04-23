@@ -18,7 +18,7 @@ function deletePopup(rowId){
 
         //dynamically set the form action
         const form=document.querySelector('#popup form');
-        form.action=`http://localhost/surplusstays/public/Admin/DeleteCustomer/${rowId}`;
+        form.action=`http://localhost/surplusstays/public/AdminDeleteCharity/${rowId}`;
         
     
 }
@@ -50,7 +50,7 @@ function viewOrganization(user_id,cus_id){
             document.getElementById("phoneNo").innerHTML = data.org[0].org_contact;
             document.getElementById("orders").innerHTML = data.countDonations;
             document.getElementById("edit_customer").onclick=function(){
-                window.location.href=`http://localhost/SurplusStays/public/admin/viewCustomer/${user_id}/${cus_id}`
+                window.location.href=`http://localhost/SurplusStays/public/admin/viewCharity/${user_id}/${cus_id}`
             }
             document.getElementById("hidden_id").value=data.org[0].user_id;
             
@@ -137,15 +137,13 @@ function viewOrganization(user_id,cus_id){
      
     
 }
-function closeCustomer(){
+function closeCharity(){
     let rcpopup = document.getElementById("rcpopup");
     let rcpopupContainer = document.getElementById("rcpopup-container");
     rcpopup.classList.remove("open-popup");
     rcpopupContainer.className = "popup-container";
 }
 
-function editCustomer(){
-    alert("edit")
-}
+
 
 
