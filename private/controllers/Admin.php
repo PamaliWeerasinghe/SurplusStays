@@ -297,11 +297,13 @@ class Admin extends Controller
         }
     }
     //view charity details
-    function charityDetails($id)
+    function charityDetails($user_id,$org_id)
     {
         if (Auth::logged_in()) {
             $admin = new AdminModel();
-            $org = $admin->where(['user_id'], [$id], 'charity_details');
+            $org = $admin->where(['user_id'], [$user_id], 'charity_details');
+            // $org_donations=$admin->where([])
+            
             echo json_encode($org);
         }
     }

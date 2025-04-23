@@ -15,7 +15,7 @@ class Login extends Controller{
             if($email){
                 $user_details=$email[0];
                 
-                //check the password
+                //check the password and the status
                 $password=$user_details->password;
                 $status_id=$user_details->status_id;
                 if(password_verify($_POST['password'],$password) && $status_id==1){

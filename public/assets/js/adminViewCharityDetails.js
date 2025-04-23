@@ -1,11 +1,10 @@
 document.addEventListener("DOMContentLoaded", () => {
-    document.getElementById("delete_business").onclick = function () {
+    document.getElementById("delete_customer").onclick = function () {
         closeCustomer();
         user_id=document.getElementById("hidden_id").value;
         deletePopup(user_id);
     };
 });
-
 
 function deletePopup(rowId){
     let popup=document.getElementById("popup");
@@ -19,22 +18,21 @@ function deletePopup(rowId){
 
         //dynamically set the form action
         const form=document.querySelector('#popup form');
-        form.action=`http://localhost/surplusstays/public/Admin/DeleteBusiness/${rowId}`;
+        form.action=`http://localhost/surplusstays/public/Admin/DeleteCustomer/${rowId}`;
         
     
 }
-
 function closedeletePopup(){
     popup.classList.remove("open-popup");
     popupContainer.className="popup-container";
 }
-function viewBusiness(user_id,business_id){
-    // alert(business_id);
+function viewOrganization(user_id,cus_id){
+  
     let rcpopup = document.getElementById("rcpopup");
     let rcpopupContainer = document.getElementById("rcpopup-container");
   
     //fetch the customer details
-    fetch(`http://localhost/SurplusStays/public/admin/businessDetails/${user_id}/${business_id}`)
+    fetch(`http://localhost/SurplusStays/public/admin/charityDetails/${user_id}/${cus_id}`)
     .then(response => {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -45,33 +43,35 @@ function viewBusiness(user_id,business_id){
         console.log("Fetched Data:", data); // Debugging: Check JSON structure
 
         // Check if 'customer' exists and is an array
-        if (data.business && Array.isArray(data.business) && data.business.length > 0) {
-            document.getElementById("businessImg").src=`http://localhost/SurplusStays/public/assets/businessImages/${data.business[0].profile_pic}`;
-            document.getElementById("name").innerHTML = data.business[0].business_name;
-            document.getElementById("email").innerHTML = data.business[0].email;
-            document.getElementById("phoneNo").innerHTML = data.business[0].phoneNo;
+        if (data.customer && Array.isArray(data.customer) && data.customer.length > 0) {
+            document.getElementById("customerImg").src=`http://localhost/SurplusStays/public/assets/customerImages/${data.customer[0].profile_pic}`;
+            document.getElementById("fname").innerHTML = data.customer[0].fname;
+            document.getElementById("lname").innerHTML = data.customer[0].lname;
+            document.getElementById("email").innerHTML = data.customer[0].email;
+            document.getElementById("phoneNo").innerHTML = data.customer[0].phoneNo;
             document.getElementById("orders").innerHTML = data.no_of_orders;
-            document.getElementById("edit_business").onclick=function(){
-                window.location.href=`http://localhost/SurplusStays/public/admin/viewBusiness/${user_id}/${business_id}}`
+            document.getElementById("edit_customer").onclick=function(){
+                window.location.href=`http://localhost/SurplusStays/public/admin/viewCustomer/${user_id}/${cus_id}`
             }
-            document.getElementById("hidden_id").value=user_id;
+            document.getElementById("hidden_id").value=data.customer[0].user_id;
             
             //selects the table body
             let tbody=document.querySelector(".order-table tbody");
             // //clear the rows
             tbody.innerHTML="";
-            complaints=data.business_complaints;
-            // console.log(complaints);
+            complaints=data.customer_complaints;
             
-            if (data.business_complaints && Array.isArray(data.business_complaints) && data.business_complaints.length > 0) {
-            data.business_complaints.forEach((complaints,index) => {
+            // console.log(complaints);
+            let row = document.createElement("tr");
+            if (data.customer_complaints && Array.isArray(data.customer_complaints) && data.customer_complaints.length > 0) {
+            data.customer_complaints.forEach((complaints,index) => {
                 
-                let row = document.createElement("tr");
+                        let row = document.createElement("tr");
                         row.innerHTML=`
                         <td>#${index+1}</td>
-                        <td>${complaints.complaintDescription}</td>
+                        <td>${complaints.customer_email}</td>
                         <td>${complaints.complaint_date}</td>
-                        <td style="text-align: center;">${complaints.complaint_status==='Not Attended'?' <button class="take-action" style="font-size:10px">Take Action</button>':
+                        <td style="text-align: center;">${complaints.complaint_status==='Pending'?' <button class="take-action" style="font-size:10px">Take Action</button>':
                             ' <button class="completed" style="font-size:10px">Resolved</button>'
                         }
                         </td>
@@ -99,7 +99,7 @@ function viewBusiness(user_id,business_id){
             container2.style.backgroundImage='none';
             container1.innerHTML="";              
             container2.innerHTML="";
-
+            
             if(data.images && Array.isArray(data.images) && data.images.length>0){
                 path='http://localhost/SurplusStays/public/assets/images/'
                
@@ -127,9 +127,9 @@ function viewBusiness(user_id,business_id){
             }else{
                 
                                     
-                 container1.innerHTML="No Recent Products";
+                 container1.innerHTML="No Recent Purchases";
                                    
-                 container2.innerHTML="No Recent Products";
+                 container2.innerHTML="No Recent Purchases";
                     
 
             }
@@ -156,3 +156,9 @@ function closeCustomer(){
     rcpopup.classList.remove("open-popup");
     rcpopupContainer.className = "popup-container";
 }
+
+function editCustomer(){
+    alert("edit")
+}
+
+
