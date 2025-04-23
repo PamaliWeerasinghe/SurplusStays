@@ -1053,5 +1053,13 @@ class Admin extends Controller
         ]);
 
     }
+    function report5()
+    {
+        $admin=new AdminModel();
+        $data=$admin->findAll('charity_report');
+        $this->view('AdminReport5',[
+            "charity"=>$data
+        ]);
+    }
     
 }

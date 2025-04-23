@@ -1,10 +1,13 @@
+<?php
+// Your PHP code above this (if needed)
+?>
 
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Surplus Saved Via Notifications</title>
+    <title>Charity Details</title>
     <style>
         /* Main Report Styling */
         body {
@@ -106,7 +109,7 @@
         .print-button-container {
             width: 100%;
             display: flex;
-            justify-content: flex-end;
+            justify-content: space-between;
             margin-bottom: 20px;
         }
         
@@ -124,6 +127,26 @@
         .print-button:hover {
             background-color: #1e7a34;
         }
+        .back-button {
+  background-color: #f0f0f0;
+  border: none;
+  color: #333;
+  font-size: 16px;
+  padding: 10px 18px;
+  border-radius: 8px;
+  cursor: pointer;
+  transition: background-color 0.3s, transform 0.2s;
+  box-shadow: 0 2px 6px rgba(0, 0, 0, 0.1);
+}
+
+.back-button:hover {
+  background-color: #e0e0e0;
+  transform: translateX(-3px);
+}
+
+.back-button:active {
+  background-color: #ccc;
+}
         
         /* Print-specific styles */
         @media print {
@@ -143,6 +166,7 @@
 </head>
 <body>
     <div class="print-button-container">
+        <button class="back-button" onclick="window.location.href='<?= ROOT ?>/Admin/Reports'">&lAarr;</button>
         <button class="print-button" onclick="window.print()">Generate Report</button>
     </div>
     

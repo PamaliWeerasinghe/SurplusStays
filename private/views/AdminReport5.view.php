@@ -172,16 +172,18 @@
     
     <div class="report-container">
         <div class="report-header">
-            <h1 class="report-title">Customer Order Details</h1>
+            <h1 class="report-title">Charity Organizations' Details </h1>
             <p class="report-subtitle">Generated on <?php echo date("Y-m-d"); ?></p>
         </div>
         
         <table class="report-table">
             <thead>
                 <tr>
-                    <th>Customer ID</th>
+                    <th>Org ID</th>
                     <th>Name</th>
-                    <th>No. Of Orders</th>
+                    <th>Contact No</th>
+                    <th>Based On</th>
+                    <th># Donations Received</th>
                     
                 </tr>
             </thead>
@@ -190,16 +192,18 @@
                 $total_orders=0;
                 
                 ?>
-                <?php foreach($customers as $customer) :?>
+                <?php foreach($charity as $org) :?>
                 <tr>
                     <?php
-                    $total_orders=$total_orders+$customer->no_of_orders;
+                    $total_orders=$total_orders+$org->donation_count;
                     
                     ?>
                     
-                    <td><?=$customer->cus_id?></td>
-                    <td><?=$customer->cus_name?></td>
-                    <td><?=$customer->no_of_orders?></td>
+                    <td># <?=$org->org_id?></td>
+                    <td><?=$org->org_name?></td>
+                    <td><?=$org->phoneNo?></td>
+                    <td><?=$org->city?></td>
+                    <td><?=$org->donation_count?></td>
                     
                 </tr>
                 <?php endforeach;?>

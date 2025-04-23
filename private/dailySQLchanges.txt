@@ -252,4 +252,15 @@ order_and_the_business.bus_name AS bus_name,
 business.phoneNo AS phoneNo
 FROM order_and_the_business
 INNER JOIN business ON order_and_the_business.business_id=business.id
-GROUP BY order_and_the_business.business_id 
+GROUP BY order_and_the_business.business_id;
+
+CREATE VIEW  charity_report AS 
+SELECT 
+COUNT(donations_received.org_id) AS donation_count,
+donations_received.org_id AS org_id,
+`organization`.`name` AS org_name,
+`organization`.phoneNo AS phoneNo,
+`organization`.city AS city
+FROM donations_received
+INNER JOIN `organization` ON `organization`.id=donations_received.org_id
+GROUP BY donations_received.org_id
