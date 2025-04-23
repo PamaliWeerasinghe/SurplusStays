@@ -979,23 +979,20 @@ class Admin extends Controller
     }
     function Reports()
     {
-        $admin = new AdminModel();
-        $products_limit = 3;
-        //count the no of records in the saved_from_wastage_report view
-        $productsCountData = $admin->count('saved_from_wastage_report');
-        //calculate the no of pages
-        $noOfPages_products = ceil($productsCountData / $products_limit);
+        // $admin = new AdminModel();
+        // $products_limit = 3;
+        // //count the no of records in the saved_from_wastage_report view
+        // $productsCountData = $admin->count('saved_from_wastage_report');
+        // //calculate the no of pages
+        // $noOfPages_products = ceil($productsCountData / $products_limit);
 
-        //pagination for the report
-        $products_pager = Pager::getInstance('saved_from_wastage_report', $noOfPages_products, $products_limit);
-        $products_offset = $products_pager->offset;
-        $products = $admin->selectRecentComplaints('saved_from_wastage_report', 'product_name', $products_limit, $products_offset);
+        // //pagination for the report
+        // $products_pager = Pager::getInstance('saved_from_wastage_report', $noOfPages_products, $products_limit);
+        // $products_offset = $products_pager->offset;
+        // $products = $admin->selectRecentComplaints('saved_from_wastage_report', 'product_name', $products_limit, $products_offset);
 
 
-        $this->view('AdminReports', [
-            "products" => $products,
-            "products_pager" => $products_pager
-        ]);
+        $this->view('AdminReports');
     }
     function RecentItems()
     {

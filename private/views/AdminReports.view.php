@@ -80,6 +80,27 @@
                         </div>
                         
                     </div>
+                    <div class="white-bar-report">
+                        <div class="report-img">
+                            <img src="<?=ASSETS?>/images/rep_business.jpg"  />
+                        </div>
+                        <div class="report-description">
+                          <div>
+                            <h4>DETAILS OF BUSINESS </h4>
+                          </div>    
+                          <div class="report-description-text">
+                            <p>The details of all the businesses who have been a part of the Surplus Stays community, 
+                              which helped to reduce their food waste by sales and donations of the surplus.
+                            
+                            </p>
+                            <button class="view-report-btn" onclick="window.location.href=`http://localhost/surplusstays/public/admin/report3`">View Report</button>
+                          </div> 
+                          
+                          
+                        </div>
+                        
+                    </div>
+
 
                 </div>
 
