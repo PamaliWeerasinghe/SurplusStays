@@ -93,7 +93,7 @@
                               which helped to reduce their food waste by sales and donations of the surplus.
                             
                             </p>
-                            <button class="view-report-btn" onclick="window.location.href=`http://localhost/surplusstays/public/admin/report3`">View Report</button>
+                            <button class="view-report-btn" onclick="window.location.href=`http://localhost/surplusstays/public/admin/report4`">View Report</button>
                           </div> 
                           
                           

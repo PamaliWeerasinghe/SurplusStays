@@ -1044,5 +1044,14 @@ class Admin extends Controller
             "customers" => $data
         ]);
     }
+    function report4()
+    {
+        $admin=new AdminModel();
+        $data=$admin->findAll('business_report');
+        $this->view('AdminReport4',[
+            "business"=>$data
+        ]);
+
+    }
     
 }
