@@ -36,12 +36,12 @@
                         <?php endif; ?>
 
                         <div class="input-group">
-                            <label for="product-name">Product Name :</label>
+                            <label>Product Name :</label>
                             <input type="text" value="<?= get_var('product-name', $row[0]->name) ?>" name="product-name" placeholder="Enter The Product Name (E.G., Fresh Apples, Baked Bread)">
                         </div>
 
                         <div class="input-group">
-                            <label for="category">Category :</label>
+                            <label>Category :</label>
                             <select name="category">
                                 <option value="" disabled>Select Category</option>
                                 <option value="Diary" <?= get_var('category', $row[0]->category) === 'Diary' ? 'selected' : '' ?>>Diary</option>
@@ -59,22 +59,22 @@
                         </div>
 
                         <div class="input-group">
-                            <label for="description">Description :</label>
+                            <label>Description :</label>
                             <textarea name="description" placeholder="Provide A Brief Description Of The Product"><?= get_var('description', $row[0]->description) ?></textarea>
                         </div>
 
                         <div class="input-group">
-                            <label for="quantity">Quantity Available :</label>
+                            <label>Quantity Available :</label>
                             <input type="number" value="<?= get_var('quantity', $row[0]->qty) ?>" min="0" value="0" name="quantity">
                         </div>
 
                         <div class="input-group">
-                            <label for="price">Price Per Unit :</label>
+                            <label>Price Per Unit :</label>
                             <input type="number" value="<?= get_var('price-per-unit', $row[0]->price_per_unit) ?>" placeholder="Enter The Price Per Unit" min="0" step="0.01" name="price-per-unit">
                         </div>
 
                         <div class="input-group">
-                            <label for="expiration">Expiration Date And Time :</label>
+                            <label>Expiration Date And Time :</label>
                             <input type="datetime-local" value="<?= get_var('expiration', $row[0]->expiration_dateTime) ?>" name="expiration">
                         </div>
 

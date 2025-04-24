@@ -34,6 +34,7 @@ class ComplaintModel extends Model
                 m.dateTime, 
                 m.description,
                 m.adminReply,
+                m.feedback,
                 c.fname AS customer_name, 
                 IFNULL(cs.name, 'Pending') AS status
               FROM `complaints` m

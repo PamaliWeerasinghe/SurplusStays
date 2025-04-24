@@ -96,11 +96,11 @@
                 <input placeholder="ENTER YOUR BUSINESS NAME" value="<?= get_var('name') ?>" type="text" name="name" class="input">
                 <h4>BUSINESS TYPE :</h4>
                 <select name="type" class="select">
-                    <option <?= get_select('type', '') ?> value="">SELECT THE TYPE</option>
-                    <option <?= get_select('type', 'Individual') ?> value="Individual">Individual</option>
-                    <option <?= get_select('type', 'Smallbusiness') ?> value="Smallbusiness">Smallbusiness</option>
-                    <option <?= get_select('type', 'Supermarket') ?> value="Supermarket">Supermarket</option>
-                    <option <?= get_select('type', 'Other') ?> value="Other">Other</option>
+                    <option value="" disabled <?= get_var('type')===''?'selected':''?>>SELECT THE TYPE</option>
+                    <option value="Individual" <?= get_var('type') === 'Individual' ? 'selected' : '' ?>>Individual</option>
+                    <option value="Smallbusiness" <?= get_var('type')==='Smallbusiness'?'selected':''?>> Smallbusiness</option>
+                    <option value="Supermarket" <?= get_var('type')==='Supermarket'?'selected':''?>>Supermarket</option>
+                    <option value="Other" <?= get_var('type')==='Other'?'selected':''?>>Other</option>
                 </select>
                 <h4>BUSINESS EMAIL:</h4>
                 <input placeholder="ENTER AN EMAIL" value="<?= get_var('email') ?>" type="text" name="email" class="input">
@@ -108,8 +108,8 @@
                 <input placeholder="ENTER A PHONE NUMBER" value="<?= get_var('phone') ?>" type="text" name="phone" class="input">
                 <h4>BUSINESS LOCATION :</h4>
                 <!-- <input placeholder="ENTER YOUR BUSINESS ADDRESS" value="?= get_var('address') ?>" type="text" name="address" class="input"> -->
-                <input type="hidden" id="latitude" name="latitude" placeholder="Latitude" readonly required><br>
-                <input type="hidden" id="longitude" name="longitude" placeholder="Longitude" readonly required><br>
+                <input type="hidden" id="latitude" name="latitude" placeholder="Latitude" readonly required value="<?=get_var('latitude')?>"><br>
+                <input type="hidden" id="longitude" name="longitude" placeholder="Longitude" readonly required value="<?= get_var('longitude')?>"><br>
                 <input id="pac-input" class="input" type="text" placeholder="Search for your business location"
                 style="margin-top:60px;margin-left:-60px;padding:8px;width:220px;z-index:5;position:absolute;top:10px;left:50%;transform:translateX(-50%);border:1px solid #ccc;border-radius:4px;">
 

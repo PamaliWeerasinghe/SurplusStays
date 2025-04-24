@@ -276,7 +276,7 @@ font-weight: bolder;
 
 .pagination{
   display: flex;
-  justify-content: flex-end;
+  justify-content: center;
   align-items: center; 
 }
 

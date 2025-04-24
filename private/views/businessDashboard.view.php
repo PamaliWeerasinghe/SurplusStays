@@ -51,7 +51,7 @@
                             </div>
                             <div class="mini-box-inner-2">
                                 <label>Rating</label>
-                                <label>4.7/5.0</label>
+                                <label><?=$rating?>/5.0</label>
                             </div>
                         </div>
                     </div>

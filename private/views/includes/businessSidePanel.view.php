@@ -1,34 +1,303 @@
-<aside class="sidePanel">
-    <div class="greeting">
-        <img src="<?= ASSETS ?>/businessImages/<?= basename(Auth::getUserPicture()) ?>" alt="Profile Image" class="profile-image">
-        <label>Hi <span class="admin"> <?= Auth::getusername() ?></span></label>
+<?php
+// Get the current URL path
+$current_url = $_SERVER['REQUEST_URI'];
+?>
+
+<div class="side-nav">
+    <div class="profile-section">
+        <div class="profile-container">
+            <img src="<?= ASSETS ?>/businessImages/<?= basename(Auth::getUserPicture()) ?>" alt="Profile Image" class="profile-image">
+        </div>
+        <h2 class="welcome-text">Hi <?= Auth::getusername() ?></h2>
     </div>
-    <div class="buttons">
-        <div class="btn-nonSelected" data-path="/SurplusStays/public/business">
-            <label>Dashboard</label>
-        </div>
-        <div class="btn-nonSelected" data-path="/SurplusStays/public/business/myproducts">
-            <label>My Products</label>
-        </div>
-        <div class="btn-nonSelected" data-path="/SurplusStays/public/business/orders">
-            <label>Orders</label>
-        </div>
-        <div class="btn-nonSelected" data-path="/SurplusStays/public/business/browse_charities">
-            <label>Browse Charities</label>
-        </div>
-        <div class="btn-nonSelected" data-path="/SurplusStays/public/business/requests">
-            <label>Requests</label>
-        </div>
-        <div class="btn-nonSelected" data-path="/SurplusStays/public/business/complaints">
-            <label>Complains</label>
-        </div>
+    <ul class="nav-links">
+        <li class="nav-item <?= strpos($current_url, '/business/index') == true ? 'active' : '' ?>">
+            <a href="<?= ROOT ?>/business/index">Dashboard</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/business/myproducts') == true ? 'active' : '' ?>">
+            <a href="<?= ROOT ?>/business/myproducts">Manage Products</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/business/orders') == true ? 'active' : '' ?>">
+            <a href="<?= ROOT ?>/business/orders">Orders</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/business/browse_charities') == true ? 'active' : '' ?>">
+            <a href="<?= ROOT ?>/business/browse_charities">Browse Charities</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/business/requests') == true ? 'active' : '' ?>">
+            <a href="<?= ROOT ?>/business/requests">Requests</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/business/complaints') == true ? 'active' : '' ?>">
+            <a href="<?= ROOT ?>/business/complaints">Complaints</a>
+        </li>
+        <li class="nav-item <?= strpos($current_url, '/business/profile') == true ? 'active' : '' ?>">
+            <a href="<?= ROOT ?>/business/profile">Profile</a>
+        </li>
+    </ul>
+</div>
+
+<script>
+    document.addEventListener('DOMContentLoaded', function() {
+        // Add subtle animations when page loads
+        document.querySelectorAll('.nav-item').forEach(function(item, index) {
+            setTimeout(() => {
+                item.style.opacity = '1';
+            }, 100 * index);
+        });
+
+        // Add hover effect
+        document.querySelectorAll('.nav-item').forEach(item => {
+            item.addEventListener('mouseenter', function() {
+                if (!this.classList.contains('active')) {
+                    this.style.transform = 'translateY(-3px)';
+                }
+            });
+
+            item.addEventListener('mouseleave', function() {
+                if (!this.classList.contains('active')) {
+                    this.style.transform = 'translateY(0)';
+                }
+            });
+        });
+    });
+</script>
+
+<style>
+    .side-nav {
+
+        display: flex;
+        flex-direction: column;
+        flex: 1;
+        background-color: #F0F8FF;
+        padding-bottom: 10%;
+        padding: 20px;
+
+    }
+
+    .profile-section {
+        text-align: center;
+        margin-bottom: 40px;
+        position: relative;
+    }
+
+    .profile-container {
+        position: relative;
+        width: 80px;
+        height: 80px;
+        margin: 0 auto 15px;
+        border-radius: 50%;
+        padding: 3px;
+        background: linear-gradient(45deg, #00615F, #008F8C);
+        animation: pulse 2s infinite;
+    }
+
+    @keyframes pulse {
+        0% {
+            box-shadow: 0 0 0 0 rgba(0, 97, 95, 0.4);
+        }
+
+        70% {
+            box-shadow: 0 0 0 10px rgba(0, 97, 95, 0);
+        }
+
+        100% {
+            box-shadow: 0 0 0 0 rgba(0, 97, 95, 0);
+        }
+    }
+
+    .profile-image {
+        width: 100%;
+        height: 100%;
+        border-radius: 50%;
+        object-fit: cover;
+        border: 3px solid white;
+        transition: transform 0.3s ease;
+    }
+
+    .profile-image:hover {
+        transform: scale(1.05);
+    }
+
+    .welcome-text {
+        font-size: 24px;
+        font-weight: 700;
+        margin: 0;
+        color: #333;
+        transition: color 0.3s ease;
+        animation: fadeIn 0.5s ease-in-out;
+    }
+
+    @keyframes fadeIn {
+        from {
+            opacity: 0;
+            transform: translateY(10px);
+        }
+
+        to {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    }
+
+    .nav-links {
+        list-style-type: none;
+        padding: 0;
+        margin: 0;
+    }
+
+    .nav-item {
+        background-color: white;
+        border-radius: 40px;
+        margin-top: 20px;
+        transition: transform 0.3s ease, box-shadow 0.3s ease;
+        position: relative;
+        overflow: hidden;
+    }
+
+    .nav-item::before {
+        content: '';
+        position: absolute;
+        top: 0;
+        left: -100%;
+        width: 100%;
+        height: 100%;
+        background: linear-gradient(90deg, rgba(255, 255, 255, 0) 0%, rgba(255, 255, 255, 0.2) 50%, rgba(255, 255, 255, 0) 100%);
+        transition: all 0.6s ease;
+        z-index: 1;
+    }
+
+    .nav-item:hover::before {
+        left: 100%;
+    }
+
+    .nav-item:hover {
+        transform: translateY(-3px);
+        box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    .nav-icon {
+        display: inline-block;
+        width: 20px;
+        height: 20px;
+        margin-right: 10px;
+        vertical-align: text-bottom;
+        align-items: center;
+        justify-content: center;
+        opacity: 0.7;
+        transition: opacity 0.3s ease;
+        background-size: contain;
+        background-repeat: no-repeat;
+        background-position: center;
+    }
+
+    .nav-item a {
+        text-decoration: none;
+        font-size: 16px;
         
-        <div class="btn-nonSelected" data-path="/SurplusStays/public/business/profile">
-            <label>Profile</label>
-        </div>
-        <!--<div class="btn-nonSelected" id="profile" onclick="profile();">
-            <label>Profile</label>
-        </div>-->
-    </div>
-    <script src="<?= ROOT ?>/assets/js/businessPagesNavigation.js"></script>
-</aside>
+        color: #333;
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        padding: 12px 15px;
+        border-radius: 40px;
+        transition: all 0.3s ease;
+        position: relative;
+        z-index: 2;
+        font-weight: 500;
+    }
+
+    .nav-item.active {
+        background: linear-gradient(45deg, #00615F, #008F8C);
+        box-shadow: 0 4px 10px rgba(0, 97, 95, 0.3);
+    }
+
+    .nav-item.active a {
+        color: white;
+    }
+
+    .nav-item.active .nav-icon {
+        opacity: 1;
+    }
+
+    .nav-item:not(.active):hover a {
+        color: #00615F;
+        background: rgba(0, 97, 95, 0.05);
+    }
+
+
+    @media (max-width: 768px) {
+        .side-nav {
+            width: 100%;
+            border-radius: 0;
+        }
+    }
+
+    /* Add subtle entrance animations for nav items */
+    .nav-item {
+        animation: slideIn 0.4s ease-out forwards;
+        opacity: 0;
+    }
+
+    @keyframes slideIn {
+        from {
+            transform: translateX(-20px);
+            opacity: 0;
+        }
+
+        to {
+            transform: translateX(0);
+            opacity: 1;
+        }
+    }
+
+    /* Delay each nav item animation */
+    .nav-item:nth-child(1) {
+        animation-delay: 0.1s;
+    }
+
+    .nav-item:nth-child(2) {
+        animation-delay: 0.2s;
+    }
+
+    .nav-item:nth-child(3) {
+        animation-delay: 0.3s;
+    }
+
+    .nav-item:nth-child(4) {
+        animation-delay: 0.4s;
+    }
+
+    .nav-item:nth-child(5) {
+        animation-delay: 0.5s;
+    }
+
+    .nav-item:nth-child(6) {
+        animation-delay: 0.6s;
+    }
+
+    .nav-item:nth-child(7) {
+        animation-delay: 0.7s;
+    }
+
+    .nav-item:nth-child(8) {
+        animation-delay: 0.8s;
+    }
+
+    /* Add subtle hover effect on nav items */
+    .nav-item a:after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        width: 0;
+        height: 2px;
+        background: #00615F;
+        transition: all 0.3s ease;
+        opacity: 0;
+    }
+
+    .nav-item:not(.active) a:hover:after {
+        width: 80%;
+        left: 10%;
+        opacity: 1;
+    }
+</style>

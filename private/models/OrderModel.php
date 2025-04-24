@@ -60,12 +60,12 @@ class OrderModel extends Model
         $this->db->query($query, ['order_id' => $order_id, 'status' => $status]);
 
         // Deduct quantities only if status is "Completed"
-        if ($status === 'Completed') {
-            $this->deductProductQuantities($order_id);
+        if ($status === 'Not Collected') {
+            $this->increaseProductQuantities($order_id);
         }
     }
 
-    private function deductProductQuantities($order_id)
+    private function increaseProductQuantities($order_id)
     {
         // Get the ordered products and quantities
         $query = "SELECT products_id, qty 
@@ -73,10 +73,10 @@ class OrderModel extends Model
               WHERE order_id = :order_id";
         $orderItems = $this->db->query($query, ['order_id' => $order_id]);
 
-        // Deduct the quantities from the products table
+        // increase the quantities from the products table
         foreach ($orderItems as $item) {
             $updateQuery = "UPDATE products 
-                        SET qty = GREATEST(qty - :qty, 0) 
+                        SET qty = qty+:qty
                         WHERE id = :product_id";
             $this->db->query($updateQuery, ['qty' => $item->qty, 'product_id' => $item->products_id]);
         }
