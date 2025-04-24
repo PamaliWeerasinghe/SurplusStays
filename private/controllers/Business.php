@@ -20,12 +20,16 @@ class Business extends Controller
         $ordercount = $ordermodel->countOrders($business_id);
         $requestcount = $requestmodel->countRequests($business_id);
         $ratingcount=$ratingmodel->businessrating($business_id);
-        if ($ratingcount[0]->count > 0) {
-            $value = $ratingcount[0]->sum / $ratingcount[0]->count;
-            $rating=round($value,1);
-        } else {
-            $rating = 0;
+        $rating=0;
+        if($ratingcount!=null){
+            if ($ratingcount[0]->count > 0) {
+                $value = $ratingcount[0]->sum / $ratingcount[0]->count;
+                $rating=round($value,1);
+            } else {
+                $rating = 0;
+            }
         }
+       
 
         $products = $product->gettopsalesproducts($business_id); //filter the top selling products
         $orders = $ordermodel->getOrdersByBusiness($business_id);
@@ -483,12 +487,16 @@ class Business extends Controller
 
         $ratingmodel=new BusinessRating();
         $ratingcount=$ratingmodel->businessrating($businessId);
-        if ($ratingcount[0]->count > 0) {
-            $value = $ratingcount[0]->sum / $ratingcount[0]->count;
-            $rating=round($value,1);
-        } else {
-            $rating = 0;
+        $rating=0;
+        if($ratingcount!=null){
+            if ($ratingcount[0]->count > 0) {
+                $value = $ratingcount[0]->sum / $ratingcount[0]->count;
+                $rating=round($value,1);
+            } else {
+                $rating = 0;
+            }
         }
+       
 
         $this->view('businessProfile', [
             'currbusiness' => $currbusiness,
