@@ -475,8 +475,8 @@ class Admin extends Controller
             //sort and search
             $search = $_GET['search'] ?? '';
             $searchBy = $_GET['searchBy'] ?? '';
-            $sort = $_GET['sort'] ?? 'id';
-            $order = $_GET['order'] ?? 'DESC';
+            $sort = 'expiration_dateTime';
+            $order = $_GET['order'] ?? 'ASC';
 
             $complaint_limit = 3;
             //count the no of complaints in the table complaints

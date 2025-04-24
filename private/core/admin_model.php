@@ -46,7 +46,7 @@ class Admin_Model
      }
      public function admin_bar($from_date,$to_date){
           
-          $query="SELECT COUNT(`order_items`.`products_id`) AS product_count,`order`.`dateTime` AS date_time FROM `order_items`
+          $query="SELECT SUM(`order_items`.`qty`) AS product_count,`order`.`dateTime` AS date_time FROM `order_items`
                   INNER JOIN `order`
                   ON `order`.`id`=`order_items`.`order_id`
                   WHERE `order`.`dateTime` BETWEEN :from_date AND :to_date

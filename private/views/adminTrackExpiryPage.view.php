@@ -146,7 +146,7 @@
                                     }
                                 ?>
                                 
-                                <td style="text-align: center;">Rs. <?=$row->price?> <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. <?=$row->price?> <br/></td>
                             </tr>
                             <script>
                                 document.addEventListener("DOMContentLoaded",function(){
