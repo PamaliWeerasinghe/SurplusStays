@@ -5,7 +5,7 @@ class OrderModel extends Model
     protected $db;
     public function __construct()
     {
-        $this->db=Database::getInstance();
+        $this->db = Database::getInstance();
     }
 
     public $table = "order";
@@ -13,22 +13,23 @@ class OrderModel extends Model
     public function getOrdersByBusiness($business_id)
     {
         $query = "SELECT 
-                    o.id, 
-                    o.dateTime, 
-                    o.total, 
-                    c.fname AS Customer, 
-                    GROUP_CONCAT(p.name SEPARATOR ', ') AS Products,
-                    IFNULL(o.order_status, 'Ongoing') AS status
-                  FROM `order` o
-                  JOIN customer c ON o.customer_id = c.id
-                  JOIN order_items oi ON o.id = oi.order_id
-                  JOIN products p ON oi.products_id = p.id
-                  WHERE p.business_id = :business_id
-                  GROUP BY o.id
-                  ORDER BY o.dateTime DESC";
+                o.id, 
+                o.dateTime, 
+                o.total, 
+                c.fname AS Customer, 
+                GROUP_CONCAT(p.name SEPARATOR ', ') AS Products,
+                IFNULL(o.order_status, 'Ongoing') AS status
+              FROM `order` o
+              JOIN customer c ON o.customer_id = c.id
+              JOIN order_items oi ON o.id = oi.order_id
+              JOIN products p ON oi.products_id = p.id
+              WHERE o.business_id = :business_id
+              GROUP BY o.id
+              ORDER BY o.dateTime DESC";
 
         return $this->db->query($query, ['business_id' => $business_id]);
     }
+
 
     public function getOrderDetails($order_id)
     {
@@ -86,27 +87,24 @@ class OrderModel extends Model
     {
         $query = "SELECT COUNT(DISTINCT o.id) as count
               FROM `order` o
-              JOIN order_items oi ON o.id = oi.order_id
-              JOIN products p ON oi.products_id = p.id
-              WHERE p.business_id = :business_id";
+              WHERE o.business_id = :business_id";
 
         $result = $this->db->query($query, ['business_id' => $business_id]);
         return $result[0]->count ?? 0;
     }
 
+
     public function getWeeklyOrderStats($business_id)
     {
         $query = "
-        SELECT 
-            DAYNAME(o.dateTime) AS day,
-            COUNT(DISTINCT o.id) AS order_count
-        FROM `order` o
-        JOIN order_items oi ON o.id = oi.order_id
-        JOIN products p ON oi.products_id = p.id
-        WHERE p.business_id = :business_id
-            AND YEARWEEK(o.dateTime, 1) = YEARWEEK(CURDATE(), 1)
-        GROUP BY DAYOFWEEK(o.dateTime)
-        ORDER BY FIELD(DAYNAME(o.dateTime), 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
+    SELECT 
+        DAYNAME(o.dateTime) AS day,
+        COUNT(DISTINCT o.id) AS order_count
+    FROM `order` o
+    WHERE o.business_id = :business_id
+        AND YEARWEEK(o.dateTime, 1) = YEARWEEK(CURDATE(), 1)
+    GROUP BY DAYOFWEEK(o.dateTime)
+    ORDER BY FIELD(DAYNAME(o.dateTime), 'Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday')
     ";
 
         return $this->db->query($query, ['business_id' => $business_id]);

@@ -84,6 +84,7 @@
                                 <option value="Individual" <?= get_var('type', $currbusiness[0]->type) == 'Individual' ? 'selected' : '' ?>>Individual</option>
                                 <option value="Smallbusiness" <?= get_var('type', $currbusiness[0]->type) == 'Smallbusiness' ? 'selected' : '' ?>>Smallbusiness</option>
                                 <option value="Supermarket" <?= get_var('type', $currbusiness[0]->type) == 'Supermarket' ? 'selected' : '' ?>>Supermarket</option>
+                                <option value="Bakery" <?= get_var('type', $currbusiness[0]->type) == 'Bakery' ? 'selected' : '' ?>>Bakery</option>
                                 <option value="Other" <?= get_var('type', $currbusiness[0]->type) == 'Other' ? 'selected' : '' ?>>Other</option>
                             </select>
 

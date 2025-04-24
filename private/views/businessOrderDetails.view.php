@@ -70,40 +70,16 @@
                             <?php if ($order[0]->status === 'Ongoing') : ?>
                                 <form action="<?= ROOT ?>/business/updateOrderStatus" method="POST" id="order-form">
                                     <input type="hidden" name="order_id" value="<?= htmlspecialchars($order[0]->id) ?>">
-                                    <input type="hidden" name="status" id="statusInput">
 
                                     <div class="button-container">
-                                        <button type="button" name="status" value="Completed" class="btn-green" onclick="showPopupAndSubmit('Completed')">ORDER COLLECTED</button>
-                                        <button type="button" name="status" value="Not Collected" class="btn-red" onclick="showPopupAndSubmit('Not Collected')">ORDER NOT COLLECTED</button>
+                                        <button type="submit" name="status" value="Completed" class="btn-green">ORDER COLLECTED</button>
+                                        <button type="submit" name="status" value="Not Collected" class="btn-red">ORDER NOT COLLECTED</button>
                                     </div>
                                 </form>
                             <?php else : ?>
-                                <p >You have already updated the order status.</p>
+                                <p>You have already updated the order status.</p>
                             <?php endif; ?>
                         </div>
-
-                        <!-- Simple Popup -->
-                        <div id="simplePopup" class="popup">
-                            <div class="popup-content">
-                                <p>Success! <br> Order status have been updated.</p>
-                                <button class="btn-ok" onclick="redirectToOrders()">OK</button>
-                            </div>
-                        </div>
-
-                        <script>
-                            function showPopupAndSubmit(status) {
-                                // Show the popup
-                                document.getElementById('simplePopup').style.display = 'block';
-
-                                // Store the status in a hidden input field to submit with the form
-                                document.getElementById('statusInput').value = status;
-                            }
-
-                            function redirectToOrders() {
-                                // Submit the form after closing the popup
-                                document.getElementById('order-form').submit();
-                            }
-                        </script>
 
                     <?php else : ?>
                         <p>Order not found.</p>

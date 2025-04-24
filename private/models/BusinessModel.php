@@ -12,15 +12,15 @@ class BusinessModel extends Model
     {
         // Validation rules
         $this->errors = []; // Reset errors
-        if(empty($DATA['name'])) {
+        if (empty($DATA['name'])) {
             $this->errors['name'] = "Business name is required";
         }
 
-        $types=['Individual','Smallbusiness','Supermarket','Other'];
-        if(empty($DATA['type']) || !in_array($DATA['type'],$types)) {
+        $types = ['Individual', 'Smallbusiness', 'Supermarket','Bakery', 'Other'];
+        if (empty($DATA['type']) || !in_array($DATA['type'], $types)) {
             $this->errors['type'] = "Business type cannot be empty";
         }
-        if(!filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
+        if (!filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
             $this->errors['email'] = "A valid email is required";
         }
 
@@ -28,25 +28,25 @@ class BusinessModel extends Model
         // if($this->where('email',$DATA['email'],'business')) {
         //     $this->errors['email'] = "Email is already in use";
         // }
-        if(empty($DATA['phone']) || !is_numeric($DATA['phone'])) {
+        if (empty($DATA['phone']) || !is_numeric($DATA['phone'])) {
             $this->errors['phone'] = "A valid phone number is required";
         }
-        
-        if(empty($DATA['username'])) {
+
+        if (empty($DATA['username'])) {
             $this->errors['username'] = "Username is required";
         }
-        if(empty($DATA['password']) || strlen($DATA['password']) < 6) {
+        if (empty($DATA['password']) || strlen($DATA['password']) < 6) {
             $this->errors['password'] = "Password must be at least 6 characters";
         }
-        if($DATA['password'] !== $DATA['confirm_password']) {
+        if ($DATA['password'] !== $DATA['confirm_password']) {
             $this->errors['confirm_password'] = "Passwords do not match";
         }
         // Return true if no errors
         return empty($this->errors);
     }
 
-//     public function hash_password($data){
-//         $data['password']=password_hash($data['password'],PASSWORD_DEFAULT);
-//         return $data;
-//     }
+    //     public function hash_password($data){
+    //         $data['password']=password_hash($data['password'],PASSWORD_DEFAULT);
+    //         return $data;
+    //     }
 }

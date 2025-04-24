@@ -37,9 +37,9 @@
                         <div class="sub-box">
                             <h3>Organization Details</h3>
                             <div class="items-colomn">
-                                <p><strong>Organization Name:</strong><?= htmlspecialchars($request[0]->organization) ?></p>
-                                <p><strong>Contact Number:</strong><?= htmlspecialchars($request[0]->phone) ?></p>
-                                <p><strong>email:</strong><?= htmlspecialchars($request[0]->email) ?></p>
+                                <p><strong>Organization Name:</strong> <?= htmlspecialchars($request[0]->organization) ?></p>
+                                <p><strong>Contact Number:</strong> <?= htmlspecialchars($request[0]->phone) ?></p>
+                                <p><strong>Email:</strong> <?= htmlspecialchars($request[0]->email) ?></p>
                             </div>
                         </div>
 
@@ -50,50 +50,47 @@
                             </div>
                         </div>
 
-                        <div class="section-buttons">
-                            <?php if ($request[0]->status == 'pending') : ?>
-                                <form method="POST" action="<?= ROOT ?>/business/updateRequestStatus" id="request-form">
-                                    <input type="hidden" name="request_id" value="<?= htmlspecialchars($request[0]->id) ?>">
-                                    <input type="hidden" name="status" id="statusInput">
-                                    <div class="feedbacktext">
-                                        <textarea name="feedback" placeholder="Enter some message" rows="4" cols="50"></textarea>
-                                    </div>
-                                    <div class="button-container">
-                                        <button type="button" name="status" value="accepted" class="btn-green" onclick="showPopupAndSubmit('Accepted')">ACCEPT REQUEST</button>
-                                        <button type="button" name="status" value="rejected" class="btn-red" onclick="showPopupAndSubmit('Rejected')">CANCEL REQUEST</button>
-                                    </div>
-                                </form>
-                            <?php else : ?>
-                                <p>You have already set the request status.</p>
-                            <?php endif; ?>
+                        <div class="sub-box">
+                            <h3>Take Action</h3>
+                            <div class="section-buttons">
+                                <?php if ($request[0]->status == 'pending') : ?>
+                                    <form method="POST" action="<?= ROOT ?>/business/updateRequestStatus" id="request-form">
+                                        <input type="hidden" name="request_id" value="<?= htmlspecialchars($request[0]->id) ?>">
+                                        <div class="table-box">
+                                            <table class="order-details-table">
+                                                <tr>
+                                                    <th>Requested Products</th>
+                                                    <th>Quantity in stock</th>
+                                                    <th>Wish To Donate</th>
+                                                </tr>
+                                                <?php foreach ($donationItems as $item) : ?>
+                                                    <tr>
+                                                        <td><?= htmlspecialchars($item->name) ?></td>
+                                                        <td><?= htmlspecialchars($item->qty) ?></td>
+                                                        <td><input type="number" name="quantity"></td>
+                                                        
+                                                    </tr>
+                                                <?php endforeach; ?>
+                                            </table>
+                                        </div>
+                                            <div class="feedbacktext">
+                                                <textarea name="feedback" placeholder="Enter some message" rows="4" cols="50"></textarea>
+                                            </div>
+                                            <div class="button-container">
+                                                <button type="submit" name="status" value="accepted" class="btn-green">ACCEPT REQUEST</button>
+                                                <button type="submit" name="status" value="rejected" class="btn-red">CANCEL REQUEST</button>
+                                            </div>
+                                    </form>
+                                <?php else : ?>
+                                    <p>You have already set the request status.</p>
+                                <?php endif; ?>
+                            </div>
                         </div>
 
                     <?php else : ?>
                         <p>Request not found.</p>
                     <?php endif; ?>
 
-                    <!-- Simple Popup -->
-                    <div id="simplePopup" class="popup">
-                        <div class="popup-content">
-                            <p>Success! <br> Request status have been updated.</p>
-                            <button class="btn-ok" onclick="redirectToOrders()">OK</button>
-                        </div>
-                    </div>
-
-                    <script>
-                        function showPopupAndSubmit(status) {
-                            // Show the popup
-                            document.getElementById('simplePopup').style.display = 'block';
-
-                            // Store the status in a hidden input field to submit with the form
-                            document.getElementById('statusInput').value = status;
-                        }
-
-                        function redirectToOrders() {
-                            // Submit the form after closing the popup
-                            document.getElementById('request-form').submit();
-                        }
-                    </script>
                 </div>
             </div>
         </div>

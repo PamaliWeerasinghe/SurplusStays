@@ -21,15 +21,15 @@
                         <div class="order-card all" onclick="filterByStatus('all')">
                             <h3>All</h3>
                         </div>
-                        <div class="order-card pending" onclick="filterByStatus('Pending')">
+                        <div class="order-card pending" onclick="filterByStatus('pending')">
                             <h3>Pending</h3>
 
                         </div>
-                        <div class="order-card accepted" onclick="filterByStatus('Accepted')">
+                        <div class="order-card accepted" onclick="filterByStatus('accepted')">
                             <h3>Accepted</h3>
 
                         </div>
-                        <div class="order-card rejected" onclick="filterByStatus('Rejected')">
+                        <div class="order-card rejected" onclick="filterByStatus('rejected')">
                             <h3>Rejected</h3>
 
                         </div>
