@@ -145,7 +145,7 @@
         <div class="modal-content">
             <span class="close-btn" id="closeModal">&times;</span>
             <h2>Send Request</h2>
-            <form method="POST" action="<?=ROOT?>/charity/sendDonationRequestToCharity">
+            <form method="POST" action="<?=ROOT?>/business/sendDonationRequestToCharity">
                 <label for="title">Title:</label>
                 <input type="text" id="title" name="title" placeholder="Enter title" required />
                 <input type="hidden" name="org_id" placeholder="Enter org_id" required readonly />

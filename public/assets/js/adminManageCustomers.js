@@ -17,12 +17,13 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function loadOrderItems() {
+  console.log("pressed");
   const oid = document.getElementById("orderID");
   if(oid!="oid"){
     oid.addEventListener("change", (event) => {
       const orderID = event.target.value;
       if(orderID){
-        fetch('http://localhost/SurplusStays/public/Customer/loadItems',{
+        fetch(`http://localhost:8080/SurplusStays/public/Customer/loadItems`,{
           method: "POST",
           headers:{
             "content-Type":"application/x-www-form-urlencoded",

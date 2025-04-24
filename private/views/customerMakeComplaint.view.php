@@ -22,8 +22,8 @@
                         <?php if (!empty($errors)) : ?>
                             <div class="error-alert-popup">
                                 <div class="alert-multialertheader">
-                                    <span class="close-btn" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
-                                    <span class="alert-title">Error</span>
+                                    <!-- <span class="close-btn" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+                                    <span class="alert-title">Error</span> -->
 
                                     <ul>
                                         <?php foreach ($errors as $error): ?>

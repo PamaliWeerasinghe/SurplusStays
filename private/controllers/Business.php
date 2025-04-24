@@ -366,6 +366,36 @@ class Business extends Controller
             'weekCounts' => $weekCounts
         ]);
     }
+    function viewOrganization($id = null){
+        $org = new Organization();
+        $row = $org->where('id', $id, 'organization');
+
+        $requests_r = new BusinessDonation();
+        $PenReqCount = $requests_r->countRows($id, 'pending');
+        $AccReqCount = $requests_r->countRows($id, 'accepted');
+        $RejReqCount = $requests_r->countRows($id, 'rejected');
+
+        $total = $PenReqCount + $AccReqCount + $RejReqCount;
+        $ResponseRate = ($total > 0) ? (($AccReqCount + $RejReqCount) / $total) * 100 : 0;
+
+        $event = new Event();
+        $eventRows = $event->where('organization_id', $id, 'upcoming_events');
+
+        // Fetch the picture from the related user
+        $picture = '';
+        if ($row && isset($row[0]->user_id)) {
+            $user = new User();
+            $userRow = $user->where('id', $row[0]->user_id, 'user');
+            $picture = $userRow[0]->profile_pic ?? '';
+        }
+
+        $this->view('businessViewOrganization', [
+            'row' => $row,
+            'eventRows' => $eventRows,
+            'responseRate' => $ResponseRate,
+            'picture' => $picture
+        ]);
+    }
 
     function requests()
     {
@@ -379,6 +409,56 @@ class Business extends Controller
         $requests = $requestModel->getRequestByBusiness($business_id);
 
         $this->view('businessRequests', ['requests' => $requests]);
+    }
+    function sendDonationRequestToCharity()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $errors = [];
+        if (count($_POST) > 0) {
+            $request = new BusinessDonation();
+
+            // Process the event if no errors
+            if (empty($errors) && $request->validate($_POST)) {
+                // Prepare the data array for database insertion
+                $arr['organization_id'] = $_POST['org_id'];
+                $arr['business_id'] = Auth::getId();
+                $arr['title'] = $_POST['title'];
+                $arr['message'] = $_POST['message'];
+                
+                // Convert food_items array to comma-separated string
+                if (isset($_POST['food_items']) && is_array($_POST['food_items'])) {
+                    // Filter out empty values and trim whitespace
+                    $filteredItems = array_filter($_POST['food_items'], function($item) {
+                        return trim($item) !== '';
+                    });
+                    
+                    // Convert the array to a comma-separated string
+                    $arr['food_items'] = implode(', ', $filteredItems);
+                } else {
+                    // Handle case when no food items are provided
+                    $arr['food_items'] = '';
+                }
+                
+                $arr['status'] = 'pending';
+                $arr['date'] = date('Y-m-d');
+
+                $request->insert($arr);
+                $this->redirect('business/viewOrganization/'. $_POST['org_id']);
+                
+                // Optional: Set a success message in session
+                // $_SESSION['success_message'] = "Donation request sent successfully!";
+                
+            } else {
+                $errors = array_merge($errors, $request->errors);
+            }
+        }
+
+        $this->view('charityBrowseShops', [
+            'errors' => $errors,
+        ]);
     }
 
     function viewRequest($id = null)

@@ -36,10 +36,11 @@ class Customer extends Controller{
 
     }
      // customer make a complaint
+     // customer make a complaint
      function makeComplaint()
      {
         // print_r($_SESSION['USER_EMAIL']);
-         $cus_id=$_SESSION['USER'][0]->id;
+         $cus_id=Auth::getID();
          $images = array();
          if (count($_POST)) {
             
@@ -173,7 +174,11 @@ class Customer extends Controller{
              $order_id = $_POST['order_id'];
              $admin = new AdminComplaints();
              $items = $admin->getAllOrders($order_id);
- 
+            //  echo($items);
+                // echo"<pre>";
+                //     print_r($items);
+                // echo"<pre>";
+                // die();
              echo json_encode($items);
          } else {
              http_response_code(400);
@@ -419,28 +424,7 @@ class Customer extends Controller{
     function paymentHistory(){
         $this->view('custPayment');
     }
-    //view complaints made
-    function complaints(){
-        $complaints=new AdminModel();
-        $cus_id=$_SESSION['USER'][0]->id;
-        $complaints_details=$complaints->where(['customer_id'],[$cus_id],'complaintdetails');
-        $no_of_complaints=$complaints->countWithWhere('complaintdetails',['customer_id'],[$cus_id]);
-        foreach($complaints_details as $complaint){
-            $img=array();
-            $images=$complaints->where(['complaints_id'],[$complaint->complaint_id],'complaint_imgs');
-            foreach($images as $image){
-                array_push($img,$image->path);
-            }
-            $complaint->images=$img;
 
-           
-        }
-        // print_r($complaints_details);
-        $this->view('custViewMadeComplaints',[
-            "complaint_details"=>$complaints_details,
-            "complaint_count"=>$no_of_complaints
-        ]);
-    }
     // Get all the orders made by a customer
     
     //view order items belonging to an order
@@ -954,7 +938,26 @@ class Customer extends Controller{
         $ratingTable->update($rating_id, $arr,'business_rating');        
         $this->redirect('Customer/orders');
     }
+    //view complaints made
+    function complaints(){
+        $complaints=new AdminModel();
+        $cus_id=Auth::getId();
+        $complaints_details=$complaints->where(['customer_id'],[$cus_id],'complaintdetails');
+        $no_of_complaints=$complaints->countWithWhere('complaintdetails',['customer_id'],[$cus_id]);
+        foreach($complaints_details as $complaint){
+            $img=array();
+            $images=$complaints->where(['complaints_id'],[$complaint->complaint_id],'complaint_imgs');
+            foreach($images as $image){
+                array_push($img,$image->path);
+            }
+            $complaint->images=$img;
 
-
+           
+        }
+        // print_r($complaints_details);
+        $this->view('custViewMadeComplaints',[
+            "complaint_details"=>$complaints_details,
+            "complaint_count"=>$no_of_complaints]);
+        }
 }
 ?>

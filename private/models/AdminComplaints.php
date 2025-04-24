@@ -147,17 +147,17 @@ class AdminComplaints extends AdminModel
     public function getAllOrders($id)
     {
         $query = "SELECT 
-        `products`.`name` AS `product_name`,
-        `products`.`id` AS `product_id`,
-        `order_id`,
-        `order_items`.`id` AS `order_items_id`,
-        `business`.`name` AS `business_name`,
-        `business`.`id` AS `business_id`
+        products.name AS product_name,
+        products.id AS product_id,
+        order_id,
+        order_items.id AS order_items_id,
+        business.name AS business_name,
+        business.id AS business_id
         FROM `order` 
-        INNER JOIN `order_items` ON `order`.`id`=`order_items`.`order_id`
-        INNER JOIN `products` ON `order_items`.`products_id`=`products`.`id`
-        INNER JOIN `business` ON `products`.`business_id`=`business`.`id`
-        WHERE `order_id`=:value";
+        INNER JOIN order_items ON `order`.id=order_items.order_id
+        INNER JOIN products ON order_items.products_id=products.id
+        INNER JOIN business ON products.business_id=business.id
+        WHERE order_id=:value";
         return $this->db->query($query, [
             'value' => $id
         ]);

@@ -28,8 +28,8 @@ $current_url = $_SERVER['REQUEST_URI'];
         <li class="nav-item <?= strpos($current_url, '/customer/orders') == true ? 'active' : '' ?>">
             <a href="<?=ROOT?>/customer/orders">Orders</a>
         </li>
-        <li class="nav-item <?= strpos($current_url, '/customer/manageComplaints') == true ? 'active' : '' ?>">
-            <a href="<?=ROOT?>/customer/manageComplaints">Complaint</a>
+        <li class="nav-item <?= strpos($current_url, '/customer/Complaints') == true ? 'active' : '' ?>">
+            <a href="<?=ROOT?>/customer/Complaints">Complaints</a>
         </li>
         <li class="nav-item <?= strpos($current_url, '/customer/profile') == true ? 'active' : '' ?>">
             <a href="<?=ROOT?>/customer/profile">Profile</a>

@@ -66,7 +66,7 @@
                             <tbody>
                                 <?php if ($rows): ?>
                                     <?php foreach ($rows as $row): ?>
-                                        <tr onclick="window.location.href='<?= ROOT ?>/charity/viewOrganization/<?= $row->id ?>'">
+                                        <tr onclick="window.location.href='<?= ROOT ?>/business/viewOrganization/<?= $row->id ?>'">
                                         <div class="card">
                                             <div class="card-image">
                                                 <img src="<?=ASSETS?>/charityImages/<?= htmlspecialchars($row->picture) ?>" alt="Project Image">
@@ -85,7 +85,7 @@
                                                         <p><strong>Phone:</strong> <span class="raised"><?= htmlspecialchars($row->phoneNo) ?></span></p>
                                                         <p><strong>Email:</strong> <span class="goal"><?= htmlspecialchars($row->email) ?></span></p>
                                                     </div>
-                                                    <button class="view-btn" onclick="window.location.href='<?= ROOT ?>/charity/viewOrganization/<?= $row->id ?>'">View More</button>
+                                                    <button class="view-btn" onclick="window.location.href='<?= ROOT ?>/business/viewOrganization/<?= $row->id ?>'">View More</button>
                                                 </div>
                                             </div>
                                         </div>
