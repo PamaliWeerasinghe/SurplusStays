@@ -6,6 +6,7 @@ class Admin extends Controller
     function viewCharity($user_id,$charity_id)
     { 
 
+        if(Auth::logged_in()){
             $charity = new AdminModel();
             $errors = array();
             $arr = array();
@@ -75,12 +76,16 @@ class Admin extends Controller
                     'rows' => $data
                 ]);
             }
+        }else{
+            $this->redirect('/');
+        }
+           
         
     }
     //Admin view business details
     function viewBusiness($user_id,$business_id)
-    { {
-
+    { 
+        if(Auth::logged_in()){
             $business = new AdminModel();
             $errors = array();
             $arr = array();
@@ -155,7 +160,12 @@ class Admin extends Controller
                     'rows' => $data
                 ]);
             }
+        
+        }else{
+            $this->redirect('/login');
         }
+
+            
     }
     //view business details - manage business popup
     function businessDetails($user_id,$business_id)
@@ -176,32 +186,46 @@ class Admin extends Controller
             error_log("data: " . print_r($data, true));
             echo json_encode($data);
         } else {
-            $this->redirect('register');
+            $this->redirect('/login');
         }
     }
     //Admin Deletes a business
-    function DeleteBusiness($id){
-        $business= new AdminModel();
-        $data["status_id"] = 2;
-        $business->update($id, $data, 'user');
-
-        $this->ManageBusinesses();
+    function DeleteBusiness($id)
+    {
+        if(Auth::logged_in()){
+            $business= new AdminModel();
+            $data["status_id"] = 2;
+            $business->update($id, $data, 'user');
+    
+            $this->ManageBusinesses();
+        }else{
+            $this->redirect('/login');
+        }
+       
     }
     //Admin Deletes a customer
     function DeleteCustomer($id)
     {
-        $customer = new AdminModel();
-        $data["status_id"] = 2;
-        $customer->update($id, $data, 'user');
-
-        $this->ManageCustomers();
+        if(Auth::logged_in())
+        {
+            $customer = new AdminModel();
+            $data["status_id"] = 2;
+            $customer->update($id, $data, 'user');
+    
+            $this->ManageCustomers();
+        }
+        else{
+            $this->redirect('/login');
+        }
+       
     }
    
 
     //Admin views a customer
     function viewCustomer($user_id,$cus_id)
     { 
-
+        if(Auth::logged_in())
+        {
             $customer = new AdminModel();
             $errors = array();
             $arr = array();
@@ -270,6 +294,12 @@ class Admin extends Controller
                     'rows' => $data
                 ]);
             }
+        }
+        else{
+            $this->redirect('/login');
+        }
+
+           
         
     }
 
@@ -293,7 +323,7 @@ class Admin extends Controller
             error_log("data: " . print_r($data, true));
             echo json_encode($data);
         } else {
-            $this->redirect('register');
+            $this->redirect('/login');
         }
     }
     //view charity details
@@ -314,6 +344,8 @@ class Admin extends Controller
             $data["businesses"]=$businesses;
 
             echo json_encode($data);
+        }else{
+            $this->redirect('/login');
         }
     }
 
