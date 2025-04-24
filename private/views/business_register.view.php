@@ -6,7 +6,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="<?= ROOT ?>/assets/styles/business_register.css">
-    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoo4pzFf80sXYMtcQUux4CWSCY9nDbvig&libraries=places"></script>
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOjGDz3PRLABXKf8sf5d___lX-RuWo3L4&libraries=places"></script>
     <script>
         let map, marker;
 
@@ -14,6 +14,38 @@
             map = new google.maps.Map(document.getElementById("map"), {
                 center: { lat: 6.927079, lng: 79.861244 },
                 zoom: 8,
+            });
+
+            const input = document.getElementById("pac-input");
+            const searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            map.addListener("bounds_changed", () => {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            searchBox.addListener("places_changed", () => {
+                const places = searchBox.getPlaces();
+
+                if (places.length === 0) return;
+
+                if (marker) marker.setMap(null);
+
+                const place = places[0];
+                if (!place.geometry || !place.geometry.location) return;
+
+                marker = new google.maps.Marker({
+                    map,
+                    position: place.geometry.location,
+                });
+
+                const lat = place.geometry.location.lat();
+                const lng = place.geometry.location.lng();
+                document.getElementById("latitude").value = lat;
+                document.getElementById("longitude").value = lng;
+
+                map.setCenter(place.geometry.location);
+                map.setZoom(15);
             });
 
             google.maps.event.addListener(map, 'click', function(event) {
@@ -30,6 +62,7 @@
             });
         }
     </script>
+
 </head>
 
 <body onload="initMap()">
@@ -63,11 +96,11 @@
                 <input placeholder="ENTER YOUR BUSINESS NAME" value="<?= get_var('name') ?>" type="text" name="name" class="input">
                 <h4>BUSINESS TYPE :</h4>
                 <select name="type" class="select">
-                    <option <?= get_select('type', '') ?> value="">SELECT THE TYPE</option>
-                    <option <?= get_select('type', 'Individual') ?> value="Individual">Individual</option>
-                    <option <?= get_select('type', 'Smallbusiness') ?> value="Smallbusiness">Smallbusiness</option>
-                    <option <?= get_select('type', 'Supermarket') ?> value="Supermarket">Supermarket</option>
-                    <option <?= get_select('type', 'Other') ?> value="Other">Other</option>
+                    <option value="" disabled <?= get_var('type')===''?'selected':''?>>SELECT THE TYPE</option>
+                    <option value="Individual" <?= get_var('type') === 'Individual' ? 'selected' : '' ?>>Individual</option>
+                    <option value="Smallbusiness" <?= get_var('type')==='Smallbusiness'?'selected':''?>> Smallbusiness</option>
+                    <option value="Supermarket" <?= get_var('type')==='Supermarket'?'selected':''?>>Supermarket</option>
+                    <option value="Other" <?= get_var('type')==='Other'?'selected':''?>>Other</option>
                 </select>
                 <h4>BUSINESS EMAIL:</h4>
                 <input placeholder="ENTER AN EMAIL" value="<?= get_var('email') ?>" type="text" name="email" class="input">
@@ -75,8 +108,11 @@
                 <input placeholder="ENTER A PHONE NUMBER" value="<?= get_var('phone') ?>" type="text" name="phone" class="input">
                 <h4>BUSINESS LOCATION :</h4>
                 <!-- <input placeholder="ENTER YOUR BUSINESS ADDRESS" value="?= get_var('address') ?>" type="text" name="address" class="input"> -->
-                <input type="hidden" id="latitude" name="latitude" placeholder="Latitude" readonly required><br>
-                <input type="hidden" id="longitude" name="longitude" placeholder="Longitude" readonly required><br>
+                <input type="hidden" id="latitude" name="latitude" placeholder="Latitude" readonly required value="<?=get_var('latitude')?>"><br>
+                <input type="hidden" id="longitude" name="longitude" placeholder="Longitude" readonly required value="<?= get_var('longitude')?>"><br>
+                <input id="pac-input" class="input" type="text" placeholder="Search for your business location"
+                style="margin-top:60px;margin-left:-60px;padding:8px;width:220px;z-index:5;position:absolute;top:10px;left:50%;transform:translateX(-50%);border:1px solid #ccc;border-radius:4px;">
+
                 <div id="map" style="height: 400px; width: 100%;"></div><br>
 
                 <h4>USERNAME :</h4>

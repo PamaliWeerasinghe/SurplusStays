@@ -42,8 +42,7 @@ body {
     padding: 3%;
 }
 
-/*main inner side*/
-.inner-main {
+.main-box {
     width: 88%;
     background-color: #F0F8FF;
     margin-top: -14%;
@@ -60,9 +59,10 @@ body {
 }
 
 .header h2 {
-    color: white;
     font-size: 18px;
 }
+
+/* input feilds */
 
 .input-group {
     margin-bottom: 15px;
@@ -99,15 +99,10 @@ body {
 }
 
 .upload-group .upload-icon {
-    width: 150px; /* Set a fixed width */
-    height: 150px; /* Set a fixed height to maintain square shape */
-    object-fit: cover; /* Ensures the image is cropped properly */
-    border-radius: 8px; /* Optional: adds rounded corners to the images */
-}
-
-.upload-group input[type="file"] {
-    width: 18%;
-    display: none;
+    width: 150px;
+    height: 150px;
+    object-fit: cover;
+    border-radius: 8px;
 }
 
 .button-group {
@@ -133,6 +128,11 @@ button {
     color: white;
 }
 
+.btn-clear {
+    background-color: #f39c12;
+    color: white;
+}
+
 .btn-cancel {
     background-color: #e74c3c;
     color: white;
@@ -142,8 +142,21 @@ button:hover {
     opacity: 0.9;
 }
 
-.small {
-    font-weight: 300px;
+/*error handling */
+
+.error.alert {
+    background-color: #f8d7da;
+    color: #721c24;
+    border: 1px solid #f5c6cb;
+    padding: 15px;
+    margin-bottom: 20px;
+    border-radius: 5px;
+}
+
+.error.alert ul {
+    margin: 0;
+    padding: 0;
+    list-style-type: none;
 }
 
 .delete-btn{

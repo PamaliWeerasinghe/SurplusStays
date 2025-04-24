@@ -1,35 +1,26 @@
-<?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
-<?php require APPROOT . '/views/customerRemoveFromWishlist.view.php' ?>
-    <link rel="stylesheet" href="<?=STYLES?>/customer.css">
-    <link rel="stylesheet" href="<?=STYLES?>/customerDashboard.css">
-    <link rel="stylesheet" href="<?=STYLES?>/customerSidePanel.css">
-    <link rel="stylesheet" href="<?=STYLES?>/CustWishlist.css">
-   
-</head>
+<!DOCTYPE html>
+<html lang="en">
 
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title><?php echo SITENAME ?></title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="<?=STYLES?>/CustWishlist.css">
+</head>
 <body>
-    <!-- navbar -->
-    <div class="main-div">
-        <?php echo $this->view('includes/navbar')?>
-        <div class="sub-div-1">
-            <?php require APPROOT."/views/includes/customerSidePanel.view.php"?>
-            <div class="dashboard">
-                <div class="summary">
-                    <div class="top-bar">
-                        <div class="search-bar">
-                            <!-- Search bar content -->
-                        </div>
-                        <div class="notification">
-                            <!-- Notification content -->
-                        </div>
-                    </div>
+    <?php echo $this->view('includes/charityNavbar')?>
+    <div class="container">
+        <?php echo $this->view('includes/customerSidePanel')?>
+        <div class="container-right">
+            <div class="top-nav">
+                <div class="top-bar">
+                </div>
+                <div class="searchWelcome">
+                    <h2>WISHLIST - <?= $item_count ?> <?= $item_count == 1 ? 'item' : 'items' ?></h2>
                 </div>
 
-                <div class="box"style="margin-top: -28%;margin-bottom: 10%;">
-                    <div class="box-header">
-                        WISHLIST - <?= $item_count ?> <?= $item_count == 1 ? 'item' : 'items' ?>
-                    </div>
-
+                <div class="complaints-status">
                     <div class="wishlist-table">
                         <table>
                             <thead>
@@ -44,32 +35,32 @@
 
                             <tbody>
                                 <?php foreach ($data as $item): ?>
-                                <tr id="card-item-<?= $item->id ?>">
+                                <tr id="card-item-<?= $item['product_id'] ?>">
                                     <td>
                                         <div class="product-card">
-                                            <div>
-                                                <img src="<?=ASSETS?>/images/<?= $item->product_img ?>">
+                                            <div class="product-image">
+                                                <img src="<?= ROOT . '/' . explode(',', $item['image'])[0] ?>">
                                             </div>
                                             <div class="product-info">
-                                                <p class="category"><?= $item->bus_name ?></p>
-                                                <h3 class="product-title"><?= $item->product_name?></h3>
+                                                <p class="category"><?= $item['business_name'] ?></p>
+                                                <h3 class="product-title"><?= $item['product_id'] ?></h3>
                                                 <div class="product-details">
-                                                    <p style="color: black;"><strong>Expiry:</strong><br/>
-                                                    <p style="color:red"><strong><?= $item->expires_in ?></p>
+                                                    <p class="expiry-label">Expiry:</p>
+                                                    <p class="expiry-date"><?= $item['expiry'] ?></p>
                                                 </div>
                                             </div>
                                         </div>
                                     </td>
 
-                                    <td>
-                                        Rs <?= number_format($item->original_price, 2) ?>
+                                    <td class="price-column">
+                                        Rs <?= number_format((float)($item['price'] ?? 0), 2) ?>
                                     </td>
-                                        
+
                                     <td>
                                         <div class="product-status">
-                                            <?php if ($item->qty_avail > 0): ?>
+                                            <?php if ($item['qty'] > 0): ?>
                                                 <span class="in-stock">In Stock</span>
-                                            <?php elseif ($item->qty_avail == 0): ?>
+                                            <?php elseif ($item['qty'] == 0): ?>
                                                 <span class="out-of-stock">Out of Stock</span>
                                             <?php else: ?>
                                                 <span class="unknown-status">Status Unknown</span>
@@ -78,65 +69,85 @@
                                     </td>
 
                                     <td>
-                                        <button class="add-to-cart-button" onclick="openAddToCartPopup(<?=$item->id?>)">Add to Cart</button>
+                                        <button class="add-to-cart-button" onclick="openAddToCartPopup(<?= $item['product_id'] ?>)">
+                                            <span>Add to Cart</span>
+                                        </button>
                                     </td>
 
                                     <td>
-                                        <img src="<?=ASSETS?>/images/delete.png" class="delete-btn" onclick="openDeletePopup(<?=$item->id?>)">
+                                        <div class="delete-container">
+                                            <img src="<?= ASSETS ?>/images/delete.png" class="delete-btn" onclick="openDeletePopup(<?= $item['product_id'] ?>)">
+                                        </div>
                                     </td>
                                 </tr>
                                 <?php endforeach; ?>
                             </tbody>
                         </table>
                     </div>
-                </div>
+                </div>  
             </div>
         </div>
-        <?php echo $this->view('includes/footer')?>
     </div>
-
-   
 
     <!-- popup for add to cart -->
     <div class="cart-popup-container" id="cart-popup-container">
-    <div class="cart-popup" id="cart-popup">
-        <span class="popup-close-btn" onclick="hideCartPopup()">&times;</span>
-        <input type="hidden" id="popupRowID"/>
-        
-        <div class="popup-product-row">
-            <div class="popup-product-image">
-                <img src="" id="addToCartImage">
+        <div class="cart-popup" id="cart-popup">
+            <span class="popup-close-btn" onclick="hideCartPopup()">&times;</span>
+            <input type="hidden" id="popupRowID"/>
+            
+            <div class="popup-product-row">
+                <div class="popup-product-image">
+                    <img src="" id="addToCartImage">
+                </div>
+                <div class="popup-product-info">
+                    <p class="popup-category" id="bus_name"></p>
+                    <h3 class="popup-product-title" id="product_name"></h3>
+                    <div class="popup-product-details">
+                        <p class="popup-expiry-label">Expires On:</p>
+                        <p class="popup-expiry-date" id="expires_in"></p>
+                    </div>
+                </div>
             </div>
-            <div class="popup-product-info">
-                <p class="popup-category" id="bus_name"></p>
-                <h3 class="popup-product-title" id="product_name"></h3>
-                <div class="popup-product-details">
-                    <p class="popup-expiry-label">Expires On:</p>
-                    <p class="popup-expiry-date" id="expires_in"></p>
+            
+            <div class="popup-action-row">
+                <div class="popup-quantity-selector">
+                    <button class="quantity-btn minus">-</button>
+                    <input type="number" min="1" value="1" class="quantity-input" id="quantity-input-1">
+                    <button class="quantity-btn plus">+</button>
+                </div>
+                <div class="popup-action-buttons">
+                    <form action="" method="POST" id="AddToCartFromWishlist">
+                        <input type="hidden" id="watchlist_id"/>
+                        <input type="hidden" id="selected-Qty"/>
+                        <button class="popup-confirm-btn" onclick="insertToCart()" type="submit">Add to Cart</button>
+                        <button type="button" class="popup-cancel-btn" onclick="hideCartPopup()">Cancel</button>
+                    </form>
                 </div>
             </div>
         </div>
-        
-        <div class="popup-action-row">
-            <div class="popup-quantity-selector">
-                <button class="quantity-btn minus">-</button>
-                <input type="number" min="1" value="1" class="quantity-input" id="quantity-input-1">
-                
-                <button class="quantity-btn plus">+</button>
-            </div>
-            <div class="popup-action-buttons">
-                <form action="" method="POST" id="AddToCartFromWishlist">
-                    <input type="hidden" id="watchlist_id"/>
-                    <input type="hidden" id="selected-Qty"/>
-                    <button class="popup-confirm-btn" onclick="insertToCart()" type="submit">Add to Cart</button>
-                    <button type="button" class="popup-cancel-btn" onclick="hideCartPopup()">Cancel</button>
-                </form>
-                
-            </div>
-        </div>
     </div>
-</div>
 
+    <?php echo $this->view('includes/footer')?>
     <script src="<?=ROOT?>/assets/js/customerWishlist.js"></script>
+    <script>
+        window.addEventListener('load', adjustContainerHeight);
+        window.addEventListener('resize', adjustContainerHeight);
+
+        function adjustContainerHeight() {
+            const complaintStatuses = document.querySelectorAll('.complaints-status');
+            const container = document.querySelector('.container');
+            const containerright = document.querySelector('.container-right');
+
+            if (complaintStatuses.length && container) {
+            let totalHeight = 0;
+            complaintStatuses.forEach(el => {
+                totalHeight += el.offsetHeight;
+            });
+            container.style.height = totalHeight + 300 + 'px';
+            containerright.style.height = totalHeight + 300 +'px';
+            }
+        }
+    </script>
+
 </body>
 </html>

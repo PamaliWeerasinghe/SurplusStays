@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Colombo');
 
 class Charity extends Controller
 {
@@ -11,7 +12,7 @@ class Charity extends Controller
     $event = new Event();
     $donation = new Donation();
     $donation_b = new BusinessDonation();
-    $businesses = new Business();
+    $businesses = new BusinessModel();
 
     $org_id = Auth::getID();
 
@@ -202,18 +203,35 @@ function getTopDonatingBusinesses()
             $this->redirect('login');
         }
 
+        $db = Database::getInstance();
         $requests = new Donation();
+        $donationItemsModel = new DonationItems();
         $requests_r = new BusinessDonation();
-        $shop = new Business();
+        $shop = new BusinessModel();
         $org_id = Auth::getID();
 
         $rows = $requests->where('organization_id', Auth::getID(),'donations' );
+        if ($rows) {
+            foreach ($rows as $row) {
+                // Fetch products related to this donation request
+                $query = "SELECT p.id, p.name, p.pictures, di.qty
+                          FROM donation_items di 
+                          JOIN products p ON p.id = di.products_id 
+                          WHERE di.request_id = :request_id";
+                $params = ['request_id' => $row->id];
+                $relatedProducts = $db->query($query, $params);
+    
+                // Attach products to each donation row
+                $row->products = $relatedProducts;
+            }
+        }
+
         $rows_r = $requests_r->where('organization_id', Auth::getID(), 'business_donations');
         $shopRows = $shop->findAll('business');
 
-        $PenReqCount = $requests->countRows($org_id,0);
-        $AccReqCount = $requests->countRows($org_id,2);
-        $RejReqCount = $requests->countRows($org_id,1);
+        $PenReqCount = $requests->countRows($org_id,'pending');
+        $AccReqCount = $requests->countRows($org_id,'accepted');
+        $RejReqCount = $requests->countRows($org_id,'rejected');
 
         $PenReqCount_r = $requests_r->countRows($org_id,'pending');
         $AccReqCount_r = $requests_r->countRows($org_id,'accepted');
@@ -240,8 +258,12 @@ function getTopDonatingBusinesses()
             $this->redirect('login');
         }
 
-        $shops = new Business();
+        $shops = new BusinessModel();
         $users = new User();
+
+        $org = new Organization();
+        $org_id = Auth::getID();
+        $currOrg = $org->where('id', $org_id,'organization');
 
         $rows = $shops->findAll('business');
         $rows_p = $users->findAll('user');
@@ -257,8 +279,35 @@ function getTopDonatingBusinesses()
             $row->picture = $userPictures[$row->user_id] ?? '';
         }
 
+        $lat = $currOrg[0]->latitude;
+        $long = $currOrg[0]->longitude;
+
         $this->view('charityBrowseShops2',[
-            'rows' => $rows
+            'rows' => $rows,
+            'lat' => $lat,
+            'long' => $long
+        ]);
+    }
+
+    function viewShop($id = null)
+    {
+        $business = new BusinessModel();
+        $row = $business->where('id', $id, 'business');
+
+        $products = new Products();
+        $productRows = $products->where('business_id', $id, 'products');
+
+        $picture = '';
+        if ($row && isset($row[0]->user_id)) {
+            $user = new User();
+            $userRow = $user->where('id', $row[0]->user_id, 'user');
+            $picture = $userRow[0]->profile_pic ?? '';
+        }
+
+        $this->view('charityViewShop', [
+            'row' => $row,
+            'productRows' => $productRows,
+            'picture' => $picture,
         ]);
     }
 
@@ -324,11 +373,118 @@ function getTopDonatingBusinesses()
         $user = new User();
         $currUser = $user->where('id', $user_id,'user' );
 
+        function getPostalCodeForDistrict($district)
+        {
+            $postalCodes = [
+                'Colombo' => '00100',
+                'Gampaha' => '11000',
+                'Kalutara' => '12000',
+                'Kandy' => '20000',
+                'Matale' => '21000',
+                'Nuwara Eliya' => '22200',
+                'Galle' => '80000',
+                'Matara' => '81000',
+                'Hambantota' => '82000',
+                'Jaffna' => '40000',
+                'Kilinochchi' => '44000',
+                'Mannar' => '41000',
+                'Vavuniya' => '43000',
+                'Mullaitivu' => '42000',
+                'Trincomalee' => '31000',
+                'Batticaloa' => '30000',
+                'Ampara' => '32000',
+                'Kurunegala' => '60000',
+                'Puttalam' => '61000',
+                'Anuradhapura' => '50000',
+                'Polonnaruwa' => '51000',
+                'Badulla' => '90000',
+                'Monaragala' => '91000',
+                'Ratnapura' => '70000',
+                'Kegalle' => '71000',
+            ];
+            return $postalCodes[$district] ?? 'N/A';
+        }
+
+        $postalCode = getPostalCodeForDistrict($currOrg[0]->city);
+
         $this->view('charityProfile',[
             'currOrg' => $currOrg,
             'currUser' => $currUser,
+            'postalCode' => $postalCode
         ]);
     }
+
+    function editProfile(){
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+    
+        $org = new Organization();
+        $org_id = Auth::getID();
+        $currOrg = $org->where('id', $org_id, 'organization');
+        $user_id = $currOrg[0]->user_id;
+    
+        $user = new User();
+        $currUser = $user->where('id', $user_id, 'user');
+    
+        $errors = [];
+    
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            
+    
+            // Handle profile picture upload
+            $profile_pic_path = $currUser[0]->profile_pic; // fallback to current
+            if (isset($_FILES['profile_pic']) && $_FILES['profile_pic']['error'] === 0) {
+                $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/charityImages/";
+                $fileName = basename($_FILES['profile_pic']['name']);
+                $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+                $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+    
+                if (in_array(strtolower($fileType), $allowedTypes)) {
+                    $uniqueName = uniqid('img_', true) . '.' . $fileType;
+                    $filePath = $targetDir . $uniqueName;
+    
+                    if (move_uploaded_file($_FILES['profile_pic']['tmp_name'], $filePath)) {
+                        $profile_pic_path = $uniqueName;
+                    } else {
+                        $errors[] = "Failed to upload profile picture.";
+                    }
+                } else {
+                    $errors[] = "Invalid image format.";
+                }
+            }
+            
+    
+            // Validate and Update
+            if (empty($errors) && $org->validateEdit($_POST)) {
+                $orgData = [
+                    'name' => $_POST['name'],
+                    'phoneNo' => $_POST['phone'],
+                    'username' => $_POST['username'],
+                    'city' => $_POST['city'],
+                    'charity_description' => $_POST['description']
+                ];
+                
+    
+                $userData = [
+                    'profile_pic' => $profile_pic_path
+                ];
+                
+    
+                $org->update($org_id, $orgData, 'organization');
+                $user->update($user_id, $userData, 'user');
+    
+                $this->redirect('charity/profile');
+            }
+        }
+    
+        $this->view('charityEditProfile', [
+            'currOrg' => $currOrg,
+            'currUser' => $currUser,
+            'errors' => $errors,
+        ]);
+    }
+    
 
     function viewEvent($id = null)
     {
@@ -376,7 +532,6 @@ function getTopDonatingBusinesses()
         if (!Auth::logged_in()) {
             $this->redirect('login');
         }
-
         $errors = [];
         if (count($_POST) > 0) {
             $event = new Event();
@@ -410,22 +565,8 @@ function getTopDonatingBusinesses()
                 $errors[] = "At least one event picture is required.";
             }
 
-            // Validate required-food input
             $requiredFood = $_POST['required-food'] ?? '';
-            // if (!empty($requiredFood)) {
-            //     try {
-            //         $correctedFood = $this->callOpenAI($requiredFood);
-            //         if($requiredFood != $correctedFood){
-            //             $errors[] = "Did you mean {$correctedFood}.";
-            //         }else{
-            //             $_POST['required-food'] = $requiredFood;
-            //         }
-            //     } catch (Exception $e) {
-            //         $errors[] = "Error validating food names: " . $e->getMessage();
-            //     }
-            // }
 
-            // Process the event if no errors
             if (empty($errors) && $event->validate($_POST)) {
                 $arr['organization_id'] = Auth::getId();
                 $arr['event'] = $_POST['event-name'];
@@ -446,7 +587,6 @@ function getTopDonatingBusinesses()
                 $errors = array_merge($errors, $event->errors);
             }
         }
-
         $this->view('charityCreateEvent', [
             'errors' => $errors,
         ]);
@@ -605,35 +745,49 @@ function getTopDonatingBusinesses()
     }
 
     function sendDonationRequest()
-    {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
-
-        $errors = [];
-        if (count($_POST) > 0) {
-            $request = new Donation();
-
-            // Process the event if no errors
-            if (empty($errors) && $request->validate($_POST)) {
-                $arr['organization_id'] = Auth::getId();
-                $arr['business_id'] = $_POST['business_id'];
-                $arr['title'] = $_POST['title'];
-                $arr['message'] = $_POST['message'];
-                $arr['status'] = 0;
-                $arr['date'] = date('Y-m-d');
-
-                $request->insert($arr);
-                $this->redirect('charity/manage_events');
-            } else {
-                $errors = array_merge($errors, $request->errors);
-            }
-        }
-
-        $this->view('charityBrowseShops', [
-            'errors' => $errors,
-        ]);
+{
+    if (!Auth::logged_in()) {
+        $this->redirect('login');
     }
+
+    $errors = [];
+    if (count($_POST) > 0) {
+        $request = new Donation();
+        $donationItem = new DonationItems(); // Assuming base model for `donation_items`
+
+        if (empty($errors) && $request->validate($_POST)) {
+            $arr['organization_id'] = Auth::getId();
+            $arr['business_id'] = $_POST['business_id'];
+            $arr['title'] = $_POST['title'];
+            $arr['message'] = $_POST['message'];
+            $arr['status'] = 'pending';
+            $arr['date'] = date('Y-m-d');
+
+            $request->insert($arr);
+            
+            // Get last inserted donation id
+            $db = Database::getInstance();
+            $donationId = $db->lastInsertId();
+            // Insert selected products into donation_items table
+            if (!empty($_POST['product_ids'])) {
+                foreach ($_POST['product_ids'] as $productId) {
+                        $arr1['products_id'] = $productId;
+                        $arr1['request_id'] = $donationId;
+                    $donationItem->insert($arr1);
+                }
+            }
+
+            $this->redirect('charity/browse_shops');
+        } else {
+            $errors = array_merge($errors, $request->errors);
+        }
+    }
+
+    $this->view('charityBrowseShops', [
+        'errors' => $errors,
+    ]);
+}
+
 
     function sendDonationRequestToCharity()
     {

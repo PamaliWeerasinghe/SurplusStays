@@ -3,25 +3,25 @@
 define('APPROOT', dirname(dirname(__FILE__)));
 
 //URL ROOT
-define('URLROOT', 'http://localhost/SurplusStays');
+define('URLROOT', 'http://localhost:8080/SurplusStays');
 
 //WEBSITE
 define('SITENAME', 'surplusStays');
 
 define('PHPMAILER',dirname(dirname(dirname(__FILE__))) . '/PHPMailer');
-define('ROOT', 'http://localhost/SurplusStays/public');
-define('STYLES', 'http://localhost/SurplusStays/public/assets/styles');
-define('ASSETS', 'http://localhost/SurplusStays/public/assets');
+define('ROOT', 'http://localhost:8080/SurplusStays/public');
+define('STYLES', 'http://localhost:8080/SurplusStays/public/assets/styles');
+define('ASSETS', 'http://localhost:8080/SurplusStays/public/assets');
 define('SIDEPANELBUSINESS', '/SurplusStays/public/business');
-define('COMPLAINTS', 'http://localhost/SurplusStays/public/assets/complaints/');
-define('CUSTOMER','http://localhost/SurplusStays/public/assets/customerImages');
-define('BUSINESS','http://localhost/SurplusStays/public/assets/businessImages');
-define('LOGIN','http://localhost/SurplusStays/public/login');
-define('FORGOT','http://localhost/SurplusStays/public/forgot');
-define('TEMPLATEROOT', 'http://localhost/SurplusStays/templates');
-define('ADMIN','http://localhost/SurplusStays/public/admin');
+define('COMPLAINTS', 'http://localhost:8080/SurplusStays/public/assets/complaints/');
+define('CUSTOMER','http://localhost:8080/SurplusStays/public/assets/customerImages');
+define('BUSINESS','http://localhost:8080/SurplusStays/public/assets/businessImages');
+define('LOGIN','http://localhost:8080/SurplusStays/public/login');
+define('FORGOT','http://localhost:8080/SurplusStays/public/forgot');
+define('TEMPLATEROOT', 'http://localhost:8080/SurplusStays/templates');
+define('ADMIN','http://localhost:8080/SurplusStays/public/admin');
 //DATABASE
-define('DBNAME','surplusstays');
+define('DBNAME','surplusstays_latest');
 define('DBHOST','localhost');
 //alwaysdata-host mysql-surplusstays.alwaysdata.net
 define('DBUSER','root');

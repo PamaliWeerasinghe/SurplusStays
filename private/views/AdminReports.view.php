@@ -33,7 +33,7 @@
                               Contains the details of all the products that were purchased until today!
                             
                             </p>
-                            <button class="view-report-btn" onclick="window.location.href=`http://localhost/surplusstays/public/admin/Report1`">View Report</button>
+                            <button class="view-report-btn" onclick="window.location.href=`http://localhost:8080/surplusstays/public/admin/Report1`">View Report</button>
                           </div> 
                           
                           
@@ -53,7 +53,7 @@
                               in the next few days!
                             
                             </p>
-                            <button class="view-report-btn" onclick="window.location.href=`http://localhost/surplusstays/public/admin/Report2`">View Report</button>
+                            <button class="view-report-btn" onclick="window.location.href=`http://localhost:8080/surplusstays/public/admin/Report2`">View Report</button>
                           </div> 
                           
                           
@@ -73,7 +73,7 @@
                               which helped to reduce food waste and save surplus.
                             
                             </p>
-                            <button class="view-report-btn" onclick="window.location.href=`http://localhost/surplusstays/public/admin/report3`">View Report</button>
+                            <button class="view-report-btn" onclick="window.location.href=`http://localhost:8080/surplusstays/public/admin/report3`">View Report</button>
                           </div> 
                           
                           

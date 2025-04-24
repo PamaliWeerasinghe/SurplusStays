@@ -4,15 +4,6 @@ class Customer extends Controller{
         $this->view('CustomerDashboard');
     }
 
-    //customer registration
-    // function register()
-    // {
-    //     $errors = array();
-    //     $verify = new CustomerModel();
-
-    // }
-
-
     function manageComplaints()
     {
         if (!Auth::logged_in()) {
@@ -23,22 +14,11 @@ class Customer extends Controller{
         $customer_id = Auth::getID();
         // print_r($customer_id);
         $customer_id=1;
-        $data = $event->where(['customer_id'], [$customer_id], "complaints");
+        $data = $event->where('customer_id', $customer_id, "complaints");
 
         $this->view('custManageComplaints',['rows' => $data]);
         
     }
-    function RemoveFromWishlist($id){
-        $item=new AdminModel();
-        $status=$item->delete($id,'watchlist');
-        if(empty($status)){
-            $this->redirect('customer/wishlist');
-
-        }
-               
-    }
-   
-
 
     function viewComplaint($id)
     {
@@ -296,6 +276,11 @@ class Customer extends Controller{
     //     $currentPictures = explode(',', $row[0]->pictures);
     //     $uploadedPictures = [];
         
+    //     $this->view('custEditComplaint',[
+    //         'row' => $row,
+    //         'errors' => $errors,
+    //     ]);
+    // }
     //     $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/customerImages/";
 
     //     // Loop through upload slots (assuming there are 5 upload slots)
@@ -388,126 +373,47 @@ class Customer extends Controller{
     //     ]);
     // }
     
-
-
-
     //other pages
     function browseShops(){
-        $this->view('CustomerBrowseShops');
-    }
-    function cart(){
-        
-        $errors = array();
-        $verify = new AdminModel();
-        $cart_view = $verify->findAll("cart_view"); // Store results in $cart_view
-        $item_count = count($cart_view); // Now count the actual variable
-        
-        $this->view('CustomerCart', [
-            'errors' => $errors,
-            'cart_view' => $cart_view, // Pass the same variable to view
-            'item_count' => $item_count
-        ]);
-    }
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+    
+        $shops = new BusinessModel();
+        $users = new User();
+        $ratings = new BusinessRating();
+    
+        $rows = $shops->findAll('business');
+        $rows_p = $users->findAll('user');
+    
+        // Build map of user_id to picture
+        $userPictures = [];
+        foreach ($rows_p as $user) {
+            $userPictures[$user->id] = $user->profile_pic;
+        }
+    
+         // Attach picture and average rating to each business row
+        foreach ($rows as &$row) {
+            $row->picture = $userPictures[$row->user_id] ?? '';
 
-    // Add these methods to your Customer controller class
-
-function updateCartQuantity() {
-    if (!Auth::logged_in()) {
-        echo json_encode(['success' => false, 'message' => 'Not logged in']);
-        exit;
-    }
-
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $cart_id = $_POST['cart_id'] ?? null;
-        $new_quantity = $_POST['quantity'] ?? null;
-
-        if ($cart_id && $new_quantity !== null) {
-            $cart = new Cart();
-            $result = $cart->updateQuantity($cart_id, $new_quantity);
-            
-            if ($result) {
-                echo json_encode(['success' => true]);
-                exit;
+            // Fetch ratings for this business
+            $ratingRows = $ratings->where('business_id', $row->id,'business_rating');
+            if ($ratingRows) {
+                $total = 0;
+                foreach ($ratingRows as $r) {
+                    $total += (int)$r->rating;
+                }
+                $row->average_rating = round($total / count($ratingRows), 1); // 1 decimal
+                $row->ratingCount = count($ratingRows);
+            } else {
+                $row->average_rating = null; // or 0 if preferred
             }
         }
+    
+        $this->view('customerBrowseShops2',[
+            'rows' => $rows
+        ]);
     }
-
-    echo json_encode(['success' => false, 'message' => 'Invalid request']);
-    exit;
-}
-
-
-    // function addToCart($id){
-    //     if(!Auth::logged_in()){
-    //         $this->redirect('login');
-    //     }
-
-    //     $cart = new Cart();
-    //     // $cart -> insert();
-    // }
-
-
-    function addToCart($products_id) {
-        if(!Auth::logged_in()) {
-            echo json_encode(['success' => false, 'message' => 'Please login to add items to cart']);
-            exit;
-        }
-    
-        // Get data from POST request
-        $data = json_decode(file_get_contents('php://input'), true);
-        $customer_id = $data['customer_id'] ?? Auth::getID();
-        $quantity = $data['quantity'] ?? 1;
-    
-        $cart = new Cart();
-        $result = $cart->addToCart($customer_id, $products_id, $quantity);
-    
-        if($result) {
-            echo json_encode(['success' => true]);
-        } else {
-            echo json_encode(['success' => false, 'message' => 'Failed to add to cart']);
-        }
-        exit;
-    }
-
- function removeFromCart($id) {
-    if (!Auth::logged_in()) {
-        $this->redirect('login');
-    }
-    
-    $cart = new Cart();
-    $cart->delete($id, 'cart');
-    $this->redirect('customer/cart');
-}
-
-// function removeFromCart() {
-//     if (!Auth::logged_in()) {
-//         echo json_encode(['success' => false, 'message' => 'Not logged in']);
-//         exit;
-//     }
-
-//     if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-//         $cart_id = $_POST['cart_id'] ?? null;
-
-//         if ($cart_id) {
-//             $cart = new Cart();
-//             $result = $cart->delete($cart_id);
-            
-//             if ($result) {
-//                 echo json_encode(['success' => true]);
-//                 exit;
-//             }
-//         }
-//     }
-
-//     echo json_encode(['success' => false, 'message' => 'Invalid request']);
-//     exit;
-// }
-
-
-    // function removeFromCart(){
-
-    // }
-
 
 
     function paymentHistory(){
@@ -536,17 +442,7 @@ function updateCartQuantity() {
         ]);
     }
     // Get all the orders made by a customer
-    function orders(){
-        $orders=new AdminModel();
-        $cus_id=$_SESSION['USER'][0]->id;
-        $order_details=$orders->where(['customer_id'],[$cus_id],'order');
-        $order_count=$orders->countWithWhere('order',['customer_id'],[$cus_id]);
-        $this->view('custViewOrders',[
-            "orders"=>$order_details,
-            "order_count"=>$order_count
-        ]);
-
-    }
+    
     //view order items belonging to an order
     function viewOrder($id){
         $order=new AdminModel();
@@ -563,28 +459,444 @@ function updateCartQuantity() {
 
     }
 
-    // wishlist
-    function wishlist(){
-        $errors = array();
-        $wishlist = new AdminModel();
-        $cus_id=$_SESSION['USER'][0]->id;
-        $watchlist = $wishlist->where(['cus_id'],[$cus_id],"watchlist_details");
-        $item_count=$wishlist->countWithWhere('watchlist_details',['cus_id'],[$cus_id]);
+    function removeFromWatchlist($id) {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
         
-        $this->view('custWishlist', [
-            'errors'=>$errors,
-            'data' => $watchlist,
-            'item_count' => $item_count,
-            // 'customer_id'=>$_SESSION['USER']
-        ]);
-        // $this->view('custWishList');
+        $watchlist = new Watchlist();
+        $watchlist->delete($id, 'watchlist');
+        $this->redirect('customer/wishlist');
     }
+
+    function profile(){
+        $this->view('custProfile');
+    }
+
+    function changePassword(){
+        $this->view('custChangePassword');
+    }
+
+    function viewShop($id = null)
+    {
+        $business = new BusinessModel();
+        $row = $business->where('id', $id, 'business');
+
+        $products = new Products();
+        $productRows = $products->where('business_id', $id, 'products');
+
+        $picture = '';
+        if ($row && isset($row[0]->user_id)) {
+            $user = new User();
+            $userRow = $user->where('id', $row[0]->user_id, 'user');
+            $picture = $userRow[0]->profile_pic ?? '';
+        }
+
+        $customer_id = Auth::getId();
+        $wishlistProductIds = [];
+
+        $wishlistModel = new Wishlist();
+        $wishlistItems = $wishlistModel->where('customer_id', $customer_id, 'watchlist');
+        foreach ($wishlistItems as $item) {
+            $wishlistProductIds[] = $item->products_id;
+        }
+
+        $this->view('custViewShop', [
+            'row' => $row,
+            'productRows' => $productRows,
+            'picture' => $picture,
+            'wishlistProductIds' => $wishlistProductIds
+        ]);
+    }
+
+    function addToCart()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $errors = [];
+        if (count($_POST) > 0) {
+            
+            $cart = new Cart();
+            $businessId = $_POST['business_id'];
+            $product = new Products();
+            $customerId = Auth::getId();
+            $productId = $_POST['product_id'];
+            $requestedQty = (int)$_POST['qty'];
+            $db = Database::getInstance();
+
+             // Check for conflicting shop
+            $existingBusinesses = $db->query("SELECT DISTINCT business_id FROM cart WHERE customer_id = ?", [$customerId]);
+
+            if (!empty($existingBusinesses) && $existingBusinesses[0]->business_id != $businessId) {
+                    // Conflict found
+                    $previousBusinessId = $existingBusinesses[0]->business_id;
+
+                    // Get shop names (assuming you have a businesses table)
+                    $shopModel = new BusinessModel();
+                    $currentShop = $shopModel->where('id', $businessId, 'business')[0]->name ?? 'Current Shop';
+                    $previousShop = $shopModel->where('id', $previousBusinessId, 'business')[0]->name ?? 'Previous Shop';
+
+                    // Store in session
+                    $_SESSION['cart_conflict'] = [
+                        'previous_id' => $previousBusinessId,
+                        'previous_name' => $previousShop,
+                        'current_id' => $businessId,
+                        'current_name' => $currentShop,
+                        'product_id' => $productId,
+                        'qty' => $_POST['qty'],
+                    ];
+
+                    $this->redirect('customer/viewShop/' . $businessId);
+                }
+            else{
+                if (isset($_POST['original_qty'])) {
+                    $requestedQty = (int)$_POST['qty'] - (int)$_POST['original_qty'];
+                }
+
+                // Check if the product already exists in the cart
+                $existing = $db->query(
+                    "SELECT * FROM cart WHERE customer_id = ? AND products_id = ? LIMIT 1",
+                    [$customerId, $productId]
+                );
+
+                // Fetch product from database
+                $prod = $product->where('id',$productId,'products');
+
+                
+                if ($existing && isset($existing[0])) {
+                    // Product already in cart → update qty
+                    $existingRow = $existing[0];
+                    $newQty = $existingRow->qty + $requestedQty;
+                    $cart->update($existingRow->id, ['qty' => $newQty], 'cart');
+                    // Update product qty
+                    $newQty_p = $prod[0]->qty - $requestedQty;
+                    $product->update($productId, ['qty' => $newQty_p], 'products');
+                    if (isset($_POST['original_qty'])) {
+                        $this->redirect('customer/cart');
+                    }
+                    else{
+                        $this->redirect('customer/viewShop/' . $businessId);
+                    }
+                    
+                }
+                else{
+                    if ($prod && $prod[0]->qty >= $requestedQty) {
+                    // Process the event if no errors
+                    if (empty($errors) && $cart->validate($_POST)) {
+                        $arr['customer_id'] = Auth::getId();
+                        $arr['products_id'] = $_POST['product_id'];
+                        $arr['business_id'] = $_POST['business_id'];
+                        $arr['qty'] = $_POST['qty'];
+                        $cart->insert($arr);
+
+                        // Update product qty
+                        $newQty = $prod[0]->qty - $requestedQty;
+                        $product->update($productId, ['qty' => $newQty], 'products');
+
+                        $this->redirect('customer/viewShop/' . $businessId);
+
+                    } else {
+                        $errors = array_merge($errors, $request->errors);
+                    }
+                    }else {
+                        $errors[] = "Not enough stock available.";
+                    }
+                }
+            }
+        }
+    }
+
+    function cart(){
+       
+        $cart = new Cart();
+        $customerId = Auth::getId();
+
+        $cartRows = $cart->where('customer_id', $customerId, 'cart');
+
+        $products = new Products();
+        $productRows = [];
+        $db = Database::getInstance();
+
+        if ($cartRows) {
+            // Collect all product IDs from the cart
+            $productIds = array_column($cartRows, 'products_id');
+    
+            // Create a string with placeholders for IN clause
+            $placeholders = implode(',', array_fill(0, count($productIds), '?'));
+            
+            // Prepare custom query to fetch all matching products
+            $query = "SELECT * FROM products WHERE id IN ($placeholders)";
+            $productRows = $db->query($query, $productIds);
+        }
+
+        $this->view('custCart', [
+            'cartRows' => $cartRows,
+            'productRows' => $productRows,
+        ]);
+    }
+    public function confirmNewOrder()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $customerId = Auth::getId();
+        $cart = new Cart();
+        $product = new Products();
+        $db = Database::getInstance();
+
+        // Get all cart items for customer
+        $cartItems = $cart->where('customer_id', $customerId, 'cart');
+
+        // Restore stock and remove each item properly
+        foreach ($cartItems as $item) {
+            $productId = $item->products_id;
+            $qtyToRestore = $item->qty;
+
+            // Get the product
+            $productRow = $product->where('id', $productId, 'products');
+            if ($productRow) {
+                $updatedQty = $productRow[0]->qty + $qtyToRestore;
+
+                // Update product stock
+                $product->update($productId, ['qty' => $updatedQty], 'products');
+
+                // Remove cart item
+                $cart->delete($item->id, 'cart');
+            }
+        }
+
+        // Now add the new product from the form
+        // You can call addToCart() or insert manually
+        $_POST['product_id'] = $_POST['product_id'] ?? null;
+        $_POST['qty'] = $_POST['qty'] ?? 1;
+        $_POST['business_id'] = $_POST['business_id'] ?? null;
+
+        if ($_POST['product_id'] && $_POST['qty']) {
+            $this->addToCart(); // Reuse your existing logic
+        } else {
+            $this->redirect('customer/viewShop/' . $_POST['business_id']);
+        }
+    }
+
+    function removeCartItem()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['cart_id'])) {
+
+            $cartId = $_POST['cart_id'];
+            $cart = new Cart();
+            $product = new Products();
+            $db = Database::getInstance();
+
+            // Get the cart item
+            $cartItem = $cart->where('id', $cartId, 'cart');
+
+            if ($cartItem) {
+                $productId = $cartItem[0]->products_id;
+                $qtyToRestore = $cartItem[0]->qty;
+
+                // Get the product
+                $productRow = $product->where('id',$productId, 'products');
+
+                if ($productRow) {
+                    $updatedQty = $productRow[0]->qty + $qtyToRestore;
+
+                    // Update product stock
+                    $product->update($productId, ['qty' => $updatedQty], 'products');
+
+                    // Remove cart item
+                    $cart->delete($cartId, 'cart');
+                }
+            }
+
+            $this->redirect('customer/cart'); // Adjust as needed
+        }
+    }
+
+    function placeOrder()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $errors = [];
+        if (count($_POST) > 0) {
+            
+            $db = Database::getInstance();
+            $customerId = Auth::getId();
+            $order = new Order();
+            $paymentMethod = $_POST['payment_method']; // 'cash_on_pickup'
+            $cartItems = $_POST['cart']; // Cart items array
+            $total = $_POST['total']; // Total amount from the order summary
+
+            // 1. Insert into the `orders` table add vallidation
+            if (empty($errors) ) {   
+                $arr1['customer_id'] =  $customerId;
+                $arr1['dateTime'] = date('Y-m-d H:i:s');
+                $arr1['total'] = $total;
+                $arr1['paymentMethod'] = 'CashOnPickup';
+                $arr1['order_status'] = 'Ongoing';
+                $arr1['business_id'] = $_POST['businessID']; // Default status   
+                $order->insert($arr1);
+            }
+            // Get the ID of the newly inserted order
+            $orderId = $db->lastInsertId();
+
+            // 2. Insert into the `order_items` table
+            foreach ($cartItems as $cartItem) {
+
+                    $arrOrderItem['order_id'] = $orderId;
+                    $arrOrderItem['products_id'] = $cartItem['products_id'];
+                    $arrOrderItem['qty'] = $cartItem['qty'];
+                    
+                // Assuming $orderItem is your model for the `order_items` table
+                $orderItem = new OrderItem();
+                
+                $orderItem->insert($arrOrderItem);;
+
+                // Update the product stock
+                $product = new Products();
+                $prod = $product->where('id', $cartItem['products_id'], 'products');
+                if ($prod) {
+                    $newStock = $prod[0]->qty - $cartItem['qty'];
+                    $product->update($cartItem['products_id'], ['qty' => $newStock], 'products');
+                }
+            }
+
+            //3. Remove items from the `cart` table using the `delete` method
+            foreach ($cartItems as $cartItem) {
+                $cart = new Cart();
+                $cart->delete($cartItem['id'], 'cart');
+            }
+
+            // Redirect to a success page or show a confirmation
+            $this->redirect('customer/');
+        }
+    }
+
+    function orders(){
+        $orders = new Model();
+        $cus_id = Auth::getId();
+
+        $db = Database::getInstance();
+    
+        // Fetch all orders for the customer
+        $order_details = $orders->where('customer_id', $cus_id, 'order');
+        $order_count = is_array($order_details) ? count($order_details) : 0;
+    
+        // For each order, check if there's a rating
+        if ($order_details && is_array($order_details)) {
+            foreach ($order_details as &$order) {
+                $rating_result = $db->query(
+                    "SELECT id, rating FROM business_rating WHERE order_id = :order_id AND customer_id = :cus_id LIMIT 1",
+                    ['order_id' => $order->id, 'cus_id' => $cus_id]
+                );
+    
+                $order->rating = $rating_result && isset($rating_result[0]->rating) ? $rating_result[0]->rating : null;
+                $order->rating_id = $rating_result && isset($rating_result[0]->id) ? $rating_result[0]->id : null;
+            }
+        }
+    
+        $this->view('custViewOrders', [
+            "orders" => $order_details,
+            "order_count" => $order_count
+        ]);
+    }
+    
+
+
+    function wishlist() {
+        $errors = array();
+        $wishlist = new Wishlist();
+        $productModel = new Products();
+        $cus_id = Auth::getId();
+    
+        // Get all watchlist entries for the logged-in customer
+        $watchlist = $wishlist->where('customer_id', $cus_id, 'watchlist');
+    
+        // Prepare an array to store enriched watchlist items
+        $data = [];
+    
+        if ($watchlist) {
+            foreach ($watchlist as $item) {
+                // Fetch product info
+                $productResults = $productModel->where('id', $item->products_id, 'products');
+    
+                // Only proceed if we got at least one result
+                if ($productResults && count($productResults) > 0) {
+                    $product = $productResults[0]; // Get the first result
+                    $shop = new Business();
+                    $shop_row = $shop->where('id',$product->business_id,'business' );
+    
+                    $data[] = [
+                        'product_id' => $item->products_id,
+                        'business_name' => $shop_row[0]->name,
+                        'image' => $product->pictures,
+                        'expiry' => $product->expiration_dateTime,
+                        'price' => $product->price_per_unit,
+                        'qty' => $product->qty,
+                    ];
+                }
+            }
+        }
+    
+        $item_count = count($data);
+    
+        $this->view('custWishlist', [
+            'errors' => $errors,
+            'data' => $data,
+            'item_count' => $item_count,
+        ]);
+    }
+    
+
+    function addToWishlist(){
+        $wishlist = new Wishlist();
+        $cus_id=Auth::getId();
+
+        if (empty($errors) ) {   
+            $arr['customer_id'] =  $cus_id;
+            $arr['datetime'] = date('Y-m-d H:i:s');
+            $arr['products_id'] =  $_POST['product_id'];
+            $wishlist->insert($arr);
+            $this->redirect('customer/viewShop/' . $_POST['business_id']);
+        }
+    }
+
+    function removeFromWishlist() {
+        $product_id = $_POST['product_id'];
+        $customer_id = Auth::getId();
+
+        if ($product_id && $customer_id) {
+            $wishlist = new Wishlist();
+            // Get all wishlist items for the customer
+            $items = $wishlist->where('customer_id', $customer_id, 'watchlist');
+
+            // Find the one with matching products_id
+            foreach ($items as $item) {
+                if ($item->products_id == $product_id) {
+                    $wishlist->delete($item->id, 'watchlist');
+                    break;
+                }
+            }
+        }
+        $this->redirect('customer/viewShop/' . $_POST['business_id']);
+    }
+    
+
     function AddToCartFromWishlist($id){
         $item=new AdminModel();
         $data=$item->where(['id'],[$id],'watchlist_details');
         $data=$data[0];
         echo json_encode($data);
     }
+
     function WishlistToCart($wishlist_id,$qty)
     {
         $wishlist=new AdminModel();
@@ -613,51 +925,36 @@ function updateCartQuantity() {
             $data['business_id']=$bus_id;
             $data['qty']=$qty;
             $wishlist->insert($data,'cart');
-    
-            
         }
         $this->redirect('Customer/wishlist');
-       
     }
 
-    function removeFromWatchlist($id) {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
-        
-        $watchlist = new Watchlist();
-        $watchlist->delete($id, 'watchlist');
-        $this->redirect('customer/wishlist');
+    function rateShop(){
+        $cus_id=Auth::getId();
+
+        $ratingTable = new BusinessRating();
+
+        $arr['business_id'] =  $_POST['business_id'];
+        $arr['rating'] = $_POST['rating'];
+        $arr['order_id'] = $_POST['order_id'];
+        $arr['customer_id'] = $cus_id;
+
+        $ratingTable->insert($arr,'business_rating');        
+        $this->redirect('Customer/orders');
     }
 
-    function profile(){
-        $this->view('custProfile');
+    function editShopRating(){
+        $cus_id=Auth::getId();
+
+        $ratingTable = new BusinessRating();
+
+        $arr['rating'] = $_POST['rating'];
+        $rating_id = $_POST['rating_id'];
+
+        $ratingTable->update($rating_id, $arr,'business_rating');        
+        $this->redirect('Customer/orders');
     }
 
-    function changePassword(){
-        $this->view('custChangePassword');
-    }
-
-    // function insideShop(){
-    //     // $this->view('insideShop');
-    //     $errors=array();
-    //     $verify=new CustomerModel();
-    //     $customer=$verify->where('business_id',1, "products");
-    //     $business=$verify->where('id',1, "business");
-    //     $user=$verify->where('id',2, "user");
-    //     // $cart=$verify->insert();
-
-    //     // print_r($customer[0]->name);
-    //     $this->view('insideShop',[
-    //         'errors'=>$errors,
-    //         'products'=>$customer,
-    //         'business'=>$business,
-    //         'user'=>$user
-    //     ]);
-    // }
-
-
- 
 
 }
 ?>
