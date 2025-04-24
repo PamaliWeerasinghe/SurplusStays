@@ -15,8 +15,8 @@
 
         function initMap() {
             // Get the latitude and longitude from the business profile
-            const lat = parseFloat("<?= Auth::getLatitude() ?>");
-            const lng = parseFloat("<?= Auth::getLongitude() ?>");
+            const lat = parseFloat("<?= $currbusiness[0]->latitude ?>");
+            const lng = parseFloat("<?= $currbusiness[0]->longitude ?>");
 
             // Default to the business location or use a fallback location
             const position = {
@@ -62,7 +62,7 @@
                                 <img class="img" src="<?= ASSETS ?>/businessImages/<?= basename(Auth::getUserPicture()) ?>" alt="Business Logo">
                             </div>
                             <div class="text">
-                                <h4><?= $currbusiness[0]->name ?> ⭐ 4.9/5.0</h4>
+                                <h4><?= $currbusiness[0]->name ?> ⭐ <?=$rating?>/5.0</h4>
                                 <p><strong>Business type : </strong> <?= $currbusiness[0]->type ?></p>
                                 <p><strong>Phone Number:</strong> <?= $currbusiness[0]->phoneNo ?></p>
                                 <p><strong>Email Address:</strong> <?= $curruser[0]->email ?></p>

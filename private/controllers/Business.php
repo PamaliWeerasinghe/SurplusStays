@@ -13,11 +13,19 @@ class Business extends Controller
         $product = new Products();
         $ordermodel = new OrderModel();
         $requestmodel = new RequestModel();
+        $ratingmodel=new BusinessRating();
         $business_id = Auth::getId();
 
         $productcount = $product->countProducts($business_id);
         $ordercount = $ordermodel->countOrders($business_id);
         $requestcount = $requestmodel->countRequests($business_id);
+        $ratingcount=$ratingmodel->businessrating($business_id);
+        if ($ratingcount[0]->count > 0) {
+            $value = $ratingcount[0]->sum / $ratingcount[0]->count;
+            $rating=round($value,1);
+        } else {
+            $rating = 0;
+        }
 
         $products = $product->gettopsalesproducts($business_id); //filter the top selling products
         $orders = $ordermodel->getOrdersByBusiness($business_id);
@@ -28,6 +36,7 @@ class Business extends Controller
             'productcount' => $productcount,
             'ordercount' => $ordercount,
             'requestcount' => $requestcount,
+            'rating'=>$rating,
             'orders' => $orders,
             'rows' => $products,
             'weeklyStats' => $weeklyStats
@@ -458,9 +467,19 @@ class Business extends Controller
         $user = new User();
         $curruser = $user->where('id', $user_id, 'user');
 
+        $ratingmodel=new BusinessRating();
+        $ratingcount=$ratingmodel->businessrating($businessId);
+        if ($ratingcount[0]->count > 0) {
+            $value = $ratingcount[0]->sum / $ratingcount[0]->count;
+            $rating=round($value,1);
+        } else {
+            $rating = 0;
+        }
+
         $this->view('businessProfile', [
             'currbusiness' => $currbusiness,
-            'curruser' => $curruser
+            'curruser' => $curruser,
+            'rating'=>$rating
         ]);
     }
 
@@ -510,8 +529,6 @@ class Business extends Controller
 
                 // Save data to `user` table
                 $userData = [
-                    'email' => $_POST['email'],
-                    'password' => password_hash($_POST['password'], PASSWORD_DEFAULT),
                     'profile_pic' => $profile_pic_path
                 ];
 
@@ -523,6 +540,8 @@ class Business extends Controller
                     'latitude' => $_POST['latitude'],
                     'longitude' => $_POST['longitude']
                 ];
+
+                //echo "<pre>"; print_r($_POST); die();
 
                 $user->update($user_id, $userData, 'user');
                 $business->update($businessId, $businessData, 'business');

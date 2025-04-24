@@ -4,10 +4,6 @@ class BusinessEditProfile extends Model
 {
     public $table = "business";
 
-    // protected $beforeInsert=[
-    //     'hash_password'
-    // ];
-
     public function validate($DATA)
     {
         // Validation rules
@@ -20,14 +16,7 @@ class BusinessEditProfile extends Model
         if (empty($DATA['type']) || !in_array($DATA['type'], $types)) {
             $this->errors['type'] = "Business type cannot be empty";
         }
-        if (!filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {
-            $this->errors['email'] = "A valid email is required";
-        }
-
-        //check if email exists
-        // if($this->where('email',$DATA['email'],'business')) {
-        //     $this->errors['email'] = "Email is already in use";
-        // }
+        
         if (empty($DATA['phone']) || !is_numeric($DATA['phone'])) {
             $this->errors['phone'] = "A valid phone number is required";
         }
@@ -41,8 +30,5 @@ class BusinessEditProfile extends Model
         return empty($this->errors);
     }
 
-    //     public function hash_password($data){
-    //         $data['password']=password_hash($data['password'],PASSWORD_DEFAULT);
-    //         return $data;
-    //     }
+    
 }

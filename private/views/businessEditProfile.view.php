@@ -73,12 +73,12 @@
                         <?php endif; ?>
 
                         <div class="input-group">
-                            <label for="product-name">Business Name :</label>
+                            <label>Business Name :</label>
                             <input placeholder="ENTER YOUR BUSINESS NAME" value="<?= get_var('name', $currbusiness[0]->name) ?>" type="text" name="name">
                         </div>
 
                         <div class="input-group">
-                            <label for="category">Business Type :</label>
+                            <label>Business Type :</label>
                             <select name="type">
                                 <option value="" disabled>SELECT THE TYPE</option>
                                 <option value="Individual" <?= get_var('type', $currbusiness[0]->type) == 'Individual' ? 'selected' : '' ?>>Individual</option>
@@ -91,24 +91,24 @@
                         </div>
 
                         <div class="input-group">
-                            <label for="description">Email :</label>
-                            <input placeholder="ENTER AN EMAIL" value="<?= get_var('email', $curruser[0]->email) ?>" type="text" name="email" disabled>
+                            <label>Email :</label>
+                            <input placeholder="ENTER AN EMAIL" value="<?= $curruser[0]->email?>" type="text" name="email" disabled>
                         </div>
 
                         <div class="input-group">
-                            <label for="quantity">Phone Number :</label>
+                            <label>Phone Number :</label>
                             <input placeholder="ENTER A PHONE NUMBER" value="<?= get_var('phone', $currbusiness[0]->phoneNo) ?>" type="text" name="phone">
                         </div>
 
                         <div class="input-group">
-                            <label for="price">Business Location :</label>
+                            <label>Business Location :</label>
                             <input type="hidden" id="latitude" name="latitude" value="<?= get_var('latitude', $currbusiness[0]->latitude ?? '') ?>">
                             <input type="hidden" id="longitude" name="longitude" value="<?= get_var('longitude', $currbusiness[0]->longitude ?? '') ?>">
                             <div id="map" style="height: 400px; width: 100%;"></div><br>
                         </div>
 
                         <div class="input-group">
-                            <label for="expiration">Username :</label>
+                            <label>Username :</label>
                             <input placeholder="ENTER A USERNAME" value="<?= get_var('username', $currbusiness[0]->username) ?>" type="text" name="username">
                         </div>
 
