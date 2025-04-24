@@ -182,29 +182,22 @@ button {
 .popup-content button {
     all: unset;
     padding: 10px 20px;
-    border-radius: 68px;
+    border-radius: 20px;
     font-size: 14px;
     cursor: pointer;
     transition: background-color 0.3s ease;
     display: inline-block;
     text-align: center;
-    background-color: orange;
+    background-color: red;
 }
 
-.btn-ok {
-    background-color:red;
+.popup-content .btn-ok {
+    background-color: red;
     color: white;
 }
 
-.btn-ok:hover {
-    background-color: #fa8b28;
-}
-
-.btn-cancel {
+.popup-content .btn-cancel {
     background-color: #1B4332;
     color: white;
 }
 
-.btn-cancel:hover {
-    background-color: #fa8b28;
-}

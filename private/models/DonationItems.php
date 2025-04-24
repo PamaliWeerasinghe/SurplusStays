@@ -1,26 +1,26 @@
 <?php
 
-class DonationItems extends Model
-{
-    public $table = "donation_items";
-    public $errors = [];
+class DonationItems extends Model{
 
-    public function validate($data)
+
+    public $table='donation_items';
+
+    protected $db;
+    public function __construct()
     {
-        $this->errors = [];
-
-        if (empty($data['products_id']) || !is_numeric($data['products_id'])) {
-            $this->errors['products_id'] = "Invalid product ID.";
-        }
-
-        if (empty($data['request_id']) || !is_numeric($data['request_id'])) {
-            $this->errors['request_id'] = "Invalid request ID.";
-        }
-
-        if (!is_numeric($data['qty']) || $data['qty'] <= 0) {
-            $this->errors['qty'] = "Quantity must be a positive number.";
-        }
-
-        return empty($this->errors);
+        $this->db = Database::getInstance();
     }
+
+    public function getdonationitems($req_id){
+
+        $query="SELECT
+        p.name,
+        p.qty
+        FROM products p
+        JOIN donation_items d ON p.id=d.products_id
+        WHERE d.request_id=:req_id
+        ";
+        return $this->db->query($query,["req_id"=>$req_id]);
+    }
+
 }

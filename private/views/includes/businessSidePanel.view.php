@@ -15,7 +15,7 @@ $current_url = $_SERVER['REQUEST_URI'];
             <a href="<?= ROOT ?>/business/index">Dashboard</a>
         </li>
         <li class="nav-item <?= strpos($current_url, '/business/myproducts') == true ? 'active' : '' ?>">
-            <a href="<?= ROOT ?>/business/myproducts">Manage Products</a>
+            <a href="<?= ROOT ?>/business/myproducts">Products</a>
         </li>
         <li class="nav-item <?= strpos($current_url, '/business/orders') == true ? 'active' : '' ?>">
             <a href="<?= ROOT ?>/business/orders">Orders</a>
@@ -142,6 +142,7 @@ $current_url = $_SERVER['REQUEST_URI'];
         list-style-type: none;
         padding: 0;
         margin: 0;
+        padding-bottom: 50px;
     }
 
     .nav-item {

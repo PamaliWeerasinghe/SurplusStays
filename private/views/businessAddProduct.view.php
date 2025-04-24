@@ -37,7 +37,7 @@
 
                         <div class="input-group">
                             <label>Product Name :</label>
-                            <input type="text" value="<?= get_var('product-name') ?>" name="product-name" placeholder="Enter The Product Name (E.G., Fresh Apples, Baked Bread)">
+                            <input type="text" pattern="[A-Za-z\s]*" title="Only letters and spaces are allowed" value="<?= get_var('product-name') ?>" name="product-name" placeholder="Enter The Product Name (E.G., Fresh Apples, Baked Bread)">
                         </div>
 
                         <div class="input-group">

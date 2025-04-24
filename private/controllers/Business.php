@@ -468,6 +468,7 @@ class Business extends Controller
         }
 
         $requestModel = new RequestModel();
+        $donationItems=new DonationItems();
         $requestDetails = $requestModel->getRequestDetails($id);
 
         $req_id = $requestDetails[0]->id;
@@ -480,6 +481,8 @@ class Business extends Controller
                           WHERE di.request_id = :request_id";
                 $params = ['request_id' => $req_id];
                 $relatedProducts = $db->query($query, $params);
+        $items=$donationItems->getdonationitems($id);
+        
 
         if (!$requestDetails) {
             $this->redirect('business/requests'); // Redirect if request is not found
@@ -487,7 +490,8 @@ class Business extends Controller
 
         $this->view('businessRequestDetails', [
             'request' => $requestDetails,
-            'products' => $relatedProducts
+            'products' => $relatedProducts,
+            'donationItems'=>$items
         ]);
     }
 
@@ -497,9 +501,26 @@ class Business extends Controller
             $this->redirect('login');
         }
 
+        
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_id'], $_POST['status'])) {
             $requestModel = new RequestModel();
+            $productModel=new Products();
+            $donationItems=new DonationItems();
             $request_id = $_POST['request_id'];
+            $itemsforrequest=$donationItems->where('request_id',$request_id,'donation_items');
+            foreach($itemsforrequest as $item){
+                $itemid=$item->id;
+                $productid=$item->products_id;
+                $data1=[
+                    'qty'=>$_POST['quantity']
+                ];
+                $updateproducts=$productModel->where('id',$productid,'products');
+                $data2=[
+                    'qty'=>$updateproducts[0]->qty-$_POST['quantity']
+                ];
+                $donationItems->update($itemid,$data1,'donation_items');
+                $productModel->update($productid,$data2,'products');
+            }
             $status = $_POST['status'];
             $feedback = $_POST['feedback'];
 
@@ -512,6 +533,7 @@ class Business extends Controller
             $this->redirect('business/requests');
         }
     }
+    
 
 
     function complaints()

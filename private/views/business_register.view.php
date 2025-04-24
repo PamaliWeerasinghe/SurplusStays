@@ -100,6 +100,7 @@
                     <option value="Individual" <?= get_var('type') === 'Individual' ? 'selected' : '' ?>>Individual</option>
                     <option value="Smallbusiness" <?= get_var('type')==='Smallbusiness'?'selected':''?>> Smallbusiness</option>
                     <option value="Supermarket" <?= get_var('type')==='Supermarket'?'selected':''?>>Supermarket</option>
+                    <option value="Bakery" <?= get_var('type')==='Bakery'?'selected':''?>>Bakery</option>
                     <option value="Other" <?= get_var('type')==='Other'?'selected':''?>>Other</option>
                 </select>
                 <h4>BUSINESS EMAIL:</h4>
