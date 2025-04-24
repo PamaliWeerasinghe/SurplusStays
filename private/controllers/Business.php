@@ -381,11 +381,25 @@ class Business extends Controller
         $requestModel = new RequestModel();
         $requestDetails = $requestModel->getRequestDetails($id);
 
+        $req_id = $requestDetails[0]->id;
+        $donationItemsModel = new DonationItems();
+        $db = Database::getInstance();
+
+        $query = "SELECT p.id, p.name, p.pictures, di.qty
+                          FROM donation_items di 
+                          JOIN products p ON p.id = di.products_id 
+                          WHERE di.request_id = :request_id";
+                $params = ['request_id' => $req_id];
+                $relatedProducts = $db->query($query, $params);
+
         if (!$requestDetails) {
             $this->redirect('business/requests'); // Redirect if request is not found
         }
 
-        $this->view('businessRequestDetails', ['request' => $requestDetails]);
+        $this->view('businessRequestDetails', [
+            'request' => $requestDetails,
+            'products' => $relatedProducts
+        ]);
     }
 
     function updateRequestStatus()

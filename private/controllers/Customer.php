@@ -19,17 +19,6 @@ class Customer extends Controller{
         $this->view('custManageComplaints',['rows' => $data]);
         
     }
-    function RemoveFromWishlist($id){
-        $item=new AdminModel();
-        $status=$item->delete($id,'watchlist');
-        if(empty($status)){
-            $this->redirect('customer/wishlist');
-
-        }
-               
-    }
-   
-
 
     function viewComplaint($id)
     {
@@ -292,6 +281,97 @@ class Customer extends Controller{
     //         'errors' => $errors,
     //     ]);
     // }
+    //     $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/customerImages/";
+
+    //     // Loop through upload slots (assuming there are 5 upload slots)
+    //     for ($i = 0; $i < 5; $i++) {
+    //         $uploadKey = 'upload-' . $i+1;
+        
+    //         if (isset($_FILES[$uploadKey]) && $_FILES[$uploadKey]['error'] === 0) {
+    //             // Get the original file name and extension
+    //             $fileName = basename($_FILES[$uploadKey]['name']);
+    //             $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+        
+    //             // Generate a unique file name
+    //             $uniqueName = uniqid('img_', true) . '.' . $fileType;
+        
+    //             // Define the file path
+    //             $filePath = $targetDir . $uniqueName;
+        
+    //             // Allow certain file formats
+    //             $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+    //             if (in_array(strtolower($fileType), $allowedTypes)) {
+    //                 if (move_uploaded_file($_FILES[$uploadKey]['tmp_name'], $filePath)) {
+    //                     // Save the relative path to the uploaded image
+    //                     $uploadedPictures[$i] = '/assets/customerImages/' . $uniqueName;
+    //                 } else {
+    //                     $errors[] = "Failed to upload image: {$fileName}.";
+    //                 }
+    //             } else {
+    //                 $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed for {$fileName}.";
+    //             }
+    //         } 
+    //          // If no file uploaded, check if it's a delete request
+    //         elseif (isset($_POST['delete-' . ($i + 1)]) && $_POST['delete-' . ($i + 1)] === "delete.png") {
+    //             // If delete request, remove the image from the server
+    //             if (!empty($currentPictures[$i])) {
+    //                 $filePathToDelete = $_SERVER['DOCUMENT_ROOT'] . $currentPictures[$i];
+    //                 if (file_exists($filePathToDelete)) {
+    //                     unlink($filePathToDelete);  // Delete the file from server
+    //                 }
+    //                 // Mark the image slot as deleted
+    //                 $uploadedPictures[$i] = '';  // Mark as empty or deleted
+    //             }
+    //         }
+    //          // If no file uploaded, keep the current picture
+    //         elseif (!empty($currentPictures[$i])) {
+    //             $uploadedPictures[$i] = $currentPictures[$i];
+    //         }
+    //     }
+        
+
+    //     // Ensure all 5 slots are accounted for
+    //     for ($i = 0; $i < 5; $i++) {
+    //         if (!isset($uploadedPictures[$i])) {
+    //             $uploadedPictures[$i] = ''; // Fill empty slots with an empty string
+    //         }
+    //     }
+
+    //     // Check if at least one image was uploaded or exists
+    //     if (!array_filter($uploadedPictures)) { // array_filter removes empty values
+    //         $errors[] = "At least one event picture is required.";
+    //     } else {
+    //         $_POST['pictures'] = implode(',', $uploadedPictures); // Store paths as a comma-separated string
+    //     }
+
+    //     $errors = array();
+    //     if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($_POST) > 0)
+    //     {
+    //         if ($event->validate($_POST)) 
+    //         {
+                
+    //             $arr['order_id'] = $_POST['order-id'];
+    //             $arr['feedback'] = $_POST['complaint'];
+    //             $arr['complaint_status_id'] = 0;  // Default 
+    //             $arr['pictures'] = $_POST['pictures'];
+    //             $arr['customer_id'] = Auth::getId();
+    //             $arr['shop'] = $_POST['shopName'];
+    //             $arr['date'] = $_POST['date'];
+            
+    //             $event->update($id, $arr);
+    //             $this->redirect('customer/manageComplaints');  // Redirect to the event list page or another relevant page
+    //         }else
+    //         {
+    //             $errors = $event->errors;
+    //         }
+    //     }
+    //     $row = $event->where('id', $id);
+        
+    //     $this->view('custEditComplaint',[
+    //         'row' => $row,
+    //         'errors' => $errors,
+    //     ]);
+    // }
     
     //other pages
     function browseShops(){
@@ -353,6 +433,42 @@ class Customer extends Controller{
             }
             $complaint->images=$img;
 
+           
+        }
+        // print_r($complaints_details);
+        $this->view('custViewMadeComplaints',[
+            "complaint_details"=>$complaints_details,
+            "complaint_count"=>$no_of_complaints
+        ]);
+    }
+    // Get all the orders made by a customer
+    
+    //view order items belonging to an order
+    function viewOrder($id){
+        $order=new AdminModel();
+        $order_details=$order->where(['id'],[$id],'order');
+        $order_details=$order_details[0];
+
+        $item_details=$order->where(['order_id'],[$id],'order_and_the_business');
+        
+        $this->view('custOrderDetails',[
+            "ord_id"=>$id,
+            "ord_details"=>$order_details,
+            "items"=>$item_details
+        ]);
+
+    }
+
+    function removeFromWatchlist($id) {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+        
+        $watchlist = new Watchlist();
+        $watchlist->delete($id, 'watchlist');
+        $this->redirect('customer/wishlist');
+    }
+
     function profile(){
         $this->view('custProfile');
     }
@@ -360,24 +476,6 @@ class Customer extends Controller{
     function changePassword(){
         $this->view('custChangePassword');
     }
-
-    // function insideShop(){
-    //     // $this->view('insideShop');
-    //     $errors=array();
-    //     $verify=new CustomerModel();
-    //     $customer=$verify->where('business_id',1, "products");
-    //     $business=$verify->where('id',1, "business");
-    //     $user=$verify->where('id',2, "user");
-    //     // $cart=$verify->insert();
-
-    //     // print_r($customer[0]->name);
-    //     $this->view('insideShop',[
-    //         'errors'=>$errors,
-    //         'products'=>$customer,
-    //         'business'=>$business,
-    //         'user'=>$user
-    //     ]);
-    // }
 
     function viewShop($id = null)
     {
@@ -538,7 +636,11 @@ class Customer extends Controller{
             'productRows' => $productRows,
         ]);
     }
-   
+    public function confirmNewOrder()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
 
         $customerId = Auth::getId();
         $cart = new Cart();
@@ -653,8 +755,6 @@ class Customer extends Controller{
                     $arrOrderItem['products_id'] = $cartItem['products_id'];
                     $arrOrderItem['qty'] = $cartItem['qty'];
                     
-                    
-
                 // Assuming $orderItem is your model for the `order_items` table
                 $orderItem = new OrderItem();
                 
@@ -710,9 +810,6 @@ class Customer extends Controller{
     }
     
 
-    function viewOrder(){
-
-    }
 
     function wishlist() {
         $errors = array();

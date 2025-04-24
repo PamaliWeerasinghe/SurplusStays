@@ -10,6 +10,9 @@
 </head>
 
 <body>
+    <pre>
+        <?php print_r($products);?>
+    </pre>
     <?php echo $this->view('includes/businessNavbar') ?>
     <div class="main-div">
         <div class="sub-div-1">

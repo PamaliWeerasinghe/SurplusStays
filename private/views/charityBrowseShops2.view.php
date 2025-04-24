@@ -357,9 +357,6 @@ document.addEventListener("DOMContentLoaded", function() {
 window.initMap = initMap;
 </script>
 
-
-
-
 </head>
 <body onload="initMap()">
     <?php echo $this->view('includes/charityNavbar')?>
@@ -397,7 +394,7 @@ window.initMap = initMap;
                             <?php if ($rows): ?>
                                 <?php foreach ($rows as $row): ?>                                 
                                     
-                                        <button class="action-btn-edit send-request-btn" data-business-id="<?= htmlspecialchars($row->id) ?>">
+                                        <button class="action-btn-edit send-request-btn" onclick="window.location.href='<?= ROOT ?>/charity/viewShop/<?= htmlspecialchars($row->id) ?>'">
                                             <div class="event">
                                                 <div class="event-name">
                                                     <img src="<?= ASSETS ?>/businessImages/<?= htmlspecialchars($row->picture) ?>" alt="Event" class="event-img">
@@ -433,23 +430,7 @@ window.initMap = initMap;
             </div>
         </div>
     </div>
-    <div id="popupModal" class="modal">
-        <div class="modal-content">
-            <span class="close-btn" id="closeModal">&times;</span>
-            <h2>Send Request</h2>
-            <form method="POST" action="<?=ROOT?>/charity/sendDonationRequest">
-            <label for="title">Title:</label>
-            <input type="text" id="title" name="title" placeholder="Enter title" required />
-            <input type="hidden" name="business_id" placeholder="Enter business_id" required readonly />
-
-
-            <label for="message">Message:</label>
-            <textarea id="message" name="message" rows="4" placeholder="Enter your message" required></textarea>
-
-            <button type="submit" class="submit-btn">Send</button>
-            </form>
-        </div>
-    </div>
+    
     <?php echo $this->view('includes/footer')?>
     
 </body>
@@ -479,63 +460,6 @@ window.initMap = initMap;
         searchButton.addEventListener("click", filterEvents);
     });
 
-
-    // Get modal elements
-    const popupModal = document.getElementById('popupModal'); // Modal container
-    const closeModal = document.getElementById('closeModal'); // Close button
-
-    // Function to open the modal
-    function openModal() {
-        popupModal.style.display = 'block';
-    }
-
-    // Function to close the modal
-    function closeModalHandler() {
-        popupModal.style.display = 'none';
-    }
-
-    // Add event listener to all "Send Request" buttons
-    document.querySelectorAll('.send-request-btn').forEach(button => {
-        button.addEventListener('click', (e) => {
-            e.preventDefault(); // Prevent default button behavior
-            // Get the business_id from the data attribute
-            const businessId = button.getAttribute('data-business-id');
-            
-            // Set the business_id in the modal form
-            document.querySelector('input[name="business_id"]').value = businessId;
-
-            // Open the modal
-            openModal();
-        });
-    });
-
-    // Close modal when clicking on the close button
-    closeModal.addEventListener('click', closeModalHandler);
-
-    // Close modal if user clicks outside the modal
-    window.addEventListener('click', (e) => {
-        if (e.target === popupModal) {
-            closeModalHandler();
-        }
-    });
-
-    // Handle form submission
-    const form = document.getElementById('popupForm'); // Form inside the modal
-    form.addEventListener('submit', (e) => {
-        e.preventDefault(); // Prevent form submission
-
-        const title = document.getElementById('title').value;
-        const message = document.getElementById('message').value;
-
-        // Perform actions here, e.g., send data to server or display a success message
-        alert(`Request Sent!\nTitle: ${title}\nMessage: ${message}`);
-
-        // Close the modal
-        closeModalHandler();
-
-        // Optionally clear the form fields
-        form.reset();
-    });
 
 </script>
 

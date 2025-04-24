@@ -203,18 +203,35 @@ function getTopDonatingBusinesses()
             $this->redirect('login');
         }
 
+        $db = Database::getInstance();
         $requests = new Donation();
+        $donationItemsModel = new DonationItems();
         $requests_r = new BusinessDonation();
         $shop = new BusinessModel();
         $org_id = Auth::getID();
 
         $rows = $requests->where('organization_id', Auth::getID(),'donations' );
+        if ($rows) {
+            foreach ($rows as $row) {
+                // Fetch products related to this donation request
+                $query = "SELECT p.id, p.name, p.pictures, di.qty
+                          FROM donation_items di 
+                          JOIN products p ON p.id = di.products_id 
+                          WHERE di.request_id = :request_id";
+                $params = ['request_id' => $row->id];
+                $relatedProducts = $db->query($query, $params);
+    
+                // Attach products to each donation row
+                $row->products = $relatedProducts;
+            }
+        }
+
         $rows_r = $requests_r->where('organization_id', Auth::getID(), 'business_donations');
         $shopRows = $shop->findAll('business');
 
-        $PenReqCount = $requests->countRows($org_id,0);
-        $AccReqCount = $requests->countRows($org_id,2);
-        $RejReqCount = $requests->countRows($org_id,1);
+        $PenReqCount = $requests->countRows($org_id,'pending');
+        $AccReqCount = $requests->countRows($org_id,'accepted');
+        $RejReqCount = $requests->countRows($org_id,'rejected');
 
         $PenReqCount_r = $requests_r->countRows($org_id,'pending');
         $AccReqCount_r = $requests_r->countRows($org_id,'accepted');
@@ -269,6 +286,28 @@ function getTopDonatingBusinesses()
             'rows' => $rows,
             'lat' => $lat,
             'long' => $long
+        ]);
+    }
+
+    function viewShop($id = null)
+    {
+        $business = new BusinessModel();
+        $row = $business->where('id', $id, 'business');
+
+        $products = new Products();
+        $productRows = $products->where('business_id', $id, 'products');
+
+        $picture = '';
+        if ($row && isset($row[0]->user_id)) {
+            $user = new User();
+            $userRow = $user->where('id', $row[0]->user_id, 'user');
+            $picture = $userRow[0]->profile_pic ?? '';
+        }
+
+        $this->view('charityViewShop', [
+            'row' => $row,
+            'productRows' => $productRows,
+            'picture' => $picture,
         ]);
     }
 
@@ -706,35 +745,49 @@ function getTopDonatingBusinesses()
     }
 
     function sendDonationRequest()
-    {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
-
-        $errors = [];
-        if (count($_POST) > 0) {
-            $request = new Donation();
-
-            // Process the event if no errors
-            if (empty($errors) && $request->validate($_POST)) {
-                $arr['organization_id'] = Auth::getId();
-                $arr['business_id'] = $_POST['business_id'];
-                $arr['title'] = $_POST['title'];
-                $arr['message'] = $_POST['message'];
-                $arr['status'] = 0;
-                $arr['date'] = date('Y-m-d');
-
-                $request->insert($arr);
-                $this->redirect('charity/manage_events');
-            } else {
-                $errors = array_merge($errors, $request->errors);
-            }
-        }
-
-        $this->view('charityBrowseShops', [
-            'errors' => $errors,
-        ]);
+{
+    if (!Auth::logged_in()) {
+        $this->redirect('login');
     }
+
+    $errors = [];
+    if (count($_POST) > 0) {
+        $request = new Donation();
+        $donationItem = new DonationItems(); // Assuming base model for `donation_items`
+
+        if (empty($errors) && $request->validate($_POST)) {
+            $arr['organization_id'] = Auth::getId();
+            $arr['business_id'] = $_POST['business_id'];
+            $arr['title'] = $_POST['title'];
+            $arr['message'] = $_POST['message'];
+            $arr['status'] = 'pending';
+            $arr['date'] = date('Y-m-d');
+
+            $request->insert($arr);
+            
+            // Get last inserted donation id
+            $db = Database::getInstance();
+            $donationId = $db->lastInsertId();
+            // Insert selected products into donation_items table
+            if (!empty($_POST['product_ids'])) {
+                foreach ($_POST['product_ids'] as $productId) {
+                        $arr1['products_id'] = $productId;
+                        $arr1['request_id'] = $donationId;
+                    $donationItem->insert($arr1);
+                }
+            }
+
+            $this->redirect('charity/browse_shops');
+        } else {
+            $errors = array_merge($errors, $request->errors);
+        }
+    }
+
+    $this->view('charityBrowseShops', [
+        'errors' => $errors,
+    ]);
+}
+
 
     function sendDonationRequestToCharity()
     {

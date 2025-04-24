@@ -15,7 +15,9 @@ define('ASSETS', 'http://localhost:8080/SurplusStays/public/assets');
 define('SIDEPANELBUSINESS', '/SurplusStays/public/business');
 define('COMPLAINTS', 'http://localhost:8080/SurplusStays/public/assets/complaints/');
 define('CUSTOMER','http://localhost:8080/SurplusStays/public/assets/customerImages');
+define('BUSINESS','http://localhost:8080/SurplusStays/public/assets/businessImages');
 define('LOGIN','http://localhost:8080/SurplusStays/public/login');
+define('FORGOT','http://localhost:8080/SurplusStays/public/forgot');
 define('TEMPLATEROOT', 'http://localhost:8080/SurplusStays/templates');
 define('ADMIN','http://localhost:8080/SurplusStays/public/admin');
 //DATABASE

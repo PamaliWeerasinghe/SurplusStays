@@ -1,15 +1,27 @@
 body, html {
-    height: 100%;
+    height: 100%; /* Ensure body and html take full height */
     margin: 0;
     padding: 0;
     display: flex;
     flex-direction: column;
-    font-family: 'Poppins', sans-serif;
-    background-color: #f9fafb;
-    color: #333;
 }
 
-.container {
+:root {
+    --primary: #2a9d8f;
+    --primary-dark: #287271;
+    --secondary: #e76f51;
+    --accent: #f4a261;
+    --light: #f8f9fa;
+    --dark: #212529;
+    --gray: #6c757d;
+    --light-gray: #e9ecef;
+    --shadow: 0 4px 12px rgba(0, 0, 0, 0.08);
+    --radius: 12px;
+    --transition: all 0.3s ease;
+  }
+  
+
+.container{
     display: flex;
     flex-direction: row;
     width: 100%;
@@ -17,26 +29,22 @@ body, html {
 }
 
 .top-nav {
-    background: linear-gradient(135deg, #005250 0%, #007571 100%);
+    background-color: #005250;
     color: white;
     width: 100%;
-    height: 100%;
     display: flex;
     flex-direction: column;
-    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
 }
 
 .top-bar {
     margin-top: 5px;
 }
 
-.container-right {
+.container-right{
     display: flex;
     flex-direction: column;
     width: 100%;
-    height: 1500px;
 }
-
 .searchWelcome {
     display: flex;
     align-items: center;

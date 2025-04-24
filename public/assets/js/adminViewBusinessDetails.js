@@ -19,7 +19,7 @@ function deletePopup(rowId){
 
         //dynamically set the form action
         const form=document.querySelector('#popup form');
-        form.action=`http://localhost/surplusstays/public/Admin/DeleteBusiness/${rowId}`;
+        form.action=`http://localhost:8080/surplusstays/public/Admin/DeleteBusiness/${rowId}`;
         
     
 }
@@ -34,7 +34,7 @@ function viewBusiness(user_id,business_id){
     let rcpopupContainer = document.getElementById("rcpopup-container");
   
     //fetch the customer details
-    fetch(`http://localhost/SurplusStays/public/admin/businessDetails/${user_id}/${business_id}`)
+    fetch(`http://localhost:8080/SurplusStays/public/admin/businessDetails/${user_id}/${business_id}`)
     .then(response => {
         if (!response.ok) {
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -46,13 +46,13 @@ function viewBusiness(user_id,business_id){
 
         // Check if 'customer' exists and is an array
         if (data.business && Array.isArray(data.business) && data.business.length > 0) {
-            document.getElementById("businessImg").src=`http://localhost/SurplusStays/public/assets/businessImages/${data.business[0].profile_pic}`;
+            document.getElementById("businessImg").src=`http://localhost:8080/SurplusStays/public/assets/businessImages/${data.business[0].profile_pic}`;
             document.getElementById("name").innerHTML = data.business[0].business_name;
             document.getElementById("email").innerHTML = data.business[0].email;
             document.getElementById("phoneNo").innerHTML = data.business[0].phoneNo;
             document.getElementById("orders").innerHTML = data.no_of_orders;
             document.getElementById("edit_business").onclick=function(){
-                window.location.href=`http://localhost/SurplusStays/public/admin/viewBusiness/${user_id}/${business_id}}`
+                window.location.href=`http://localhost:8080/SurplusStays/public/admin/viewBusiness/${user_id}/${business_id}}`
             }
             document.getElementById("hidden_id").value=user_id;
             
@@ -101,7 +101,7 @@ function viewBusiness(user_id,business_id){
             container2.innerHTML="";
 
             if(data.images && Array.isArray(data.images) && data.images.length>0){
-                path='http://localhost/SurplusStays/public/assets/images/'
+                path='http://localhost:8080/SurplusStays/public/assets/images/'
                
                 data.images.forEach((images,index)=>{
                     
