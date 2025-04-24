@@ -207,10 +207,16 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php if($products):?>
                                 
                                 <?php foreach ($products as $product):?>
                                     <tr>
-                                        <td><img src="<?= ASSETS ?>/images/<?=$product->pictures?>" /></td>
+                                    <?php
+                                    
+                                    $productPictures = explode(',', $product->pictures); // Get images
+                                    $productImage = isset($productPictures[0]) ? $productPictures[0] : 'product_placeholder.png';
+                                    ?>
+                                        <td><img src="<?= ROOT ?><?=$productImage?>" style="width:60px;height:60px;border-radius:20px" /></td>
                                         <td> <?=$product->name?></td>
                                         <td>Rs. <?=$product->price_per_unit?>
                                         <td>Rs. <?= $product->discountPrice?></td></td>
@@ -225,9 +231,17 @@
                                 document.addEventListener("DOMContentLoaded",function(){
                                     countDown('<?=$product->expiration_dateTime?>','<?=$product->id?>');
                                 });
+                               
                                 
                             </script>
                                 <?php endforeach ?>
+                                <?php else:?>
+                                    <tr>
+                                        <td colspan="5" style="text-align: center;">
+                                            No recent items added
+                                        </td>
+                                    </tr>
+                                <?php endif;?>
                             </tbody>
                         </table>
                         <?php $products_pager->display() ?>
@@ -254,7 +268,7 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                                <?php if($complaints):?>
                                 <?php foreach ($complaints as $complaint) : ?>
                                     <tr>
 
@@ -276,6 +290,13 @@
                                         
                                     </tr>
                                 <?php endforeach; ?>
+                                <?php else:?>
+                                    <tr>
+                                        <td colspan="5" style="text-align: center;">
+                                            No Recent Complaints
+                                        </td>
+                                    </tr>
+                                <?php endif;?>
                             </tbody>
                         </table>
 

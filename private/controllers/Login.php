@@ -18,8 +18,8 @@ class Login extends Controller{
                 //check the password and the status
                 $password=$user_details->password;
                 $status_id=$user_details->status_id;
-                if(password_verify($_POST['password'],$password) && $status_id==1){
                 
+                if(password_verify($_POST['password'],$password) && $status_id==1){
                 //check the roles
                 switch ($user_details->role) {
                     case 'admin':

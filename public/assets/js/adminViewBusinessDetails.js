@@ -48,6 +48,7 @@ function viewBusiness(user_id,business_id){
         if (data.business && Array.isArray(data.business) && data.business.length > 0) {
             document.getElementById("businessImg").src=`http://localhost/SurplusStays/public/assets/businessImages/${data.business[0].profile_pic}`;
             document.getElementById("name").innerHTML = data.business[0].business_name;
+            // document.getElementById("name").innerHTML =data.images1;
             document.getElementById("email").innerHTML = data.business[0].email;
             document.getElementById("phoneNo").innerHTML = data.business[0].phoneNo;
             document.getElementById("orders").innerHTML = data.no_of_orders;
@@ -89,6 +90,7 @@ function viewBusiness(user_id,business_id){
                
                     });
             }else{
+                let row = document.createElement("tr");
                 row.innerHTML=`<td>No complaints</td>`;
                 tbody.appendChild(row);
             }
@@ -100,40 +102,33 @@ function viewBusiness(user_id,business_id){
             container1.innerHTML="";              
             container2.innerHTML="";
 
-            if(data.images && Array.isArray(data.images) && data.images.length>0){
-                path='http://localhost/SurplusStays/public/assets/images/'
-               
-                data.images.forEach((images,index)=>{
-                    
-                    let container=document.getElementById(`profile-section-${index+1}`);
-
-                    // const img=document.createElement("img");
-                    
-                    if(images.pictures==null){
-                        container.innerHTML="No image Found"
-                    }else{
-                        src=path+images.pictures;
-                        container.style.backgroundRepeat='no-repeat'
-                        container.style.backgroundPosition='center'
-                        container.style.backgroundSize='contain'
-                        container.style.backgroundImage=`url('${src}')`
-                        // container.appendChild(img);
-                    }
-
-                  
-                   
-                })
-                
+            if(data.images1!='no product'){
+                path=`http://localhost/SurplusStays/public`;
+                src=path+`${data.images1}`;
+                console.log(src);
+                container1.style.backgroundRepeat='no-repeat'
+                container1.style.backgroundPosition='center'
+                container1.style.backgroundSize='contain'
+                container1.style.backgroundImage=`url('${src}')`
             }else{
-                
-                                    
-                 container1.innerHTML="No Recent Products";
-                                   
-                 container2.innerHTML="No Recent Products";
-                    
-
+                container1.innerHTML="No Recent Products";
             }
 
+            //set the second image also
+            if(data.images2!='no product'){
+                path=`http://localhost/SurplusStays/public`;
+                src=path+`${data.images2}`;
+                console.log(src);
+                container2.style.backgroundRepeat='no-repeat'
+                container2.style.backgroundPosition='center'
+                container2.style.backgroundSize='contain'
+                container2.style.backgroundImage=`url('${src}')`
+            }else{
+                container2.innerHTML="No Recent Products";
+            }
+           
+               
+          
 
         } else {
             console.error("Customer data not found", data);

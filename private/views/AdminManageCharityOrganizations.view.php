@@ -72,7 +72,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                    <!-- <?php foreach ($org as $row): ?> -->
+                    <?php foreach ($org as $row): ?>
                         <!-- <div class="business-row">
                             <div class="business-wrap">
                                 <div class="business">
@@ -123,7 +123,7 @@
                                     </span>
                                 </td>
                             </tr>
-                        <!-- <?php endforeach;?> -->
+                        <?php endforeach;?>
                         </tbody>
                     </table>
                     <?php $org_pager->display() ?>

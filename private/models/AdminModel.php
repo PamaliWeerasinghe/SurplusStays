@@ -5,30 +5,33 @@ class AdminModel extends Admin_Model
     public function insertCharity($user_columns,$user_values,$charity_columns,$charity_values,$user,$charity)
     {
         try {
-            
-            if(empty($this->where(['email'],[$user_values[0]],'user')) ){
-                //begin the transaction
-                $this->db->beginTransaction();
-                
-                //insert the user
-                if($this->insert($user,'user')){
+        
+            if(!$this->where(['email'],[$user_values[0]],'user') ){
+               
+                        //begin the transaction
+                    $this->db->beginTransaction();
                     
-                    $this->db->rollback();
-                    return false;
-                }
-                
-                //get the last id
-                $id=$this->db->lastInsertId();
-                
-                //Insert into organization table
-                $charity['user_id']=$id;
-                if($this->insert($charity,'organization')){
-                    $this->db->rollback();
-                    return false;
-                }
-                //commit the transaction
-                $this->db->commit();
-                return true;
+                    //insert the user
+                    if($this->insert($user,'user')){
+                        
+                        $this->db->rollback();
+                        return false;
+                    }
+                    
+                    //get the last id
+                    $id=$this->db->lastInsertId();
+                    
+                    //Insert into organization table
+                    $charity['user_id']=$id;
+                    if($this->insert($charity,'organization')){
+                        $this->db->rollback();
+                        return false;
+                    }
+                    //commit the transaction
+                    $this->db->commit();
+                    return true;
+              
+               
             }else{
                 return false;
             }
@@ -45,7 +48,7 @@ class AdminModel extends Admin_Model
          $logoNameNew = uniqid('', true) . "." . $logoActualExt;
          $fileDestination =$_SERVER['DOCUMENT_ROOT'] .'/SurplusStays/public/assets/charityImages/' . $logoNameNew;
          $dbFileDestination = $logoNameNew;
-         move_uploaded_file($_FILES['logo']['tmp_name'], $fileDestination);
+         move_uploaded_file($_FILES['profile_picture']['tmp_name'], $fileDestination);
  
          return $dbFileDestination;
      }
@@ -282,19 +285,19 @@ class AdminModel extends Admin_Model
         }
         //validate the image selection
 
-        $logo = $_FILES['logo']['name'];
+        $logo = $_FILES['profile_picture']['name'];
         $logoExt = explode('.', $logo);
         $logoActualExt = strtolower(end($logoExt));
         $allowed = array('jpg', 'jpeg', 'png');
         if (in_array($logoActualExt, $allowed)) {
-            if ($_FILES['logo']['error'] != 0) {
+            if ($_FILES['profile_picture']['error'] != 0) {
                 $this->errors['logo'] = "There was an error uploading your file!";
             }
         } else {
             $this->errors['logo'] = "You cannot upload files of this type!";
         }
 
-        if (isset($DATA['logo'])) {
+        if (isset($DATA['profile_picture'])) {
             $this->errors['logo'] = "Select a logo for the Organization";
         }
         //validate the city

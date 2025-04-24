@@ -57,9 +57,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php if($complaints):?>
                             <?php foreach($complaints as $complaint):?>
                             <tr>
-                
                                 <td># <?= $complaint->complaint_id ?></td>
                                 <td><?=$complaint->DESCRIPTION?></td>
                                 <td><?=$complaint->complaint_dateTime?></td>
@@ -81,7 +81,13 @@
                                 
                             </tr>
                             <?php endforeach; ?>   
-                           
+                           <?php else: ?>
+                            <tr>
+                                        <td colspan="4" style="text-align: center;">
+                                            No Complaints Added
+                                        </td>
+                                    </tr>
+                           <?php endif;?>
                             
                             
                         </tbody>

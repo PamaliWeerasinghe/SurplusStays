@@ -64,6 +64,7 @@
                             </tr>
                         </thead>
                         <tbody>
+                        <?php if($business):?>
                         <?php foreach($business as $business):?>
                             <tr  onclick="viewBusiness(<?=$business->user_id?>,<?=$business->bus_id?>)">
                                 <td><img src="<?=BUSINESS.'/'.$business->profile_pic?>" class="customer-profile-pic"/></td>
@@ -81,6 +82,13 @@
                                 </td>
                             </tr>
                         <?php endforeach;?>
+                        <?php else: ?>
+                            <tr>
+                                        <td colspan="4" style="text-align: center;">
+                                            No Complaints Added
+                                        </td>
+                                    </tr>
+                           <?php endif;?> 
                         </tbody>
                     </table>
                     <?php $business_pager->display() ?>

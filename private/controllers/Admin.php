@@ -186,9 +186,25 @@ class Admin extends Controller
             $data["no_of_orders"] = $orders;
             //get the images of recently added products
             $items = $admin->whereWithLimit('products', ['business_id'], [$business_id], 2);
-            $data["images"] = $items;
+            
+           
+            
+            $productPictures1 = explode(',', $items[0]->pictures); // Get images
+            $productPictures2 = explode(',', $items[1]->pictures);
+            $productImage1 = isset($productPictures1[0]) ? $productPictures1[0] : 'no product';
+            $productImage2= isset($productPictures2[0]) ? $productPictures2[0] : 'no product';
+            $data["images1"]=$productImage1;
+            $data["images2"]=$productImage2;
+           
+            
+            // if(isset($productPictures[1])){
+            //     $data["images2"] = $productPictures[1];
+            // }else{
+            //     $data["images2"]='';
+            // }
+            
             // print_r(json_encode($data["customer_complaints"]));
-            error_log("data: " . print_r($data, true));
+            error_log("data: " . print_r($items, true));
             echo json_encode($data);
         } else {
             $this->redirect('/login');
@@ -964,7 +980,7 @@ class Admin extends Controller
         if (count($_POST) > 0) {
             $charity = new AdminModel();
             if ($charity->validateCharity($_POST)) {
-                print_r($_POST);
+                // print_r($_POST);
                 //Get charity details
                 $charity_arr['name'] = $_POST['name'];
                 $charity_arr['city'] = $_POST['city'];
@@ -976,7 +992,7 @@ class Admin extends Controller
                 //Details of the user 
                 $user['email'] = $_POST['email'];
                 $user['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                $user['profile_pic'] = $charity->uploadCharityOrgPic($_FILES['logo']['name']);
+                $user['profile_pic'] = $charity->uploadCharityOrgPic($_FILES['profile_picture']['name']);
                 $user['role'] = 'charity';
                 $user['reg_date'] = date('Y-m-d H:i:s');
                 $user['status_id'] = 1;
@@ -997,12 +1013,13 @@ class Admin extends Controller
                     $user,
                     $charity_arr
                 )) {
+                   
+                    $this->redirect('/Admin/ManageCharityOrg');
+                } else {
                     $errors["charity_insertion"] = "Charity already exists";
                     $this->view('AddNewCharityOrg', [
                         "errors" => $errors
                     ]);
-                } else {
-                    $this->redirect('/Admin/ManageCharityOrg');
                 }
             } else {
 
