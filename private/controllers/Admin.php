@@ -187,14 +187,31 @@ class Admin extends Controller
             //get the images of recently added products
             $items = $admin->whereWithLimit('products', ['business_id'], [$business_id], 2);
             
-           
+            if($items==null){
+                $data['images1']="no product";
+                $data['images2']="no product";
             
-            $productPictures1 = explode(',', $items[0]->pictures); // Get images
-            $productPictures2 = explode(',', $items[1]->pictures);
-            $productImage1 = isset($productPictures1[0]) ? $productPictures1[0] : 'no product';
-            $productImage2= isset($productPictures2[0]) ? $productPictures2[0] : 'no product';
-            $data["images1"]=$productImage1;
-            $data["images2"]=$productImage2;
+                
+            }else{
+                if (count($items)==2){
+                    $productPictures1 = explode(',', $items[0]->pictures); // Get images
+                    $productPictures2 = explode(',', $items[1]->pictures);
+                    $productImage1 = isset($productPictures1[0]) ? $productPictures1[0] : 'no product';
+                    $productImage2= isset($productPictures2[0]) ? $productPictures2[0] : 'no product';
+                    $data["images1"]=$productImage1;
+                    $data["images2"]=$productImage2;
+                }else{
+                    $productPictures1 = explode(',', $items[0]->pictures); // Get images
+               
+                    $productImage1 = isset($productPictures1[0]) ? $productPictures1[0] : 'no product';
+                    
+                    $data["images1"]=$productImage1;
+                }
+               
+                
+            }
+            
+           
            
             
             // if(isset($productPictures[1])){
