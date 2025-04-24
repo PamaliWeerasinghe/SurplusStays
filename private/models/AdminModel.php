@@ -408,14 +408,14 @@ class AdminModel extends Admin_Model
         $this->errors = array();
         $this->data = array();
 
-        if (!empty($DATA['name'])) {
+        if (!empty($DATA['org_name'])) {
         
-            if (!preg_match('/^[a-z A-Z &]+$/', $DATA['name'])) {
+            if (!preg_match('/^[a-z A-Z &]+$/', $DATA['org_name'])) {
                 
                 $this->errors['name'] = "Only letters are allowed for the name";
             } else {
             
-                $this->data['name'] = $DATA['name'];
+                $this->data['name'] = $DATA['org_name'];
                 
             }
         }

@@ -40,10 +40,15 @@ class Admin extends Controller
                     if(!empty($user_arr) && !empty($org_arr)){
                         $charity->update($user_id, $user_arr, 'user');
                         $charity->update($charity_id, $org_arr, 'organization');
+                        $this->redirect('Admin/ManageCharityOrg');
+
                     }else if (!empty($user_arr)){
                         $charity->update($user_id, $user_arr, 'user');
+                        $this->redirect('Admin/ManageCharityOrg');
+
                     }else if (!empty($org_arr)){
                         $charity->update($charity_id, $org_arr, 'organization');
+                        $this->redirect('Admin/ManageCharityOrg');
                     }else{
                        
                         $data = $charity->where(['org_id'], [$charity_id], 'charity_details');
@@ -206,17 +211,15 @@ class Admin extends Controller
     //Admin Deletes a customer
     function DeleteCustomer($id)
     {
-        if(Auth::logged_in())
-        {
+        
             $customer = new AdminModel();
             $data["status_id"] = 2;
             $customer->update($id, $data, 'user');
     
             $this->ManageCustomers();
-        }
-        else{
-            $this->redirect('/login');
-        }
+        
+            
+        
        
     }
    
@@ -360,6 +363,7 @@ class Admin extends Controller
             $admin = new AdminModel();
             
             $arr['adminReply'] = $_POST['feedback'];
+            $arr['complaint_status_id']=2;
 
             //$feedback=$admin->update($id,$arr,'complaints');
             // returns an empty array
