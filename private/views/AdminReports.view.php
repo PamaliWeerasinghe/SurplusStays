@@ -80,6 +80,47 @@
                         </div>
                         
                     </div>
+                    <div class="white-bar-report">
+                        <div class="report-img">
+                            <img src="<?=ASSETS?>/images/rep_business.jpg"  />
+                        </div>
+                        <div class="report-description">
+                          <div>
+                            <h4>DETAILS OF BUSINESS </h4>
+                          </div>    
+                          <div class="report-description-text">
+                            <p>The details of all the businesses who have been a part of the Surplus Stays community, 
+                              which helped to reduce their food waste by sales and donations of the surplus.
+                            
+                            </p>
+                            <button class="view-report-btn" onclick="window.location.href=`http://localhost:8080/surplusstays/public/admin/report4`">View Report</button>
+                          </div> 
+                          
+                          
+                        </div>
+                        
+                    </div>
+                    <div class="white-bar-report">
+                        <div class="report-img">
+                            <img src="<?=ASSETS?>/images/charity_report.jpg"  />
+                        </div>
+                        <div class="report-description">
+                          <div>
+                            <h4>DETAILS OF CHARITY ORGANIZATION </h4>
+                          </div>    
+                          <div class="report-description-text">
+                            <p>The details of all the charity organizations who have been a part of the Surplus Stays community, 
+                              which helped to get their necessary donations and to reduce the wastage of surplus.
+                            
+                            </p>
+                            <button class="view-report-btn" onclick="window.location.href=`http://localhost:8080/surplusstays/public/admin/report5`">View Report</button>
+                          </div> 
+                          
+                          
+                        </div>
+                        
+                    </div>
+
 
                 </div>
 

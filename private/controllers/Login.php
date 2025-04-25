@@ -18,8 +18,8 @@ class Login extends Controller{
                 //check the password and the status
                 $password=$user_details->password;
                 $status_id=$user_details->status_id;
-                if(password_verify($_POST['password'],$password) && $status_id==1){
                 
+                if(password_verify($_POST['password'],$password) && $status_id==1){
                 //check the roles
                 switch ($user_details->role) {
                     case 'admin':
@@ -68,7 +68,7 @@ class Login extends Controller{
                 }
                 //password doesn't match
                 }else{
-                    $errors['password'] = "Please check your password";
+                    $errors['password'] = "Please check your login details";
                     $this->view('AdminLoginStep1', [
                         'errors' => $errors
                     ]);

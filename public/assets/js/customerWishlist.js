@@ -21,7 +21,7 @@ function openDeletePopup(rowId) {  // Changed from openCartPopup to match onclic
 
     //dynamically set the form action
     const form=document.querySelector('#wishlist-popup form');
-    form.action=`http://localhost:8080/surplusstays/public/Customer/RemoveFromWishlist/${rowId}`;
+    form.action=`http://localhost/surplusstays/public/Customer/RemoveFromWishlist/${rowId}`;
     
 }
 
@@ -33,7 +33,7 @@ function openAddToCartPopup(rowId) {  // Changed from openCartPopup to match onc
     document.getElementById('popupRowID').value = rowId;
 
     //fetch the details of the item 
-    fetch(`http://localhost:8080/SurplusStays/public/Customer/AddToCartFromWishlist/${rowId}`)
+    fetch(`http://localhost/SurplusStays/public/Customer/AddToCartFromWishlist/${rowId}`)
     .then(response=>{
         if(!response.ok){
             throw new Error(`HTTP error! Status: ${response.status}`);
@@ -42,7 +42,7 @@ function openAddToCartPopup(rowId) {  // Changed from openCartPopup to match onc
     })
     .then(data=>{
         console.log("Fetched Data:",data); // Debugging: Check JSON structure
-        document.getElementById('addToCartImage').src=`http://localhost:8080/SurplusStays/public/assets/images/${data.product_img}`;
+        document.getElementById('addToCartImage').src=`http://localhost/SurplusStays/public/assets/images/${data.product_img}`;
         document.getElementById('bus_name').innerHTML=data.bus_name;
         document.getElementById('product_name').innerHTML=data.product_name;
         document.getElementById('expires_in').innerHTML=data.expires_in;
@@ -121,7 +121,7 @@ function insertToCart(){
     const watchlistID=document.getElementById("watchlist_id").value;
     const qtySelected=document.getElementById("selected-Qty").value;
     const form=document.querySelector('#AddToCartFromWishlist');
-    form.action=`http://localhost:8080/surplusstays/public/customer/WishlistToCart/${watchlistID}/${qtySelected}`;
+    form.action=`http://localhost/surplusstays/public/customer/WishlistToCart/${watchlistID}/${qtySelected}`;
 
     
     

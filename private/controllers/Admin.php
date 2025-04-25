@@ -4,8 +4,9 @@ class Admin extends Controller
     
     //Admin view charity organization details
     function viewCharity($user_id,$charity_id)
-    { {
+    { 
 
+        if(Auth::logged_in()){
             $charity = new AdminModel();
             $errors = array();
             $arr = array();
@@ -39,10 +40,15 @@ class Admin extends Controller
                     if(!empty($user_arr) && !empty($org_arr)){
                         $charity->update($user_id, $user_arr, 'user');
                         $charity->update($charity_id, $org_arr, 'organization');
+                        $this->redirect('Admin/ManageCharityOrg');
+
                     }else if (!empty($user_arr)){
                         $charity->update($user_id, $user_arr, 'user');
+                        $this->redirect('Admin/ManageCharityOrg');
+
                     }else if (!empty($org_arr)){
                         $charity->update($charity_id, $org_arr, 'organization');
+                        $this->redirect('Admin/ManageCharityOrg');
                     }else{
                        
                         $data = $charity->where(['org_id'], [$charity_id], 'charity_details');
@@ -75,12 +81,16 @@ class Admin extends Controller
                     'rows' => $data
                 ]);
             }
+        }else{
+            $this->redirect('/');
         }
+           
+        
     }
     //Admin view business details
     function viewBusiness($user_id,$business_id)
-    { {
-
+    { 
+        if(Auth::logged_in()){
             $business = new AdminModel();
             $errors = array();
             $arr = array();
@@ -155,7 +165,12 @@ class Admin extends Controller
                     'rows' => $data
                 ]);
             }
+        
+        }else{
+            $this->redirect('/login');
         }
+
+            
     }
     //view business details - manage business popup
     function businessDetails($user_id,$business_id)
@@ -171,37 +186,82 @@ class Admin extends Controller
             $data["no_of_orders"] = $orders;
             //get the images of recently added products
             $items = $admin->whereWithLimit('products', ['business_id'], [$business_id], 2);
-            $data["images"] = $items;
+            
+            if($items==null){
+                $data['images1']="no product";
+                $data['images2']="no product";
+            
+                
+            }else{
+                if (count($items)==2){
+                    $productPictures1 = explode(',', $items[0]->pictures); // Get images
+                    $productPictures2 = explode(',', $items[1]->pictures);
+                    $productImage1 = isset($productPictures1[0]) ? $productPictures1[0] : 'no product';
+                    $productImage2= isset($productPictures2[0]) ? $productPictures2[0] : 'no product';
+                    $data["images1"]=$productImage1;
+                    $data["images2"]=$productImage2;
+                }else{
+                    $productPictures1 = explode(',', $items[0]->pictures); // Get images
+               
+                    $productImage1 = isset($productPictures1[0]) ? $productPictures1[0] : 'no product';
+                    
+                    $data["images1"]=$productImage1;
+                }
+               
+                
+            }
+            
+           
+           
+            
+            // if(isset($productPictures[1])){
+            //     $data["images2"] = $productPictures[1];
+            // }else{
+            //     $data["images2"]='';
+            // }
+            
             // print_r(json_encode($data["customer_complaints"]));
-            error_log("data: " . print_r($data, true));
+            error_log("data: " . print_r($items, true));
             echo json_encode($data);
         } else {
-            $this->redirect('register');
+            $this->redirect('/login');
         }
     }
     //Admin Deletes a business
-    function DeleteBusiness($id){
-        $business= new AdminModel();
-        $data["status_id"] = 2;
-        $business->update($id, $data, 'user');
-
-        $this->ManageBusinesses();
+    function DeleteBusiness($id)
+    {
+        if(Auth::logged_in()){
+            $business= new AdminModel();
+            $data["status_id"] = 2;
+            $business->update($id, $data, 'user');
+    
+            $this->ManageBusinesses();
+        }else{
+            $this->redirect('/login');
+        }
+       
     }
     //Admin Deletes a customer
     function DeleteCustomer($id)
     {
-        $customer = new AdminModel();
-        $data["status_id"] = 2;
-        $customer->update($id, $data, 'user');
-
-        $this->ManageCustomers();
+        
+            $customer = new AdminModel();
+            $data["status_id"] = 2;
+            $customer->update($id, $data, 'user');
+    
+            $this->ManageCustomers();
+        
+            
+        
+       
     }
    
 
     //Admin views a customer
     function viewCustomer($user_id,$cus_id)
     { 
-
+        if(Auth::logged_in())
+        {
             $customer = new AdminModel();
             $errors = array();
             $arr = array();
@@ -270,6 +330,12 @@ class Admin extends Controller
                     'rows' => $data
                 ]);
             }
+        }
+        else{
+            $this->redirect('/login');
+        }
+
+           
         
     }
 
@@ -293,7 +359,7 @@ class Admin extends Controller
             error_log("data: " . print_r($data, true));
             echo json_encode($data);
         } else {
-            $this->redirect('register');
+            $this->redirect('/login');
         }
     }
     //view charity details
@@ -302,9 +368,20 @@ class Admin extends Controller
         if (Auth::logged_in()) {
             $admin = new AdminModel();
             $org = $admin->where(['user_id'], [$user_id], 'charity_details');
-            // $org_donations=$admin->where([])
-            
-            echo json_encode($org);
+            //donation details
+            $org_donations=$admin->where(['org_id'],[$org_id],'donations_received');
+            //get the no. of donations
+            $donation_count=$admin->countWithWhere('donations_received',['org_id'],[$org_id]);
+            //get the business logos of those recently donated
+            $businesses=$admin->whereWithLimit('donations_received', ['org_id'] ,[$org_id],2);
+            $data["org"]=$org;
+            $data["donations"]=$org_donations;
+            $data["countDonations"]=$donation_count;
+            $data["businesses"]=$businesses;
+
+            echo json_encode($data);
+        }else{
+            $this->redirect('/login');
         }
     }
 
@@ -319,6 +396,7 @@ class Admin extends Controller
             $admin = new AdminModel();
             
             $arr['adminReply'] = $_POST['feedback'];
+            $arr['complaint_status_id']=2;
 
             //$feedback=$admin->update($id,$arr,'complaints');
             // returns an empty array
@@ -466,8 +544,8 @@ class Admin extends Controller
             //sort and search
             $search = $_GET['search'] ?? '';
             $searchBy = $_GET['searchBy'] ?? '';
-            $sort = $_GET['sort'] ?? 'id';
-            $order = $_GET['order'] ?? 'DESC';
+            $sort = 'expiration_dateTime';
+            $order = $_GET['order'] ?? 'ASC';
 
             $complaint_limit = 3;
             //count the no of complaints in the table complaints
@@ -919,7 +997,7 @@ class Admin extends Controller
         if (count($_POST) > 0) {
             $charity = new AdminModel();
             if ($charity->validateCharity($_POST)) {
-                print_r($_POST);
+                // print_r($_POST);
                 //Get charity details
                 $charity_arr['name'] = $_POST['name'];
                 $charity_arr['city'] = $_POST['city'];
@@ -931,7 +1009,7 @@ class Admin extends Controller
                 //Details of the user 
                 $user['email'] = $_POST['email'];
                 $user['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                $user['profile_pic'] = $charity->uploadCharityOrgPic($_FILES['logo']['name']);
+                $user['profile_pic'] = $charity->uploadCharityOrgPic($_FILES['profile_picture']['name']);
                 $user['role'] = 'charity';
                 $user['reg_date'] = date('Y-m-d H:i:s');
                 $user['status_id'] = 1;
@@ -952,12 +1030,13 @@ class Admin extends Controller
                     $user,
                     $charity_arr
                 )) {
+                   
+                    $this->redirect('/Admin/ManageCharityOrg');
+                } else {
                     $errors["charity_insertion"] = "Charity already exists";
                     $this->view('AddNewCharityOrg', [
                         "errors" => $errors
                     ]);
-                } else {
-                    $this->redirect('/Admin/ManageCharityOrg');
                 }
             } else {
 
@@ -970,23 +1049,20 @@ class Admin extends Controller
     }
     function Reports()
     {
-        $admin = new AdminModel();
-        $products_limit = 3;
-        //count the no of records in the saved_from_wastage_report view
-        $productsCountData = $admin->count('saved_from_wastage_report');
-        //calculate the no of pages
-        $noOfPages_products = ceil($productsCountData / $products_limit);
+        // $admin = new AdminModel();
+        // $products_limit = 3;
+        // //count the no of records in the saved_from_wastage_report view
+        // $productsCountData = $admin->count('saved_from_wastage_report');
+        // //calculate the no of pages
+        // $noOfPages_products = ceil($productsCountData / $products_limit);
 
-        //pagination for the report
-        $products_pager = Pager::getInstance('saved_from_wastage_report', $noOfPages_products, $products_limit);
-        $products_offset = $products_pager->offset;
-        $products = $admin->selectRecentComplaints('saved_from_wastage_report', 'product_name', $products_limit, $products_offset);
+        // //pagination for the report
+        // $products_pager = Pager::getInstance('saved_from_wastage_report', $noOfPages_products, $products_limit);
+        // $products_offset = $products_pager->offset;
+        // $products = $admin->selectRecentComplaints('saved_from_wastage_report', 'product_name', $products_limit, $products_offset);
 
 
-        $this->view('AdminReports', [
-            "products" => $products,
-            "products_pager" => $products_pager
-        ]);
+        $this->view('AdminReports');
     }
     function RecentItems()
     {
@@ -1036,6 +1112,23 @@ class Admin extends Controller
 
         $this->view('AdminReport3', [
             "customers" => $data
+        ]);
+    }
+    function report4()
+    {
+        $admin=new AdminModel();
+        $data=$admin->findAll('business_report');
+        $this->view('AdminReport4',[
+            "business"=>$data
+        ]);
+
+    }
+    function report5()
+    {
+        $admin=new AdminModel();
+        $data=$admin->findAll('charity_report');
+        $this->view('AdminReport5',[
+            "charity"=>$data
         ]);
     }
     

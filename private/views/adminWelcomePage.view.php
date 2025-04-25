@@ -5,6 +5,7 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITENAME ?></title>
+    <link rel="icon" href="<?=ASSETS?>/images/nav-logo.png"/>
     <link rel="stylesheet" href="<?= STYLES ?>/admin.css">
     <link rel="stylesheet" href="<?= STYLES ?>/adminDashboard.css">
 </head>
@@ -206,10 +207,16 @@
                                 </tr>
                             </thead>
                             <tbody>
+                                <?php if($products):?>
                                 
                                 <?php foreach ($products as $product):?>
                                     <tr>
-                                        <td><img src="<?= ASSETS ?>/images/<?=$product->pictures?>" /></td>
+                                    <?php
+                                    
+                                    $productPictures = explode(',', $product->pictures); // Get images
+                                    $productImage = isset($productPictures[0]) ? $productPictures[0] : 'product_placeholder.png';
+                                    ?>
+                                        <td><img src="<?= ROOT ?><?=$productImage?>" style="width:60px;height:60px;border-radius:20px" /></td>
                                         <td> <?=$product->name?></td>
                                         <td>Rs. <?=$product->price_per_unit?>
                                         <td>Rs. <?= $product->discountPrice?></td></td>
@@ -224,9 +231,17 @@
                                 document.addEventListener("DOMContentLoaded",function(){
                                     countDown('<?=$product->expiration_dateTime?>','<?=$product->id?>');
                                 });
+                               
                                 
                             </script>
                                 <?php endforeach ?>
+                                <?php else:?>
+                                    <tr>
+                                        <td colspan="5" style="text-align: center;">
+                                            No recent items added
+                                        </td>
+                                    </tr>
+                                <?php endif;?>
                             </tbody>
                         </table>
                         <?php $products_pager->display() ?>
@@ -253,16 +268,35 @@
                                 </tr>
                             </thead>
                             <tbody>
-
+                                <?php if($complaints):?>
                                 <?php foreach ($complaints as $complaint) : ?>
                                     <tr>
 
                                         <td><?= $complaint->complaint_date ?> &nbsp; &nbsp;<?=$complaint->complaint_id?></td>
                                         <td><?= $complaint->fname ?>&nbsp;<?= $complaint->lname ?> </td>
                                         <td><?= $complaint->product ?></td>
-                                        <td><button class="completed" style="border-radius: 10px;"><?= $complaint->complaint_status ?></button></td>
+                                        <?php 
+                                        if($complaint->complaint_status=='Pending'){
+                                            ?>
+                                                <td><button class="take-action" style="border-radius: 10px;"><?= $complaint->complaint_status ?></button></td>
+                                            <?php
+                                        }else{
+                                            ?>
+                                            <td><button class="completed" style="border-radius: 10px;"><?= $complaint->complaint_status ?></button></td>
+                                            <?php
+
+                                        }
+                                        ?>
+                                        
                                     </tr>
                                 <?php endforeach; ?>
+                                <?php else:?>
+                                    <tr>
+                                        <td colspan="5" style="text-align: center;">
+                                            No Recent Complaints
+                                        </td>
+                                    </tr>
+                                <?php endif;?>
                             </tbody>
                         </table>
 

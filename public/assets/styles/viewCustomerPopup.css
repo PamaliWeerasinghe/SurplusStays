@@ -17,6 +17,7 @@
     visibility: hidden;
     opacity: 0;
     transition: opacity 0.3s ease-in-out;
+
     z-index: 9999;
 }
 
@@ -42,6 +43,7 @@
     visibility: hidden;
     transition: transform 0.3s ease-in-out, opacity 0.3s;
     opacity: 0;
+    z-index: 10000;
 }
 .edit-delete{
     width: 100%;

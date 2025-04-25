@@ -1,6 +1,7 @@
 <?php require APPROOT.'/views/includes/htmlHeader.view.php'?>
 <?php require APPROOT.'/views/AdminTrackExpiryViewItemPopup.view.php'?>
     <title><?php echo SITENAME ?></title>
+    <link rel="icon" href="<?=ASSETS?>/images/nav-logo.png"/>
     <link rel="stylesheet" href="<?=STYLES?>/adminTrackExpiry.css" />
     <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
     <link rel="stylesheet" href="<?=STYLES?>/admin.css">
@@ -145,7 +146,7 @@
                                     }
                                 ?>
                                 
-                                <td style="text-align: center;">Rs. <?=$row->price?> <br/><label>View Full Details</label></td>
+                                <td style="text-align: center;">Rs. <?=$row->price?> <br/></td>
                             </tr>
                             <script>
                                 document.addEventListener("DOMContentLoaded",function(){

@@ -112,7 +112,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            
+                            <?php if($customers):?>
                             <?php foreach ($customers as $customer): ?>
                                 <tr id="customer_row<?= $customer->user_id ?>" onclick="viewCustomer(<?= $customer->user_id ?>,<?=$customer->cus_id?>)">
                                     <td><img src="<?= CUSTOMER . '/' . $customer->profile_pic ?>" class="customer-profile-pic" /></td>
@@ -130,6 +130,14 @@
                                     </td>
                                 </tr>
                             <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                        <td colspan="5" style="text-align: center;">
+                                            No Customers Available
+                                        </td>
+                                    </tr>
+                                <?php endif;?>
+
                         </tbody>
                     </table>
                     <?php $customers_pager->display() ?>

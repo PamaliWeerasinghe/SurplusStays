@@ -1,10 +1,4 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo SITENAME ?></title>
+<?php require APPROOT.'/views/includes/htmlHeader.view.php'?>
     <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
     <link rel="stylesheet" href="<?=STYLES?>/adminBusinessComplaints.css" />
     <link rel="stylesheet" href="<?=STYLES?>/admin.css">
@@ -63,9 +57,9 @@
                             </tr>
                         </thead>
                         <tbody>
+                            <?php if($complaints):?>
                             <?php foreach($complaints as $complaint):?>
                             <tr>
-                
                                 <td># <?= $complaint->complaint_id ?></td>
                                 <td><?=$complaint->DESCRIPTION?></td>
                                 <td><?=$complaint->complaint_dateTime?></td>
@@ -87,7 +81,13 @@
                                 
                             </tr>
                             <?php endforeach; ?>   
-                           
+                           <?php else: ?>
+                            <tr>
+                                        <td colspan="4" style="text-align: center;">
+                                            No Complaints Added
+                                        </td>
+                                    </tr>
+                           <?php endif;?>
                             
                             
                         </tbody>
@@ -104,8 +104,8 @@
 
 
             </div>
+           
         </div>
+        <?php echo $this->view('includes/footer')?>
         <script src="<?= ROOT ?>/assets/js/PagerAndSorter.js"></script>
-</body>
-
-</html>
+        <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>
