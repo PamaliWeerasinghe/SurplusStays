@@ -6,3 +6,11 @@ CREATE TABLE donation_items (
     FOREIGN KEY (products_id) REFERENCES products(product_id) ON DELETE CASCADE,
     FOREIGN KEY (request_id) REFERENCES donation(id) ON DELETE CASCADE
 );
+
+CREATE TABLE organization_fav_shops (
+    id INT PRIMARY KEY AUTO_INCREMENT,
+    business_id INT,
+    organization_id INT,
+    FOREIGN KEY (business_id) REFERENCES business(id),
+    FOREIGN KEY (organization_id) REFERENCES organization(id)
+);

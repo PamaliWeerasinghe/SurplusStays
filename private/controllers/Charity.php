@@ -214,10 +214,12 @@ function getTopDonatingBusinesses()
         if ($rows) {
             foreach ($rows as $row) {
                 // Fetch products related to this donation request
-                $query = "SELECT p.id, p.name, p.pictures, di.qty
-                          FROM donation_items di 
-                          JOIN products p ON p.id = di.products_id 
-                          WHERE di.request_id = :request_id";
+                $query = "SELECT p.id, p.name, p.pictures, SUM(di.qty) AS qty
+                    FROM donation_items di 
+                    JOIN products p ON p.id = di.products_id 
+                    WHERE di.request_id = :request_id
+                    GROUP BY p.id, p.name, p.pictures";
+
                 $params = ['request_id' => $row->id];
                 $relatedProducts = $db->query($query, $params);
     
@@ -297,6 +299,20 @@ function getTopDonatingBusinesses()
         $products = new Products();
         $productRows = $products->where('business_id', $id, 'products');
 
+         // ✅ Check if the shop is already favorited
+        $isFavorite = false;
+        $db = Database::getInstance();
+        if (Auth::logged_in()) {
+            $org_id = Auth::getId();
+            $fav = new OrganizationFavShops();
+            $favRow = $db->query("SELECT * FROM organization_fav_shops WHERE organization_id = :org_id AND business_id = :biz_id", [
+                'org_id' => $org_id,
+                'biz_id' => $id
+            ]);
+
+            $isFavorite = !empty($favRow);
+        }
+
         $picture = '';
         if ($row && isset($row[0]->user_id)) {
             $user = new User();
@@ -308,6 +324,7 @@ function getTopDonatingBusinesses()
             'row' => $row,
             'productRows' => $productRows,
             'picture' => $picture,
+            'isFavorite' => $isFavorite,
         ]);
     }
 
@@ -841,40 +858,124 @@ function getTopDonatingBusinesses()
     }
 
     function replyDonationRequest($id = null)
-{
-    if (!Auth::logged_in()) {
-        $this->redirect('login');
-    }
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
 
-     // Debug to see what's coming in
-    //  echo "ID: " . $id . "<br>";
-    //  echo "<pre>";
-    //  print_r($_POST);
-    //  echo "</pre>";
-    //  die(); // This will stop execution and show you the data
+        // Debug to see what's coming in
+        //  echo "ID: " . $id . "<br>";
+        //  echo "<pre>";
+        //  print_r($_POST);
+        //  echo "</pre>";
+        //  die(); // This will stop execution and show you the data
 
-    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-        $request = new BusinessDonation();
-        
-        // Get the donation ID from the form
-        $donationId = $_POST['donation_id'] ?? $id;
-        
-        // Create the data array for update
-        $arr = [];
-        $arr['feedback'] = $_POST['reply-message']; // Note the hyphen
-        $arr['status'] = $_POST['status']; // This is coming from the hidden input
-        
-        // Update the database
-        $result = $request->update($donationId, $arr, 'business_donations');
-        
-        // Redirect back to donations page
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $request = new BusinessDonation();
+            
+            // Get the donation ID from the form
+            $donationId = $_POST['donation_id'] ?? $id;
+            
+            // Create the data array for update
+            $arr = [];
+            $arr['feedback'] = $_POST['reply-message']; // Note the hyphen
+            $arr['status'] = $_POST['status']; // This is coming from the hidden input
+            
+            // Update the database
+            $result = $request->update($donationId, $arr, 'business_donations');
+            
+            // Redirect back to donations page
+            $this->redirect('charity/donations');
+            return; // Make sure to return after redirect
+        }
+
+        // If we get here, something went wrong
         $this->redirect('charity/donations');
-        return; // Make sure to return after redirect
     }
 
-    // If we get here, something went wrong
-    $this->redirect('charity/donations');
-}
+    function addToFav(){
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+
+        $fav = new OrganizationFavShops;
+        $arr['organization_id'] = Auth::getId();
+        $arr['business_id'] = $_POST['business_id'];
+        // echo"<pre>";
+        //     print_r($arr);
+        // echo"</pre>";
+        // die();
+        $fav->insert($arr);
+        $this->redirect('charity/viewShop/'.$_POST['business_id']);
+    }
+
+
+
+    function favourites()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+    
+        $org_id = Auth::getId();
+        $db = Database::getInstance();
+    
+        // Get favorite business IDs
+        $favRows = $db->query("SELECT business_id FROM organization_fav_shops WHERE organization_id = :org_id", [
+            'org_id' => $org_id
+        ]);
+    
+        $rows = [];
+        if (!empty($favRows)) {
+            $ids = array_column($favRows, 'business_id');
+            $placeholders = implode(',', array_fill(0, count($ids), '?'));
+    
+            // Get businesses
+            $rows = $db->query("SELECT * FROM business WHERE id IN ($placeholders)", $ids);
+    
+            // Get all users (to find pictures)
+            $users = new User();
+            $userRows = $users->findAll('user');
+    
+            // Map user_id => profile_pic
+            $userPictures = [];
+            foreach ($userRows as $user) {
+                $userPictures[$user->id] = $user->profile_pic;
+            }
+    
+            // Attach picture to each business
+            foreach ($rows as &$row) {
+                $row->picture = $userPictures[$row->user_id] ?? '';
+            }
+        }
+    
+        $this->view('charityfavourites', [
+            'rows' => $rows
+        ]);
+    }
+    
+
+
+    function removeFav()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $db = Database::getInstance();
+
+        $org_id = Auth::getId();
+        $biz_id = $_POST['business_id'];
+
+        // Remove the favorite entry
+        $db->query("DELETE FROM organization_fav_shops WHERE organization_id = :org_id AND business_id = :biz_id", [
+            'org_id' => $org_id,
+            'biz_id' => $biz_id
+        ]);
+
+        $this->redirect('charity/viewShop/' . $biz_id);
+    }
     
 }
 

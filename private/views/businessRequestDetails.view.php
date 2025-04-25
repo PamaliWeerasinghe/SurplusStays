@@ -63,12 +63,12 @@
                                                     <th>Quantity in stock</th>
                                                     <th>Wish To Donate</th>
                                                 </tr>
-                                                <?php foreach ($donationItems as $item) : ?>
+                                                <?php foreach ($products as $item) : ?>
                                                     <tr>
                                                         <td><?= htmlspecialchars($item->name) ?></td>
                                                         <td><?= htmlspecialchars($item->qty) ?></td>
-                                                        <td><input type="number" name="quantity"></td>
-                                                        
+                                                        <input type="number" name="prod[<?= $item->id ?>][qty]">
+                                                        <input type="hidden" name="prod[<?= $item->id ?>][id]" value="<?= $item->id ?>">
                                                     </tr>
                                                 <?php endforeach; ?>
                                             </table>

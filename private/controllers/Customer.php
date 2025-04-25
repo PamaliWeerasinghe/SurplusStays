@@ -420,11 +420,6 @@ class Customer extends Controller{
         ]);
     }
 
-
-    function paymentHistory(){
-        $this->view('custPayment');
-    }
-
     // Get all the orders made by a customer
     
     //view order items belonging to an order
@@ -791,6 +786,82 @@ class Customer extends Controller{
             "orders" => $order_details,
             "order_count" => $order_count
         ]);
+    }
+
+    function payByCard(){
+        require_once __DIR__ . '/../../vendor/autoload.php';
+    
+        $stripe_secret_key = "sk_test_51RGqzYIeNI0btLZ4A21OX7q2XjUnKESfQyetU5s0WTZcgaio7umxwTmLRY0AGhqwiEdKw6RoQOhim9CuF7tpB8Lq00pLPeqsd3";
+        \Stripe\Stripe::setApiKey($stripe_secret_key);
+    
+        $checkout_session = \Stripe\Checkout\Session::create([
+            "mode" => "payment",
+            "success_url" => "http://localhost:8080/SurplusStays/public/Customer/custSucessPayement",
+            "line_items" => [
+                [
+                    "quantity" => 1,
+                    "price_data" => [
+                        "currency" => "lkr",
+                        "unit_amount" => $_POST['total']*100,
+                        "product_data" => [
+                            "name" => "Foods"
+                        ]
+                    ]
+                ]
+            ]
+        ]);
+    
+        $db = Database::getInstance();
+        $customerId = Auth::getId();
+        $order = new Order();
+        $cartItems = $_POST['cart'];
+        $total = $_POST['total'];
+    
+        if (empty($errors)) {
+            $arr1 = [
+                'customer_id' => $customerId,
+                'dateTime' => date('Y-m-d H:i:s'),
+                'total' => $total,
+                'paymentMethod' => 'Online Payment',
+                'order_status' => 'Ongoing',
+                'business_id' => $_POST['businessID']
+            ];
+            $order->insert($arr1);
+        }
+    
+        $orderId = $db->lastInsertId();
+    
+        foreach ($cartItems as $cartItem) {
+            $arrOrderItem = [
+                'order_id' => $orderId,
+                'products_id' => $cartItem['products_id'],
+                'qty' => $cartItem['qty']
+            ];
+    
+            $orderItem = new OrderItem();
+            $orderItem->insert($arrOrderItem);
+    
+            $product = new Products();
+            $prod = $product->where('id', $cartItem['products_id'], 'products');
+            if ($prod) {
+                $newStock = $prod[0]->qty - $cartItem['qty'];
+                $product->update($cartItem['products_id'], ['qty' => $newStock], 'products');
+            }
+        }
+    
+        foreach ($cartItems as $cartItem) {
+            $cart = new Cart();
+            $cart->delete($cartItem['id'], 'cart');
+        }
+    
+        http_response_code(303);
+        header("Location: " . $checkout_session->url);
+        exit; // 🔥 Prevent further execution so Stripe redirect works
+    }
+    
+
+    function custSuccessPayment(){
+        $this->view('custSucessPayement');
     }
     
 

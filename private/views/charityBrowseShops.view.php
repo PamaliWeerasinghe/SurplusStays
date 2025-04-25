@@ -171,10 +171,11 @@
                                             <td class="event">
                                                 <div class="event-name">
                                                     <img src="<?=ASSETS?>/businessImages/<?= htmlspecialchars($row->picture) ?>" alt="Event" class="event-img">
-                                                    <h3><?= htmlspecialchars($row->name) ?></h3>
+                                                    <span class="heart" title="Add to Favorites">❤</span>       
                                                 </div>
                                             </td>                                           
                                             <td class="date"><span class="status open">Open Today</span><br>10.00AM-22.00PM</td>
+                                            <h3><?= htmlspecialchars($row->name) ?></h3>
                                             <td><button class="action-btn-edit">Send Request</button></td>
                                         </tr>
                                     <?php endforeach; ?>

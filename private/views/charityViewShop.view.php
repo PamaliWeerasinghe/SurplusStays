@@ -21,6 +21,14 @@
                         <h2><?= $row[0]->name ?? '' ?></h2>
                     </div>                
                         <button class="send-request">Send Request</button>
+                        <form method="POST" action="<?= ROOT ?>/charity/<?= isset($isFavorite) && $isFavorite ? 'removeFav' : 'addToFav' ?>" style="display:inline;">
+                            <input type="hidden" name="business_id" value="<?= $row[0]->id ?>">
+                            <button type="submit" class="favorite-btn"  aria-label="Add to Favorites">
+                                <svg class="heart-icon <?= isset($isFavorite) && $isFavorite ? 'active' : '' ?>" xmlns="http://www.w3.org/2000/svg" viewBox="0 0 24 24" width="50" height="50">
+                                    <path fill="currentColor" d="M12 21.35l-1.45-1.32C5.4 15.36 2 12.28 2 8.5 2 5.42 4.42 3 7.5 3c1.74 0 3.41.81 4.5 2.09C13.09 3.81 14.76 3 16.5 3 19.58 3 22 5.42 22 8.5c0 3.78-3.4 6.86-8.55 11.54L12 21.35z"/>
+                                </svg>
+                            </button>
+                        </form>
                 </div>
 
                 <div class="complaints-status">
@@ -231,6 +239,20 @@ window.onclick = function(event) {
     const modal = document.getElementById('popupModal');
     if (event.target == modal) {
         modal.style.display = "none";
+    }
+}
+
+function toggleFavorite(event) {
+    // Prevent navigation when clicking on the heart icon
+    event.stopPropagation();
+    
+    const heartIcon = event.currentTarget.querySelector('.heart-icon');
+    const isFavorite = heartIcon.classList.toggle('active');
+    
+    if (isFavorite) {
+        heartIcon.setAttribute('title', 'Remove from Favorites');
+    } else {
+        heartIcon.setAttribute('title', 'Add to Favorites');
     }
 }
 

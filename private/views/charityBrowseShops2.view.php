@@ -397,13 +397,13 @@ window.initMap = initMap;
                                         <button class="action-btn-edit send-request-btn" onclick="window.location.href='<?= ROOT ?>/charity/viewShop/<?= htmlspecialchars($row->id) ?>'">
                                             <div class="event">
                                                 <div class="event-name">
-                                                    <img src="<?= ASSETS ?>/businessImages/<?= htmlspecialchars($row->picture) ?>" alt="Event" class="event-img">
-                                                    <h3><?= htmlspecialchars($row->name) ?></h3>
-                                                </div>
+                                                    <img src="<?= ASSETS ?>/businessImages/<?= htmlspecialchars($row->picture) ?>" alt="Event" class="event-img"> 
+                                                    <h3><?= htmlspecialchars($row->name) ?></h3>                        
+                                                </div>                
                                             </div>
                                             <div class="date">
                                                 <span class="status open">Open Today</span><br>10.00AM-22.00PM
-                                            </div>
+                                                
                                         </button>
                                     
                                 <?php endforeach; ?>
@@ -459,6 +459,16 @@ window.initMap = initMap;
 
         searchButton.addEventListener("click", filterEvents);
     });
+    function toggleFavorite(event, shopId) {
+    event.preventDefault();
+    event.stopPropagation();
+    
+    const btn = event.target;
+    btn.classList.toggle('active');
+    
+    // Here you would typically send an AJAX request to save this favorite status
+    console.log("Toggled favorite for shop ID:", shopId);
+}
 
 
 </script>

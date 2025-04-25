@@ -113,7 +113,22 @@
                                     <button type="submit" class="place-order">Cash On Pickup</button>
                                 </div>
                             </form>
-                            <button class="place-order">Cash On Pickup</button>
+                            <form method="post" action="<?= ROOT ?>/customer/payByCard">
+                                <input type="hidden" name="payment_method" value="CardPayment">
+                                <?php foreach ($cartRows as $cartItem): ?>
+                                    <input type="hidden" name="cart[<?= $cartItem->id ?>][id]" value="<?= $cartItem->id ?>">
+                                    <input type="hidden" name="cart[<?= $cartItem->id ?>][products_id]" value="<?= $cartItem->products_id ?>">
+                                    <input type="hidden" name="cart[<?= $cartItem->id ?>][customer_id]" value="<?= $cartItem->customer_id ?>"> <!-- Assuming you have customer ID variable -->
+                                    <input type="hidden" name="cart[<?= $cartItem->id ?>][qty]" value="<?= $cartItem->qty ?>">
+                                    <input type="hidden" name="cart[<?= $cartItem->id ?>][business_id]" value="<?= $cartItem->business_id ?>">
+                                    <input type="hidden" name="businessID" value="<?= $cartItem->business_id ?>">
+                                    <input type="hidden" name="total" value="<?= $total ?>">
+                                <?php endforeach; ?>
+
+                                <div class="payment-method">
+                                    <button type="submit" class="place-order">Pay By Card</button>
+                                </div>
+                            </form>
                         </div>
                     </div>
                 </div>

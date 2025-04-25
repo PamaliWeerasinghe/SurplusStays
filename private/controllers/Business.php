@@ -475,10 +475,11 @@ class Business extends Controller
         $donationItemsModel = new DonationItems();
         $db = Database::getInstance();
 
-        $query = "SELECT p.id, p.name, p.pictures, di.qty
-                          FROM donation_items di 
-                          JOIN products p ON p.id = di.products_id 
-                          WHERE di.request_id = :request_id";
+        $query = "SELECT DISTINCT p.id, p.name, p.pictures, p.qty
+          FROM donation_items di 
+          JOIN products p ON p.id = di.products_id 
+          WHERE di.request_id = :request_id";
+
                 $params = ['request_id' => $req_id];
                 $relatedProducts = $db->query($query, $params);
         $items=$donationItems->getdonationitems($id);
@@ -496,43 +497,90 @@ class Business extends Controller
     }
 
     function updateRequestStatus()
-    {
-        if (!Auth::logged_in()) {
-            $this->redirect('login');
-        }
-
-        
-        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_id'], $_POST['status'])) {
-            $requestModel = new RequestModel();
-            $productModel=new Products();
-            $donationItems=new DonationItems();
-            $request_id = $_POST['request_id'];
-            $itemsforrequest=$donationItems->where('request_id',$request_id,'donation_items');
-            foreach($itemsforrequest as $item){
-                $itemid=$item->id;
-                $productid=$item->products_id;
-                $data1=[
-                    'qty'=>$_POST['quantity']
-                ];
-                $updateproducts=$productModel->where('id',$productid,'products');
-                $data2=[
-                    'qty'=>$updateproducts[0]->qty-$_POST['quantity']
-                ];
-                $donationItems->update($itemid,$data1,'donation_items');
-                $productModel->update($productid,$data2,'products');
-            }
-            $status = $_POST['status'];
-            $feedback = $_POST['feedback'];
-
-            // Update request status
-            $requestModel->updateRequestStatus($request_id, $status, $feedback);
-
-            // Redirect back to the request details page
-            $this->redirect('business/requests/');
-        } else {
-            $this->redirect('business/requests');
-        }
+{
+    if (!Auth::logged_in()) {
+        $this->redirect('login');
     }
+
+    if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+        $request_id = $_POST['request_id'];
+        $products = $_POST['prod'];
+        $status = $_POST['status'];
+        $feedback = $_POST['feedback'];
+
+        $donationItems = new DonationItems();
+        $productModel = new Products();
+        $donationRequest = new Donation();
+        $db = Database::getInstance();
+
+        foreach ($products as $productId => $productData) {
+            $donatedQty = (int)$productData['qty'];
+
+            if ($donatedQty > 0) {
+                // Check if record exists
+                $checkQuery = "SELECT qty FROM donation_items WHERE request_id = :request_id AND products_id = :products_id";
+                $checkParams = [
+                    'request_id' => $request_id,
+                    'products_id' => $productId
+                ];
+                $existingItem = $db->query($checkQuery, $checkParams);
+
+                if ($existingItem && isset($existingItem[0])) {
+                    // Update existing donation quantity
+                    $existingQty = (int)$existingItem[0]->qty;
+                    $newQty = $existingQty + $donatedQty;
+
+                    $updateQuery = "UPDATE donation_items SET qty = :qty WHERE request_id = :request_id AND products_id = :products_id";
+                    $updateParams = [
+                        'qty' => $newQty,
+                        'request_id' => $request_id,
+                        'products_id' => $productId
+                    ];
+                    $db->query($updateQuery, $updateParams);
+                } else {
+                    // Insert new donation item
+                    $insertQuery = "INSERT INTO donation_items (request_id, products_id, qty) VALUES (:request_id, :products_id, :qty)";
+                    $insertParams = [
+                        'request_id' => $request_id,
+                        'products_id' => $productId,
+                        'qty' => $donatedQty
+                    ];
+                    $db->query($insertQuery, $insertParams);
+                }
+
+                // Update stock in products table
+                $productCheck = $productModel->where('id', $productId, 'products');
+                if ($productCheck && isset($productCheck[0])) {
+                    $product = $productCheck[0];
+                    $newStock = max(0, (int)$product->qty - $donatedQty);
+
+                    $stockUpdateQuery = "UPDATE products SET qty = :qty WHERE id = :id";
+                    $stockParams = [
+                        'qty' => $newStock,
+                        'id' => $productId
+                    ];
+                    $db->query($stockUpdateQuery, $stockParams);
+                }
+            }
+        }
+
+        // Update request status and feedback
+        $statusUpdateQuery = "UPDATE donations SET status = :status, feedback = :feedback WHERE id = :id";
+        $statusParams = [
+            'status' => $status,
+            'feedback' => $feedback,
+            'id' => $request_id
+        ];
+        $db->query($statusUpdateQuery, $statusParams);
+
+        $this->redirect('business/requests');
+    } else {
+        $this->redirect('business/requests');
+    }
+}
+
+
+
     
 
 
