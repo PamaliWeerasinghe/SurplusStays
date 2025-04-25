@@ -14,6 +14,7 @@ class DonationItems extends Model{
     public function getdonationitems($req_id){
 
         $query="SELECT
+        d.id,
         p.name,
         p.qty
         FROM products p

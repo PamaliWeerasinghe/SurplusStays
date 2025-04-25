@@ -32,6 +32,10 @@ class BusinessModel extends Model
             $this->errors['phone'] = "A valid phone number is required";
         }
 
+        if (empty($DATA['picture']) ) {
+            $this->errors['picture'] = "A valid picture required";
+        }
+
         if (empty($DATA['username'])) {
             $this->errors['username'] = "Username is required";
         }

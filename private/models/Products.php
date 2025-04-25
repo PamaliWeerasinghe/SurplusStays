@@ -64,7 +64,7 @@ class Products extends Model
 
     public function countProducts($business_id)
     {
-        $query = "SELECT COUNT(*) as count FROM $this->table WHERE business_id = :business_id";
+        $query = "SELECT COUNT(*) as count FROM $this->table WHERE business_id = :business_id AND status_id=1";
         $result = $this->db->query($query, ['business_id' => $business_id]);
         return $result[0]->count ?? 0;
     }

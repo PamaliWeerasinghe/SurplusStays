@@ -13,16 +13,16 @@ class Business extends Controller
         $product = new Products();
         $ordermodel = new OrderModel();
         $requestmodel = new RequestModel();
-        $ratingmodel=new BusinessRating();
+        $ratingmodel = new BusinessRating();
         $business_id = Auth::getId();
 
         $productcount = $product->countProducts($business_id);
         $ordercount = $ordermodel->countOrders($business_id);
         $requestcount = $requestmodel->countRequests($business_id);
-        $ratingcount=$ratingmodel->businessrating($business_id);
+        $ratingcount = $ratingmodel->businessrating($business_id);
         if ($ratingcount[0]->count > 0) {
             $value = $ratingcount[0]->sum / $ratingcount[0]->count;
-            $rating=round($value,1);
+            $rating = round($value, 1);
         } else {
             $rating = 0;
         }
@@ -36,7 +36,7 @@ class Business extends Controller
             'productcount' => $productcount,
             'ordercount' => $ordercount,
             'requestcount' => $requestcount,
-            'rating'=>$rating,
+            'rating' => $rating,
             'orders' => $orders,
             'rows' => $products,
             'weeklyStats' => $weeklyStats
@@ -388,11 +388,11 @@ class Business extends Controller
         }
 
         $requestModel = new RequestModel();
-        $donationItems=new DonationItems();
+        $donationItems = new DonationItems();
         $requestDetails = $requestModel->getRequestDetails($id);
 
-        $items=$donationItems->getdonationitems($id);
-        
+        $items = $donationItems->getdonationitems($id);
+
 
         if (!$requestDetails) {
             $this->redirect('business/requests'); // Redirect if request is not found
@@ -400,7 +400,7 @@ class Business extends Controller
 
         $this->view('businessRequestDetails', [
             'request' => $requestDetails,
-            'donationItems'=>$items
+            'donationItems' => $items
         ]);
     }
 
@@ -410,26 +410,33 @@ class Business extends Controller
             $this->redirect('login');
         }
 
-        
+        print_r($_POST);
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_id'], $_POST['status'])) {
             $requestModel = new RequestModel();
-            $productModel=new Products();
-            $donationItems=new DonationItems();
+            $productModel = new Products();
+            $donationItems = new DonationItems();
             $request_id = $_POST['request_id'];
-            $itemsforrequest=$donationItems->where('request_id',$request_id,'donation_items');
-            foreach($itemsforrequest as $item){
-                $itemid=$item->id;
-                $productid=$item->products_id;
-                $data1=[
-                    'qty'=>$_POST['quantity']
+            $itemsforrequest = $donationItems->where('request_id', $request_id, 'donation_items');
+            $quantities = $_POST['quantity'];
+
+            foreach ($itemsforrequest as $item) {
+                $itemid = $item->id;
+                $productid = $item->products_id;
+                $donatedQty = (int)$quantities[$itemid];// get quantity for this item
+
+                $data1 = [
+                    'qty' => $donatedQty
                 ];
-                $updateproducts=$productModel->where('id',$productid,'products');
-                $data2=[
-                    'qty'=>$updateproducts[0]->qty-$_POST['quantity']
+
+                $updateproducts = $productModel->where('id', $productid, 'products');
+                $data2 = [
+                    'qty' => $updateproducts[0]->qty - $donatedQty
                 ];
-                $donationItems->update($itemid,$data1,'donation_items');
-                $productModel->update($productid,$data2,'products');
+
+                $donationItems->update($itemid, $data1, 'donation_items');
+                $productModel->update($productid, $data2, 'products');
             }
+
             $status = $_POST['status'];
             $feedback = $_POST['feedback'];
 
@@ -442,7 +449,7 @@ class Business extends Controller
             $this->redirect('business/requests');
         }
     }
-    
+
 
 
     function complaints()
@@ -488,15 +495,15 @@ class Business extends Controller
         $businessId = Auth::getUserId();
         $currbusiness = $business->where('id', $businessId, 'business');
         $user_id = $currbusiness[0]->user_id;
-
         $user = new User();
         $curruser = $user->where('id', $user_id, 'user');
 
-        $ratingmodel=new BusinessRating();
-        $ratingcount=$ratingmodel->businessrating($businessId);
+        //Get Ratings for business
+        $ratingmodel = new BusinessRating();
+        $ratingcount = $ratingmodel->businessrating($businessId);
         if ($ratingcount[0]->count > 0) {
             $value = $ratingcount[0]->sum / $ratingcount[0]->count;
-            $rating=round($value,1);
+            $rating = round($value, 1);
         } else {
             $rating = 0;
         }
@@ -504,7 +511,7 @@ class Business extends Controller
         $this->view('businessProfile', [
             'currbusiness' => $currbusiness,
             'curruser' => $curruser,
-            'rating'=>$rating
+            'rating' => $rating
         ]);
     }
 

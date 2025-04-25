@@ -67,7 +67,8 @@
                                                     <tr>
                                                         <td><?= htmlspecialchars($item->name) ?></td>
                                                         <td><?= htmlspecialchars($item->qty) ?></td>
-                                                        <td><input type="number" name="quantity"></td>
+                                                        <td><input type="number" name="quantity[<?= $item->id ?>]" min="0" max=<?= $item->qty ?>></td>
+
                                                         
                                                     </tr>
                                                 <?php endforeach; ?>
