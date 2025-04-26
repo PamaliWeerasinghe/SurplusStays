@@ -44,7 +44,7 @@
                                 <div class="complaint-response-container">
                                     <h3>Respond to Complaint</h3>
                                     <form id="myform" method="POST">
-                                        <textarea name="response" placeholder="Write your response here..."></textarea>
+                                        <textarea name="response" placeholder="Write your response here..." required></textarea>
                                         <button type="submit">Submit Response</button>
                                         <p class="advise"><strong>Please wait for the admin's reply after submitting.</strong> </p>
                                     </form>

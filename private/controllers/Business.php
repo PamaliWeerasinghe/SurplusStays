@@ -419,22 +419,24 @@ class Business extends Controller
             $itemsforrequest = $donationItems->where('request_id', $request_id, 'donation_items');
             $quantities = $_POST['quantity'];
 
-            foreach ($itemsforrequest as $item) {
-                $itemid = $item->id;
-                $productid = $item->products_id;
-                $donatedQty = (int)$quantities[$itemid];// get quantity for this item
+            if ($_POST['status'] == 'accepted') {
+                foreach ($itemsforrequest as $item) {
+                    $itemid = $item->id;
+                    $productid = $item->products_id;
+                    $donatedQty = (int)$quantities[$itemid]; // get quantity for this item
 
-                $data1 = [
-                    'qty' => $donatedQty
-                ];
+                    $data1 = [
+                        'qty' => $donatedQty
+                    ];
 
-                $updateproducts = $productModel->where('id', $productid, 'products');
-                $data2 = [
-                    'qty' => $updateproducts[0]->qty - $donatedQty
-                ];
+                    $updateproducts = $productModel->where('id', $productid, 'products');
+                    $data2 = [
+                        'qty' => $updateproducts[0]->qty - $donatedQty
+                    ];
 
-                $donationItems->update($itemid, $data1, 'donation_items');
-                $productModel->update($productid, $data2, 'products');
+                    $donationItems->update($itemid, $data1, 'donation_items');
+                    $productModel->update($productid, $data2, 'products');
+                }
             }
 
             $status = $_POST['status'];
