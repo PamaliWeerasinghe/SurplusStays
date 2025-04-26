@@ -410,7 +410,6 @@ class Business extends Controller
             $this->redirect('login');
         }
 
-        print_r($_POST);
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_id'], $_POST['status'])) {
             $requestModel = new RequestModel();
             $productModel = new Products();
@@ -423,7 +422,7 @@ class Business extends Controller
                 foreach ($itemsforrequest as $item) {
                     $itemid = $item->id;
                     $productid = $item->products_id;
-                    $donatedQty = (int)$quantities[$itemid]; // get quantity for this item
+                    $donatedQty = (int)$quantities[$itemid]; 
 
                     $data1 = [
                         'qty' => $donatedQty
@@ -442,10 +441,10 @@ class Business extends Controller
             $status = $_POST['status'];
             $feedback = $_POST['feedback'];
 
-            // Update request status
+            
             $requestModel->updateRequestStatus($request_id, $status, $feedback);
 
-            // Redirect back to the request details page
+            
             $this->redirect('business/requests/');
         } else {
             $this->redirect('business/requests');
