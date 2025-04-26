@@ -1,6 +1,7 @@
 <?php require APPROOT.'/views/includes/htmlHeader.view.php'?>
     <link rel="stylesheet" href="<?=ROOT?>/assets/styles/register.css">
     <link rel="stylesheet" href="<?= STYLES ?>/errorAlertPopup.css">
+    
 </head>
 <body>
     
@@ -22,13 +23,19 @@
                     <p></p>
                 </div>
                 <?php if (!empty($errors)): ?>
-                    <div class="error alert">
-                        <ul>
-                            <?php foreach ($errors as $error): ?>
-                                <li><?= $error ?></li>
-                            <?php endforeach; ?>
-                        </ul>
-                    </div>
+                    <div class="error-alert-popup">
+                                <div class="alert-multialertheader">
+                                    <!-- <span class="close-btn" onclick="this.parentElement.parentElement.style.display='none';">&times;</span>
+                                    <span class="alert-title">Error</span> -->
+
+                                    <ul>
+                                        <?php foreach ($errors as $error): ?>
+                                            <li><?= $error ?></li>
+                                        <?php endforeach; ?>
+                                    </ul>
+                                </div>
+                           
+                            </div>
                 <?php endif; ?>   
                 <?php if (!empty($successfull)):?>
                     <div class="successfull-alert-popup">

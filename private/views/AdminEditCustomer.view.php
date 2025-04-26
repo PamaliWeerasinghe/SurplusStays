@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/styles/charity_register.css">
 </head>
 <body>
-<?php echo $this->view('includes/navbar_unregistered')?>
+<?php echo $this->view('includes/navbar')?>
 
     <div class="container">
         <div class="left">

@@ -58,11 +58,11 @@ class Admin extends Controller
                         ]);
                     }
                     // $charity->update($id, $arr, 'charity_details');
-                    $data = $charity->where(['org_id'], [$charity_id], 'charity_details');
-                    // $data = $data[0];
-                    $this->view('AdminEditCharityOrg', [
-                        'rows' => $data[0],
-                    ]);
+                    // $data = $charity->where(['org_id'], [$charity_id], 'charity_details');
+                    // // $data = $data[0];
+                    // $this->view('AdminEditCharityOrg', [
+                    //     'rows' => $data[0],
+                    // ]);
                 } else {
                     $errors = $charity->errors;
                     $data = $charity->where(['user_id'], [$user_id], 'charity_details');
@@ -129,10 +129,16 @@ class Admin extends Controller
                     if(!empty($user) && !empty($business_details)){
                         $business->update($user_id, $user, 'user');
                         $business->update($business_id, $business_details, 'business');
+                        
+                        $this->redirect('Admin/ManageBusinesses');
                     }else if (!empty($user)){
                         $business->update($user_id, $user, 'user');
+                        
+                        $this->redirect('Admin/ManageBusinesses');
                     }else if (!empty($business_details)){
                         $business->update($business_id, $business_details, 'business');
+                        
+                        $this->redirect('Admin/ManageBusinesses');
                     }else{
                        
                         $data = $business->where(['bus_id'], [$business_id], 'business_details');
@@ -142,11 +148,7 @@ class Admin extends Controller
                         ]);
                     }
                 
-                    $data = $business->where(['bus_id'], [$business_id], 'business_details');
-                    $data = $data[0];
-                    $this->view('AdminEditBusiness', [
-                        'rows' => $data,
-                    ]);
+                   
                 } else {
                     $errors = $business->errors;
                     $data = $business->where(['bus_id'], [$business_id], 'business_details');
@@ -293,10 +295,13 @@ class Admin extends Controller
                     if(!empty($user) && !empty($cus_details)){
                         $customer->update($user_id, $user, 'user');
                         $customer->update($cus_id, $cus_details, 'customer');
+                        $this->redirect('Admin/ManageCustomers');
                     }else if (!empty($user)){
                         $customer->update($user_id, $user, 'user');
+                        $this->redirect('Admin/ManageCustomers');
                     }else if (!empty($cus_details)){
                         $customer->update($cus_id, $cus_details, 'customer');
+                        $this->redirect('Admin/ManageCustomers');
                     }else{
                        
                         $data = $customer->where(['cus_id'], [$cus_id], 'customer_details');
@@ -307,11 +312,11 @@ class Admin extends Controller
                     }
 
                     // $customer->update($id, $arr, 'customer');
-                    $data = $customer->where(['cus_id'], [$cus_id], 'customer_details');
-                    $data = $data[0];
-                    $this->view('AdminEditCustomer', [
-                        'rows' => $data,
-                    ]);
+                    // $data = $customer->where(['cus_id'], [$cus_id], 'customer_details');
+                    // $data = $data[0];
+                    // $this->view('AdminEditCustomer', [
+                    //     'rows' => $data,
+                    // ]);
                 } else {
                     $errors = $customer->errors;
                     $data = $customer->where(['cus_id'], [$cus_id], 'customer_details');
@@ -390,31 +395,46 @@ class Admin extends Controller
     function ReplyToComplaint()
     {
         $errors = array();
-
+        // print_r($_POST);
         if (count($_POST)) {
             $id = $_POST['id'];
-            $admin = new AdminModel();
-            
-            $arr['adminReply'] = $_POST['feedback'];
-            $arr['complaint_status_id']=2;
-
-            //$feedback=$admin->update($id,$arr,'complaints');
-            // returns an empty array
-
-            if ($admin->update($id, $arr, 'complaints')) {
-
-                $this->view('AdminLoginStep1');
-            } else {
+            if(!empty($_POST['feedback'])){
+               
+                $admin = new AdminModel();
+                
+                $arr['adminReply'] = $_POST['feedback'];
+                $arr['complaint_status_id']=2;
+    
+                //$feedback=$admin->update($id,$arr,'complaints');
+                // returns an empty array
+    
+                if ($admin->update($id, $arr, 'complaints')) {
+    
+                    $this->view('AdminLoginStep1');
+                } else {
+                    $user = new AdminComplaints();
+                    $complaint_details = $user->complaintDetails($id);
+                    $complaint_images = $user->getComplaintImages($id);
+                    $this->view('AdminSeeComplainPage', [
+                        "complaint_details" => $complaint_details[0],
+                        "complaint_imgs" => $complaint_images,
+                        "errors" => $errors
+    
+                    ]);
+                }
+            }else{
                 $user = new AdminComplaints();
-                $complaint_details = $user->complaintDetails($id);
-                $complaint_images = $user->getComplaintImages($id);
-                $this->view('AdminSeeComplainPage', [
-                    "complaint_details" => $complaint_details[0],
-                    "complaint_imgs" => $complaint_images,
-                    "errors" => $errors
+                    $complaint_details = $user->complaintDetails($id);
+                    $complaint_images = $user->getComplaintImages($id);
+                    $this->view('AdminSeeComplainPage', [
+                        "complaint_details" => $complaint_details[0],
+                        "complaint_imgs" => $complaint_images,
+                        "errors" => $errors
+    
+                    ]);
 
-                ]);
             }
+           
         }
     }
     //View a charity organization
@@ -670,81 +690,91 @@ class Admin extends Controller
     //Track the expiration products
     function TrackExpiry()
     {
-        $admin = new AdminModel();
-        if (count($_POST) > 0) {
-
-            $data['notify_status_id'] = 1;
-            $admin->update($_POST['product_id'], $data, 'products');
-
-            $data=$admin->where(['product_id'],[$_POST['product_id']], 'product_details');
-            $data=$data[0];
-
-            Mail::sendProductExpiryNotification($_POST['product_id'], $_POST['email'],$data);
-
+        if(Auth::logged_in()){
+            $admin = new AdminModel();
+            if (count($_POST) > 0) {
+    
+                $data['notify_status_id'] = 1;
+                $admin->update($_POST['product_id'], $data, 'products');
+    
+                $data=$admin->where(['product_id'],[$_POST['product_id']], 'product_details');
+                $data=$data[0];
+    
+                Mail::sendProductExpiryNotification($_POST['product_id'], $_POST['email'],$data);
+    
+            }
+            //sort and search
+            $search = $_GET['search'] ?? '';
+            $searchBy = $_GET['searchBy'] ?? '';
+            $sort = $_GET['sort'] ?? 'product_id';
+            $order = $_GET['order'] ?? 'ASC';
+    
+            $product_limit = 3;
+            //count the no of products in the table products
+            $productsCountData = $admin->count('about_to_expire_products');
+            //calculate the no of pages
+            $noOfPages_products = ceil($productsCountData / $product_limit);
+    
+            //Pagination for products
+            $products_pager = Pager::getInstance('about_to_expire_products', $noOfPages_products, $product_limit);
+            $products_offset = $products_pager->offset;
+            $products = $admin->select('about_to_expire_products', $product_limit, $products_offset, $search, $searchBy, $sort, $order);
+    
+            //count from products where notifiy_status_id 
+            $productsNoty=$admin->countWithWhere('products',['notify_status_id'],[1]);
+            //Expired products
+            $expired=$admin->countWithWhere('products',['status_id'],[2]);
+            //all orderscount
+            $orders=$admin->count('order');
+            //total Revenue
+            $revenue=$admin->totalRevenue('order');
+            $this->view('adminTrackExpiryPage', [
+                "rows" => $products,
+                "products_pager" => $products_pager,
+                "productsSaved"=>$productsNoty,
+                "expired"=>$expired,
+                "orders"=>$orders,
+                "revenue"=>$revenue
+    
+            ]);
+        }else{
+            $this->redirect('/login');
         }
-        //sort and search
-        $search = $_GET['search'] ?? '';
-        $searchBy = $_GET['searchBy'] ?? '';
-        $sort = $_GET['sort'] ?? 'product_id';
-        $order = $_GET['order'] ?? 'ASC';
-
-        $product_limit = 3;
-        //count the no of products in the table products
-        $productsCountData = $admin->count('about_to_expire_products');
-        //calculate the no of pages
-        $noOfPages_products = ceil($productsCountData / $product_limit);
-
-        //Pagination for products
-        $products_pager = Pager::getInstance('about_to_expire_products', $noOfPages_products, $product_limit);
-        $products_offset = $products_pager->offset;
-        $products = $admin->select('about_to_expire_products', $product_limit, $products_offset, $search, $searchBy, $sort, $order);
-
-        //count from products where notifiy_status_id 
-        $productsNoty=$admin->countWithWhere('products',['notify_status_id'],[1]);
-        //Expired products
-        $expired=$admin->countWithWhere('products',['status_id'],[2]);
-        //all orderscount
-        $orders=$admin->count('order');
-        //total Revenue
-        $revenue=$admin->totalRevenue('order');
-        $this->view('adminTrackExpiryPage', [
-            "rows" => $products,
-            "products_pager" => $products_pager,
-            "productsSaved"=>$productsNoty,
-            "expired"=>$expired,
-            "orders"=>$orders,
-            "revenue"=>$revenue
-
-        ]);
+       
     }
     //View all the complaints
     function Complaints()
     {
-        $admin = new AdminModel();
+        if(Auth::logged_in()){
+            $admin = new AdminModel();
 
-        //sort and search
-        $search = $_GET['search'] ?? '';
-        $searchBy = $_GET['searchBy'] ?? '';
-        $sort = $_GET['sort'] ?? 'complaint_id';
-        $order = $_GET['order'] ?? 'ASC';
-
-        $complaint_limit = 4;
-        //count the no of complaints in the non_resolved_complaints view
-        $complaintsCountData = $admin->count('non_resolved_complaints');
-        //calculate the no of pages
-        $noOfPages_complaints = ceil($complaintsCountData / $complaint_limit);
-
-        //Pagination for complaints
-        // displays only the non-resolved complaints
-        $complaints_pager = Pager::getInstance('non_resolved_complaints', $noOfPages_complaints, $complaint_limit);
-        $complaints_offset = $complaints_pager->offset;
-        $complaints = $admin->selectNotAttended('non_resolved_complaints', $complaint_limit, $complaints_offset, $search, $searchBy, $sort, $order);
-        
-      
-        $this->view('AdminBusinessComplaints', [
-            "complaints" => $complaints,
-            "complaints_pager" => $complaints_pager
-        ]);
+            //sort and search
+            $search = $_GET['search'] ?? '';
+            $searchBy = $_GET['searchBy'] ?? '';
+            $sort = $_GET['sort'] ?? 'complaint_id';
+            $order = $_GET['order'] ?? 'ASC';
+    
+            $complaint_limit = 4;
+            //count the no of complaints in the non_resolved_complaints view
+            $complaintsCountData = $admin->count('non_resolved_complaints');
+            //calculate the no of pages
+            $noOfPages_complaints = ceil($complaintsCountData / $complaint_limit);
+    
+            //Pagination for complaints
+            // displays only the non-resolved complaints
+            $complaints_pager = Pager::getInstance('non_resolved_complaints', $noOfPages_complaints, $complaint_limit);
+            $complaints_offset = $complaints_pager->offset;
+            $complaints = $admin->selectNotAttended('non_resolved_complaints', $complaint_limit, $complaints_offset, $search, $searchBy, $sort, $order);
+            
+          
+            $this->view('AdminBusinessComplaints', [
+                "complaints" => $complaints,
+                "complaints_pager" => $complaints_pager
+            ]);
+        }else{
+            $this->redirect('/login');
+        }
+       
     }
     //View a respective complaint made by a customer
     function ViewComplain($complaint_id)
@@ -814,12 +844,13 @@ class Admin extends Controller
 
             ]);
         } else {
-            $this->view('adminLoginStep1');
+            $this->redirect('/login');
         }
     }
     //Add new business
     function addNewBusiness(){
-        $errors=array();
+        if(Auth::logged_in()){
+            $errors=array();
         // print_r($_FILES);
         if(count($_POST)>0){
             $business=new AdminBusiness();
@@ -871,6 +902,10 @@ class Admin extends Controller
         }else{
             $this->view('AdminAddNewBusiness');
         }
+        }else{
+            $this->redirect('/login');
+        }
+        
         
 
     
@@ -879,53 +914,58 @@ class Admin extends Controller
     //Add new customer
     function addNewCustomer()
     {
-        $errors = array();
-        if (count($_POST) > 0) {
-            $customer = new AdminCustomer();
-            if ($customer->validateCustomer($_POST)) {
-                $user['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
-                $user['email'] = $_POST['email'];
-                $user['role'] = 'customer';
-                $user['profile_pic'] = $customer->uploadCustomerPic($_FILES['profile_picture']['name']);
-                $user['reg_date'] = date('Y-m-d H:i:s');
-                $user['status_id'] = 1;
-
-                $add_customer['fname'] = $_POST['fname'];
-                $add_customer['lname'] = $_POST['lname'];
-                $add_customer['phoneNo'] = $_POST['phone'];
-                $add_customer['username'] = $_POST['username'];
-
-
-                $user_columns = ['email', 'password', 'role', 'profile_pic', 'reg_date'];
-                $user_values = [$user['email'], $user['password'], $user['role'], $user['profile_pic'], $user['reg_date']];
-
-                $customer_columns = ['fname', 'lname', 'phoneNo'];
-                $customer_values = [$add_customer['fname'], $add_customer['lname'], $add_customer['phoneNo']];
-
-                if (!($customer->insertCustomer(
-                    $user_columns,
-                    $user_values,
-                    $customer_columns,
-                    $customer_values,
-                    $user,
-                    $add_customer
-                ))) {
-                    $errors["customer_insertion"] = "Customer already exists";
+        if(Auth::logged_in()){
+            $errors = array();
+            if (count($_POST) > 0) {
+                $customer = new AdminCustomer();
+                if ($customer->validateCustomer($_POST)) {
+                    $user['password'] = password_hash($_POST['password'], PASSWORD_DEFAULT);
+                    $user['email'] = $_POST['email'];
+                    $user['role'] = 'customer';
+                    $user['profile_pic'] = $customer->uploadCustomerPic($_FILES['profile_picture']['name']);
+                    $user['reg_date'] = date('Y-m-d H:i:s');
+                    $user['status_id'] = 1;
+    
+                    $add_customer['fname'] = $_POST['fname'];
+                    $add_customer['lname'] = $_POST['lname'];
+                    $add_customer['phoneNo'] = $_POST['phone'];
+                    $add_customer['username'] = $_POST['username'];
+    
+    
+                    $user_columns = ['email', 'password', 'role', 'profile_pic', 'reg_date'];
+                    $user_values = [$user['email'], $user['password'], $user['role'], $user['profile_pic'], $user['reg_date']];
+    
+                    $customer_columns = ['fname', 'lname', 'phoneNo'];
+                    $customer_values = [$add_customer['fname'], $add_customer['lname'], $add_customer['phoneNo']];
+    
+                    if (!($customer->insertCustomer(
+                        $user_columns,
+                        $user_values,
+                        $customer_columns,
+                        $customer_values,
+                        $user,
+                        $add_customer
+                    ))) {
+                        $errors["customer_insertion"] = "Customer already exists";
+                        $this->view('AdminAddNewCustomer', [
+                            "errors" => $errors
+                        ]);
+                    } else {
+                        $this->redirect('/Admin/ManageCustomers');
+                    }
+                } else {
+                    $errors = $customer->errors;
                     $this->view('AdminAddNewCustomer', [
                         "errors" => $errors
                     ]);
-                } else {
-                    $this->redirect('/Admin/ManageCustomers');
                 }
             } else {
-                $errors = $customer->errors;
-                $this->view('AdminAddNewCustomer', [
-                    "errors" => $errors
-                ]);
+                $this->view('AdminAddNewCustomer');
             }
-        } else {
-            $this->view('AdminAddNewCustomer');
+        }else{
+            $this->redirect('/login');
         }
+      
     }
     //Admin Manage Business
     function ManageBusinesses()
@@ -993,7 +1033,8 @@ class Admin extends Controller
     //Add new Charity organization
     function addNewCharityOrg()
     {
-        $errors = array();
+        if(Auth::logged_in()){
+            $errors = array();
         if (count($_POST) > 0) {
             $charity = new AdminModel();
             if ($charity->validateCharity($_POST)) {
@@ -1046,6 +1087,10 @@ class Admin extends Controller
         } else {
             $this->view('AddNewCharityOrg', ['errors' => $errors]);
         }
+        }else{
+            $this->redirect('/login');
+        }
+        
     }
     function Reports()
     {

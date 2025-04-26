@@ -246,36 +246,48 @@ class Login extends Controller{
         ]);
     }
     function forgot(){
-        $errors=array();
-        //Check the POST method
-        if(count($_POST)>0){
-            $user=new User();
-            //find a user with the relevant email
-            $email=$user->where('email',$_POST['email'],'user');
-            //check the user exists
-            if($email){
-                $user_details=$email[0];
-                //generate the token
-                $token=TokenHandler::generateToken();
-                $expiry=TokenHandler::generateExpiryDate();
-                //insert the token into the database
-                $data['token']=$token;
-                $data['token_expiry']=$expiry;
-
-                $admin=new AdminModel();
-
-                $admin->update($user_details->id,$data,'user');
-
-                Mail::sendEmailVerification($_POST['email'],$token);
-                
-
-
-                
+        if(Auth::logged_in()){
+            $errors=array();
+            //Check the POST method
+            if(count($_POST)>0){
+                $user=new User();
+                //find a user with the relevant email
+                $email=$user->where('email',$_POST['email'],'user');
+                //check the user exists
+                if($email){
+                    $user_details=$email[0];
+                    //generate the token
+                    $token=TokenHandler::generateToken();
+                    $expiry=TokenHandler::generateExpiryDate();
+                    //insert the token into the database
+                    $data['token']=$token;
+                    $data['token_expiry']=$expiry;
+    
+                    $admin=new AdminModel();
+    
+                    $admin->update($user_details->id,$data,'user');
+    
+                    Mail::sendEmailVerification($_POST['email'],$token);
+                    
+    
+    
+                    
+                }else{
+                    $errors['invalid email']="User email not registered";
+                    $this->view('ForgotPassword',[
+                        "errors"=>$errors
+                    ]);
+                }
+            }else{
+    
             }
-        }else{
-
+            $this->view('ForgotPassword');
+        
+        } else {
+            $this->redirect('register');
         }
-        $this->view('ForgotPassword');
+        
+       
     }
     function ResetPassword(){
         // print_r(count($_POST));

@@ -513,12 +513,14 @@ class AdminModel extends Admin_Model
             }
         }
 
-        if(isset($DATA['latitude'])) {
+        if (!empty($DATA['latitude']) && $DATA['latitude'] != '0') {
             $this->data['latitude'] = $DATA['latitude'];
         }
-        if(isset($DATA['longitude'])) {
+        
+        if (!empty($DATA['longitude']) && $DATA['longitude'] != '0') {
             $this->data['longitude'] = $DATA['longitude'];
         }
+        
 
         if (!empty($DATA['email'])) {
             if (empty($DATA['email']) || !filter_var($DATA['email'], FILTER_VALIDATE_EMAIL)) {

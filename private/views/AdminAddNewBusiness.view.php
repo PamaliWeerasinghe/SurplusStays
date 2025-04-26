@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Update Business</title>
+    <title>Insert Business</title>
     <!-- <link rel="stylesheet" href="<?=ROOT?>/assets/styles/charity_register.css"> -->
     <link rel="stylesheet" href="<?=STYLES?>/charity_register.css">
     <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBoo4pzFf80sXYMtcQUux4CWSCY9nDbvig&libraries=places"></script>
@@ -80,7 +80,7 @@
                 <h4>USERNAME :</h4>
                 <input placeholder="ENTER USERNAME" value='<?=get_var('username')?>' type="username" name="username" class="input" >
                 <h4>PASSWORD :</h4>
-                <input placeholder="ENTER A PASSWORD" value="<?=get_var('password')?>" type="password" name="password" class="input">
+                <input placeholder="ENTER A PASSWORD" value="<?=get_var('password')?>" minlength=5 type="password" name="password" class="input">
                 <h4>CONFIRM PASSWORD  :</h4>
                 <input placeholder="RE-ENTER A PASSWORD" value="<?=get_var('confirm_password')?>" type="password" name="confirm_password" class="input">   
                 <p>BY REGISTERING YOU AGREE TO OUR <a style="text-decoration: none;" href="url">TERMS AND CONDITIONS</a> AND <a style="text-decoration: none;" href="url">PRIVACY POLICY</a></p>                  

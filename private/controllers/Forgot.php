@@ -25,7 +25,10 @@ class Forgot extends Controller
 
                 Mail::sendEmailVerification($_POST['email'], $token);
             }else{
-                $this->view('ForgotPassword');
+                $errors['invalid email']="User email not registered";
+                $this->view('ForgotPassword',[
+                    "errors"=>$errors
+                ]);
             }
             
         } else {

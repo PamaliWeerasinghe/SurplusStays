@@ -137,14 +137,12 @@ class Customer extends Controller{
                  } else {
                      // send notification for the admin
                      $currentDateTime = date('Y-m-d H:i:s');
-                     // $email=$_SESSION['USER'];
-                     // $complaints=new AdminComplaints();
+                    
                      $complaint_id = $admin->id;
                      if (!Mail::sendCustomerComplaint($complaint_id, $currentDateTime, 'pamaliweerasinghe@gmail.com')) {
                          error_log("Could't send the email");
-                         $_SESSION['alert_message']="Check your email";
-                         $_SESSION['alert_type']="success";
-                         $this->redirect('admin/makeComplaints');
+                        
+                         $this->redirect('Complaints');
                      }
                  }
  
@@ -152,7 +150,7 @@ class Customer extends Controller{
                      "orders" => $orders,
                     //  "orderDetails" => $orderDetails,
                      "errors" => $errors,
-                     'successfull'=>$_SESSION['alert_message'],
+                     
                  ]);
              }
          } else {

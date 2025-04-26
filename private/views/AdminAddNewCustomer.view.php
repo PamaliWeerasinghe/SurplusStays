@@ -7,7 +7,7 @@
     <link rel="stylesheet" href="<?=ROOT?>/assets/styles/charity_register.css">
 </head>
 <body>
-<?php echo $this->view('includes/navbar_unregistered')?>
+<?php echo $this->view('includes/navbar')?>
 
     <div class="container">
         <div class="left">
@@ -21,7 +21,7 @@
             <div class="details">
                 <div class="steps">
                     <h4></h4>
-                    <div class="step-number"><h3>PERSONAL AND LOGIN INFORMATION</h3></div>
+                    <div class="step-number"><h3>CUSTOMER INFORMATION</h3></div>
                     <p></p>
                 </div>
                 <?php if (!empty($errors)): ?>
