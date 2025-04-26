@@ -13,8 +13,8 @@
         let map, marker;
 
         function initMap() {
-            const lat = parseFloat("<?= Auth::getLatitude() ?>");
-            const lng = parseFloat("<?= Auth::getLongitude() ?>");
+            const lat = parseFloat("<?=$currbusiness[0]->latitude?>");
+            const lng = parseFloat("<?= $currbusiness[0]->longitude ?>");
             const position = {
                 lat: isNaN(lat) ? 6.927079 : lat,
                 lng: isNaN(lng) ? 79.861244 : lng

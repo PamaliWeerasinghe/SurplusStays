@@ -138,6 +138,7 @@ body {
 .order-details-table {
     border-collapse: collapse;
     margin-top: 20px;
+    margin-bottom: 20px;
 }
 
 .order-details-table th,
