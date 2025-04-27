@@ -80,21 +80,21 @@
                         <div class="input-group upload-group">
                             <label>Upload Images : <small>You Can Add Up To 3 Images.</small></label>
                             <div class="upload-wrapper">
-                                <!-- First Image Upload -->
+                                
                                 <label for="upload-1">
                                     <img src="<?= isset($uploadedPictures[0]) ? ROOT . $uploadedPictures[0] : ASSETS . '/icons/uploadArea.png' ?>"
                                         alt="Upload Image" class="upload-icon" id="profilePreview-1">
                                 </label>
                                 <input type="file" id="upload-1" name="upload-1" style="display: none;">
 
-                                <!-- Second Image Upload -->
+                                
                                 <label for="upload-2">
                                     <img src="<?= isset($uploadedPictures[1]) ? ROOT . $uploadedPictures[1] : ASSETS . '/icons/uploadArea.png' ?>"
                                         alt="Upload Image" class="upload-icon" id="profilePreview-2">
                                 </label>
                                 <input type="file" id="upload-2" name="upload-2" style="display: none;">
 
-                                <!-- Third Image Upload -->
+                                
                                 <label for="upload-3">
                                     <img src="<?= isset($uploadedPictures[2]) ? ROOT . $uploadedPictures[2] : ASSETS . '/icons/uploadArea.png' ?>"
                                         alt="Upload Image" class="upload-icon" id="profilePreview-3">
@@ -125,9 +125,9 @@
         </div>
         <?php echo $this->view('includes/footer') ?>
 
-        <!-- JavaScript to Show Preview -->
+        
         <script>
-            // First Image Preview
+            
             document.getElementById('upload-1').addEventListener('change', function(event) {
                 const file = event.target.files[0];
                 if (file) {
@@ -139,7 +139,7 @@
                 }
             });
 
-            // Second Image Preview
+            
             document.getElementById('upload-2').addEventListener('change', function(event) {
                 const file = event.target.files[0];
                 if (file) {
@@ -151,7 +151,7 @@
                 }
             });
 
-            // Third Image Preview
+            
             document.getElementById('upload-3').addEventListener('change', function(event) {
                 const file = event.target.files[0];
                 if (file) {
@@ -163,16 +163,14 @@
                 }
             });
 
-        /* handle image uploaders when  clear-all button is clicked */ 
 
-        // Handle "Clear All" manually for custom elements
+
         document.querySelector('form').addEventListener('reset', function () {
-        // Reset image previews to default upload icons
+
         document.getElementById('profilePreview-1').src = "<?= ASSETS ?>/icons/uploadArea.png";
         document.getElementById('profilePreview-2').src = "<?= ASSETS ?>/icons/uploadArea.png";
         document.getElementById('profilePreview-3').src = "<?= ASSETS ?>/icons/uploadArea.png";
 
-        // Clear file input fields
         document.getElementById('upload-1').value = "";
         document.getElementById('upload-2').value = "";
         document.getElementById('upload-3').value = "";

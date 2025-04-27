@@ -14,23 +14,23 @@
         let map, marker;
 
         function initMap() {
-            // Get the latitude and longitude from the business profile
+            
             const lat = parseFloat("<?= $currbusiness[0]->latitude ?>");
             const lng = parseFloat("<?= $currbusiness[0]->longitude ?>");
 
-            // Default to the business location or use a fallback location
+            
             const position = {
-                lat: isNaN(lat) ? 6.927079 : lat, // Default lat if invalid
-                lng: isNaN(lng) ? 79.861244 : lng // Default lng if invalid
+                lat: isNaN(lat) ? 6.927079 : lat, 
+                lng: isNaN(lng) ? 79.861244 : lng 
             };
 
-            // Initialize the map
+            
             map = new google.maps.Map(document.getElementById("map"), {
                 center: position,
                 zoom: 14,
             });
 
-            // Place a marker on the map
+            
             marker = new google.maps.Marker({
                 position: position,
                 map: map,
@@ -94,7 +94,7 @@
                 </div>
             </div>
         </div>
-        <!-- Simple Delete Confirmation Popup -->
+        
         <div id="deletePopup" class="popup">
             <div class="popup-content">
                 <p>Confirm Profile Deletion</p>
@@ -107,7 +107,7 @@
         </div>
 
         <script>
-            /* deleteform popup */
+            
             let deleteForm = null;
 
             document.querySelectorAll('.deletebutton').forEach(button => {

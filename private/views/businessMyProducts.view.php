@@ -56,7 +56,7 @@
                                 <?php foreach ($rows as $row): ?>
                                     <?php
                                     if($row->status_id==1):
-                                    $productPictures = explode(',', $row->pictures); // Get images
+                                    $productPictures = explode(',', $row->pictures); 
                                     $productImage = isset($productPictures[0]) ? $productPictures[0] : 'product_placeholder.png';
                                     ?>
                                     <tr class="product-row" onclick="window.location.href='<?= ROOT ?>/business/viewProduct/<?= $row->id ?>'">
@@ -105,7 +105,7 @@
         <?php echo $this->view('includes/footer') ?>
     </div>
 
-    <!-- Simple Delete Confirmation Popup -->
+    
     <div id="deletePopup" class="popup">
         <div class="popup-content">
             <p>Are you sure you want to delete this product?</p>
@@ -117,7 +117,7 @@
     </div>
 
     <script>
-        /* deleteform popup */
+        
         let deleteForm = null;
 
         document.querySelectorAll('.deletebutton').forEach(button => {
@@ -136,7 +136,7 @@
             document.getElementById('deletePopup').style.display = 'none';
         });
 
-        /* stop the viewProduct page when clicking edit and delete */
+        
 
         document.querySelectorAll('.editbutton, .deletebutton').forEach(button => {
             button.addEventListener('click', event => {
@@ -144,7 +144,7 @@
             });
         });
 
-        /* pagination */
+        
 
         const rowsPerPage = 10;
         let currentPage = 1;
@@ -158,10 +158,10 @@
             });
         }
 
-        // Initial display
+        
         showPage(currentPage);
 
-        // Event listeners
+        
         document.getElementById('NextBtn').addEventListener('click', () => {
             if (currentPage < totalPages) {
                 currentPage++;
@@ -176,7 +176,7 @@
             }
         });
 
-        /* search by name */
+        
 
         function searchByName() {
             let input = document.getElementById("productSearch").value.toUpperCase();

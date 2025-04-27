@@ -74,7 +74,7 @@
             <p>Are you a business looking to make a positive impact by reducing food waste and helping those in need? Register with SurplusStays and start donating your surplus food today.
             </p>
         </div>
-        <form method="post" class="right" enctype="multipart/form-data"> <!--enctype="multipart/form-data" allows file uploads-->
+        <form method="post" class="right" enctype="multipart/form-data"> 
             <div class="details">
                 <div class="steps">
                     <h4></h4>
@@ -108,7 +108,6 @@
                 <h4>PHONE NUMBER :</h4>
                 <input placeholder="ENTER A PHONE NUMBER" value="<?= get_var('phone') ?>" type="text" name="phone" class="input">
                 <h4>BUSINESS LOCATION :</h4>
-                <!-- <input placeholder="ENTER YOUR BUSINESS ADDRESS" value="?= get_var('address') ?>" type="text" name="address" class="input"> -->
                 <input type="hidden" id="latitude" name="latitude" placeholder="Latitude" readonly required value="<?=get_var('latitude')?>"><br>
                 <input type="hidden" id="longitude" name="longitude" placeholder="Longitude" readonly required value="<?= get_var('longitude')?>"><br>
                 <input id="pac-input" class="input" type="text" placeholder="Search for your business location"
@@ -136,7 +135,7 @@
     </div>
     <?php echo $this->view('includes/footer') ?>
 
-    <!-- JavaScript to Show Preview -->
+    
     <script>
         document.getElementById('upload-1').addEventListener('change', function(event) {
             const file = event.target.files[0];

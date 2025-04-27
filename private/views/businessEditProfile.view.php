@@ -139,7 +139,7 @@
         </div>
         <?php echo $this->view('includes/footer') ?>
 
-        <!-- JavaScript to Show Preview -->
+        
         <script>
 
             document.getElementById('upload-1').addEventListener('change', function(event) {
@@ -148,7 +148,7 @@
                     const reader = new FileReader();
                     reader.onload = function(e) {
                         const previewImage = document.getElementById('profilePreview-1');
-                        previewImage.src = e.target.result; // Update image source
+                        previewImage.src = e.target.result; 
                         
                     };
                     reader.readAsDataURL(file);

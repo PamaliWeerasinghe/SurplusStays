@@ -16,7 +16,7 @@
             <?php echo $this->view('includes/businessSidePanel') ?>
             <div class="dashboard">
                 <div class="summary">
-                    <!-- Request Status Cards -->
+                    
                     <div class="order-status-cards">
                         <div class="order-card all" onclick="filterByStatus('all')">
                             <h3>All</h3>
@@ -44,7 +44,7 @@
                         </div>
                     </div>
 
-                    <!-- Request Table -->
+                    
                     <table class="main-table">
                         <thead>
                             <tr>
@@ -92,9 +92,9 @@
         <?php echo $this->view('includes/footer') ?>
     </div>
 
-    <!-- JavaScript to Handle Filtering -->
+    
     <script>
-        /* pagination */
+        
 
         const rowsPerPage = 10;
         let currentPage = 1;
@@ -108,10 +108,10 @@
             });
         }
 
-        // Initial display
+       
         showPage(currentPage);
 
-        // Event listeners
+        
         document.getElementById('NextBtn').addEventListener('click', () => {
             if (currentPage < totalPages) {
                 currentPage++;
@@ -126,7 +126,7 @@
             }
         });
 
-        /* search Requests by ID */
+        
 
         function filterrequests() {
             let input = document.getElementById("requestSearch").value.toUpperCase();
@@ -138,7 +138,7 @@
             });
         }
 
-        /* filter status by status */
+        
 
         function filterByStatus(status) {
             let rows = document.querySelectorAll(".request-row");

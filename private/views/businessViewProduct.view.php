@@ -27,7 +27,7 @@
                         <?php if (($row)): ?>
 
                             <?php
-                            // Get the images from the pictures array
+                            
                             $businessPictures = explode(',', $row[0]->pictures);
                             ?>
 

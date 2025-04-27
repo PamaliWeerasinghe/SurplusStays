@@ -58,7 +58,7 @@
 
                 </div>
 
-                <!-- Order status bar chart -->
+                
                 <div class="order-status">
                     <div class="order">
                         <label>Order Status For this week</label>
@@ -78,7 +78,7 @@
                     </div>
                 </div>
 
-                <!-- Top Sales Products -->
+                
                 <div class="product-status">
                     <div>
                         <label>Top Sales Products</label>
@@ -115,7 +115,7 @@
                     </div>
                 </div>
 
-                <!-- Recent Orders Table -->
+                
                 <div class="recent-orders">
                     <div>
                         <label>Recent Orders</label>
@@ -164,7 +164,7 @@
     </div>
 
     <script>
-        //pagination for top selling products section
+        
 
         const rowsPerPage = 4;
         let currentPage = 1;
@@ -178,10 +178,10 @@
             });
         }
 
-        // Initial display
+        
         showPage(currentPage);
 
-        // Event listeners
+        
         document.getElementById('productNextBtn').addEventListener('click', () => {
             if (currentPage < totalPages) {
                 currentPage++;
@@ -196,7 +196,7 @@
             }
         });
 
-        //pagination for recent orders section
+        
 
         const orderItemsPerPage = 4;
         let orderCurrentPage = 1;
@@ -213,10 +213,10 @@
             });
         }
 
-        // Initial display
+        
         showOrders(orderCurrentPage);
 
-        // Event listeners
+       
         orderPrevBtn?.addEventListener("click", () => {
             if (orderCurrentPage > 1) {
                 orderCurrentPage--;
@@ -231,35 +231,35 @@
             }
         });
 
-        //JS for bar chart
+        
 
-        // Get weekly data from PHP
+        
         const weeklyData = <?= json_encode($weeklyStats) ?>;
 
-        // Define the week days and prepare a map with default zero counts
+        
         const daysOfWeek = ['Monday', 'Tuesday', 'Wednesday', 'Thursday', 'Friday', 'Saturday', 'Sunday'];
         const orderData = {};
 
         daysOfWeek.forEach(day => {
-            orderData[day] = 0; // default value
+            orderData[day] = 0; 
         });
 
-        // Fill orderData with actual values from backend
+        
         weeklyData.forEach(item => {
             orderData[item.day] = item.order_count;
         });
 
-        // Get chart container
+        
         const chart = document.getElementById("orderChart");
-        chart.innerHTML = ""; // Clear existing bars
+        chart.innerHTML = ""; 
 
-        // Create bars for each day
+        
         daysOfWeek.forEach(day => {
             const bar = document.createElement("div");
             bar.className = "bar";
 
-            const orders = orderData[day]; // how many orders that day
-            const barHeight = Math.min(orders * 20, 100); // scale height, max 100%
+            const orders = orderData[day]; 
+            const barHeight = Math.min(orders * 20, 100); 
 
             bar.style.setProperty("--value", `${barHeight}%`);
             chart.appendChild(bar);
