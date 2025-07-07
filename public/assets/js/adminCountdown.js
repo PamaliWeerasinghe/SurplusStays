@@ -11,7 +11,7 @@ function countDown(exp_date, index) {
     );
     var minutes = Math.floor((distance % (1000 * 60 * 60)) / (1000 * 60));
     var seconds = Math.floor((distance % (1000 * 60)) / 1000);
-
+    
     document.getElementById("days" + index).innerHTML = days+"days";
     document.getElementById("hours" + index).innerHTML = hours+"h";
     document.getElementById("minutes" + index).innerHTML = minutes + "m";

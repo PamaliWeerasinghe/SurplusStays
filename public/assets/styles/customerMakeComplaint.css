@@ -1,0 +1,322 @@
+body, html {
+    height: 100%; /* Ensure body and html take full height */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0;
+}
+
+.top-nav {
+    background-color: #005250;
+    color: white;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-bar {
+    margin-top: 5px;
+}
+
+.container-right{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 1500px;
+}
+
+.searchWelcome{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 5px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-left: 6.5%;
+    margin-top: 40px;
+    width: 85%;
+    height: 40px;
+}
+
+  .searchWelcome h2{
+    color: black;
+  }
+  
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    padding-left: 10px;
+  }
+
+.complaints-status {
+    margin-left: 6.5%;
+    width: 88%;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: #F0F8FF;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+
+/* Modern Color Scheme */
+:root {
+    --primary-color: #3a6ea5;
+    --secondary-color: #3a6ea5;
+    --accent-color: #005250;
+    --success-color: #4caf50;
+    --background-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --border-color: #e0e7ff;
+    --shadow: 0 10px 25px rgba(0, 0, 0, 0.05);
+  }
+  
+  /* Form Container */
+ 
+  
+
+  .searchWelcome select {
+    background-color: rgba(255, 255, 255, 0.9);
+    border: none;
+    border-radius: 8px;
+    padding: 12px 16px;
+    font-size: 1rem;
+    color: var(--text-primary);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+    width: auto;
+  }
+  
+  .searchWelcome select:hover, 
+  .searchWelcome select:focus {
+    background-color: white;
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+    transform: translateY(-2px);
+  }
+  
+  .searchWelcome label {
+    font-weight: 500;
+    padding: 6px 12px;
+    display: flex;
+    flex-direction: row;
+    gap: 0.5rem;
+    width: 200px;
+    margin-top: 0%;
+    margin-left: 45%;
+    color: black;
+  }
+  .searchWelcome label h2{
+    padding: 12px 16px;
+    width: 60px;
+    font-size:large;
+  }
+  
+  
+  .seecomplain-status {
+    background: var(--card-bg);
+    padding: 2.5rem;
+    border-radius: 0 0 16px 16px;
+    box-shadow: var(--shadow);
+  }
+  
+  /* Product Details Section */
+  .see-product {
+    display: flex;
+    flex-direction: column;
+    gap: 2rem;
+  }
+  
+  .main-img-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .see-product-details {
+    display: flex;
+    flex-direction: column;
+    gap: 1.5rem;
+  }
+  
+  .see-product-details h2 {
+    font-size: 1.4rem;
+    color: var(--text-primary);
+    margin: 0;
+    display: inline-block;
+  }
+  
+  .see-product-details h3 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin: 0;
+    margin-bottom: 0.5rem;
+  }
+  
+  .see-product-details label {
+    color: var(--secondary-color);
+    font-weight: 600;
+    font-size: 1.1rem;
+    display: inline-block;
+    margin-left: 0.5rem;
+  }
+  
+  /* Select Elements */
+  .see-product-details select {
+    padding: 14px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    background-color: white;
+    font-size: 1rem;
+    color: var(--text-primary);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+    appearance: none;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='24' height='24' viewBox='0 0 24 24' fill='none' stroke='%233a6ea5' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='6 9 12 15 18 9'%3E%3C/polyline%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 16px center;
+    background-size: 16px;
+    padding-right: 40px;
+  }
+  
+  .see-product-details select:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+    outline: none;
+  }
+  
+  /* Textarea */
+  .see-product-details textarea {
+    padding: 16px;
+    border-radius: 12px;
+    border: 1px solid var(--border-color);
+    font-size: 1rem;
+    color: var(--text-primary);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.03);
+    transition: all 0.3s ease;
+    resize: vertical;
+    min-height: 150px;
+    font-family: inherit;
+  }
+  
+  .see-product-details textarea:focus {
+    border-color: var(--secondary-color);
+    box-shadow: 0 0 0 3px rgba(108, 99, 255, 0.2);
+    outline: none;
+  }
+  
+  /* Image Upload Area */
+  .sub-img {
+    margin-top: 1.5rem;
+  }
+  
+  .img-container {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 16px;
+    justify-content: flex-start;
+  }
+  
+  .upload-wrapper {
+    width: 150px;
+    height: 150px;
+    border: 2px dashed var(--border-color);
+    border-radius: 16px;
+    background-color: rgba(240, 242, 245, 0.8);
+    overflow: hidden;
+    transition: all 0.3s ease;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+  }
+  
+  .upload-wrapper:hover {
+    border-color: var(--secondary-color);
+    background-color: rgba(230, 235, 250, 0.8);
+    transform: translateY(-4px);
+  }
+  
+  .upload-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 14px;
+    transition: all 0.3s ease;
+  }
+  
+  /* Submit Button */
+  .business-response-area-btn {
+    margin-top: 2rem;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .complain-btn1 {
+    background: linear-gradient(135deg, var(--secondary-color), var(--primary-color));
+    color: white;
+    padding: 14px 32px;
+    border-radius: 12px;
+    font-size: 1.1rem;
+    font-weight: 600;
+    border: none;
+    cursor: pointer;
+    transition: all 0.3s ease;
+    box-shadow: 0 6px 12px rgba(58, 110, 165, 0.2);
+    letter-spacing: 0.5px;
+  }
+  
+  .complain-btn1:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 8px 15px rgba(58, 110, 165, 0.3);
+    background: linear-gradient(135deg, #5e56e8, #3259a5);
+  }
+  
+  .complain-btn1:active {
+    transform: translateY(1px);
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .searchWelcome,
+    .seecomplain-status {
+      padding: 1.5rem;
+    }
+    
+    .img-container {
+      justify-content: center;
+    }
+    
+    .business-response-area-btn {
+      justify-content: center;
+    }
+  }
+  
+  /* Animations */
+  @keyframes fadeIn {
+    from {
+      opacity: 0;
+      transform: translateY(10px);
+    }
+    to {
+      opacity: 1;
+      transform: translateY(0);
+    }
+  }
+  
+  .seecomplain-status {
+    animation: fadeIn 0.4s ease-out forwards;
+  }

@@ -1,0 +1,408 @@
+body, html {
+    height: 100%; /* Ensure body and html take full height */
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+}
+
+.container{
+    display: flex;
+    flex-direction: row;
+    width: 100%;
+    margin: 0;
+}
+
+.top-nav {
+    background-color: #005250;
+    color: white;
+    width: 100%;
+    height: 300px;
+    display: flex;
+    flex-direction: column;
+}
+
+.top-bar {
+    margin-top: 5px;
+}
+
+.container-right{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 1500px;
+}
+
+.searchWelcome{
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background-color: #fff;
+    padding: 20px;
+    border-radius: 15px;
+    box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+    margin-left: 6.5%;
+    margin-top: 40px;
+    width: 85%;
+    height: 40px;
+}
+
+  .searchWelcome h2{
+    color: black;
+  }
+  
+  h2 {
+    margin: 0;
+    font-size: 24px;
+    padding-left: 10px;
+  }
+
+.complaints-status {
+    margin-left: 6.5%;
+    width: 88%;
+    margin-top: 60px;
+    margin-bottom: 20px;
+    border-radius: 10px;
+    box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
+    background-color: #F0F8FF;
+    display: flex;
+    flex-direction: column;
+    flex-grow: 1;
+}
+
+
+/* Modern Color Scheme - Using same colors as previous design */
+:root {
+    --primary-color: #3a6ea5;
+    --secondary-color: #6c63ff;
+    --accent-color: #e05b4a;
+    --success-color: #4caf50;
+    --background-color: #f8fafc;
+    --card-bg: #ffffff;
+    --text-primary: #333333;
+    --text-secondary: #666666;
+    --border-color: #e0e7ff;
+    --shadow: 0 10px 25px rgba(0, 0, 0, 0.08);
+  }
+  
+  /* Main Container */
+  .seecomplain-status {
+    margin-top: 100px;
+    width: 86%;
+    background-color: #ffffff;
+
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.1);
+    overflow: hidden;
+    transition: all 0.3s ease;
+  }
+  
+  /* Header Bar */
+  .seecomplain-bar {
+    width: 100%;
+    height: auto;
+    border-radius: 16px 16px 0 0;
+    background: linear-gradient(135deg, var(--accent-color), #f56954);
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 16px 24px;
+    box-sizing: border-box;
+
+  }
+  
+  .seecomplain-bar label {
+    color: white;
+    font-size: 1.1rem;
+    font-weight: 600;
+    margin: 0;
+    text-shadow: 0 1px 2px rgba(0, 0, 0, 0.1);
+  }
+  
+  /* Content Section */
+  .see-product {
+    display: flex;
+    flex-direction: column;
+    padding: 2%;
+    gap: 24px;
+  }
+  
+  /* Main Image and Details Area */
+  .main-img-details {
+    display: flex;
+    flex-direction: row;
+    padding: 1%;
+    gap: 32px;
+    align-items: flex-start;
+  }
+  
+  /* Product Image */
+  .see-product-img {
+    display: flex;
+    flex: 1;
+    justify-content: center;
+    align-items: flex-start;
+  }
+  
+  .see-product-img img {
+    height: 40vh;
+    object-fit: contain;
+    border-radius: 12px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    transition: transform 0.3s ease;
+  }
+  
+  .see-product-img img:hover {
+    transform: scale(1.02);
+  }
+  
+  /* Product Details */
+  .see-product-details {
+    display: flex;
+    flex: 1;
+    justify-content: flex-start;
+    align-items: flex-start;
+    flex-direction: column;
+    gap: 16px;
+  }
+  
+  .see-product-details h2 {
+    font-size: 1.6rem;
+    color: var(--primary-color);
+    margin: 0;
+    font-weight: 600;
+    border-bottom: 2px solid var(--border-color);
+    padding-bottom: 8px;
+    width: 100%;
+  }
+  
+  .see-product-details h3 {
+    font-size: 1.2rem;
+    color: var(--text-primary);
+    margin: 0;
+    font-weight: 600;
+  }
+  
+  .see-product-details div p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    font-size: 1rem;
+    margin: 8px 0;
+    background-color: rgba(240, 242, 245, 0.5);
+    padding: 12px 16px;
+    border-radius: 8px;
+    border-left: 4px solid var(--border-color);
+  }
+  
+  .see-product-details div {
+    width: 100%;
+    margin-top: 0;
+  }
+  
+  /* Location Info */
+  .see-product-location {
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: space-between;
+    width: 100%;
+    background-color: rgba(230, 235, 250, 0.5);
+    padding: 12px 16px;
+    border-radius: 10px;
+  }
+  
+  .see-product-location label {
+    font-weight: 600;
+    color: var(--primary-color);
+  }
+  
+  /* Other Product Info */
+  .see-product-details > div > label {
+    display: block;
+    font-size: 1rem;
+    color: var(--text-primary);
+    font-weight: 500;
+    padding: 8px 0;
+    position: relative;
+  }
+  
+  .see-product-details > div > label:before {
+    content: '•';
+    color: var(--secondary-color);
+    font-weight: bold;
+    margin-right: 8px;
+  }
+  
+  /* Thumbnail Images */
+  .sub-img {
+    padding: 2% 4%;
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+  }
+  
+  .sub-img img {
+    height: 14vh;
+    width: auto;
+    object-fit: cover;
+    border-radius: 8px;
+    box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+    transition: all 0.3s ease;
+    cursor: pointer;
+  }
+  
+  .sub-img img:hover {
+    transform: translateY(-4px);
+    box-shadow: 0 8px 16px rgba(0, 0, 0, 0.15);
+  }
+  
+  /* Additional Details */
+  .sub-details {
+    padding-left: 4%;
+    margin-top: 1%;
+    background-color: rgba(240, 242, 245, 0.5);
+    border-radius: 10px;
+    padding: 12px 20px;
+    margin: 0 4%;
+  }
+  
+  .sub-details label {
+    color: var(--text-primary);
+    font-weight: 500;
+  }
+  
+  /* Customer Details */
+  .sub-customer-details {
+    padding: 16px 4%;
+    margin-top: 1%;
+    display: flex;
+    flex-direction: column;
+    gap: 8px;
+    background-color: rgba(230, 235, 250, 0.5);
+    border-radius: 10px;
+    margin: 0 4%;
+  }
+  
+  .sub-customer-details label {
+    font-weight: 600;
+    color: var(--text-primary);
+    margin-bottom: 8px;
+  }
+  
+  .sub-customer-details span {
+    color: var(--accent-color);
+    padding: 4px 0;
+    font-size: 0.95rem;
+  }
+  
+  /* Business Response Areas */
+  .business-response-area {
+    display: flex;
+    flex-direction: column;
+    padding: 2% 4%;
+    background-color: rgba(240, 248, 255, 0.6);
+    border-radius: 12px;
+    margin: 12px 4%;
+    border-left: 4px solid var(--primary-color);
+  }
+  
+  .business-response-area h3 {
+    font-size: 1.1rem;
+    color: var(--primary-color);
+    margin: 0 0 12px 0;
+    font-weight: 600;
+  }
+  
+  .business-response-area div p {
+    color: var(--text-secondary);
+    line-height: 1.6;
+    margin: 8px 0;
+    padding: 12px;
+    background-color: white;
+    border-radius: 8px;
+  }
+  
+  /* Button Area */
+  .business-response-area-btn {
+    padding: 2% 4%;
+    display: flex;
+    justify-content: flex-end;
+  }
+  
+  .business-response-area-btn button {
+    min-width: 120px;
+    padding: 12px 24px;
+    height: auto;
+    border-radius: 10px;
+    border: none;
+    text-align: center;
+    font-weight: 600;
+    font-size: 1rem;
+    transition: all 0.3s ease;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  }
+  
+  .complain-btn1 {
+    background: linear-gradient(135deg, var(--accent-color), #fa8072);
+    color: white;
+    cursor: pointer;
+  }
+  
+  .complain-btn1:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 6px 15px rgba(224, 91, 74, 0.3);
+  }
+  
+  .complain-btn2 {
+    background-color: #fff;
+    color: var(--text-primary);
+    border: 1px solid #eaeaea !important;
+    margin-right: 12px;
+    cursor: pointer;
+  }
+  
+  .complain-btn2:hover {
+    background-color: #f9f9f9;
+    transform: translateY(-2px);
+  }
+  
+  /* Image Container */
+  .img-container {
+    display: flex;
+    flex-direction: row;
+    gap: 16px;
+    flex-wrap: wrap;
+  }
+  
+  /* Responsive adjustments */
+  @media (max-width: 768px) {
+    .seecomplain-status {
+      width: 95%;
+    }
+    
+    .main-img-details {
+      flex-direction: column;
+    }
+    
+    .see-product-img {
+      width: 100%;
+      justify-content: center;
+    }
+    
+    .see-product-img img {
+      height: auto;
+      max-width: 100%;
+    }
+    
+    .business-response-area-btn button {
+      width: 100%;
+    }
+  }
+  
+  /* Highlight text selection */
+  ::selection {
+    background-color: rgba(108, 99, 255, 0.2);
+    color: var(--primary-color);
+  }

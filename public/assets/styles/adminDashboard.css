@@ -164,7 +164,7 @@
   }
   
   .bar:nth-child(3) {
-    background-color: #FD5D34; /* Different color for the highest bar */
+    background-color:  #ffa07a; /* Different color for the highest bar */
   }
   
   .day {

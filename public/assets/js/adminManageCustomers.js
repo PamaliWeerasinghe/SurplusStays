@@ -17,12 +17,13 @@ document.addEventListener("DOMContentLoaded", function() {
 });
 
 function loadOrderItems() {
+  console.log("pressed");
   const oid = document.getElementById("orderID");
   if(oid!="oid"){
     oid.addEventListener("change", (event) => {
       const orderID = event.target.value;
       if(orderID){
-        fetch('http://localhost/SurplusStays/public/Customer/loadItems',{
+        fetch(`http://localhost/SurplusStays/public/Customer/loadItems`,{
           method: "POST",
           headers:{
             "content-Type":"application/x-www-form-urlencoded",
@@ -87,11 +88,4 @@ function closePopup() {
   rcpopupContainer.className = "popup-container";
 }
 
-// function sendReply(){
-//     let msg=document.getElementById("replyText").value;
-//     let id=document.getElementById("complaintID").value;
-//     const data=[id,msg];
-//     const form=document.querySelector('#form1');
-//     form.action=`http://localhost/surplusstays/public/AdminReplyToComplaint/${data}`;
 
-// }
