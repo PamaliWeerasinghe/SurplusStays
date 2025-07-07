@@ -1,0 +1,8 @@
+CREATE TABLE donation_items (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    products_id INT NOT NULL,
+    request_id INT NOT NULL,
+    qty INT,
+    FOREIGN KEY (products_id) REFERENCES products(product_id) ON DELETE CASCADE,
+    FOREIGN KEY (request_id) REFERENCES donation(id) ON DELETE CASCADE
+);

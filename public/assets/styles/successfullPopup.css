@@ -1,0 +1,10 @@
+body{
+    margin: 0;
+}
+.alert-div{
+    width: 40%;
+    height: 10vh;
+    background-color:#5CB338 ;
+    display: flex;
+    flex-direction: row;
+}

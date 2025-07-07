@@ -1,19 +1,7 @@
 <?php
 class AdminCharity extends Controller
 {
-    // function edit($id){
-    //     $charity=new AdminModel();
-    //     $data=$charity->where('id',$id,'organization');
-    //     $errors=null;
-
-    //     $this->view('AdminViewCharity',[
-    //         'rows'=>$data,
-    //         'errors'=>$errors
-    //     ]);
-    // }
-
-
-
+    
     function index($id)
     {
         
@@ -27,7 +15,7 @@ class AdminCharity extends Controller
                 $arr = $charity->data;
         
                 $charity->update($id,$arr,'organization');
-                $data = $charity->where('id', $id, 'organization');
+                $data = $charity->where(['id'],[ $id], 'organization');
                 if ($data) {
                     $data = $data[0];
                 
@@ -41,7 +29,7 @@ class AdminCharity extends Controller
 
             } else {
                 $errors = $charity->errors;
-                $data = $charity->where('id', $id, 'organization');
+                $data = $charity->where(['id'], [$id], 'organization');
                 if ($data) {
                     $data = $data[0];
                 }
@@ -53,7 +41,7 @@ class AdminCharity extends Controller
             }
         } else {
 
-            $data = $charity->where('id', $id, 'organization');
+            $data = $charity->where(['id'],[ $id], 'organization');
             if ($data) {
                 $data = $data[0];
             }
@@ -65,23 +53,7 @@ class AdminCharity extends Controller
         }
 
 
-        // if(count($_POST)>0){
-
-        // }else{
-
-        // }
-
-
-        // $charity=new AdminModel();
-        // $data=$charity->where('id',$id,'organization');
-        // if($data){
-        //     $data=$data[0];
-        // }
-
-        // $this->view('AdminViewCharity',[
-        //     'rows'=>$data,
-
-        // ]);
+       
 
     }
 

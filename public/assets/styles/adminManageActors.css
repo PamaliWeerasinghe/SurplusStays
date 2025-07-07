@@ -20,7 +20,7 @@
     display: flex;
     justify-content: center;
     align-items: center;
-    margin-top: 4%;
+    /* margin-top: 4%; */
     
 }
 .add-buyer div{
@@ -36,7 +36,7 @@
 .pic{
     height: 80px;
     width: 80px;
-    border-radius: 50%;
+    border-radius: 10%;
 }
 .add-buyer div label{
     font-weight: bold;
@@ -161,4 +161,10 @@
 }
 .business-joined label{
     color: red;
+}
+.customer-profile-pic{
+    width: 80px;
+    height: 80px;
+    
+
 }

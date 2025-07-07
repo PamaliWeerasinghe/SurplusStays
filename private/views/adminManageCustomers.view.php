@@ -1,339 +1,151 @@
-<?php require APPROOT.'/views/includes/htmlHeader.view.php'?>
-    <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
-    <link rel="stylesheet" href="<?=STYLES?>/adminManageActors.css" />
-    <link rel="stylesheet" href="<?=STYLES?>/admin.css">
+<?php require APPROOT . '/views/includes/htmlHeader.view.php' ?>
+<?php require APPROOT . '/views/adminViewCustomerPopup.view.php' ?>
+
+<link rel="stylesheet" href="<?= STYLES ?>/adminSidePanel.css" />
+<link rel="stylesheet" href="<?= STYLES ?>/adminManageActors.css" />
+<link rel="stylesheet" href="<?= STYLES ?>/admin.css">
+<link rel="stylesheet" href="<?= STYLES ?>/searchBar.css">
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined" rel="stylesheet" />
 </head>
 
 <body>
-<?php echo $this->view('includes/navbar')?>
+    <?php echo $this->view('includes/navbar') ?>
     <div class="main-div">
         <div class="sub-div-1">
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary">
-                    <div class="notifications-type2">
-                        <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." />
-                            <img src="<?=ASSETS?>/images/search.png" class="bell2" />
-                        </div>
-
-                        <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
-                    </div>
-                    <div class="add-buyer">
-                            <div>
-                                <label>
-                                + Add Buyer
-                                </label>
-                                
+                    <div class="summary-blocks">
+                        <div class="summaries">
+                            <div class="summaries-1">
+                                <label>Total Customers</label>
                             </div>
+                            <div class="summaries-2">
+                                <label><?= $customer_count ?></label>
+                            </div>
+
+
+                        </div>
+                        <div class="summaries">
+                            <div class="summaries-1">
+                                <label>Total Orders</label>
+                            </div>
+                            <div class="summaries-2">
+                                <label><?= $order_count ?></label>
+                            </div>
+
+
+                        </div>
+                        <div class="summaries">
+                            <div class="summaries-1">
+                                <label>Total Complaints</label>
+                            </div>
+                            <div class="summaries-2">
+                                <label><?= $complaint_count ?></label>
+                            </div>
+
+
+                        </div>
+                        <div class="summaries">
+                            <div class="summaries-1">
+                                <label>Total Revenue</label>
+                            </div>
+                            <div class="summaries-2">
+                                <label>Rs. <?= $total_price ?></label>
+                            </div>
+
+
+                        </div>
                     </div>
-                    
+                    <div class="notifications-type2">
+                        
+                        <?php
+                        $columns = [
+                            'fname' => 'First Name',
+                            'lname' => 'Last Name',
+                            'phoneNo' => 'Phone No',
+                            'email' => 'Email',
+                            'username' => 'Username',
+                            'reg_date' => 'Registered Date'
+                        ];
+                        $seacher = TableSearcher::getInstance();
+                        echo $seacher->renderSearchBar($columns);
+                        ?>
+                    </div>
+
+
+
 
                 </div>
                 <div class="Business-complaints-order-status">
-                    <div class="order">
-                        <label>Buyers</label>
+                    <div class="add-buyer" onclick="window.location.href='<?= ROOT ?>/Admin/addNewCustomer'">
                         <div>
-                        <select>
-                            <option>Business</option>
-                        </select>
-                        <select>
-                            <option>Location</option>
-                        </select>
-                        <select>
-                            <option>Total Amount</option>
-                        </select>
-                        </div>
-                        
-                    </div>
-                    <div class="buyer-row">
-                        <div class="row1">
-                            <div>
-                            <div class="customer-img">
-                            <img src="<?=ASSETS?>/images/woman-user (1).png"/>
-                            </div>
-                            <div class="customer-details">
-                                
-                                <label>&nbsp;Kithmini Herath</label>
-                                
-                                
-                                <div class="customer-location">
-                                <img src="<?=ASSETS?>/images/location.png"/>
-                                <label>Kaduwela</label>
-                                </div>
-                            </div>
-                            </div>
-                            
-                            
-                            <div class="customer-joined">
-                                <label>Joined On : 26 / 05 / 2022</label>
-                            </div>
-                            <div class="customer-purchased">
-                                <label>Purchased Total : Rs.48000</label>
-                            </div>
-                            <div class="customer-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
-                            </div>
-                            </div>
-                            <div class="row1">
-                            <div>
-                            <div class="customer-img">
-                            <img src="<?=ASSETS?>/images/man-user.png"/>
-                            </div>
-                            <div class="customer-details">
-                                
-                                <label>Sakith</label>
-                                
-                                
-                                <div class="customer-location">
-                                <img src="<?=ASSETS?>/images/location.png"/>
-                                <label>Kaduwela</label>
-                                </div>
-                            </div>
-                            </div>
-                            
-                            
-                            <div class="customer-joined">
-                                <label>Joined On : 26 / 05 / 2022</label>
-                            </div>
-                            <div class="customer-purchased">
-                                <label>Purchased Total : Rs.48000</label>
-                            </div>
-                            <div class="customer-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
-                            </div>
-                            </div>
-                            <div class="row1">
-                            <div>
-                            <div class="customer-img">
-                            <img src="<?=ASSETS?>/images/woman-user (2).png"/>
-                            </div>
-                            <div class="customer-details">
-                                
-                                <label>Sanduni Perera</label>
-                                
-                                
-                                <div class="customer-location">
-                                <img src="<?=ASSETS?>/images/location.png"/>
-                                <label>Kaduwela</label>
-                                </div>
-                            </div>
-                            </div>
-                            
-                            
-                            <div class="customer-joined">
-                                <label>Joined On : 26 / 05 / 2022</label>
-                            </div>
-                            <div class="customer-purchased">
-                                <label>Purchased Total : Rs.48000</label>
-                            </div>
-                            <div class="customer-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
-                            </div>
-                            </div>
-                        </div>
-                        <div class="buyer-row">
-                        <div class="row1">
-                            <div>
-                            <div class="customer-img">
-                            <img src="<?=ASSETS?>/images/woman-user (1).png"/>
-                            </div>
-                            <div class="customer-details">
-                                
-                                <label>Kithmini Herath</label>
-                                
-                                
-                                <div class="customer-location">
-                                <img src="<?=ASSETS?>/images/location.png"/>
-                                <label>Kaduwela</label>
-                                </div>
-                            </div>
-                            </div>
-                            
-                            
-                            <div class="customer-joined">
-                                <label>Joined On : 26 / 05 / 2022</label>
-                            </div>
-                            <div class="customer-purchased">
-                                <label>Purchased Total : Rs.48000</label>
-                            </div>
-                            <div class="customer-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
-                            </div>
-                            </div>
-                            <div class="row1">
-                            <div>
-                            <div class="customer-img">
-                            <img src="<?=ASSETS?>/images/man-user.png"/>
-                            </div>
-                            <div class="customer-details">
-                                
-                                <label>Sakith</label>
-                                
-                                
-                                <div class="customer-location">
-                                <img src="<?=ASSETS?>/images/location.png"/>
-                                <label>Kaduwela</label>
-                                </div>
-                            </div>
-                            </div>
-                            
-                            
-                            <div class="customer-joined">
-                                <label>Joined On : 26 / 05 / 2022</label>
-                            </div>
-                            <div class="customer-purchased">
-                                <label>Purchased Total : Rs.48000</label>
-                            </div>
-                            <div class="customer-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
-                            </div>
-                            </div>
-                            <div class="row1">
-                            <div>
-                            <div class="customer-img">
-                            <img src="<?=ASSETS?>/images/woman-user (2).png"/>
-                            </div>
-                            <div class="customer-details">
-                                
-                                <label>Sanduni Perera</label>
-                                
-                                
-                                <div class="customer-location">
-                                <img src="<?=ASSETS?>/images/location.png"/>
-                                <label>Kaduwela</label>
-                                </div>
-                            </div>
-                            </div>
-                            
-                            
-                            <div class="customer-joined">
-                                <label>Joined On : 26 / 05 / 2022</label>
-                            </div>
-                            <div class="customer-purchased">
-                                <label>Purchased Total : Rs.48000</label>
-                            </div>
-                            <div class="customer-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
-                            </div>
-                            </div>
-                        </div>
-                    
-                        <div class="buyer-row">
-                        <div class="row1">
-                            <div>
-                            <div class="customer-img">
-                            <img src="<?=ASSETS?>/images/woman-user (1).png"/>
-                            </div>
-                            <div class="customer-details">
-                                
-                                <label>Kithmini Herath</label>
-                                
-                                
-                                <div class="customer-location">
-                                <img src="<?=ASSETS?>/images/location.png"/>
-                                <label>Kaduwela</label>
-                                </div>
-                            </div>
-                            </div>
-                            
-                            
-                            <div class="customer-joined">
-                                <label>Joined On : 26 / 05 / 2022</label>
-                            </div>
-                            <div class="customer-purchased">
-                                <label>Purchased Total : Rs.48000</label>
-                            </div>
-                            <div class="customer-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
-                            </div>
-                            </div>
-                            <div class="row1">
-                            <div>
-                            <div class="customer-img">
-                            <img src="<?=ASSETS?>/images/man-user.png"/>
-                            </div>
-                            <div class="customer-details">
-                                
-                                <label>Sakith</label>
-                                
-                                
-                                <div class="customer-location">
-                                <img src="<?=ASSETS?>/images/location.png"/>
-                                <label>Kaduwela</label>
-                                </div>
-                            </div>
-                            </div>
-                            
-                            
-                            <div class="customer-joined">
-                                <label>Joined On : 26 / 05 / 2022</label>
-                            </div>
-                            <div class="customer-purchased">
-                                <label>Purchased Total : Rs.48000</label>
-                            </div>
-                            <div class="customer-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
-                            </div>
-                            </div>
-                            <div class="row1">
-                            <div>
-                            <div class="customer-img">
-                            <img src="<?=ASSETS?>/images/woman-user (2).png"/>
-                            </div>
-                            <div class="customer-details">
-                                
-                                <label>Sanduni Perera</label>
-                                
-                                
-                                <div class="customer-location">
-                                <img src="<?=ASSETS?>/images/location.png"/>
-                                <label>Kaduwela</label>
-                                </div>
-                            </div>
-                            </div>
-                            
-                            
-                            <div class="customer-joined">
-                                <label>Joined On : 26 / 05 / 2022</label>
-                            </div>
-                            <div class="customer-purchased">
-                                <label>Purchased Total : Rs.48000</label>
-                            </div>
-                            <div class="customer-buttons">
-                                <button>View</button>
-                                <button>Remove</button>
-                            </div>
-                            </div>
-                        </div>
+                            <label>
+                                + Add Buyer
+                            </label>
 
-                        <div class="arrow-div">
-                        <div class="arrows">
-                            <img src="<?=ASSETS?>/images/Arrow right-circle.png"/>
-                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png"/>
-                            
                         </div>
                     </div>
+                    <?php
+                    $columns = [
+                        'fname' => 'First Name',
+                        'lname' => 'Last Name',
+                        'phoneNo' => 'Phone No',
+                        'email' => 'Email',
+                        'username' => 'Username',
+                        'reg_date' => 'Registered Date'
+                    ];
 
-                    </div>
-                    
-                    
-                    
-                    
+                    $sorter = Sorter::getInstance();
+                    echo $sorter->renderSorter($columns);
+                    ?>
 
+                    <table class="order-table">
+                        <thead>
+
+                            <tr>
+                                <th>Profile</th>
+                                <th>Name</th>
+                                <th>Phone No</th>
+                                <th>Registered Date</th>
+
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <?php if($customers):?>
+                            <?php foreach ($customers as $customer): ?>
+                                <tr id="customer_row<?= $customer->user_id ?>" onclick="viewCustomer(<?= $customer->user_id ?>,<?=$customer->cus_id?>)">
+                                    <td><img src="<?= CUSTOMER . '/' . $customer->profile_pic ?>" class="customer-profile-pic" /></td>
+                                    <td><?= $customer->fname ?> <?= $customer->lname ?></td>
+                                    <td><?= $customer->phoneNo ?></td>
+                                    <td><?= $customer->reg_date ?></td>
+                                    <td>
+
+                                        <span class="material-symbols-outlined" style="z-index:999;">
+                                            edit_square
+                                        </span>
+                                        <span class="material-symbols-outlined action-btn deactivate" style="color: red;">
+                                            person_remove
+                                        </span>
+                                    </td>
+                                </tr>
+                            <?php endforeach; ?>
+                            <?php else: ?>
+                                <tr>
+                                        <td colspan="5" style="text-align: center;">
+                                            No Customers Available
+                                        </td>
+                                    </tr>
+                                <?php endif;?>
+
+                        </tbody>
+                    </table>
+                    <?php $customers_pager->display() ?>
                 </div>
-
-
             </div>
-            <?php echo $this->view('includes/footer')?>
+        </div>
+        <?php echo $this->view('includes/footer') ?>
     </div>
-        
-        <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>
+    <script src="<?= ROOT ?>/assets/js/adminViewCustomerDetails.js"></script>
+    <script src="<?= ROOT ?>/assets/js/PagerAndSorter.js"></script>
+    <?php require APPROOT . '/views/includes/htmlFooter.view.php' ?>

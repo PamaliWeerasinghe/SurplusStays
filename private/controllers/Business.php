@@ -1,4 +1,5 @@
 <?php
+date_default_timezone_set('Asia/Colombo');
 class Business extends Controller
 {
 
@@ -10,10 +11,39 @@ class Business extends Controller
         }
 
         $product = new Products();
-        $pro_id = Auth::getID();
-        $rowCount = $product->countRows($pro_id);
-        $this->view('businessWelcomePage', [
-            'rowCount' => $rowCount,
+        $ordermodel = new OrderModel();
+        $requestmodel = new RequestModel();
+        $ratingmodel=new BusinessRating();
+        $business_id = Auth::getId();
+
+        $productcount = $product->countProducts($business_id);
+        $ordercount = $ordermodel->countOrders($business_id);
+        $requestcount = $requestmodel->countRequests($business_id);
+        $ratingcount=$ratingmodel->businessrating($business_id);
+        $rating=0;
+        if($ratingcount!=null){
+            if ($ratingcount[0]->count > 0) {
+                $value = $ratingcount[0]->sum / $ratingcount[0]->count;
+                $rating=round($value,1);
+            } else {
+                $rating = 0;
+            }
+        }
+       
+
+        $products = $product->gettopsalesproducts($business_id); //filter the top selling products
+        $orders = $ordermodel->getOrdersByBusiness($business_id);
+        $weeklyStats = $ordermodel->getWeeklyOrderStats($business_id);
+
+
+        $this->view('businessDashboard', [
+            'productcount' => $productcount,
+            'ordercount' => $ordercount,
+            'requestcount' => $requestcount,
+            'rating'=>$rating,
+            'orders' => $orders,
+            'rows' => $products,
+            'weeklyStats' => $weeklyStats
         ]);
     }
 
@@ -26,54 +56,31 @@ class Business extends Controller
         $product = new Products();
         $business_id = Auth::getID();
 
-        // Handle expired products
-        $currentDateTime = date('Y-m-d H:i:s');
-        $data = $product->where('business_id', $business_id);
-        if (!empty($data)) {
-            foreach ($data as $row) {
-                if ($currentDateTime > $row->expiration_date_time) {
-                    $product->delete($row->id);
+        $currentDateTime = new DateTime();
+        $allProducts = $product->where('business_id', $business_id, 'products');
+
+        if (!empty($allProducts)) {
+            foreach ($allProducts as $row) {
+                $productExpiration = new DateTime($row->expiration_dateTime);
+                if ($currentDateTime > $productExpiration) {
+                    $arr['status_id'] = 2;
+                    $product->update($row->id, $arr, 'products');
                 }
             }
         }
 
-        // Get filter from query parameters
         $filter = $_GET['filter'] ?? null;
+        $filteredProducts = $product->getFilteredProducts($business_id, $filter);
 
-        // Fetch filtered or default data
-        $data = $product->getFilteredProducts($business_id, $filter);
-
-        $this->view('businessMyProducts', ['rows' => $data]);
+        $this->view('businessMyProducts', ['rows' => $filteredProducts]);
     }
 
 
-    function orders()
-    {
-        $this->view('businessOrders');
-    }
-
-    function requests()
-    {
-        $this->view('businessRequests');
-    }
-
-    function complains()
-    {
-        $this->view('businessComplains');
-    }
-    function reports()
-    {
-        $this->view('businessReport');
-    }
-    function profile()
-    {
-        $this->view('businessProfile');
-    }
 
     function viewProduct($id = null)
     {
         $product = new Products();
-        $row = $product->where('id', $id);
+        $row = $product->where('id', $id, 'products');
         $this->view('businessViewProduct', [
             'row' => $row,
         ]);
@@ -84,6 +91,7 @@ class Business extends Controller
         if (!Auth::logged_in()) {
             $this->redirect('login');
         }
+
         $errors = [];
         $uploadedPictures = []; // Initialize uploaded pictures array
 
@@ -122,21 +130,26 @@ class Business extends Controller
             // Check if at least one image was uploaded
             if (!empty($uploadedPictures)) {
                 $_POST['pictures'] = implode(',', $uploadedPictures); // Store paths as a comma-separated string
-            } else {
-                $errors[] = "At least one product picture is required.";
             }
 
             if (empty($errors) && $product->validate($_POST)) {
-                $arr['business_id'] = Auth::getUserId();
-                $arr['name'] = $_POST['product-name'];
-                $arr['category'] = $_POST['category'];
-                $arr['description'] = $_POST['description'];
-                $arr['qty'] = $_POST['quantity'];
-                $arr['price_per_unit'] = $_POST['price-per-unit'];
-                $arr['expiration_date_time'] = $_POST['expiration'];
-                $arr['discount_price'] = $_POST['discount'];
-                $arr['pictures'] = $_POST['pictures'];
-                $product->insert($arr);
+                $discount = !empty($_POST['discount']) ? $_POST['discount'] : 0;
+
+                $productData = [
+                    'business_id' => Auth::getUserId(),
+                    'name' => $_POST['product-name'],
+                    'category' => $_POST['category'],
+                    'description' => $_POST['description'],
+                    'qty' => $_POST['quantity'],
+                    'price_per_unit' => $_POST['price-per-unit'],
+                    'discountPrice' => $_POST['price-per-unit'] * (100 - $discount) / 100,
+                    'expiration_dateTime' => $_POST['expiration'] . ':00',
+                    'pictures' => $_POST['pictures'],
+                    'notify_status_id' => 2,
+                    'status_id' => 1,
+                ];
+
+                $product->insert($productData);
                 $this->redirect('business/myproducts');
             } else {
                 $errors = array_merge($errors, $product->errors);
@@ -157,9 +170,9 @@ class Business extends Controller
         }
 
         $errors = []; // Ensure this is declared before use.
-        $product = new Products();
+        $product = new ProductsEdit();
 
-        $row = $product->where('id', $id);
+        $row = $product->where('id', $id, 'products');
         $currentPictures = explode(',', $row[0]->pictures);
         $uploadedPictures = [];
 
@@ -214,19 +227,22 @@ class Business extends Controller
         $errors = array();
 
         if ($_SERVER['REQUEST_METHOD'] === 'POST' && count($_POST) > 0) {
-            // Process the form
             if ($product->validate($_POST)) {
-                $arr['business_id'] = Auth::getUserId();
-                $arr['name'] = $_POST['product-name'];
-                $arr['category'] = $_POST['category'];
-                $arr['description'] = $_POST['description'];
-                $arr['qty'] = $_POST['quantity'];
-                $arr['price_per_unit'] = $_POST['price-per-unit'];
-                $arr['expiration_date_time'] = $_POST['expiration'];
-                $arr['discount_price'] = $_POST['discount'];
-                $arr['pictures'] = $_POST['pictures'];
+                $discount = !empty($_POST['discount']) ? $_POST['discount'] : 0;
 
-                $product->update($id, $arr);
+                $productData = [
+                    'business_id' => Auth::getUserId(),
+                    'name' => $_POST['product-name'],
+                    'category' => $_POST['category'],
+                    'description' => $_POST['description'],
+                    'qty' => $_POST['quantity'],
+                    'price_per_unit' => $_POST['price-per-unit'],
+                    'discountPrice' => $_POST['price-per-unit'] * (100 - $discount) / 100,
+                    'expiration_dateTime' => $_POST['expiration'],
+                    'pictures' => $_POST['pictures'],
+                ];
+
+                $product->update($id, $productData, 'products');
                 $this->redirect('business/myproducts');
             } else {
                 $errors = $product->errors;
@@ -234,7 +250,7 @@ class Business extends Controller
         }
 
         // Fetch existing product details for display
-        $row = $product->where('id', $id);
+        $row = $product->where('id', $id, 'products');
 
         $this->view('businessEditProduct', [
             'row' => $row,
@@ -250,19 +266,359 @@ class Business extends Controller
                 $this->redirect('login');
             }
             if ($_SERVER['REQUEST_METHOD'] === 'POST') {
-                $product = new Products(); // Ensure you have an Product model
-                if ($product->delete($id)) {
-                    // Optionally, set a success message
-                    $_SESSION['message'] = 'Product deleted successfully';
-                } else {
-                    // Optionally, set an error message
-                    $_SESSION['message'] = 'Failed to delete product';
-                }
+                $product = new Products();
+                $arr['status_id'] = 2;
+                $product->update($id, $arr, 'products');
                 $this->redirect('business/myproducts'); // Redirect back to the myproducts page
             }
         }
     }
 
+
+    function orders()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $business_id = Auth::getID();
+        $orderModel = new OrderModel();
+
+        $orders = $orderModel->getOrdersByBusiness($business_id);
+
+        $this->view('businessOrders', ['orders' => $orders]);
+    }
+
+    function viewOrder($id = null)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $orderModel = new OrderModel();
+        $orderDetails = $orderModel->getOrderDetails($id);
+
+        if (!$orderDetails) {
+            $this->redirect('business/orders'); // Redirect if order is not found
+        }
+
+        $this->view('businessOrderDetails', ['order' => $orderDetails]);
+    }
+
+    function updateOrderStatus()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST' && isset($_POST['order_id'], $_POST['status'])) {
+            $orderModel = new OrderModel();
+            $order_id = $_POST['order_id'];
+            $status = $_POST['status'];
+
+            $orderModel->updateOrderStatus($order_id, $status);
+
+            $this->redirect('business/orders');
+        } else {
+            $this->redirect('business/orders');
+        }
+    }
+
+    function browse_charities()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $donation = new Donation();
+        $donation_b = new BusinessDonation();
+
+        $orgs = new Organization();
+        $users = new User();
+
+        $rows = $orgs->findAll('organization');
+        $rows_p = $users->findAll('user');
+
+        // Build map of user_id to picture
+        $userPictures = [];
+        $userEmails = [];
+        foreach ($rows_p as $user) {
+            $userPictures[$user->id] = $user->profile_pic;
+            $userEmails[$user->id] = $user->email;
+        }
+
+        // Add picture to each business row
+        foreach ($rows as &$row) {
+            $row->picture = $userPictures[$row->user_id] ?? '';
+            $row->email = $userEmails[$row->user_id] ?? '';
+        }
+
+        $today = date('Y-m-d 23:59:59');
+        $sevenDaysAgo = date('Y-m-d 00:00:00', strtotime('-6 days'));
+
+        // Calculate week count for each organization
+        $weekCounts = [];
+        foreach ($rows as $org) {
+            $orgId = $org->id; // assuming 'id' is the primary key field
+            $count = $donation->getAcceptedDonationsCountByDate($orgId, $sevenDaysAgo, $today) +
+                $donation_b->getAcceptedDonationsCountByDate($orgId, $sevenDaysAgo, $today);
+            $weekCounts[$orgId] = $count;
+        }
+
+        $this->view('businessBrowseOrganizations', [
+            'rows' => $rows,
+            'weekCounts' => $weekCounts
+        ]);
+    }
+
+    function requests()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $business_id = Auth::getID();
+        $requestModel = new RequestModel();
+
+        $requests = $requestModel->getRequestByBusiness($business_id);
+
+        $this->view('businessRequests', ['requests' => $requests]);
+    }
+
+    function viewRequest($id = null)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $requestModel = new RequestModel();
+        $requestDetails = $requestModel->getRequestDetails($id);
+
+        $req_id = $requestDetails[0]->id;
+        $donationItemsModel = new DonationItems();
+        $db = Database::getInstance();
+
+        $query = "SELECT p.id, p.name, p.pictures, di.qty
+                          FROM donation_items di 
+                          JOIN products p ON p.id = di.products_id 
+                          WHERE di.request_id = :request_id";
+                $params = ['request_id' => $req_id];
+                $relatedProducts = $db->query($query, $params);
+
+        if (!$requestDetails) {
+            $this->redirect('business/requests'); // Redirect if request is not found
+        }
+
+        $this->view('businessRequestDetails', [
+            'request' => $requestDetails,
+            'products' => $relatedProducts
+        ]);
+    }
+
+    function updateRequestStatus()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST' && isset($_POST['request_id'], $_POST['status'])) {
+            $requestModel = new RequestModel();
+            $request_id = $_POST['request_id'];
+            $status = $_POST['status'];
+            $feedback = $_POST['feedback'];
+
+            // Update request status
+            $requestModel->updateRequestStatus($request_id, $status, $feedback);
+
+            // Redirect back to the request details page
+            $this->redirect('business/requests/');
+        } else {
+            $this->redirect('business/requests');
+        }
+    }
+
+
+    function complaints()
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $business_id = Auth::getID();
+        $complaintModel = new ComplaintModel();
+
+        $complaints = $complaintModel->getComplainsByBusiness($business_id);
+
+        $this->view('businessComplaints', ['complaints' => $complaints]);
+    }
+
+    function viewComplaint($id = null)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+
+        $complaintModel = new ComplaintModel();
+        $complaintDetails = $complaintModel->getComplaintDetails($id);
+
+        if (!$complaintDetails) {
+            $this->redirect('complaints');
+        }
+
+        // Handle response submission (safely check for POST data)
+        if (isset($_POST['response']) && !empty($_POST['response'])) {
+            $complaintModel->addResponse($id, $_POST['response']);
+            $this->redirect('business/complaints');
+        }
+
+        $this->view('businessComplaintDetails', ['complaint' => $complaintDetails]);
+    }
+
+    function profile()
+    {
+
+        $business = new BusinessModel();
+        $businessId = Auth::getUserId();
+        $currbusiness = $business->where('id', $businessId, 'business');
+        $user_id = $currbusiness[0]->user_id;
+
+        $user = new User();
+        $curruser = $user->where('id', $user_id, 'user');
+
+        $ratingmodel=new BusinessRating();
+        $ratingcount=$ratingmodel->businessrating($businessId);
+        $rating=0;
+        if($ratingcount!=null){
+            if ($ratingcount[0]->count > 0) {
+                $value = $ratingcount[0]->sum / $ratingcount[0]->count;
+                $rating=round($value,1);
+            } else {
+                $rating = 0;
+            }
+        }
+       
+
+        $this->view('businessProfile', [
+            'currbusiness' => $currbusiness,
+            'curruser' => $curruser,
+            'rating'=>$rating
+        ]);
+    }
+
+
+    function editprofile()
+    {
+
+        $business = new BusinessEditProfile();
+        $businessId = Auth::getUserId();
+        $currbusiness = $business->where('id', $businessId, 'business');
+        $user_id = $currbusiness[0]->user_id;
+
+        $user = new User();
+        $curruser = $user->where('id', $user_id, 'user');
+        $errors = [];
+
+
+        if ($_SERVER['REQUEST_METHOD'] == 'POST') {
+
+            $targetDir = $_SERVER['DOCUMENT_ROOT'] . "/SurplusStays/public/assets/businessImages/";
+            $errors = [];
+
+            if (isset($_FILES['upload-1']) && $_FILES['upload-1']['error'] === 0) {
+                $fileName = basename($_FILES['upload-1']['name']);
+                $fileType = pathinfo($fileName, PATHINFO_EXTENSION);
+                $allowedTypes = ['jpg', 'jpeg', 'png', 'gif'];
+
+                if (in_array(strtolower($fileType), $allowedTypes)) {
+                    $uniqueName = uniqid('img_', true) . '.' . $fileType;
+                    $filePath = $targetDir . $uniqueName;
+
+                    if (move_uploaded_file($_FILES['upload-1']['tmp_name'], $filePath)) {
+                        $profile_pic_path =  $uniqueName;
+                    } else {
+                        $errors[] = "Failed to upload image: {$fileName}.";
+                    }
+                } else {
+                    $errors[] = "Only JPG, JPEG, PNG, and GIF formats are allowed.";
+                }
+            } else {
+                $profile_pic_path = $curruser[0]->profile_pic ?? '';
+            }
+
+
+            // Validate and process form data
+            if (empty($errors) && $business->validate($_POST)) {
+
+                // Save data to `user` table
+                $userData = [
+                    'profile_pic' => $profile_pic_path
+                ];
+
+                $businessData = [
+                    'name' => $_POST['name'],
+                    'phoneNo' => $_POST['phone'], //phone_no
+                    'username' => $_POST['username'],
+                    'type' => $_POST['type'], //business_type
+                    'latitude' => $_POST['latitude'],
+                    'longitude' => $_POST['longitude']
+                ];
+
+                //echo "<pre>"; print_r($_POST); die();
+
+                $user->update($user_id, $userData, 'user');
+                $business->update($businessId, $businessData, 'business');
+
+                $this->redirect('business/profile');
+            } elseif (!$business->validate($_POST)) {
+                $errors = $business->errors;
+            }
+        }
+        // Render the business registration view
+        $this->view('businessEditProfile', [
+            'errors' => $errors,
+            'currbusiness' => $currbusiness,
+            'curruser' => $curruser
+        ]);
+    }
+
+    function changepassword($userId)
+    {
+        $user = new BusinessChangePassword();
+        $errors = [];
+
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+
+            if ($user->validate($_POST, $userId)) {
+                $passwordData = [
+                    'password' => password_hash($_POST['password'], PASSWORD_DEFAULT)
+                ];
+
+                $user->update($userId, $passwordData, 'user');
+                $this->redirect('logout');
+            } else {
+                $errors = $user->errors;
+            }
+        }
+
+        $this->view('businessChangePassword', [
+            'errors' => $errors
+        ]);
+    }
+
+
+
+    function deleteprofile($id)
+    {
+        if (!Auth::logged_in()) {
+            $this->redirect('login');
+        }
+        if ($_SERVER['REQUEST_METHOD'] === 'POST') {
+            $user = new user();
+            $arr['status_id'] = 2;
+            $user->update($id, $arr, 'user');
+            $this->redirect('logout');
+        }
+    }
 
     function test($name)
     {

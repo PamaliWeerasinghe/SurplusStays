@@ -1,13 +1,8 @@
-<!DOCTYPE html>
-<html lang="en">
-
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title><?php echo SITENAME ?></title>
+<?php require APPROOT.'/views/includes/htmlHeader.view.php'?>
     <link rel="stylesheet" href="<?=STYLES?>/adminSidePanel.css" />
     <link rel="stylesheet" href="<?=STYLES?>/adminBusinessComplaints.css" />
     <link rel="stylesheet" href="<?=STYLES?>/admin.css">
+    <link rel="stylesheet" href="<?= STYLES ?>/searchBar.css">
 </head>
 
 <body>
@@ -18,141 +13,89 @@
             <div class="dashboard">
                 <div class="summary">
                     <div class="notifications-type2">
-                        <div class="searchdiv">
-                            <input type="text" class="search" placeholder="Search..." />
-                            <img src="<?=ASSETS?>/images/search.png" class="bell2" />
-                        </div>
-
-                        <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
+                    <?php
+                        $columns = [
+                            'DESCRIPTION' => 'Complaint Description',
+                            'complaint_dateTime' => 'Date Submitted',
+                            'complaint_id' => 'Complaint ID',
+                            'status' => 'Complaint Status'
+                        ];
+                        $seacher = TableSearcher::getInstance();
+                        echo $seacher->renderSearchBar($columns);
+                        ?>
                     </div>
                     
 
                 </div>
                 <div class="Business-complaints-order-status">
                     <div class="order">
-                        <label>Complaints</label>
-                        <select>
-                            <option>All Time</option>
-                        </select>
+                        <!-- <label>Complaints</label> -->
+                        <?php
+                    $columns = [
+                        'DESCRIPTION' => 'Complaint Description',
+                        'complaint_dateTime' => 'Date Submitted',
+                        'complaint_id' => 'Complaint ID',
+                        'status' => 'Complaint Status'
+                    ];
+
+                    $sorter = Sorter::getInstance();
+                    echo $sorter->renderSorter($columns);
+                    ?>
+
                     </div>
 
-                    <div class="Business-complaints-order-nav">
-                        <div class="Business-complaints-view-slots">
-                            <div class="slot1">
-                                <label>Order Complaints</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Take Actions</label>
-                            </div>
-                          
-                        </div>
-                    </div>
-                    <div class="Business-complaints-order-nav">
-                        <div class="Business-complaints-view-slots">
-                            <div class="slot1">
-                                <label>All</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Pending</label>
-                            </div>
-                            <div class="slot2">
-                                <label>Reserved</label>
-
-                            </div>
-                           
-                        </div>
-                    </div>
+                  
+                  
                     <table class="order-table">
                         <thead>
                             <tr>
                                 <th>Complaint ID</th>
+                                <th>Complaint Description</th>
                                 <th>Date Submitted</th>
                                 <th style="text-align: center;">Status</th>
                                 
                             </tr>
                         </thead>
                         <tbody>
+                            <?php if($complaints):?>
+                            <?php foreach($complaints as $complaint):?>
                             <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="take-action">In Progress</button></td>
+                                <td># <?= $complaint->complaint_id ?></td>
+                                <td><?=$complaint->DESCRIPTION?></td>
+                                <td><?=$complaint->complaint_dateTime?></td>
+                                <?php if($complaint->status=='Pending'){?>
+                                    <td style="text-align: center;"><button class="take-action">Attend</button></td>
+                                <?php }else{?>
+                                    <td style="text-align: center;"><button class="completed">Resolved</button></td>
+                                <?php }?>
                                 <td style="text-align: center;">
+                                    
                                     <button 
                                     class="see-complain" 
                                     style="color:grey;background-color:transparent;border-style:solid;border-color:grey"
-                                    onclick="window.location.href='<?=ROOT?>/Admin/ViewComplain'"
+                                    onclick="window.location.href='<?=ROOT?>/Admin/ViewComplain/<?=$complaint->complaint_id?>'"
                                     >
                                     See Complain
                                     </button>
                                 </td>
                                 
                             </tr>
+                            <?php endforeach; ?>   
+                           <?php else: ?>
                             <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="take-action">In Progress</button></td>
-                                <td style="text-align: center;">
-                                    <button 
-                                    class="see-complain" 
-                                    style="color:grey;background-color:transparent;border-style:solid;border-color:grey">
-                                    See Complain
-                                    </button>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;">
-                                    <button 
-                                    class="see-complain" 
-                                    style="color:grey;background-color:transparent;border-style:solid;border-color:grey">
-                                    See Complain
-                                    </button>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="take-action">In Progress</button></td>
-                                <td style="text-align: center;">
-                                    <button 
-                                    class="see-complain" 
-                                    style="color:grey;background-color:transparent;border-style:solid;border-color:grey">
-                                    See Complain
-                                    </button>
-                                </td>
-                                
-                            </tr>
-                            <tr>
-                                <td>#154</td>
-                                <td>14.02.2024</td>
-                                
-                                <td style="text-align: center;"><button class="completed">Resolved</button></td>
-                                <td style="text-align: center;">
-                                    <button 
-                                    class="see-complain" 
-                                    style="color:grey;background-color:transparent;border-style:solid;border-color:grey">
-                                    See Complain
-                                    </button>
-                                </td>
-                                
-                            </tr>
-                           
+                                        <td colspan="4" style="text-align: center;">
+                                            No Complaints Added
+                                        </td>
+                                    </tr>
+                           <?php endif;?>
                             
                             
                         </tbody>
                     </table>
                     <div class="arrow-div">
                         <div class="arrows">
-                            <img src="<?=ASSETS?>/images/Arrow right-circle.png"/>
-                            <img src="<?=ASSETS?>/images/Arrow right-circle-bold.png"/>
+                           
+                            <?php $complaints_pager->display()?>
                             
                         </div>
                     </div>
@@ -161,8 +104,8 @@
 
 
             </div>
+           
         </div>
-
-</body>
-
-</html>
+        <?php echo $this->view('includes/footer')?>
+        <script src="<?= ROOT ?>/assets/js/PagerAndSorter.js"></script>
+        <?php require APPROOT.'/views/includes/htmlFooter.view.php'?>

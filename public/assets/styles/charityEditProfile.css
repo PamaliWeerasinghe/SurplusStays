@@ -1,0 +1,348 @@
+body, html {
+    height: 100%;
+    margin: 0;
+    padding: 0;
+    display: flex;
+    flex-direction: column;
+  }
+  
+  .container{
+      display: flex;
+      flex-direction: row;
+      width: 100%;
+      margin: 0;
+  }
+  
+  .container-right{
+    display: flex;
+    flex-direction: column;
+    width: 100%;
+    height: 200vh;
+  }
+  
+  .top-half {
+      background-color: #005250;
+      color: white;
+      width: 100%;
+      height: 480px;
+      display: flex;
+      flex-direction: column;
+  }
+  
+  .bell-icon {
+      width: 28px;
+      height: 28px;
+      padding-top: 10px;
+      cursor: pointer;
+      margin-left: 96%;
+  }
+
+/* Form and Card Styles */
+form {
+    margin-top: 40px;
+    width: 100%;
+}
+
+.charity-info-card {
+    background-color: white;
+    border-radius: 12px;
+    box-shadow: 0 5px 20px rgba(0, 0, 0, 0.08);
+    margin: 0 40px;
+    margin-left: 6.5%;
+    width: 88%;
+    position: relative;
+    z-index: 10;
+    overflow: hidden;
+}
+
+.header {
+    background:  #e05b4a;
+    color: white;
+    padding: 15px 20px;
+    border-radius: 12px 12px 0 0;
+    display: flex;
+    align-items: center;
+}
+
+.header h2 {
+    color: white;
+    font-size: 18px;
+    margin: 0;
+    font-weight: 600;
+}
+
+.header h2 i {
+    margin-right: 10px;
+}
+
+/* Section Styles */
+.section {
+    margin-bottom: 15px;
+    border-bottom: 1px solid #eaeef5;
+}
+
+.section:last-child {
+    border-bottom: none;
+    margin-bottom: 0;
+}
+
+.section h3 {
+    margin: 0;
+    color: #333;
+    background-color: #f9fafb;
+    padding: 15px 30px;
+    font-size: 16px;
+    font-weight: 600;
+    display: flex;
+    align-items: center;
+}
+
+.section h3 i {
+    margin-right: 10px;
+    color: #005250;
+}
+
+/* Charity Overview Styles */
+.charity-overview {
+    display: flex;
+    align-items: flex-start;
+    padding: 25px 30px;
+    background-color: white;
+}
+
+.charity-info {
+    padding: 20px 30px;
+    background-color: white;
+}
+
+/* Image Upload Styles */
+.image-container {
+    position: relative;
+    width: 150px;
+    height: 150px;
+    border-radius: 50%;
+    margin-right: 30px;
+    overflow: hidden;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+    cursor: pointer;
+}
+
+.logo-img {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    transition: filter 0.3s ease;
+}
+
+.image-container:hover .logo-img {
+    filter: brightness(0.8);
+}
+
+.overlay {
+    position: absolute;
+    bottom: 0;
+    left: 0;
+    width: 100%;
+    height: 40px;
+    background-color: rgba(0, 0, 0, 0.5);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    transition: height 0.3s ease;
+}
+
+.image-container:hover .overlay {
+    height: 100%;
+}
+
+.camera-icon i {
+    color: white;
+    font-size: 18px;
+    transition: transform 0.3s ease, font-size 0.3s ease;
+}
+
+.image-container:hover .camera-icon i {
+    transform: scale(1.5);
+    font-size: 24px;
+}
+
+input[type="file"] {
+    display: none;
+}
+
+/* Input Group Styles */
+.charity-text {
+    flex: 1;
+}
+
+.input-group {
+    margin-bottom: 20px;
+    width: 100%;
+}
+
+.input-group label {
+    display: block;
+    font-weight: 500;
+    margin-bottom: 8px;
+    color: #333;
+}
+
+.input-group small {
+    display: block;
+    color: #777;
+    font-size: 12px;
+    margin-top: 5px;
+}
+
+.input-group input,
+.input-group select,
+.input-group textarea {
+    width: 100%;
+    padding: 10px 15px;
+    border-radius: 8px;
+    border: 1px solid #dde2e9;
+    font-family: 'Poppins', sans-serif;
+    font-size: 14px;
+    transition: border-color 0.3s ease, box-shadow 0.3s ease;
+}
+
+.input-group input:focus,
+.input-group select:focus,
+.input-group textarea:focus {
+    outline: none;
+    border-color: #005250;
+    box-shadow: 0 0 0 2px rgba(0, 82, 80, 0.1);
+}
+
+.input-group input:read-only {
+    background-color: #f5f7fa;
+    cursor: not-allowed;
+}
+
+.input-group textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Address Grid */
+.address-grid {
+    display: grid;
+    grid-template-columns: 2fr 1fr 1fr;
+    gap: 20px;
+}
+
+/* Button Group */
+.button-group {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    padding: 20px 0 30px;
+}
+
+.button-group button {
+    padding: 12px 24px;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    font-weight: 500;
+    font-size: 15px;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    min-width: 160px;
+}
+
+.button-group button i {
+    margin-right: 8px;
+}
+
+.btn-save {
+    background: linear-gradient(135deg, #005250 0%, #007571 100%);
+    color: white;
+    box-shadow: 0 4px 10px rgba(0, 82, 80, 0.2);
+}
+
+.btn-save:hover {
+    background: linear-gradient(135deg, #007571 0%, #009691 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(0, 82, 80, 0.3);
+}
+
+.btn-clear {
+    background: linear-gradient(135deg, #f39c12 0%, #f5b041 100%);
+    color: white;
+    box-shadow: 0 4px 10px rgba(243, 156, 18, 0.2);
+}
+
+.btn-clear:hover {
+    background: linear-gradient(135deg, #f5b041 0%, #f8c471 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(243, 156, 18, 0.3);
+}
+
+.btn-cancel {
+    background: linear-gradient(135deg, #e74c3c 0%, #ec7063 100%);
+    color: white;
+    box-shadow: 0 4px 10px rgba(231, 76, 60, 0.2);
+}
+
+.btn-cancel:hover {
+    background: linear-gradient(135deg, #ec7063 0%, #f1948a 100%);
+    transform: translateY(-2px);
+    box-shadow: 0 6px 14px rgba(231, 76, 60, 0.3);
+}
+
+/* Responsive Adjustments */
+@media (max-width: 992px) {
+    .address-grid {
+        grid-template-columns: 1fr 1fr;
+    }
+}
+
+@media (max-width: 768px) {
+    .charity-overview {
+        flex-direction: column;
+        align-items: center;
+        text-align: center;
+    }
+    
+    .image-container {
+        margin-right: 0;
+        margin-bottom: 30px;
+    }
+    
+    .charity-info-card {
+        margin: 0 20px;
+        width: calc(100% - 40px);
+    }
+    
+    .address-grid {
+        grid-template-columns: 1fr;
+    }
+    
+    .button-group {
+        flex-direction: column;
+        align-items: center;
+    }
+    
+    .button-group button {
+        width: 100%;
+        margin-bottom: 10px;
+    }
+}
+
+@media (max-width: 480px) {
+    .top-bar {
+        padding: 20px;
+    }
+    
+    .page-title h1 {
+        font-size: 24px;
+    }
+    
+    .charity-info-card {
+        margin: 0 10px;
+        width: calc(100% - 20px);
+    }
+}

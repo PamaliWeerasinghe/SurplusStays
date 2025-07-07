@@ -1,0 +1,266 @@
+create view complaintDetails as 
+SELECT `complaints`.`id` AS `complaint_id`,
+            `order_items_id`,
+            `customer`.`id` AS `customer_id`,
+            `feedback`,
+            `order`.`id` AS `order_id`,
+            `complaint_status`.`name` AS `complaint_status`,
+            `complaints`.`business_id` AS `businessID`,
+            `complaints`.`complaint_dateTime` AS `complaint_date`,
+            `complaints`.`description` AS `complaintDescription`,
+            `business`.`name` AS `business_name`,
+            `business`.`phoneNo` AS `business_phone`,
+            `fname`,
+            `lname`,
+            `total`,
+            `order_items`.`qty` AS `itemQty`,
+            `paymentMethod`,
+            `user`.`email` AS `customer_email`,
+            `customer`.`phoneNo` AS `customer_phone`,
+            `expiration_dateTime` AS `product_expirationTime`,
+            `discountPrice`,
+            `products`.`name` AS product,
+            `products`.price_per_unit AS product_price,
+            `user`.`id` AS user_id,
+            complaints.adminReply AS admin_reply
+FROM `complaints` 
+INNER JOIN `order_items` ON `complaints`.`order_items_id`=`order_items`.`id` 
+INNER JOIN `products` ON `products`.`id`=`order_items`.`products_id`
+INNER JOIN `order` ON `order_items`.`order_id`=`order`.`id`
+INNER JOIN `complaint_status` ON `complaints`.`complaint_status_id`=`complaint_status`.`id`
+INNER JOIN `business` ON `business`.`id`=`complaints`.`business_id`
+INNER JOIN `customer` ON `customer`.`id`=`complaints`.`customer_id`
+INNER JOIN `user`  ON `user`.`id`=`customer`.`user_id`  ;
+
+CREATE VIEW trackExpiry AS 
+SELECT products.id AS product_id,products.expiration_dateTime AS best_before,products.name AS product_name,notify_status.status AS notify_status,
+business.name AS business_name, products.price_per_unit
+FROM products
+INNER JOIN business ON products.business_id=business.id
+INNER JOIN notify_status ON notify_status.id=products.notify_status_id
+order BY products.expiration_dateTime DESC ;
+
+CREATE VIEW about_to_expire_products AS
+SELECT products.id AS product_id, products.expiration_dateTime AS bestBefore, products.`name`AS product_name,notify_status.`status` AS notify_status, 
+products.price_per_unit AS price, business.`name` AS business_name, products.status_id AS status_id,user.email AS email
+from products
+INNER JOIN status
+ON status.id=products.status_id
+INNER JOIN notify_status
+ON notify_status.id=products.notify_status_id
+INNER JOIN business
+ON business.id=products.business_id
+INNER JOIN `user`
+ON `user`.id =business.user_id
+WHERE status.`status`!='Inactive'
+order BY products.expiration_dateTime ;
+
+CREATE VIEW non_resolved_complaints AS
+SELECT complaints.id AS complaint_id,
+complaints.feedback AS feedback,
+business_id,
+DATETIME,
+DESCRIPTION,
+customer_id,
+order_items_id,
+adminReply,
+complaint_dateTime,
+complaint_status.name as status,
+complaints.complaint_status_id AS status_id
+FROM complaints 
+INNER JOIN complaint_status
+ON complaints.complaint_status_id=complaint_status.id ;
+
+
+
+CREATE VIEW admin_details AS
+SELECT admin.id AS admin_id,
+admin.`name` AS admin_name,
+admin.token AS token,
+email,
+`password`,
+profile_pic,
+reg_date,
+admin.token_expiry AS token_expiry
+FROM admin
+INNER JOIN user 
+ON user.id=admin.user_id1;
+
+CREATE VIEW business_details AS 
+SELECT business.id AS bus_id,
+business.`name` AS business_name,
+phoneNo,
+business.latitude AS latitude,
+business.longitude AS longitude,
+username,
+email,
+`password`,
+profile_pic,
+reg_date,
+`user`.id AS user_id,
+`user`.`status_id` AS status_id
+FROM business
+INNER JOIN user ON user.id=business.user_id
+WHERE user.`role`='business' ; 
+
+CREATE view products_in_items AS 
+SELECT products.pictures AS pictures,
+`order_items`.products_id AS product_id,
+`order_items`.order_id AS order_id,
+`order`.dateTime AS dateANDTime,
+`customer`.id AS cus_id
+FROM products
+INNER JOIN order_items ON order_items.products_id=products.id
+INNER JOIN `order` ON `order`.id=order_items.order_id
+INNER JOIN `customer` ON `customer`.id=`order`.`customer_id`
+order BY `order`.dateTime DESC;
+
+CREATE view order_and_the_business AS
+SELECT `order`.id AS order_id,                          
+business.id AS business_id,                             
+order_items.id AS order_item,                           
+products.id AS product_id,                              
+`order_items`.qty AS qty,                               
+business.`name` AS bus_name,                            
+products.name AS product_name,                          
+products.price_per_unit AS original_price,              
+products.discountPrice AS discount                      
+FROM order_items                                        
+INNER JOIN `order` ON `order`.id=order_items.order_id   
+INNER JOIN products ON order_items.products_id=products.id
+INNER JOIN business ON products.business_id=business.id  ;
+
+CREATE VIEW customer_details AS 
+SELECT customer.id AS cus_id,
+customer.`fname` AS fname,
+customer.`lname` AS lname,
+phoneNo,
+username,
+email,
+`password`,
+profile_pic,
+reg_date,
+`customer`.`user_id` AS user_id,
+`user`.`status_id` AS status_id
+FROM customer
+INNER JOIN user ON user.id=customer.user_id
+WHERE user.`role`='customer';
+
+CREATE VIEW charity_details AS
+SELECT `organization`.`name` AS org_name,
+`organization`.id AS org_id,
+`organization`.`phoneNo` AS org_contact,
+`organization`.`username` AS username,
+`organization`.`city` AS city,
+`organization`.`charity_description` AS org_description,
+`user`.`id` AS user_id,
+`user`.`email` AS user_email,
+`user`.`profile_pic` AS profile_pic,
+`user`.`reg_date` AS reg_date,
+`user`.`status_id` AS status_id
+FROM `organization` 
+INNER JOIN `user` 
+ON `organization`.`user_id`=`user`.`id`;
+
+CREATE VIEW saved_from_wastage_report AS 
+SELECT  
+products.`name` AS product_name,
+sum(order_items.qty) AS qty_saved,
+products.price_per_unit AS original_price,
+products.discountPrice AS discounted_price,
+products.qty AS left_overs,
+products.status_id AS status_id,
+products.business_id AS bus_id,
+business.`name` AS bus_name
+FROM order_items
+INNER JOIN products
+ON order_items.products_id = products.id
+INNER JOIN business
+ON products.business_id=business.id
+GROUP BY order_items.products_id ;
+
+CREATE VIEW product_details AS
+SELECT products.id AS product_id,
+products.business_id AS bus_id,
+products.`name` AS product_name,
+products.`description` AS product_description,
+products.qty AS qty_avail,
+products.price_per_unit AS unit_price,
+products.expiration_dateTime AS expires_in,
+products.discountPrice AS discount,
+products.pictures AS product_img,
+products.notify_status_id AS notify_status_id,
+products.status_id AS status_id,
+business.`name` AS bus_name
+FROM products
+INNER JOIN business
+ON products.business_id=business.id
+WHERE products.status_id!='Inactive' ;
+
+CREATE VIEW customer_order_report AS 
+SELECT
+`order`.customer_id AS cus_id,
+concat(customer.fname,' ', customer.lname) AS cus_name,
+COUNT(`order`.`id`) AS no_of_orders
+FROM `order`
+INNER JOIN customer
+ON customer.id=`order`.customer_id
+GROUP BY cus_id;
+
+CREATE VIEW watchlist_details AS 
+SELECT watchlist.products_id AS product_id,
+watchlist.id AS id,
+watchlist.customer_id AS cus_id,
+watchlist.datetime AS product_added,
+business.id AS bus_id,
+business.`name` AS bus_name,
+products.qty AS qty_avail,
+products.expiration_dateTime AS expires_in,
+products.price_per_unit AS original_price,
+products.discountPrice AS discount,
+products.pictures AS product_img,
+products.`name` AS product_name,
+products.status_id AS product_status
+FROM watchlist
+INNER JOIN products ON products.id=watchlist.products_id
+INNER JOIN business ON business.id=products.business_id 
+INNER JOIN `status` ON products.status_id=`status`.id
+WHERE `status`.`status`!='Inactive' ; 
+
+CREATE VIEW donations_received AS
+SELECT 
+business.id AS bus_id,
+business.`name` AS bus_name,
+donations.organization_id AS org_id,
+donations.title AS donate_title,
+donations.message AS donate_msg,
+donations.`status` AS donate_status,
+donations.`date` AS donate_date,
+donations.feedback AS donate_feedback,
+`user`.profile_pic AS business_logo
+FROM donations
+INNER JOIN business 
+ON  donations.business_id=business.id 
+INNER JOIN `user`
+ON business.user_id=`user`.id;
+
+CREATE VIEW business_report AS 
+SELECT 
+order_and_the_business.business_id AS bus_id,
+sum(order_and_the_business.qty) AS sum_qty,
+order_and_the_business.bus_name AS bus_name,
+business.phoneNo AS phoneNo
+FROM order_and_the_business
+INNER JOIN business ON order_and_the_business.business_id=business.id
+GROUP BY order_and_the_business.business_id;
+
+CREATE VIEW  charity_report AS 
+SELECT 
+COUNT(donations_received.org_id) AS donation_count,
+donations_received.org_id AS org_id,
+`organization`.`name` AS org_name,
+`organization`.phoneNo AS phoneNo,
+`organization`.city AS city
+FROM donations_received
+INNER JOIN `organization` ON `organization`.id=donations_received.org_id
+GROUP BY donations_received.org_id

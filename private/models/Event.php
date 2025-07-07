@@ -2,7 +2,13 @@
 
 class Event extends Model
 {
-    protected $table = "upcoming_events";
+    public $table = "upcoming_events";
+    protected $db;
+
+    public function __construct()
+    {
+        $this->db=Database::getInstance();
+    }
 
     public function validate($DATA)
     {
@@ -47,7 +53,7 @@ class Event extends Model
     public function countRows($org_id) {
         $query = "SELECT COUNT(*) as count FROM " . $this->table . " WHERE organization_id = :org_id";
         $params = [':org_id' => $org_id];
-        $result = $this->query($query, $params);
+        $result = $this->db->query($query, $params);
     
         // Return the scalar count value or 0 if the result is empty
         return isset($result[0]) ? (int) $result[0]->count : 0;

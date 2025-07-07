@@ -5,8 +5,64 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Register</title>
     <link rel="stylesheet" href="<?=ROOT?>/assets/styles/charity_register.css">
+    <script src="https://maps.googleapis.com/maps/api/js?key=AIzaSyBOjGDz3PRLABXKf8sf5d___lX-RuWo3L4&libraries=places"></script>
+    <script>
+        let map, marker;
+
+        function initMap() {
+            map = new google.maps.Map(document.getElementById("map"), {
+                center: { lat: 6.927079, lng: 79.861244 },
+                zoom: 8,
+            });
+
+            const input = document.getElementById("pac-input");
+            const searchBox = new google.maps.places.SearchBox(input);
+            map.controls[google.maps.ControlPosition.TOP_LEFT].push(input);
+
+            map.addListener("bounds_changed", () => {
+                searchBox.setBounds(map.getBounds());
+            });
+
+            searchBox.addListener("places_changed", () => {
+                const places = searchBox.getPlaces();
+
+                if (places.length === 0) return;
+
+                if (marker) marker.setMap(null);
+
+                const place = places[0];
+                if (!place.geometry || !place.geometry.location) return;
+
+                marker = new google.maps.Marker({
+                    map,
+                    position: place.geometry.location,
+                });
+
+                const lat = place.geometry.location.lat();
+                const lng = place.geometry.location.lng();
+                document.getElementById("latitude").value = lat;
+                document.getElementById("longitude").value = lng;
+
+                map.setCenter(place.geometry.location);
+                map.setZoom(15);
+            });
+
+            google.maps.event.addListener(map, 'click', function(event) {
+                const lat = event.latLng.lat();
+                const lng = event.latLng.lng();
+                document.getElementById("latitude").value = lat;
+                document.getElementById("longitude").value = lng;
+
+                if (marker) marker.setMap(null);
+                marker = new google.maps.Marker({
+                    position: event.latLng,
+                    map: map,
+                });
+            });
+        }
+    </script>
 </head>
-<body>
+<body onload="initMap()">
 <?php echo $this->view('includes/navbar_unregistered')?>
 
     <div class="container">
@@ -44,6 +100,13 @@
                 <input placeholder="ENTER A PHONE NUMBER" value="<?=get_var('phone')?>" type="text" name="phone" class="input" >
                 <h4>ORGANIZATION DESCRIPTION :</h4>
                 <input placeholder="ENTER A BRIEF DESCRIPTION ABOUT THE ORGANIZATION" value="<?=get_var('description')?>" type="text" name="description" class="input"> 
+                <h4>ORGANIZATION ADDRESS :</h4>
+                <input type="hidden" id="latitude" name="latitude" placeholder="Latitude" readonly required><br>
+                <input type="hidden" id="longitude" name="longitude" placeholder="Longitude" readonly required><br>
+                <input id="pac-input" class="input" type="text" placeholder="Search for your organization location"
+                style="margin-top:60px;margin-left:-60px;padding:8px;width:220px;z-index:5;position:absolute;top:10px;left:50%;transform:translateX(-50%);border:1px solid #ccc;border-radius:4px;">
+
+                <div id="map" style="height: 400px; width: 100%;"></div><br>
                 <h4>USERNAME :</h4>
                 <input placeholder="ENTER A USERNAME" value="<?=get_var('username')?>" type="username" name="username" class="input" >
                 <h4>PROFILE PICTURE :</h4>

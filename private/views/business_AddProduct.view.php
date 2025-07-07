@@ -20,7 +20,6 @@
                         <img src="<?=ASSETS?>/images/Bell.png" class="bell" />
                     </div>
                     
-
                 </div>
                 <div class="reports-status">
                     <div class="orange-bar">

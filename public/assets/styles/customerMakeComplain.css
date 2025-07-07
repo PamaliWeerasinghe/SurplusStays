@@ -1,0 +1,144 @@
+/* Overall form section improvement */
+.seecomplain-status {
+    background: #fff;
+    padding: 2rem;
+    border-radius: 16px;
+    box-shadow: 0 8px 24px rgba(0, 0, 0, 0.08);
+    /* margin-top: 2rem; */
+    transition: all 0.3s ease;
+}
+
+/* Headings and labels */
+.see-product-details h2,
+.see-product-details h3 {
+    font-size: 1.1rem;
+    color: #333;
+    margin-bottom: 0.5rem;
+    font-weight: 600;
+}
+
+label, select, textarea {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-size: 0.95rem;
+    color: #444;
+}
+
+/* Select boxes */
+.see-product-details select {
+    padding: 10px;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    outline: none;
+    transition: border-color 0.3s ease;
+    width: 10px;
+}
+
+.see-product-details select:focus {
+    border-color: #4285f4;
+}
+
+/* Complaint textarea */
+.see-product-details textarea {
+    padding: 1rem;
+    border-radius: 10px;
+    border: 1px solid #ccc;
+    resize: vertical;
+    /* width: 90%; */
+    transition: border-color 0.3s ease;
+}
+
+.see-product-details textarea:focus {
+    border-color: #34a853;
+}
+
+/* Upload image styling */
+.upload-wrapper {
+    width: 160px;
+    height: 160px;
+    border: 2px dashed #ccc;
+    border-radius: 12px;
+    background-color: #f9f9f9;
+    cursor: pointer;
+    transition: background 0.3s ease, border-color 0.3s ease;
+    position: relative;
+}
+
+.upload-wrapper:hover {
+    background-color: #f1f1f1;
+    border-color: #34a853;
+}
+
+.upload-wrapper img.upload-icon {
+    width: 100%;
+    height: 100%;
+    object-fit: cover;
+    border-radius: 12px;
+}
+
+/* Submit button */
+.business-response-area-btn .complain-btn1 {
+    background-color: #34a853;
+    color: white;
+    padding: 0.75rem 1.5rem;
+    border-radius: 10px;
+    border: none;
+    font-size: 1rem;
+    font-weight: 600;
+    margin-top: 1.5rem;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+.business-response-area-btn .complain-btn1:hover {
+    background-color: #2c8c45;
+}
+
+/* Success alert box */
+.successfull-alert-popup {
+    background-color: #e6f4ea;
+    border-left: 6px solid #34a853;
+    color: #256029;
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+/* Error alert box */
+.error-alert-popup {
+    background-color: #fbeaea;
+    border-left: 6px solid #d93025;
+    color: #a94442;
+    padding: 1rem;
+    border-radius: 10px;
+    margin: 1rem 0;
+    animation: fadeIn 0.3s ease-in-out;
+}
+
+.alert-multialertheader,
+.alert-header2 {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    font-weight: 600;
+}
+
+.close-btn {
+    background: none;
+    border: none;
+    font-size: 1.2rem;
+    color: #555;
+    cursor: pointer;
+    transition: color 0.2s ease;
+}
+
+.close-btn:hover {
+    color: #000;
+}
+
+/* Fade-in animation */
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(-10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+

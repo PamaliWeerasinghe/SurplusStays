@@ -1,69 +1,214 @@
-/* .navbar{
-    width: 100%;
-    height: 7vh;
-    background-color: black;
-} */
-.sidePanel{
+body {
+    margin: 0;
+    padding: 0;
     display: flex;
     flex-direction: column;
-    flex: 1;
-    background-color: #F0F8FF;
 }
-
-.greeting{
+.side-nav {
+    width: 1%;
+    /* height: 100%; */
+    background-color: #f5f9ff;
+    padding: 20px;
     display: flex;
-    justify-content: center;
-    align-items: center;
-    padding: 6%;
-}
-.greeting label{
-    font-size: larger;
-    font-weight: bolder;
-    margin-left: 2%;
-}
-.buttons{
-    display: flex;
+    box-shadow: 2px 0 5px rgba(0, 0, 0, 0.1);
     flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    margin-top: 5%;
-}
-.btn-nonSelected{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 240px;
-    height: 39px;
-    background-color: #ffffff;
-    border-radius: 68px;
-    margin-top: 10%;
-    cursor: pointer;
-}
-.btn-Selected{
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 240px;
-    height: 39px;
-    background-color: #FD5D34;
-    border-radius: 68px;
-    margin-top: 10%;
-    cursor: pointer;
-}
-.btn-Selected label{
-    color: white;
-}
-
-.btn-nonSelected :hover{
-    color: white;
-    display: flex;
-    justify-content: center;
-    align-items: center;
-    width: 240px;
-    height: 39px;
-    background-color: #FFAC96;
-    border-radius: 68px;
+    flex-grow: 1;
+    position: relative;
+    z-index:1;
     
-    cursor: pointer;
+    
+}
 
+.profile-section {
+    text-align: center;
+    margin-bottom: 40px;
+    position: relative;
+}
+
+.profile-container {
+    position: relative;
+    width: 80px;
+    height: 80px;
+    margin: 0 auto 15px;
+    border-radius: 50%;
+    padding: 3px;
+    background: linear-gradient(45deg, #00615F, #008F8C);
+    animation: pulse 2s infinite;
+}
+
+@keyframes pulse {
+    0% {
+        box-shadow: 0 0 0 0 rgba(0, 97, 95, 0.4);
+    }
+    70% {
+        box-shadow: 0 0 0 10px rgba(0, 97, 95, 0);
+    }
+    100% {
+        box-shadow: 0 0 0 0 rgba(0, 97, 95, 0);
+    }
+}
+
+.profile-image {
+    width: 100%;
+    height: 100%;
+    border-radius: 50%;
+    object-fit: cover;
+    border: 3px solid white;
+    transition: transform 0.3s ease;
+}
+
+.profile-image:hover {
+    transform: scale(1.05);
+}
+
+.welcome-text {
+    font-size: 24px;
+    font-weight: 700;
+    margin: 0;
+    color: #333;
+    transition: color 0.3s ease;
+    animation: fadeIn 0.5s ease-in-out;
+}
+
+@keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to { opacity: 1; transform: translateY(0); }
+}
+
+.nav-links {
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+.nav-item {
+    background-color: white;
+    border-radius: 40px;
+    margin-top: 20px;
+    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    position: relative;
+    overflow: hidden;
+}
+
+.nav-item::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: -100%;
+    width: 100%;
+    height: 100%;
+    background: linear-gradient(90deg, rgba(255,255,255,0) 0%, rgba(255,255,255,0.2) 50%, rgba(255,255,255,0) 100%);
+    transition: all 0.6s ease;
+    z-index: 1;
+}
+
+.nav-item:hover::before {
+    left: 100%;
+}
+
+.nav-item:hover {
+    transform: translateY(-3px);
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+}
+
+.nav-icon {
+    display: inline-block;
+    width: 20px;
+    height: 20px;
+    margin-right: 10px;
+    vertical-align: text-bottom;
+    align-items: center;
+    justify-content: center;
+    opacity: 0.7;
+    transition: opacity 0.3s ease;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+.nav-item a {
+    text-decoration: none;
+    font-size: 16px;
+    color: #333;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    padding: 12px 15px;
+    border-radius: 40px;
+    transition: all 0.3s ease;
+    position: relative;
+    z-index: 2;
+    font-weight: 500;
+}
+
+.nav-item.active {
+    background: linear-gradient(45deg, #00615F, #008F8C);
+    box-shadow: 0 4px 10px rgba(0, 97, 95, 0.3);
+}
+
+.nav-item.active a {
+    color: white;
+}
+
+.nav-item.active .nav-icon {
+    opacity: 1;
+}
+
+.nav-item:not(.active):hover a {
+    color: #00615F;
+    background: rgba(0, 97, 95, 0.05);
+}
+
+
+@media (max-width: 768px) {
+    .side-nav {
+        width: 100%;
+        border-radius: 0;
+    }
+}
+
+/* Add subtle entrance animations for nav items */
+.nav-item {
+    animation: slideIn 0.4s ease-out forwards;
+    opacity: 0;
+}
+
+@keyframes slideIn {
+    from {
+        transform: translateX(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateX(0);
+        opacity: 1;
+    }
+}
+
+/* Delay each nav item animation */
+.nav-item:nth-child(1) { animation-delay: 0.1s; }
+.nav-item:nth-child(2) { animation-delay: 0.2s; }
+.nav-item:nth-child(3) { animation-delay: 0.3s; }
+.nav-item:nth-child(4) { animation-delay: 0.4s; }
+.nav-item:nth-child(5) { animation-delay: 0.5s; }
+.nav-item:nth-child(6) { animation-delay: 0.6s; }
+.nav-item:nth-child(7) { animation-delay: 0.7s; }
+.nav-item:nth-child(8) { animation-delay: 0.8s; }
+
+/* Add subtle hover effect on nav items */
+.nav-item a:after {
+    content: "";
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    width: 0;
+    height: 2px;
+    background: #00615F;
+    transition: all 0.3s ease;
+    opacity: 0;
+}
+
+.nav-item:not(.active) a:hover:after {
+    width: 80%;
+    left: 10%;
+    opacity: 1;
 }

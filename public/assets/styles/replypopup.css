@@ -1,0 +1,161 @@
+/* Popup Container */ 
+.popup-container {
+    width: 100%;
+    height: 100vh;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    position: fixed;
+    top: 0;
+    left: 0;
+    backdrop-filter: blur(6px);
+    background: rgba(0, 0, 0, 0.3);
+    display: none;
+    z-index: 999;
+}
+
+/* Opened Popup Container */
+.open-popup-container {
+    display: flex;
+}
+
+/* Popup Box */
+.popup {
+    width: 50%;
+    max-width: 500px;
+    background: rgba(255, 255, 255, 0.95);
+    border-radius: 16px;
+    box-shadow: 0 12px 30px rgba(0, 0, 0, 0.25);
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%) scale(0.1);
+    text-align: center;
+    color: #333;
+    padding: 25px;
+    visibility: hidden;
+    transition: transform 0.35s ease, opacity 0.35s;
+    opacity: 0;
+    backdrop-filter: blur(10px);
+}
+
+/* Opened Popup */
+.open-popup {
+    visibility: visible;
+    opacity: 1;
+    transform: translate(-50%, -50%) scale(1);
+}
+
+/* Close Button */
+.close-btn {
+    font-size: 18px;
+    background-color: #FD5D34;
+    color: white;
+    width: 32px;
+    height: 32px;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    border-radius: 50%;
+    cursor: pointer;
+    position: absolute;
+    top: 15px;
+    right: 15px;
+    transition: background 0.25s ease-in-out;
+    box-shadow: 0 2px 6px rgba(0,0,0,0.2);
+}
+
+.close-btn:hover {
+    background-color: #e04a2c;
+}
+
+/* Reply Box */
+.reply-box {
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    justify-content: center;
+    width: 100%;
+    gap: 20px;
+}
+
+.reply-box img {
+    width: 12%;
+}
+
+.reply-box div {
+    width: 100%;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    justify-content: center;
+    gap: 1.5%;
+}
+
+/* Reply Textarea */
+.msg {
+    width: 95%;
+    height: 110px;
+    padding: 14px;
+    border: 1px solid #ccc;
+    border-radius: 8px;
+    font-size: 15px;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    resize: none;
+    transition: border-color 0.25s;
+    background-color: #fdfdfd;
+}
+
+.msg:focus {
+    outline: none;
+    border-color: #FD5D34;
+    box-shadow: 0 0 4px rgba(253, 93, 52, 0.4);
+}
+
+/* Send Button */
+.send-icon {
+    width: 52px;
+    height: 52px;
+    background: #FD5D34;
+    border: none;
+    border-radius: 50%;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    cursor: pointer;
+    transition: background 0.25s ease-in-out;
+    box-shadow: 0 4px 12px rgba(253, 93, 52, 0.4);
+}
+
+.send-icon img {
+    width: 60%;
+}
+
+.send-icon:hover {
+    background: #e04a2c;
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .popup {
+        width: 85%;
+    }
+
+    .msg {
+        width: 100%;
+    }
+
+    .reply-box div {
+        flex-direction: column;
+        gap: 12px;
+    }
+
+    .send-icon {
+        width: 46px;
+        height: 46px;
+    }
+
+    .reply-box img {
+        width: 16%;
+    }
+}

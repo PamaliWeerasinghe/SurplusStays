@@ -5,22 +5,17 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title><?php echo SITENAME ?></title>
-    <link rel="stylesheet" href="<?=STYLES?>/customer.css">
     <link rel="stylesheet" href="<?=STYLES?>/customerDashboard.css">
-    <link rel="stylesheet" href="<?=STYLES?>/customerSidePanel.css">
 </head>
 
 <body>
-    <!-- navbar -->
-
-    <div class="main-div">
     <?php echo $this->view('includes/charityNavbar')?>
-        <div class="sub-div-1">
-            <!-- included the admin side panel -->
-            <?php require APPROOT."/views/includes/customerSidePanel.view.php"?>
+
+    <div class="container">
+        <?php require APPROOT."/views/includes/customerSidePanel.view.php"?>
+        <div class="container-right">
             <div class="dashboard">
                 <div class="summary">
-                    
                     <div class="summary-blocks123">
                         <h2>Shops</h2>
                         <div class="summary-details1">
@@ -45,21 +40,18 @@
                             <select class="location-distance">
                                 <option>Distance</option>
                             </select>
-                            <button class="location-btn">
-                                Search
-                            </button>
+                            <button class="location-btn">Search</button>
                     </div>
                     <div class="map">
-                    <iframe src="https://www.google.com/maps/embed?pb=YourMapURL"
-                        width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
-                    </iframe>
+                        <iframe src="https://www.google.com/maps/embed?pb=YourMapURL"width="100%" height="450" style="border:0;" allowfullscreen="" loading="lazy">
+                        </iframe>
                     </div>
 
                     <div class="shop">
                         <img src="<?=ASSETS?>/images/keells.png"/>
                         <label>Keells Super</label>
-                        <div>
-                            <img src="<?=ASSETS?>/images/location.png"/>
+                    <div>
+                        <img src="<?=ASSETS?>/images/location.png"/>
                             <label>Kalutara</label>
                         </div>
                         <div>
@@ -70,7 +62,7 @@
                             <label class="shop-label1">Open Today</label>
                             <label class="shop-label2">10.00 A.M -22.00 P.M</label>
                         </div>
-                        <button class="shop-btn">Send Request</button>
+                            <button class="shop-btn">Send Request</button>
                     </div>
                     <div class="shop">
                         <img src="<?=ASSETS?>/images/keells.png"/>
@@ -100,25 +92,18 @@
                             <img src="<?=ASSETS?>/images/star-rating.png"/>
                             <label>3.0</label>
                         </div>
-                        <div>
-                            <label class="shop-label1">Open Today</label>
-                            <label class="shop-label2">10.00 A.M -22.00 P.M</label>
-                        </div>
-                        <button class="shop-btn">Send Request</button>
-                    </div>
-                  
-
+                    <div>
+                    <label class="shop-label1">Open Today</label>
+                    <label class="shop-label2">10.00 A.M -22.00 P.M</label>
                 </div>
-
-                
-               
-
-
+                <button class="shop-btn">Send Request</button>
             </div>
-            
         </div>
-        <?php echo $this->view('includes/footer')?>
     </div>
+                </div>
+            </div>
+        </div>
+    <?php echo $this->view('includes/footer')?>
     
 </body>
 

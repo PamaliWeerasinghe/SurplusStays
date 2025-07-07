@@ -13,20 +13,10 @@
             <?php require APPROOT . "/views/includes/adminSidePanel.view.php" ?>
             <div class="dashboard">
                 <div class="summary" >
-                    <!-- <div class="notifications-type2">
-                        
-
-                        
-                    </div> -->
-                    
-
                 </div>
                 <div class="order-status" style="margin-top: -28%;">
                     <div class="order">
                         <label>Orders</label>
-                        <!-- <select>
-                            <option>All Time</option>
-                        </select> -->
                     </div>
 
                    
