@@ -27,7 +27,7 @@
 - **Frontend:** HTML, CSS, JavaScript  
 - **Backend:** PHP  
 - **Database:** MySQL  
-- **Payment Integration:** PayHere 
+- **Payment Integration** 
 - **Email Notifications:** PHP Mailer or similar  
 
 
